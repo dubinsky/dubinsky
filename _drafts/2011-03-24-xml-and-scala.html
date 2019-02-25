@@ -1,0 +1,74 @@
+---
+layout: post
+title: XML and Scala
+date: '2011-03-24T11:48:00.021-04:00'
+author: Leonid Dubinsky
+tags: 
+modified_time: '2014-05-26T16:11:46.573-04:00'
+blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-2463497025338849164
+blogger_orig_url: https://blog.dub.podval.org/2011/03/xml-and-scala.html
+---
+
+There seems to be an XML backlash going on (see "Ongoing" ... "Meh"). I understand that in many cases XML might not be as appropriate as it was hyped to be:<br />
+<br />
+<ul>
+<li>configuration, if it does not need to be externalizable; annotations in Java and Scala are more convenient;</li>
+<li>for data transfer to Web applications Json might be the right thing;</li>
+<li>HTML5 (now just HTML) superseded XHTML etc.</li>
+</ul>
+But for document processing, XML is the way!<br />
+<br />
+XML is everywhere, and support for XML processing, including parsing, is available for all languages and platforms.<br />
+<br />
+Scala has very good support for XML, including built-in XML parser and access to the platform-provided parsers.<br />
+<br />
+Its author, Burak Emir says:<br />
+If you deal with XML, you can make your life simpler by using scala.xml. By now I finally think that xml is a big mistake, but I still stand by the API which follows several standards closely. It is all explained in the scala.xml book.<br />
+<br />
+In an excellent piece "<a href="http://www.codecommit.com/blog/scala/working-with-scalas-xml-support">Working with Scala’s XML Support</a>" Daniel Spiewak quotes (and agrees with) Martin Odersky saying that he half-regrets inclusion of XML support in Scala, but agrees that it turned out to be very useful ;)<br />
+<br />
+XML Support in Scala is not without problems, as Spiewak notes. There are "<a href="http://blog.markfeeney.com/2011/03/scala-xml-gotchas.html">gotchas</a>". I remember a long post explicating all the problems, but I misplaced it :( Here is a an illustration how non-trivial is something that should be completely trivial:&nbsp;<a href="http://stackoverflow.com/questions/2569580/how-to-change-attribute-on-scala-xml-element">http://stackoverflow.com/questions/2569580/how-to-change-attribute-on-scala-xml-element</a>.<br />
+<br />
+<ul>
+<li>Pattern matching on attributes does not work</li>
+<li>Built-in parser is problematic, but can be replaced (even with TagSoup :))</li>
+<li>Built-in transformations are not good</li>
+<li>XPATH support is not great</li>
+</ul>
+<br />
+<a href="http://blog.bolinfest.com/2011/05/gdata-i-cant-take-it-anymore.html">GData: I can't take it anymore</a><br />
+Hortsman: say no to XSLT!<br />
+<a href="http://scala-scales.googlecode.com/svn/sites/snapshots/scales/scales-utils_2.8.1/0.1/index.html">Scales</a><br />
+<a href="https://github.com/djspiewak/anti-xml">Anti-XML</a><br />
+<a href="http://weblogs.java.net/blog/cayhorstmann/archive/2011/12/12/sordid-tale-xml-catalogs">http://weblogs.java.net/blog/cayhorstmann/archive/2011/12/12/sordid-tale-xml-catalogs</a><br />
+<br />
+"<a href="http://infoscience.epfl.ch/record/85493/files/Scala_XQuery.pdf">Efficient Semi-structured Queries in Scala using XQuery Shipping</a>"<br />
+<br />
+<a href="https://github.com/fancellu/xqs">XQS</a><br />
+<br />
+XQuery: close to the data.<br />
+Wolfgang: application in XQuery (AtomicWiki). With interface code and custom functions in &nbsp;Java/Scala, this can be done. But:<br />
+<ul>
+<li>no static typing;</li>
+<li>no objects (manual encoding is not the real thing :))</li>
+<li>no exceptions (before XQuery 1.1)</li>
+<li>no concurrency</li>
+<li>no integration with libraries</li>
+</ul>
+So, I'd rather "send data" :) I want to write in Scala - but process XML!<br />
+<br />
+From Java: parsing, XPath (only v 1.0) and XSLT APIs are cumbersome; DOM - impossible to work with; JDom sucks and no XPATH... XQuery - XML literals with expression escapes - rules!<br />
+<br />
+Interfacing with XQuery via XQJ gives: pipelining, iteration, XPATH, parsing, XSLT (through non-standard functions), literals...<br />
+<br />
+In pure Scala - literals with escapes into Scala, XPath library, comprehensions!<br />
+<br />
+Scala is good for XML processing *not* because of the built-in support.<br />
+<br />
+I am sure that when I'll need to "send the query", it'll be doable in Scala, and "pipelining", promissed by proprietary(!) Saxon &amp; Exist, did not work, but has better chance of being implementable in Scala, I think.<br />
+<br />
+TEI people started on the HTML serialization: permalink.gmane.org/gmane/text.tei.general/11589<br />
+They say that microformats and RDF are past; microdata is the future: schema.org; www.w3.org/TR/HTML5/microdata<br />
+<br />
+<br />
+<br />

@@ -1,0 +1,92 @@
+---
+layout: post
+title: Native Libraries with Maven
+date: '2011-01-31T14:34:00.002-05:00'
+author: Leonid Dubinsky
+tags:
+- maven
+modified_time: '2013-04-25T14:59:36.599-04:00'
+blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-122451127561287518
+blogger_orig_url: https://blog.dub.podval.org/2011/01/native-libraries-with-maven.html
+---
+
+Maven supports the "so" packaging. When "so"-packaged dependency is used in a Maven project, the native library has to be:<br />
+<br />
+<ul><li>available to the unti tests;</li>
+<li>available during execution of classes (from within the IDE);</li>
+<li>packaged into the application jar so that it is available during production execution.</li>
+</ul><br />
+Turns out that a fair amount of POM tweaking is needed to achieve all this. As my other Maven-related posts, this one documents the solution that I found.<br />
+<a name='more'></a><br />
+<h3>Unpack the libraries from the dependencies</h3>Define a property pointing to the directory where the native libraries will be unpacked, e.g.:<br />
+<pre><code class="language-markup">
+&lt;properties>
+    &lt;lib.directory>${project.build.directory}/so&lt;/lib.directory>
+&lt;/properties>
+</code>
+</pre>Unpack the libraries from the dependencies, e.g.:<br />
+<pre><code class="language-markup">
+&lt;plugin>
+    &lt;groupid>org.apache.maven.plugins&lt;/groupid>
+    &lt;artifactid>maven-dependency-plugin&lt;/artifactid>
+    &lt;executions>
+        &lt;execution>
+            &lt;id>copy&lt;/id>
+            &lt;phase>process-classes&lt;/phase>
+            &lt;goals>
+                &lt;goal>copy&lt;/goal>
+            &lt;/goals>
+            &lt;configuration>
+                &lt;artifactitems>
+                    &lt;artifactitem>
+                        &lt;groupid>org.podval.group&lt;/groupid>
+                        &lt;artifactid>native-library&lt;/artifactid>
+                        &lt;type>so&lt;/type>
+                        &lt;version>1.0-SNAPSHOT&lt;/version>
+
+                        &lt;overwrite>true&lt;/overwrite>
+                        &lt;outputdirectory>${lib.directory}&lt;/outputdirectory>
+                        &lt;destfilename>${so.&lt;/destfilename>
+                    &lt;/artifactitem>
+                &lt;/artifactitems>
+            &lt;/configuration>
+        &lt;/execution>
+    &lt;/executions>            
+&lt;/plugin>
+</code></pre>The chosen phase has to be early enough to make the libraries available during "execute", "test" and "package" activities.<br />
+<h3>Set up unit tests</h3>java.library.path has to be set for the native libraries to be available to the unit tests:<br />
+<pre><code class="language-markup">
+&lt;plugin>
+    &lt;groupid>org.apache.maven.plugins&lt;/groupid>
+    &lt;artifactid>maven-surefire-plugin&lt;/artifactid>
+    &lt;configuration>
+        &lt;argline>-Djava.library.path=${lib.directory}&lt;/argline>
+    &lt;/configuration>
+&lt;/plugin>
+</code></pre>Note that "argLine" is used, and not "systemProperties" (or its more modern replacement "systemPropertyVariables"), since even with the forked execution (forkMode="once", which is the default)  surefire plugin does not set the java.library.path early enough for it to matter ;) Actually, execution of individual tests from within the NetBeans IDE works with the "systemProperties" (but not with "systemPropertyVariables"), but I need "mvn test" to just work...<br />
+<h3>Set up class execution</h3>I do not yet know how to tweak java.library.path for execution of the project classes. Attempts to affect configuration of the exec-maven-plugin and pass appropriate argument were unsuccessful.<br />
+<h3>Package the libraries</h3>One-Jar takes care of unpacking the libraries from the jar and putting them where loadLibrary() can will them. All that needs to be done is telling One-Jar *which* libraries to pack:<br />
+<pre><code class="language-markup">
+&lt;plugin>
+    &lt;groupid>org.dstovall&lt;/groupid>
+    &lt;artifactid>onejar-maven-plugin&lt;/artifactid>
+    &lt;executions>
+        &lt;execution>
+            &lt;configuration>
+                ...
+                &lt;binlibs>
+                    &lt;fileset>
+                        &lt;directory>${lib.directory}&lt;/directory>
+                        &lt;includes>
+                            &lt;include>${so.name}&lt;/include>
+                        &lt;/includes>
+                    &lt;/fileset>
+                &lt;/binlibs>
+            &lt;/configuration>
+            ...
+        &lt;/execution>
+    &lt;/executions>
+&lt;/plugin>            
+</code></pre>If One-Jar is *not* being used to package the executable, things get trickier ;)<br />
+<h3>Procedurality of it all</h3>Most of the necessary steps have a very "procedural", Ant-like feeling to them and go against the - purported - declarative style of Maven. I do not think that Maven is Object-Oriented enough for this sequence of interrelated steps to be packageable as a unit (unless it is a special plugin?). In fact, I do not understand why doesn't Maven do all (or at least most) of the steps itself - after all, I *do* declare an *so* dependency?!<br />
+Am I missing something?<br />

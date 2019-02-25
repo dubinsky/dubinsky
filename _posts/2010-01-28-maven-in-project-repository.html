@@ -1,0 +1,133 @@
+---
+layout: post
+title: Maven in-project repository
+date: '2010-01-28T14:24:00.004-05:00'
+author: dub
+tags:
+- maven
+modified_time: '2013-06-20T16:19:10.864-04:00'
+blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-343750537477523036
+blogger_orig_url: https://blog.dub.podval.org/2010/01/maven-in-project-repository.html
+---
+
+<h3>
+<span style="font-family: Arial, Helvetica, sans-serif; font-size: large;">Why in-project dependencies?</span></h3>
+<span style="font-family: Arial, Helvetica, sans-serif;">Maven handles dependencies of the project very well. It finds the artifacts in the configured repositories, retrieves their POMs and resolves transitive dependencies.</span><br />
+<span style="font-family: Arial, Helvetica, sans-serif;">
+<br />
+In some cases, artifacts are not available in well-known public repositories. For instance: </span><br />
+<ul>
+<li><span style="font-family: Arial, Helvetica, sans-serif;">artifact is proprietary&nbsp;</span></li>
+<li><span style="font-family: Arial, Helvetica, sans-serif;">nobody bothered packaging the artifact (e.g., Saxon9)&nbsp;</span></li>
+<li><span style="font-family: Arial, Helvetica, sans-serif;">artifact is available, but its sources are not</span></li>
+</ul>
+<a name='more'></a><br />
+<h3>
+<span style="font-family: Arial, Helvetica, sans-serif;"><span style="font-size: large;">The Nexus solution</span></span></h3>
+<span style="font-family: Arial, Helvetica, sans-serif;">One solution to such problems is to run an instance of (Nexus) repository manager, upload the missing artifacts there and configure it in you project's POM. (Actually, a repository manager should be used even when all artifacts are available in public repositories, but that is a different story :)). <br />
+<br />
+But what if this is not an option? What if - for political or technical reasons - you really need to carry some dependencies with your project? How do you do it?</span><br />
+<h3>
+<span style="font-family: Arial, Helvetica, sans-serif; font-size: large;">The "system scope" attempt</span></h3>
+<span style="font-family: Arial, Helvetica, sans-serif;">It is possible to describe in-project dependencies using "system" scope and URL that references a jar co-located with the project. Unfortunately, system-scoped dependencies break the transitive dependency resolution of Maven. (Also, if your in-project dependency is needed only for tests, there is no way to specify a "test" scope for it...)</span><br />
+<span style="font-family: Arial, Helvetica, sans-serif;"><br /></span>
+<span style="font-family: Arial, Helvetica, sans-serif;">The in-project repository</span><br />
+<span style="font-family: Arial, Helvetica, sans-serif;"><br /></span>
+<span style="font-family: Arial, Helvetica, sans-serif;">To embed a Maven repository in the project:</span><br />
+<span style="font-family: Arial, Helvetica, sans-serif;">Create a subdirectory "lib" in the project directory.</span><br />
+<span style="font-family: Arial, Helvetica, sans-serif;">Define this subdirectory as a repository in the project's POM:</span><br />
+<br />
+<pre><code class="language-markup">
+&lt;repository&gt;
+    &lt;id&gt;lib&lt;/id&gt;
+    &lt;name&gt;lib&lt;/name&gt;
+    &lt;releases&gt;
+        &lt;enabled&gt;true&lt;/enabled&gt;
+        &lt;checksumPolicy&gt;ignore&lt;/checksumPolicy&gt;
+    &lt;/releases&gt;
+    &lt;snapshots&gt;
+        &lt;enabled&gt;false&lt;/enabled&gt;
+    &lt;/snapshots&gt;
+    &lt;url&gt;file://${project.basedir}/lib&lt;/url&gt;
+&lt;/repository&gt;
+</code></pre>
+<br />
+<span style="font-family: Arial, Helvetica, sans-serif;">(Above assumes that you want to&nbsp;turn off the SHA1 checksum checking for your in-project repository.)</span><br />
+<div>
+</div>
+<span style="font-family: Arial, Helvetica, sans-serif;"><br />
+</span> <span style="font-family: Arial, Helvetica, sans-serif;">For an artifact with groupId x.y.z, content of the "lib" subdirectory should be:</span><br />
+<br />
+<span style="font-family: 'Courier New', Courier, monospace;">lib<br />
+&nbsp; |--</span><span style="font-family: 'Courier New', Courier, monospace;">&nbsp;x</span><br />
+<div>
+<span style="font-family: 'Courier New', Courier, monospace;">&nbsp; &nbsp; &nbsp; |-- y</span></div>
+<div>
+<span style="font-family: 'Courier New', Courier, monospace;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |-- z</span><br />
+<span style="font-family: 'Courier New', Courier, monospace;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |-- ${</span><span style="font-family: 'Courier New', Courier, monospace;">artifactId</span><span style="font-family: 'Courier New', Courier, monospace;">}</span></div>
+<div>
+<span style="font-family: 'Courier New', Courier, monospace;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |-- ${version}</span></div>
+<div>
+<span style="font-family: 'Courier New', Courier, monospace;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |-- ${artifactId}-${version}.pom</span></div>
+<div>
+<span style="font-family: 'Courier New', Courier, monospace;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |-- ${artifactId}-${version}.pom.sha1</span></div>
+<div>
+<span style="font-family: 'Courier New', Courier, monospace;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |-- ${artifactId}-${version}.jar</span></div>
+<div>
+<span style="font-family: 'Courier New', Courier, monospace;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; |-- ${artifactId}-${version}.jar.sha1&nbsp;</span><br />
+<div>
+<br />
+<span style="font-family: Arial, Helvetica, sans-serif;">POMs for in-project dependency artifacts are not, strictly speaking, necessary. But if you do not have them, Maven will attempt to retrieve the POMs from the other repositories (including central) for each build.</span><br />
+<span style="font-family: Arial, Helvetica, sans-serif;"><br />
+</span><br />
+<span style="font-family: Arial, Helvetica, sans-serif;">SHA1 checksums are not necessary either - if you indicate in the repository definition (see below) that they should be ignored.</span><br />
+<span style="font-family: Arial, Helvetica, sans-serif;"><br />
+</span><br />
+<span style="font-family: Arial, Helvetica, sans-serif;">This structure can be created manually - or using Maven itself, thus reducing the risk of typos (thank you +</span><a href="http://www.blogger.com/profile/18172568217105448018" style="font-family: Arial, Helvetica, sans-serif;">vmp</a><span style="font-family: Arial, Helvetica, sans-serif;">&nbsp;for the idea and +<a href="http://www.blogger.com/profile/06300558549133430072">Jeremy</a>&nbsp;for the generatePom tip!</span><span style="font-family: Arial, Helvetica, sans-serif;">):</span><span style="font-family: Arial, Helvetica, sans-serif;"><br />
+<br />
+Install the artifact in the local repository with <br />
+</span><span style="font-family: Arial, Helvetica, sans-serif;">mvn install:install-file -Dfile=myArtifact.jar -DgroupId=x.y.z -DartifactId=${artifactId} -Dversion=${version} -Dpackaging=jar&nbsp;<span style="background-color: white; color: #222222; font-size: 12px; line-height: 16px; text-align: justify;">-</span><span style="background-color: white; color: #222222; line-height: 16px; text-align: justify;">DgeneratePom=true</span></span><br />
+<span style="font-family: Arial, Helvetica, sans-serif;"><br />
+and then copy resulting files from the local repository into the in-project one.</span><br />
+<br />
+<h3>
+<span style="font-family: Arial, Helvetica, sans-serif; font-size: large;">Obsolete "legacy" layout</span></h3>
+<br />
+<span style="font-family: Arial, Helvetica, sans-serif;">It is somewhat simpler to use the Maven1 repository layout. That means that under lib directory there are directories for each groupId that you need:</span><br />
+<br />
+<span style="font-family: 'Courier New', Courier, monospace;"> lib</span><br />
+<span style="font-family: 'Courier New', Courier, monospace;">&nbsp; |-- ${groupId}</span><br />
+<span style="font-family: 'Courier New', Courier, monospace;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|-- poms</span><br />
+<span style="font-family: 'Courier New', Courier, monospace;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|-- ${artifactId}-${version}.pom</span><br />
+<span style="font-family: 'Courier New', Courier, monospace;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|-- jars</span><br />
+<span style="font-family: 'Courier New', Courier, monospace;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|-- ${artifactId}-${version}.jar</span><br />
+<span style="font-family: 'Courier New', Courier, monospace;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|-- java-sources</span><br />
+<span style="font-family: 'Courier New', Courier, monospace;">&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;|-- ${artifactId}-${version}-sources.jar </span><br />
+<span style="font-family: Arial, Helvetica, sans-serif;"><br /></span>
+<span style="font-family: Arial, Helvetica, sans-serif;">Sub-directory "java-sources" is needed only if you want to publish the sources.</span><br />
+<br />
+<span style="font-family: Arial, Helvetica, sans-serif;">In the repository definition, add:</span><br />
+<br />
+<pre><code class="language-markup">...
+&lt;repository&gt;
+   &lt;layout&gt;legacy&lt;/layout&gt;
+&lt;/repository&gt;
+</code></pre>
+<br />
+<span style="font-family: Arial, Helvetica, sans-serif;">With Maven 3, "legacy" layout is going away, so the default layout has to be used.</span><br />
+<h3>
+<span style="font-family: Arial, Helvetica, sans-serif; font-size: large;">Modules</span></h3>
+<span style="font-family: Arial, Helvetica, sans-serif;">For multi-module projects, a "lib" repository declared in the parent POM is inherited by each module. Artifacts are being looked up in the "lib" folder under each module. Where to put arftifacts depends on the build order: the first module that needs an artifact has to contain it in the "lib" folder; figuring this out is tedious - and empty "lib" folders left around by the build are not pretty :)</span><br />
+<span style="font-family: Arial, Helvetica, sans-serif;"><br /></span>
+<span style="font-family: Arial, Helvetica, sans-serif;">One approach to deal with that is to declare the "lib" repository in a separate module dedicated to the in-project repository. That module contains all the artifacts in its "lib" folder and declares them as dependencies, so that the local Maven repository is populated during the build of the module.</span><br />
+<span style="font-family: Arial, Helvetica, sans-serif;"><br /></span>
+<span style="font-family: Arial, Helvetica, sans-serif;">The modules that actually use an artifact carried in the in-project repository can declare a dependency on the "lib" module, ensuring that the needed artifact will be present in the local repository prior to the module's build. Unfortunately, *all* of the in-project artifacts will transitively become the module's dependencies.</span><br />
+<span style="font-family: Arial, Helvetica, sans-serif;"><br /></span>
+<span style="font-family: Arial, Helvetica, sans-serif;">Or: leave the "lib" module out of the dependencies of the rest of the modules, and ensure that the local repository is populated by running a build of that module manually (once on the empty system and every time the in-project dependencies change).</span><br />
+<h3>
+<span style="font-family: Arial, Helvetica, sans-serif;">Mirrors</span></h3>
+</div>
+</div>
+<div>
+<span style="font-family: Arial, Helvetica, sans-serif;">For this to work when using a mirror, in-project artifacts have to be excluded from mirroring. One way to do it is: in the mirror definition's "mirrorOf" element, put "external:*" instead of (to inclusive) "*". (Thanks for the tip, anonymous commenter!)</span><br />
+<br /></div>

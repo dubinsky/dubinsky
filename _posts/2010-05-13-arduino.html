@@ -1,0 +1,97 @@
+---
+layout: post
+title: Arduino
+date: '2010-05-13T00:45:00.532-04:00'
+author: dub
+tags:
+- electronics
+modified_time: '2012-12-31T19:36:06.881-05:00'
+blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-6701907751305210869
+blogger_orig_url: https://blog.dub.podval.org/2010/05/arduino.html
+---
+
+I became a late adopter of a number of technologies (among them - <a href="http://ltsp.org/">LTSP</a>, Google Apps and <a href="http://en.wikipedia.org/wiki/XQuery">XQuery</a>) in a similar way. A technology looks interesting when I encounter it for the first time. It keeps popping up for years. I think it is not for me. Then, a problem arises, and that particular technology turns out to be <i>the</i> solution.<br />
+Finally, the same happened to <a href="http://www.arduino.cc/">Arduino</a>. I knew about it. It used an unfamiliar word "<a href="http://en.wikipedia.org/wiki/Microcontroller">microcontroller</a>". And usually robots were involved, and I am not into robots :) I ignored it; not any more. Here is my story so far.<br />
+<a name='more'></a><h3>
+The Problem</h3>
+Recently, I decided to look into a way to trigger my photo camera when a drop of water breaks a (laser?) beam. Or - <a href="http://strobist.blogspot.com/2009/03/building-better-mousetrap.html">capture a mouse in flight</a>. Or a bursting balloon. Or a growing flower. While researching this problem, I kept <a href="http://delicious.com/leonid/electronics">bookmarking</a> (on <a href="http://delicious.com/">delicious</a>, of course) various sites. That is why I know <i>when</i> it brought me face-to-face with Arduino. It started on April 21st, 2010.<br />
+I found two commercial devices designed for automating&nbsp;photography&nbsp; I saw them mentioned in photography books (for instance, in an excellent <a href="http://www.amazon.com/Mastering-Canon-EOS-Flash-Photography/dp/193395244X/">Mastering Canon EOS Flash Photography</a> by NK Guy). One is called <a href="http://www.cognisys-inc.com/">Stop Shop</a>, and it costs <a href="http://www.cognisys-inc.com/catalog/product_info.php?products_id=32">$300</a> (without sensors). The other one is called <a href="http://www.universaltimer.com/">Universal Photo Timer</a>, and it costs <a href="http://www.universaltimer.com/buy_now.html#UPT_KIT1A">$165</a> (again, without sensors). (Later, I became aware of a <a href="https://bmumford.securewebsites.com/OrderCamSecure.html">$325</a> <a href="http://www.bmumford.com/photo/camctlr.html">Time Machine</a> and Kapture Group's <a href="http://www.kapturegroup.com/main_htmls/toolbox.html">Toolbox</a> that starts at $2,095!)<br />
+That seemed to me to be too much for the few times I might use it. So I decided to find out what would it take to interface some sensors and triggers to a computer somehow, and just do it myself.<br />
+For a time, I though of connecting a sensor instead of a mouse button. I'd need to convert an analog signal from the sensor to digital ("yes" or "no") with a <a href="http://home.cogeco.ca/~rpaisley4/ATDetIR.html">comparator</a>, and read the mouse events in the computer... All this is doable, but not elegant nor flexible.<br />
+Then, I found <a href="http://www.phidgets.com/">Phidgets</a>, who sell I/O boards and sensors that connect to them. They enjoy good reputation for quality-built products. Their basic I/O board costs <a href="http://www.phidgets.com/products.php?category=0&amp;product_id=1018">$80</a>, which is still a little too much, but I was almost ready to go for it.<br />
+And then I did a Google search for "I/O board", and the first two links were to Arduino. At first, I did not understand why. But then (on April 27th, 2010) I realized that Arduino <i>is</i> an extendable I/O board with a&nbsp;micro-controller&nbsp; And on May 4th, a very trustworthy source (<a href="http://www.dansdata.com/">Dan's Data</a>) published the pro-micro-controller&nbsp;<a href="http://www.dansdata.com/gz104.htm">piece</a>...<br />
+<h3>
+Interfacing</h3>
+Arduino provides analog-to-digital converters (on the&nbsp;micro-controller&nbsp;chip itself), so there is no need for comparators: comparison with the threshold is done in software! Of course, there are digital inputs also, so buttons can be read directly in software.<br />
+Digital-to-analog converters are also provided, as are digital outputs. LEDs can be made to blink (and their brightness controlled). Stepper motors can be made to turn and relays to close.<br />
+Arduino is an I/O board: it facilitates interfacing of sensors and effectors to a computer. But the devices are not connected directly (through memory-mapped ports and such). Instead, computer is interfaced (through a USB port) with the&nbsp;micro-controller&nbsp;on the Arduino board. This&nbsp;micro-controller&nbsp; in turn, is interfaced with the sensors etc. This roundabout way of interfacing means that for a computer to be able to talk to the sensors and effectors, a program ("a sketch") has to be uploaded into the&nbsp;micro-controller.<br />
+One way to write this program would be to define commands using which the computer would read the sensors and trigger the effectors. With this approach, the computer is running a tight poll loop, wasting resources. Also, since communications channel between the computer and the Arduino board is relatively slow (serial over USB), the polling cycle may be too long.<br />
+An alternative way is to do polling on the&nbsp;micro-controller&nbsp;itself, and only send notifications of changes to the computer. This approach saves both resources of the computer and the bandwidth of the connection. It is the approach taken by the Firmata <a href="http://firmata.org/wiki/Main_Page">project</a> and its <a href="http://firmata.org/wiki/Protocol">protocol</a>.<br />
+Surprisingly, there is no standard Java binding for Firmata (as far as I know). I did not like the sample <a href="http://www.arduino.cc/playground/uploads/Interfacing/Arduino.java.txt">floating around</a>: it is, in my opinion, insufficiently object-oriented and unnecessarily tied to Processing. So, I did the usual: wrote my own Java <a href="https://github.com/dubinsky/podval-firmata">binding for Firmata</a>.<br />
+<b>Note:</b> Some <a href="http://www.robotroom.com/Comparator.html">say</a> that if the comparator is used together with the&nbsp;micro-controller&nbsp;it is "only interrupted when the digital signal changes", and does not need "to spend most of its time reading the phototransistor's voltage in order to detect a passing line or mark", but I do not yet understand how that works :( Maybe it is time to read some documentation on the&nbsp;micro-controller&nbsp;used by Arduino...<br />
+<h3>
+Embeddability</h3>
+Since the board has a&nbsp;micro-controller&nbsp; it is possible to program it so that the project behaves as designed without the connection to the computer. Instead of the specialized schematics of the earlier days of electronics, a general-purpose device is given its purpose through firmware. This way, modifications are much cheaper and easier.<br />
+Of course, it would be nice to be able to program an embedded board in Java. Indeed, single-board computers that run Linux and Java are available - for instance, <a href="http://www.phidgets.com/products.php?category=0&amp;product_id=1070">this one</a> from Phidgets is very nice. It costs $265. Also, there is <a href="http://beagleboard.org/">BeagleBoard</a> for $150. Arduino board, on the other hand, has to be programmed in single-threaded simplified C++. But it costs $30. <br />
+And if embedding an $30 board in a project is not feasible, there are cheaper Arduino boards specifically designed to be embedded. Also, there are ways to build an Arduino-equivalent board (with some space for expansion) for <a href="http://blog.makezine.com/archive/2010/05/how-to_perfboard_hackduino.html">$8</a>!<br />
+<h3>
+Connectivity</h3>
+Contemporary&nbsp;micro-controller-based devices are also very connectable.<br />
+It is possible to connect an Arduino board to an Ethernet network.<br />
+Bluetooth connectivity is available. Some robotics projects use an Android phone as part of the robot, and use Bluetooth as connection mechanism. (<a href="http://blog.makezine.com/archive/2010/05/cellbot_runs_on_internal_battery.html">Others</a> use the standard cable for data transfer <i>and power :)</i>)<br />
+There is also a very appealing radio module: XBee, a <a href="http://en.wikipedia.org/wiki/ZigBee">ZigBee</a> implementation. This relatively cheap device helps connect Arduinos to one another, and to the main computer. Or - to <a href="http://www.ladyada.net/make/xbee/arduino.html">remotely program</a> an embedded board. Since XBee itself has a&nbsp;micro-controller&nbsp;on chip, in <a href="http://www.ladyada.net/make/tweetawatt/">some</a> cases, even an Arduino is not required!<br />
+<h3>
+Photo Triggers</h3>
+Of course, after I realized that Arduino can be used to trigger my camera, I found an article from the (excellent) <a href="http://makezine.com/">Make magazine</a> that describes such a device. I subscribe to Make, so I have that issue. And I even have bookmarked the article when I first read it!<br />
+Here is a <i>selection</i> of photo triggers, timers and intervalometers using Arduino:<br />
+<br />
+<ul>
+<li><a href="http://photocritic.org/camera-laser-trigger/">Laser trigger</a> from <a href="http://photocritic.org/">Photocritic.org</a></li>
+<li>  <a href="http://openmoco.org/node/88">Arduino Intervalometer</a> from OpenMoco.org (Open Source Photographic Motion-Control)</li>
+<li><a href="http://www.glacialwanderer.com/hobbyrobotics/?p=325">Camera Axe</a> from <a href="http://www.glacialwanderer.com/hobbyrobotics/">Hobby Robotics</a></li>
+<li>  <a href="http://www.mindspring.com/~tom2000/Projects/AI-1_Remote/AI-1_Remote.html">All-in-One Remote</a>  <a href="http://controlyourcamera.blogspot.com/2010/01/infrared-controlled-timelapse.html">Infrared controlled timelapse</a> photography with Canon DSLR</li>
+<li><a href="http://wordpress.bolanski.com/?p=9">Timelapse Remote Control</a></li>
+<li>  <a href="http://blog.makezine.com/archive/2010/09/photoduino_a_camera-controlling_ard.html">Photoduino</a></li>
+</ul>
+<br />
+An interesting text on <a href="http://www.diyhappy.com/building-camera-triggers/">remote triggers</a> (<a href="https://docs.google.com/viewer?url=http%3A%2F%2Fmedia.wiley.com%2Fproduct_data%2Fexcerpt%2F19%2F07645965%2F0764596519.pdf">pdf</a>).<br />
+<h3>
+General Electronics Books and Resources</h3>
+Although a lot of circuitry that was necessary previously is supplanted by the Arduino board, some interfacing issues remain, and basic knowledge of electronics is unavoidable. I mean questions like those:<br />
+<ul>
+<li>How do you calculate the <a href="http://led.linear1.org/1led.wiz">value</a> of the <a href="http://led.linear1.org/why-do-i-need-a-resistor-with-an-led/">current-limiting</a> <a href="http://www.doctronics.co.uk/resistor.htm">resistor</a> for an LED?</li>
+<li>When do you need a <a href="http://www.sparkfun.com/tutorials/218">pull-up resistor</a> and how big?</li>
+<li>When do you use an <a href="http://en.wikipedia.org/wiki/Opto-isolator">optoisolator</a> and how?</li>
+<li>What can you turn on directly? When a transistor is required? A relay?</li>
+</ul>
+I found some books that can help.<br />
+<br />
+<div style="clear: left;">
+<a href="http://www.amazon.com/MAKE-Electronics-Learning-Through-Discovery/dp/0596153740/" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" height="200" src="http://ecx.images-amazon.com/images/I/51Bmzqec6ZL.jpg" /></a><a href="http://www.amazon.com/MAKE-Electronics-Learning-Through-Discovery/dp/0596153740/">MAKE: Electronics: Learning Through Discovery</a> by Charles Platt.  Excellent introductory book. </div>
+<div style="clear: left;">
+<a href="http://www.amazon.com/Practical-Electronics-Inventors-Paul-Scherz/dp/0071452818/" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" height="200" src="http://ecx.images-amazon.com/images/I/31UHZq-JxRL.jpg" /></a> <a href="http://www.amazon.com/Practical-Electronics-Inventors-Paul-Scherz/dp/0071452818/"> Practical Electronics for Inventors</a> by Paul Scherz.  Big. Uses water analogies too much ;)  Seems to have the information, though. <a href="http://www.amazon.com/Practical-Electronics-Inventors-Paul-Scherz/dp/0071771336/">Third edition</a> is coming out in January 2013.</div>
+<div style="clear: left;">
+<a href="http://www.amazon.com/Getting-Started-Electronics-Forrest-Mims/dp/0945053282/" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" height="200" src="http://ecx.images-amazon.com/images/I/51Y29Ecr6DL.jpg" /></a><a href="http://www.amazon.com/Getting-Started-Electronics-Forrest-Mims/dp/0945053282/"> Getting Started in Electronics</a> (and <a href="http://www.amazon.com/s/ref=ntt_athr_dp_sr_1?_encoding=UTF8&amp;sort=relevancerank&amp;search-alias=books&amp;field-author=Forrest%20Mims">others</a>) by Forrest M. Mims III.  A little <i>too</i> short and elementary, I think.  Some like it, some don't. </div>
+<br />
+<h3 style="clear: left;">
+<span style="font-size: small; font-weight: normal;">There are also on-line sites worth looking into, for instance:&nbsp;</span><a href="http://www.electronics-tutorials.ws/" style="font-size: medium; font-weight: normal;">http://www.electronics-tutorials.ws/</a><span style="font-size: small; font-weight: normal;">. Lady Ada (Limor Fried) of&nbsp;</span><a href="http://www.adafruit.com/" style="font-size: medium; font-weight: normal;">AdaFruit</a><span style="font-size: small; font-weight: normal;">&nbsp;has a lot of&nbsp;</span><a href="http://www.adafruit.com/index.php?main_page=tutorials" style="font-size: medium; font-weight: normal;">information on her site</a><span style="font-size: small; font-weight: normal;">, and&nbsp;</span><a href="http://www.sparkfun.com/tutorials" style="font-size: medium; font-weight: normal;">so does</a><span style="font-size: small; font-weight: normal;">&nbsp;another Open-Source Hardware enterprise -&nbsp;</span><a href="http://www.sparkfun.com/" style="font-size: medium; font-weight: normal;">SparkFun</a><span style="font-size: small;"><span style="font-weight: normal;">.</span></span></h3>
+<h3>
+<span style="font-size: large;">Arduino Books</span></h3>
+<span style="font-size: small; font-weight: normal;">There are some Arduino-sppecific books. More are coming out. I found some good ones.</span><br />
+<br />
+<div style="clear: left;">
+<a href="http://www.amazon.com/Getting-Started-Arduino-Make-Projects/dp/0596155514/" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" height="200" src="http://ecx.images-amazon.com/images/I/51oiBms59EL.jpg" width="129" /></a><a href="http://www.amazon.com/Getting-Started-Arduino-Make-Projects/dp/0596155514/">Getting Started with Arduino</a> by Massimo Banzi.  Very introductory, but nice and sweet. Written by the originator of the whole Arduino fenomenon. </div>
+<div style="clear: left;">
+<a href="http://www.amazon.com/Making-Things-Talk-Practical-Connecting/dp/0596510519/" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" height="200" src="http://ecx.images-amazon.com/images/I/51so0SeGv4L.jpg" width="163" /></a> <a href="http://www.amazon.com/Making-Things-Talk-Sensors-Networks/dp/1449392431/">Making Things Talk: Practical Methods for Connecting Physical Objects</a> by Tom Igoe.  Connectivity is the topic of this book, which is very good. </div>
+<div style="clear: left;">
+<a href="http://ecx.images-amazon.com/images/I/51WWniNaQcL.jpg" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" height="200" src="http://ecx.images-amazon.com/images/I/51WWniNaQcL.jpg" width="161" /></a>  <a href="http://www.amazon.com/Practical-Arduino-Projects-Hardware-Technology/dp/1430224770/">Practical Arduino: Cool Projects for Open Source Hardware</a> by Jonathan Oxer and Hugh Blemings.  Skim the book even if a particular project does not appeal to you: they introduce general ideas, libraries and techniques in-line! </div>
+<div style="clear: left;">
+<a href="http://ecx.images-amazon.com/images/I/410cr4qhnfL.jpg" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" height="200" src="http://ecx.images-amazon.com/images/I/410cr4qhnfL.jpg" width="151" /></a><a href="http://www.amazon.com/Programming-Interactivity-Designers-Processing-Openframeworks/dp/0596154143/">Programming Interactivity: A Designer's Guide to Processing, Arduino, and Openframeworks</a> by Joshua J. Noble.  Some people like it. I did not like it at all and returned it. </div>
+<div style="clear: left;">
+<a href="http://www.amazon.com/Arduino-Cookbook-Oreilly-Cookbooks-Margolis/dp/0596802471/" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" height="200" src="http://ecx.images-amazon.com/images/I/51XxuLGcPCL.jpg" width="152" /></a> <a href="http://www.amazon.com/Arduino-Cookbook-Oreilly-Cookbooks-Margolis/dp/0596802471/">Arduino Cookbook</a> by Michael Margolis.</div>
+<div style="clear: left;">
+<a href="http://www.amazon.com/Building-Wireless-Sensor-Networks-Processing/dp/0596807732" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" height="200" src="http://ecx.images-amazon.com/images/I/51mnKFi%2BAiL.jpg" width="152" /></a> <a href="http://www.amazon.com/Building-Wireless-Sensor-Networks-Processing/dp/0596807732">Building Wireless Sensor Networks: with ZigBee, XBee, Arduino, and Processing</a> by Robert Faludi.  For about 10 years, I read about many O'Reilly books that they are sloppily edited, uncharacteristically for O'Reilly. I think it is time to admit that sloppy editing *is* characteristic for O'Reilly :) This one also suffers from sloppy editing, bad structuring and condescending jokes. Nevertheless, there is enough crucial information in the book to justify both the price and the unpleasantness. Just do not expect to enjoy the process of absorbing the information :)  </div>
+<h3 style="clear: left;">
+Where to Buy</h3>
+There many suppliers of electronics parts. The biggest and most popular are: <a href="http://www.digikey.com/">DigiKey</a>, <a href="http://www.mouser.com/">Mouser</a>, <a href="http://www.jameco.com/">Jameco</a>, <a href="http://www.newark.com/">Newark</a>. So big and popular they are, in fact, that there are <a href="http://blog.makezine.com/archive/2010/05/how-to_sort_by_price_on_digikey.html">tools</a> that help you find cheapest part when it is made by multiple manufacturers!<br />
+There are quite a few places that supply parts for Arduino (and similar) Open-Source Hardware designs. For instance: <a href="http://www.sparkfun.com/commerce/categories.php">SparkFun Electronics</a>, <a href="http://www.adafruit.com/">AdaFruit Industries</a>, <a href="http://www.liquidware.com/">Liquidware</a>. 

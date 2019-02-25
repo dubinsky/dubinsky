@@ -1,0 +1,396 @@
+---
+layout: post
+title: 'Yubikey: 2-factor authentication (U2F, OATH and OTP) and SSH'
+date: '2015-01-14T20:15:00.000-05:00'
+author: Leonid Dubinsky
+tags:
+- authentication
+- life in the cloud
+modified_time: '2018-11-11T03:44:06.602-05:00'
+blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-3229372978474069876
+blogger_orig_url: https://blog.dub.podval.org/2015/01/yubikey-neo-2-factor-authentication-u2f.html
+---
+
+<h2>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Why Yubikey</span></h2>
+<div style="line-height: 1.15; margin-bottom: 0pt; margin-top: 10pt;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">I've been using 2-factor authentication with my Google account for a few years: when logging in, in addition to my password, I need to enter a code that an application on my phone displays.</span></div>
+<div style="line-height: 1.15; margin-bottom: 0pt; margin-top: 10pt;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Recently Google introduced an alternative to the codes (for Chrome users): a Yubikey USB token that supports <a href="http://fidoalliance.org/adoption/video/yubico-fido-alliance-universal-2nd-factor-u2f-demonstration">U2F</a> - Universal 2nd Factor - protocol. That sounded cool, and I decided to get me one :)</span><br />
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">There is no new information in this post; everything is already available on the Internet - and probably in more popular and easier to find places :) &nbsp;Consider this as a note to self - so that I know what to do next time :)</span><br />
+<a name='more'></a></div>
+<div style="line-height: 1.15; margin-bottom: 0pt; margin-top: 10pt;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><a href="https://www.yubico.com/">Yubico</a> has different tokens, some of which support U2F, but <a href="http://www.amazon.com/Yubico-Y-072-YubiKey-NEO/dp/B00LX8KZZ8/">Yubikey Neo</a> supports everything other tokens do - plus NFC, so it can be used with the smartphones (if they are <a href="https://www.yubico.com/2014/09/neo-work-iphone-6-nfc/">not from Apple</a> :)).</span></div>
+<div style="line-height: 1.15; margin-bottom: 0pt; margin-top: 10pt;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Yubikey Neo is also a SmartCard, which comes with OATH and GPG applets&nbsp;<span style="line-height: 18.3999996185303px;">installed</span><span style="line-height: 1.15;">, and seems to allow applet installation. This is important, since firmware on Yubico tokens is not upgradeable, but on Yubikey Neo new functionality can be deployed via applets. Hopefully, that means that I won't have to replace the $50 Yubikey Neo every time Yubico releases new firmware :)</span></span><br />
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><span style="line-height: 1.15;"><br /></span></span>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Recently, I bought myself a Yubikey 4C, which doesn't have NFC, but it plugs directly into my phone's USB-C port, so that's ok.</span></div>
+<div dir="ltr" style="margin-bottom: 0pt; margin-top: 0pt;">
+<h3>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">udev</span></h3>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">It seems that recent Linux releases recognize the token out of the box, but custom udev rules are needed to allow non-root users accessing the USB device representing the YubiKey (which is needed to use the smart-card functionality).</span><br />
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">On current Fedora releases, you need to install package "ykpers" (or "yubikey-personalization-gui" that drags it in); it puts appropriate udev rules in /lib/udev/rules.d/69-yubikey.rules.&nbsp;</span><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Reboot or force udev daemon to reload the rules in some other way.</span><br />
+<div>
+<h3>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Enabling yubikey features</span></h3>
+</div>
+<div>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Not all features are enabled initially; to turn the Yubikey into “OTP/U2F/CCID composite device” issue command (from the&nbsp;</span><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">“ykpers” package that you already installed</span><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">):</span></div>
+</div>
+<div dir="ltr" style="margin-bottom: 0pt; margin-top: 0pt;">
+<br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp; $ ykpersonalize -m6</span><br />
+<br />
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">(Adding 80 to the mode activates an “eject flag” that I do not think I need.)</span><br />
+<br />
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; line-height: 1.15;">U2F is currently far from being universally supported, so for different sites different approaches to security enhancements have to be used.</span></div>
+<h2 style="line-height: 1.15; margin-bottom: 0pt; margin-top: 10pt;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Yubikey Authenticator</span></h2>
+<div style="line-height: 1.15; margin-bottom: 0pt; margin-top: 10pt;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Yubikey provides two "slots", both of which can be used for OATH credentials. Length of the tap on the token determines which one the user intends. Although convenient - the user doesn't need to copy codes from the phone - this approach is limited to 2 distinct OATH credentials (also, varying-length taps are weird :)).</span></div>
+<div style="line-height: 1.15; margin-bottom: 0pt; margin-top: 10pt;">
+<span style="line-height: 1.15;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">OATH applet installed on Yubikey Neo can be used to store many more than 2 credentials.</span></span></div>
+<div style="line-height: 1.15; margin-bottom: 0pt; margin-top: 10pt;">
+<span style="line-height: 1.15;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">To use it, standard Google Authenticator application needs to be replaced by Yubikey Authenticator. Just like the Google's one, it shows codes that the user has to enter when logging into a site, but unlike Google one, nothing is stored on the phone: Yubikey Neo has to be tapped to the phone to see the codes (or add credentials). Yubikey 4C needs to be plugged into the phone, since it doesn't support NFC. (Direct plugging of Yubikey wasn't supported on early versions of the Yubikey Authenticator; it is now.)</span></span></div>
+<div style="line-height: 1.15; margin-bottom: 0pt; margin-top: 10pt;">
+<span style="line-height: 1.15;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">2-factor authentication of this nature can be used with sites that support it but do not (yet) support U2F - which used to include, for instance, GitHub and WordPress (it seems that Github does support U2F now).</span></span><br />
+<span style="line-height: 1.15;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></span>
+<span style="line-height: 1.15;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Inconvenience of entering codes manually can theoretically be alleviated by the <a href="https://github.com/Yubico/yubioath-desktop">yubioath-desktop</a> application, which in practice didn't work for me.</span></span></div>
+<h2 style="line-height: 1.15; margin-bottom: 0pt; margin-top: 10pt;">
+<span style="line-height: 1.15;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">LastPass</span></span></h2>
+<div>
+<span style="line-height: 1.15;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></span></div>
+<div>
+<span style="line-height: 1.15;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">For sites that do not support U2F or codes-based 2-factor authentication, the only line of defence is the password, so it needs to be strong - which means, long, weird, unique - and hard to remember.</span></span></div>
+<div>
+<span style="line-height: 1.15;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></span></div>
+<div>
+<span style="line-height: 1.15;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">While we are waiting for U2F to become universal so that we can go back to having the same short and easy to remember password on all the sites, strong passwords are only practical if you use a password manager - a service that stores your passwords, detects when you are logging into a site it knows about, and supplies the password.</span></span></div>
+<div>
+<span style="line-height: 1.15;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></span></div>
+<div>
+<span style="line-height: 1.15;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">I chose one such password manager - <a href="https://www.google.com/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;cad=rja&amp;uact=8&amp;ved=0CB4QFjAA&amp;url=https%3A%2F%2Flastpass.com%2F&amp;ei=7wq3VJ3WG47IsQT2zoHwBA&amp;usg=AFQjCNEAIh1evSHeKsHV103QuMD3qIcnNQ&amp;sig2=3K7keq2uIkd_4iCknQt9vw&amp;bvm=bv.83640239,d.cWc">LastPass</a>. I stored login information about the sites I frequent in it, drained passwords from the browser's built-in password manager and told the browser to stop collecting my passwords.</span></span></div>
+<div>
+<span style="line-height: 1.15;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></span></div>
+<div>
+<span style="line-height: 1.15;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">When all the passwords are stored in a password manager, the question arises: how secure is the password manager itself? Well, one of the reasons why I chose LastPass (in addition to raving reviews) is - it supports multiple flavors of 2-factor authentication, including the Authenticator codes - and the OTP (one-time passwords) that Yubikey Neo supports directly!</span></span></div>
+<div>
+<span style="line-height: 1.15;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></span></div>
+<div>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><span style="line-height: 1.15;">I paid for LastPass Premium to gain access to the 2-factor authentication feature ($12/year) and registered my token. No</span><span style="line-height: 1.15;">w to log into my LastPass account I need to type in my password *and* insert and tap the Yubikey Neo.</span></span></div>
+<div>
+<span style="line-height: 1.15;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></span></div>
+<div>
+<span style="line-height: 18.3999996185303px;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">LastPass allows up to three tokens to be registered for one account, to allow for the recovery in case the token is lost. One can get a (cheaper) OTP-only Yubico token for this purpose - or get Yubike Neo/4C tokens for the family members and cross-register them :)</span></span><br />
+<h2>
+<span style="line-height: 18.3999996185303px;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">SSH</span></span></h2>
+</div>
+<div>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Remaining piece of the puzzle: SSH.&nbsp;</span><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: 15px; white-space: pre-wrap;">I use SSH to log into my home server remotely. I also use it to push code into my GitHub repositories.</span><br />
+<span style="line-height: 18.3999996185303px;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">
+</span></span>
+<br />
+<div style="font-family: &quot;Times New Roman&quot;; line-height: 18.4px;">
+<span style="line-height: 18.3999996185303px;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: 15px; white-space: pre-wrap;"><br /></span></span></span></div>
+<span style="line-height: 18.3999996185303px;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">
+</span></span>
+<br />
+<div style="font-family: &quot;Times New Roman&quot;; line-height: 18.4px;">
+<span style="line-height: 18.3999996185303px;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: 15px; white-space: pre-wrap;">I to store my private SSH key on the Yubikey. </span><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: 15px; white-space: pre-wrap;">With this configuration, I do not need my private key on the machine I open SSH connection from, which increases my feeling of security. On top of that, the key can be deleted from any machine that I ssh into and then open further ssh connection from! All it takes is - add “</span><span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace; font-size: 15px; white-space: pre-wrap;">ForwardAgent yes</span><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: 15px; white-space: pre-wrap;">” in </span><span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace; font-size: 15px; white-space: pre-wrap;">~./ssh/config</span><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: 15px; white-space: pre-wrap;"> for the particular host! This is really cool!</span></span></span></div>
+<span style="line-height: 18.3999996185303px;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">
+</span></span>
+<div style="font-family: &quot;Times New Roman&quot;; line-height: 18.4px;">
+<span style="line-height: 18.3999996185303px;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: 15px; white-space: pre-wrap;"></span></span></span></div>
+<span style="line-height: 18.3999996185303px;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">
+<h2 style="font-family: &quot;Times New Roman&quot;; line-height: 18.4px;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Yubikey as a PIV Smart Card</span></h2>
+<div style="font-family: arial, helvetica, sans-serif; line-height: 18.4px;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">I do not know how did I overlook the PIV functionality of the Yubikey and decided to use GPG instead (see below), but here is the current state of the PIV support.</span><br />
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">To figure out how to set this up, I used <a href="https://ruimarinho.gitbooks.io/yubikey-handbook/content/ssh/authenticating-ssh-with-piv-and-pkcs11-client/">Yubikey Handbook</a>&nbsp;and Yubico <a href="https://developers.yubico.com/yubico-piv-tool/">documentation</a>.</span></div>
+<div style="font-family: arial, helvetica, sans-serif; line-height: 18.4px;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></div>
+<div style="font-family: arial, helvetica, sans-serif; line-height: 18.4px;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">We need the smart-card demon installed and running (as far as I can tell, it doesn't interfere with the GPG functionality any more):</span></div>
+<div style="font-family: arial, helvetica, sans-serif; line-height: 18.4px;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp; # dnf install pcsc-lite opensc yubico-piv-tool</span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp; # systemctl enable pcscd; systemctl start pcscd</span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp; $ opensc-tool -l</span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Change PIN and PUK:</span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp; $ yubico-piv-tool -a change-pin&nbsp; # from default 123456</span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp; $ yubico-piv-yool -a change-puk&nbsp; # from default 12345678</span></div>
+<div style="font-family: arial, helvetica, sans-serif; line-height: 18.4px;">
+<span style="line-height: 18.3999996185303px;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Default Management Key is:&nbsp;</span></span></span><span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace; font-size: x-small;">010203040506070801020304050607080102030405060708</span></div>
+</span></span><br />
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">(It is possible to generate the private key directly on the Yubikey:</span></div>
+</div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp; $ yubico-piv-tool -s 9a -a generate -o key.pub.pem</span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">but I prefer to do it on the outside, so that I can put the same private key onto multiple tokens, stash it somewhere etc.)</span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Generate the keypair in the current directory:</span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp; $ ssh-keygen -f key</span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Export the public key in PEM format (known to ssh-keygen as PKCS8, not PEM :)):</span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp; $ ssh-keygen -f key -e -m PKCS8 &gt; key.pub.pem</span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Import the key:</span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp; $ yubico-piv-tool -s 9a -a import-key -i key</span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Certify the key (for one year):</span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp; $ yubico-piv-tool -s 9a -a verify-pin -a selfsign-certificate -S '/CN=login@domain SSH key' -i key.pub.pem -o cert.pem</span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">If you get</span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp; error: Failed to begin pcsc transaction, rc=80100003</span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">see Temporary Detour below :)</span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Import the certificate:</span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp; $ yubico-piv-tool -s 9a -a import-certificate -i cert.pem</span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">Check status:</span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp; $ yubico-piv-tool -a status</span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Export public key from the token in OpenSSH format:</span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp; $ ssh-keygen -D /usr/lib64/opensc-pkcs11.so -e</span></div>
+<div style="line-height: 18.4px;">
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;"><br /></span>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">To use the key from the token, add to&nbsp;</span><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">~/.ssh/config (for specific hosts or globally):</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp; PKCS11Provider /usr/lib64/opensc-pkcs11.so</span><br />
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">This way, SSH agent is running, but identity isn't added to it- and so it can't be reused on machines SSHed into; to a</span><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">dd Yubikey SSH identity to SSH agent:</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp; $ ssh-add -s /usr/lib64/opensc-pkcs11.so</span><br />
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">See it:</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp; $ ssh-add -L</span><br />
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Running gpg-agent (needed for the GPG approach below) may cause problems.</span><br />
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">When Yubikey is removed and re-inserted, ssh-agent needs to be killed&nbsp;</span><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">and the key re-added for some reason. I use this alias in ~./bashrc:</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace; font-size: x-small;">alias yk='pkill ssh-agent; pkill gpg-agent; ssh-add -s /usr/lib64/opensc-pkcs11.so'</span><br />
+<span style="color: red; font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Is there a way to avoid this?</span><br />
+<span style="color: red; font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">How to hook graphical pin-entry into this flow?</span><br />
+<span style="color: red; font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">How to make the identity from the token default one?</span></div>
+<div style="line-height: 18.4px;">
+<h3>
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">Temporary Detour (no longer needed)</span></h3>
+<div>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Current version of Fedora ships with yubico-piv-tool version 1.5.0; current latest version is 1.5.2; both seem to suffer from an <a href="https://github.com/Yubico/yubico-piv-tool/issues/134">issue</a>&nbsp;that causes the tool to crash truing to sign the certificate. The issue is fixed in the trunk, but until version 1.5.3 is released and percolates down to the distribution, the workaround is to build the tool from <a href="https://github.com/Yubico/yubico-piv-tool">GIT</a>.</span></div>
+<div>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></div>
+<div>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Prerequisites (some checked by ./configure, some not):</span></div>
+<div>
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace; font-size: x-small;">&nbsp; # dnf install openssl-devel check-devel pcsc-lib-devel gengetopt help2man</span></div>
+<div>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Then, in the sources distribution:</span></div>
+<div>
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp; $ autoreconf --install</span></div>
+<div>
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp; $ ./configure</span></div>
+<div>
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp; $ make</span></div>
+<div>
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp; $ make install&nbsp; # I used the resulting tool without installing</span></div>
+<div>
+<h2>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Yubikey as a GPG Smart Card</span></h2>
+</div>
+</div>
+<span style="color: black; font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;">Yubikey has a GPG Applet that can be used to store GPG keys. It doesn’t seem to be possible to turn an existing SSH key into a GPG key, but it is </span><span style="color: black; font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;">possible to use a GPG key for SSH authentication, and that is what I decided to do.</span><br />
+<div dir="ltr" style="line-height: 1.15; margin-bottom: 0pt; margin-top: 0pt;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><span style="background-color: transparent; color: black; font-size: 15px; font-style: normal; font-variant: normal; font-weight: normal; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;"><br /></span></span></div>
+<div dir="ltr" style="line-height: 1.15; margin-bottom: 0pt; margin-top: 0pt;">
+<span style="color: black; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Since I do not use GPG for email, I did not have a GPG key. It is possible to generate the key on the Neo itself, but it is impossible to extract the key from it (for obvious reasons). I want to have a backup of the key (to stash </span></span><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: 15px; line-height: 17.25px; white-space: pre-wrap;">in a safe place</span><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: 15px; line-height: 1.15; white-space: pre-wrap;">), so I needed to generate the key in a normal way and put it on the Neo.</span></div>
+<div dir="ltr" style="line-height: 1.15; margin-bottom: 0pt; margin-top: 0pt;">
+<br />
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: 15px; line-height: 1.15; white-space: pre-wrap;"></span>
+
+<br />
+<div style="-webkit-text-stroke-width: 0px; color: black; font-family: &quot;Times New Roman&quot;; font-size: medium; font-style: normal; font-variant-caps: normal; font-variant-ligatures: normal; font-weight: 400; letter-spacing: normal; margin: 0px; orphans: 2; text-align: start; text-decoration-color: initial; text-decoration-style: initial; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px;">
+<span style="color: black; font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: 15px; line-height: 1.15; vertical-align: baseline; white-space: pre-wrap;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">There is a lot of stuff out there about the gpg-agent configuration, ssh support, sshcontrol, keygrips etc. This <a href="https://github.com/herlo/ssh-gpg-smartcard-config/blob/master/YubiKey_NEO.rst">document</a> by</span></span><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">&nbsp;<a href="https://github.com/Aricg">Aric Gardner</a></span><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: 15px; line-height: 1.15; white-space: pre-wrap;"> helped me get the things running.</span></div>
+</div>
+<div dir="ltr" style="margin-bottom: 0pt; margin-top: 0pt;">
+<h3>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Configure GPG to use agent</span></h3>
+<div style="line-height: 18.3999996185303px;">
+<span style="color: black; font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;">Make sure file </span><span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace; font-size: 15px; line-height: 17.25px; white-space: pre-wrap;">~/.gnupg/gpg.conf</span><span style="font-size: 15px; line-height: 17.25px; white-space: pre-wrap;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"> exists and contains a line </span></span><span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace; font-size: 15px; line-height: 17.25px; white-space: pre-wrap;">use-agent</span><span style="font-size: 15px; line-height: 17.25px; white-space: pre-wrap;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">.</span></span></div>
+<div style="line-height: 1.15;">
+<div style="line-height: 18.3999996185303px;">
+<span style="color: black; font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;">Make sure file </span><span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace; font-size: 15px; line-height: 17.25px; white-space: pre-wrap;">~/.gnupg/gpg-agent.conf</span><span style="font-size: 15px; line-height: 17.25px; white-space: pre-wrap;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"> exists and contains a line </span></span><span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace; font-size: 15px; line-height: 17.25px; white-space: pre-wrap;">enable-ssh-support</span><span style="font-size: 15px; line-height: 17.25px; white-space: pre-wrap;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">.</span></span></div>
+</div>
+<div style="line-height: 1.15;">
+<div style="line-height: 18.3999996185303px;">
+<span style="color: black; font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;">Make sure file </span><span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace; font-size: 15px; line-height: 17.25px; white-space: pre-wrap;">~/.gnupg/scdaemon.conf</span><span style="font-size: 15px; line-height: 17.25px; white-space: pre-wrap;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"> exists and contains a line </span></span><span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace; font-size: 15px; line-height: 17.25px; white-space: pre-wrap;">allow-admin</span><span style="font-size: 15px; line-height: 17.25px; white-space: pre-wrap;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">.</span></span></div>
+</div>
+<div style="line-height: 1.15;">
+<h3>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">
+Ensure GPG agent starts</span></h3>
+</div>
+</div>
+<div dir="ltr" style="margin-bottom: 0pt; margin-top: 0pt;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: 15px; line-height: 17.25px; white-space: pre-wrap;">Put into .bashrc:</span><br />
+<br />
+<div style="line-height: 1.15;">
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;"><span style="font-size: 15px; white-space: pre-wrap;">if [ ! -f /tmp/gpg-agent.env ]; then
+    killall gpg-agent;
+    eval $(gpg-agent --daemon --enable-ssh-support &gt; /tmp/gpg-agent.env);
+fi
+. /tmp/gpg-agent.env</span></span></div>
+</div>
+<div dir="ltr" style="line-height: 1.15; margin-bottom: 0pt; margin-top: 0pt;">
+<div style="line-height: 18.3999996185303px;">
+<h3 style="line-height: normal;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Generate Key and Subkeys</span></h3>
+<div dir="ltr" style="line-height: 1.15; margin-bottom: 0pt; margin-top: 0pt;">
+<span style="color: black; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">When generating the key, I did not add a photo to it, nor did I publish it to the key servers. People who actually use GPG would know how to do all that :)</span></span></div>
+<div dir="ltr" style="line-height: 1.15; margin-bottom: 0pt; margin-top: 0pt;">
+<br /></div>
+<div dir="ltr" style="line-height: 1.15; margin-bottom: 0pt; margin-top: 0pt;">
+<span style="color: black; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">To generate the key:</span></span></div>
+<div style="line-height: normal;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></div>
+<div dir="ltr" style="line-height: 1.15; margin-bottom: 0pt; margin-top: 0pt;">
+<span style="color: black; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;"><span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">  $ gpg2 --gen-key</span></span></div>
+<div style="line-height: normal;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></div>
+<div dir="ltr" style="line-height: 1.15; margin-bottom: 0pt; margin-top: 0pt;">
+<span style="color: black; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">I picked “RSA and RSA (default)”, 4096 bits long key, key does not expire.</span></span></div>
+<div style="line-height: normal;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></div>
+<div dir="ltr" style="line-height: 1.15; margin-bottom: 0pt; margin-top: 0pt;">
+<span style="color: black; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">To create a backup of the generated key XXXXXX:</span></span></div>
+<div style="line-height: normal;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></div>
+<div dir="ltr" style="line-height: 1.15; margin-bottom: 0pt; margin-top: 0pt;">
+<span style="color: black; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;"><span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">  $ gpg2 --armor --export XXXXXX &gt; XXXXXX-master.txt</span></span></div>
+<div style="line-height: normal;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></div>
+<div dir="ltr" style="line-height: 1.15; margin-bottom: 0pt; margin-top: 0pt;">
+<span style="color: black; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">To generate subkeys:</span></span></div>
+<div style="line-height: normal;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></div>
+<div dir="ltr" style="line-height: 1.15; margin-bottom: 0pt; margin-top: 0pt;">
+<span style="color: black; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;"><span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">  $ gpg2 --expert --key-edit XXXXXX</span></span></div>
+<div style="line-height: normal;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></div>
+<div dir="ltr" style="line-height: 1.15; margin-bottom: 0pt; margin-top: 0pt;">
+<span style="color: black; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">In gpg2, I issued command “</span><span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">adkey</span><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">”, chose “RSA (set your own capabilities)” and 2048 bits long key (Neo can't store keys longer than that).</span></span></div>
+<div style="line-height: normal;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></div>
+<div dir="ltr" style="line-height: 1.15; margin-bottom: 0pt; margin-top: 0pt;">
+<span style="color: black; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Although only authentication key is needed for the SSH logins, I generated subkeys of each flavor: signing, encryption and authentication.</span></span></div>
+<div style="line-height: normal;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></div>
+<div dir="ltr" style="line-height: 1.15; margin-bottom: 0pt; margin-top: 0pt;">
+<span style="color: black; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">To create backups:</span></span></div>
+<div dir="ltr" style="line-height: normal; margin-bottom: 0pt; margin-top: 0pt;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><span style="line-height: 1.15;"><span style="color: #666666; font-size: 16px; font-weight: bold; vertical-align: baseline; white-space: pre-wrap;">  </span></span><span style="font-size: 15px; line-height: 17.25px; white-space: pre-wrap;">$</span><span style="line-height: 18.3999996185303px; white-space: pre-wrap;"><span style="color: #666666;"><b> </b></span></span><span style="font-size: 15px; vertical-align: baseline; white-space: pre-wrap;">gpg2 --armor --export XXXXXX &gt; XXXXXX-master-with-subkeys.txt</span></span></div>
+<div dir="ltr" style="line-height: 1.15; margin-bottom: 0pt; margin-top: 0pt;">
+<span style="color: black; font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;">  $ gpg2 --armor --export-secret-keys XXXXXX &gt; XXXXXX-secret-keys.txt</span></div>
+<div dir="ltr" style="line-height: 1.15; margin-bottom: 0pt; margin-top: 0pt;">
+<span style="color: black; font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;">  $ gpg2 --armor --export-secret-subkeys XXXXXX &gt; XXXXXX-secret-subkeys.txt</span></div>
+<div style="line-height: normal;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></div>
+<div dir="ltr" style="line-height: 1.15; margin-bottom: 0pt; margin-top: 0pt;">
+<span style="color: black; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">I am sure that not all the backups are needed, but so far did not learn enough about the subject to figure out which are not ;)</span></span></div>
+<h3 style="line-height: normal;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Set Up Yubikey GPG SmartCard</span></h3>
+<div dir="ltr" style="line-height: 1.15; margin-bottom: 0pt; margin-top: 0pt;">
+<span style="color: black; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">To set up the GPG SmartCard on the Neo, I did:</span></span></div>
+<div style="line-height: normal;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></div>
+<div dir="ltr" style="line-height: 1.15; margin-bottom: 0pt; margin-top: 0pt;">
+<span style="color: black; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;"><span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">  $ gpg2 --card-edit</span></span></div>
+<div style="line-height: normal;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></div>
+<div dir="ltr" style="line-height: 1.15; margin-bottom: 0pt; margin-top: 0pt;">
+<span style="color: black; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Enable admin commands with “</span><span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">admin</span><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">”; use “</span><span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">passwd</span><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">” to change the Admin PIN from default </span><span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">12345678</span><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"> and PIN from default </span><span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">123456</span><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">; use “</span><span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">name</span><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">”, “</span><span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">lang</span><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">”, “</span><span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">sex</span><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">” and “</span><span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">login</span><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">” to set the card’s parameters.</span></span></div>
+<h3 style="line-height: normal;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Move Keys onto the Card</span></h3>
+<div dir="ltr" style="line-height: 1.15; margin-bottom: 0pt; margin-top: 0pt;">
+<span style="color: black; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;"><span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">  $ gpg2 --expert --key-edit XXXXXX</span></span></div>
+<div style="line-height: normal;">
+<br /></div>
+Switch to secret keys with the “toggle” command.<br />
+Select the key to move to the card using “key n” commands (toggles the marker on subkey n).<br />
+Use “keytocard” command to move the marked key into appropriate slot on the card.<br />
+<h3>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">It Works!</span></h3>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">When the smart card is connected, “ssh-add -L” should output the public key corresponding to the authentication key from the card (no need to insert any "keygrips" into the sshcontrol file :)). It needs to be listed on the machine you are logging into :)</span><br />
+<div style="line-height: 1.38; margin-bottom: 0pt; margin-top: 0pt;">
+<span style="background-color: transparent; color: black; font-style: normal; font-variant: normal; font-weight: 400; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></span></div>
+<div style="line-height: 1.38; margin-bottom: 0pt; margin-top: 0pt;">
+<span style="background-color: transparent; color: black; font-style: normal; font-variant: normal; font-weight: 400; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">I never had to do this before, but on fc28 in order for the ssh key to work, I have to do:</span></span></div>
+<span style="background-color: transparent; color: black; font-style: normal; font-variant: normal; font-weight: 400; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;"><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"> &nbsp;&nbsp;&nbsp;&nbsp;$ gpg-connect-agent updatestartuptty /bye</span></span><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><span style="background-color: transparent; color: black; font-style: normal; font-variant: normal; font-weight: 400; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;">(see </span><a href="https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=835394" style="text-decoration: none;"><span style="background-color: transparent; color: #1155cc; font-style: normal; font-variant: normal; font-weight: 400; text-decoration: underline; vertical-align: baseline; white-space: pre-wrap;">https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=835394</span></a><span style="background-color: transparent; color: black; font-style: normal; font-variant: normal; font-weight: 400; text-decoration: none; vertical-align: baseline; white-space: pre-wrap;">)</span></span><br />
+<br />
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><span id="docs-internal-guid-12484132-ddfb-7956-a84d-ae0787fafbea"></span>If the public key is published somewhere, GPG applet on the token can be configured with the URL so that it can fetch the key. On a machine where GPG doesn't know about my the key, I used "fetch" in gpg2 --card-edit.</span><br />
+<h2>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Obsolete</span></h2>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Previously, additional steps were required to set things up. In recent releases, some of them are no longer needed - but I preserved previous instructions here just in case :)</span></div>
+<h3 style="line-height: 18.3999996185303px;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">udev</span></h3>
+<div>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Previously, I had to manually install the following udev rule:</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp; &nbsp;ACTION=="add|change" \</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp; &nbsp;SUBSYSTEM=="usb", \</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp; &nbsp;ATTRS{idVendor}=="1050", \</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp;ATTRS{idProduct}=="0010|0110|0111|0113|0114|0115|0116|0120|0401|0402|0403|0405|0406|0407|0410", \</span><br />
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;">&nbsp; &nbsp;TAG+="uaccess"</span><br />
+<div>
+<br /></div>
+<div>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Above rule works for Fedora, but not for Debian-based Raspbian running on my Raspberry Pi.&nbsp;</span><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">There, instead of TAG, I use MODE:="0666". It is ugly, and only works with "final" assignment (:=), but it works...</span><br />
+<h3>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Install GnuPG2</span></h3>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Both version 1 (gpg) and version 2 (gpg2) of the Gnu Privacy Guard can be used for the key generation, but only gpg2 is capable of writing the keys to the Neo. Previously, I had to make sure that the following packages are installed: gnupg2, gnupg2-smime (contains scdaemon, which is needed) and pinentry-gtk (GTK UI for PIN entry) (on Raspbian, I had to install packages gnupg2, gnupg-agent and scdaemon).</span><br />
+<h3>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">Uninstall pcsc-lite</span></h3>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">There is some kind of a race for the card access between GPG and pcsc-lite (which is installed by default). Previously, I removed pcsc-lite, pcsc-lite-libs, pcsc-lite-ccid, pcsc-perl and dependent packages: opensc, coolkey, openconnect, NetworkManager-openconnect, NetworkManager-openconnect-gnome. I hope this gets resolved soon, and package uninstallation won't be necessary.</span><br />
+<h3>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">D</span><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">isable Gnome keyring agent</span></h3>
+<div dir="ltr" style="line-height: 1.15; margin-bottom: 0pt; margin-top: 0pt;">
+<div dir="ltr" style="line-height: normal; margin-bottom: 0pt; margin-top: 0pt;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">O</span><span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;">n Gnome desktop (Fedora, not Raspberry Pi) gnome-keyring-daemon used to interfere with the gpg-agent and had to be disabled before smart-card applet on the Neo could be used:</span></div>
+</div>
+<div dir="ltr" style="margin-bottom: 0pt; margin-top: 0pt;">
+<div dir="ltr" style="margin-bottom: 0pt; margin-top: 0pt;">
+<div style="line-height: 1.15;">
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></div>
+</div>
+</div>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"></span><br />
+<div dir="ltr" style="margin-bottom: 0pt; margin-top: 0pt;">
+<div style="line-height: 1.15;">
+<span style="background-color: #f7f7f7; color: #333333; font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;">  $</span><span style="background-color: #f7f7f7; color: #333333; font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;"> </span><span style="color: black; font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;">if [[ $(gconftool-2 --get /apps/gnome-keyring/daemon-components/ssh) != "false" ]]; then</span></div>
+<div style="line-height: 1.15;">
+<span style="font-family: &quot;courier new&quot; , &quot;courier&quot; , monospace;"><span style="color: black; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gconftool-2 --type bool --set /apps/gnome-keyring/daemon-components/ssh false</span><span style="color: black; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;"><br class="kix-line-break" /></span><span style="color: black; font-size: 15px; vertical-align: baseline; white-space: pre-wrap;"> &nbsp;&nbsp;&nbsp;fi</span></span></div>
+</div>
+<span style="font-family: &quot;arial&quot; , &quot;helvetica&quot; , sans-serif;"><br /></span></div>
+</div>
+</div>
