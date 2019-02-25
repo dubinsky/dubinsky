@@ -13,20 +13,26 @@ blogger_orig_url: https://blog.dub.podval.org/2010/02/water-drops.html
 
 via [Strobist](http://draft.blogger.com/strobist.com):
 
+<a href="http://3.bp.blogspot.com/-RNHG_1HPYcY/TrFjCU0egJI/AAAAAAAACks/CAcwCp8s-QM/s320/HeinzDrop.jpg">
 <img src="http://3.bp.blogspot.com/-RNHG_1HPYcY/TrFjCU0egJI/AAAAAAAACks/CAcwCp8s-QM/s320/HeinzDrop.jpg" height="320" width="214"/>
+</a>
 
 [Heinz Maier's](http://strobist.blogspot.com/2011/11/heinz-maiers-insanely-beautiful-water.html)
 [Insanely Beautiful Water Droplets](http://www.flickr.com/photos/cymaii/sets/72157625675697795/)
 
 
+<a href="http://www.thisiscolossal.com/wp-content/uploads/2011/12/aqueous-11.jpg">
 <img src="http://www.thisiscolossal.com/wp-content/uploads/2011/12/aqueous-11.jpg" height="315" width="320"/>
+</a>
 
 [Mark Mawson's Aquous Floreau](http://markmawson.com/)
 
 
 Instructional video: [How to Photograph Water Drops](http://www.strobist.blogspot.com/2009/05/how-to-photograph-water-drops-with-one.html)
 
+<a href="http://lh5.ggpht.com/_SW7CpSW40no/S4DdpAotgfE/AAAAAAAAdNQ/zx4e6kWcVz0/s160-c/2010FebruaryWaterDrops.jpg">
 <img src="http://lh5.ggpht.com/_SW7CpSW40no/S4DdpAotgfE/AAAAAAAAdNQ/zx4e6kWcVz0/s160-c/2010FebruaryWaterDrops.jpg" height="200" width="200"/>
+</a>
 
 [Family Efforts: February 2010](http://picasaweb.google.com/leoniddubinsky/2010FebruaryWaterDrops?feat=embedwebsite)
 
