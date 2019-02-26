@@ -48,3 +48,26 @@ XML.withSAXParser(new org.ccil.cowan.tagsoup.jaxp.SAXFactoryImpl().newSAXParser(
 ```
 is all it takes! But, the object provides the scope where to put the code that configures features of the SAXFactoryImpl
 if such a need ever arises :)
+
+## Comments ##
+
+**[Pavel](https://www.blogger.com/profile/08462194502302025182)** Friday, September 24, 2010 6:43:00 AM
+
+Thanks a lot, because "Processing real world HTML as if it were XML in scala" at the 2.8.0 scala's time even don't compile :)
+
+**[sanj sahayam](https://www.blogger.com/profile/01161497777336386073)** Monday, January 23, 2012 1:51:00 AM
+
+Exactly what I was looking for! Thanks! :)
+
+**[qu1j0t3](https://www.blogger.com/profile/16041515498065869604)** Friday, April 06, 2012 9:11:00 PM
+
+Thankyou. This really helped me get a project started. And thankyou John Cowan for Tagsoup.
+
+> **[Siddhartha](https://www.blogger.com/profile/13445999321678627749)** Saturday, January 05, 2013 5:24:00 AM
+> 
+> Thank you. Very useful.
+
+  **Leonid Dubinsky** Sunday, January 06, 2013 7:48:00 PM
+
+  Thanks for you kind words!
+

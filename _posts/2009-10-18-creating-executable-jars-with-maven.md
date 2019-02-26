@@ -84,7 +84,6 @@ Here is my Assembly plugin stanza:
 ```
 
 And the assembly descriptor has the following:
-
 ```xml
 <assembly>
   <id>one-jar</id>
@@ -186,3 +185,13 @@ fixed!
 ### Interoperation with JNA ###
 
 I heard about some issues in the past, but right now One-Jar and JNA seem to work well together.
+
+## Comments ##
+
+**Anonymous** Tuesday, February 08, 2011 1:27:00 AM
+
+Hi,
+I use hudson build and need to generate a single jar.
+I tried several ways, but cannot find the classpath for the jars as they are nested due to tycho. Can you help?
+
+G

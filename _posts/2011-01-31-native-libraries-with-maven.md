@@ -119,3 +119,18 @@ to be packageable as a unit (unless it is a special plugin?). In fact, I do not 
 at least most) of the steps itself - after all, I *do* declare an *so* dependency?!
 
 Am I missing something?
+
+## Comments ##
+
+> **[venkat](https://www.blogger.com/profile/04911001746709246957)** Friday, June 29, 2012 11:39:00 PM
+> 
+> Thanks for the blog post. The native files are copied to target/libs directory. But, I don't see them in the jar file.
+> Is this expected ?
+
+  **Leonid Dubinsky** Wednesday, July 11, 2012 1:23:00 PM
+
+  Native libraries should be inside "binlib" directory in the OneJar jar.
+
+**Anonymous** Tuesday, February 26, 2013 12:01:00 PM
+
+A typo there: needs to be "argLine" instead of "argline" in surefire configuration.

@@ -138,3 +138,175 @@ dependencies change).
 For this to work when using a mirror, in-project artifacts have to be excluded from mirroring. One way to do it is:
 in the mirror definition's "mirrorOf" element, put "external:*" instead of (too inclusive) "*". (Thanks for the tip,
 anonymous commenter!)
+
+
+## Comments ##
+
+> **[tmoreira](https://www.blogger.com/profile/02746102746554973322)** Wednesday, February 22, 2012 9:12:00 AM
+>
+> Nice post! Fits like a charm on my current project.
+
+  **Leonid Dubinsky** Wednesday, February 22, 2012 3:12:00 PM
+
+  Thanks!
+
+
+> **[par](http://stackoverflow.com/users/312594/par)** Wednesday, February 22, 2012 11:41:00 PM
+>
+> Pro post. Seems interesting that tmoreira2020 and I both needed this info on the same day.
+> I found this via a stackoverflow article, you might consider reposting this in that thread as it's so useful.
+>
+> [http://stackoverflow.com/questions/364114/can-i-add-jars-to-maven-2-build-classpath-without-installing-them](http://stackoverflow.com/questions/364114/can-i-add-jars-to-maven-2-build-classpath-without-installing-them)
+
+  **Leonid Dubinsky** Thursday, February 23, 2012 12:52:00 PM
+
+  Thanks! You are right, since the post is helpful, it probably should be on stackoverflow, but the question is closed for
+  casual answers. I need to get some reputation first :)
+
+> **[vmp](https://www.blogger.com/profile/18172568217105448018)** Saturday, March 31, 2012 9:17:00 AM
+>
+> Great post, thanks! I think this is the best solution and I am using it already. Just a couple minor corrections that I
+> found with trial and fail, since I am an absolute noob in maven.
+>
+> The folder structure for groupId=x.y.z and artifactId=artefact will be x/y/z/artifact/version (the artifact folder was
+> missing from the post.
+>
+> Also, if the lib directory is at the same level with the pom.xml then the url will be file://${project.basedir}/lib
+>
+> Btw, after spending about 5 minutes to manually create the correct folder structure and produce the sha1 checksums, I
+> found a nice "trick".
+>
+> Install the artifact in the local repository using the install plugin:
+> ```
+> mvn install:install-file -Dfile=myArtifact.jar -DgroupId=com.example.group -DartifactId=myArtifact -Dversion=1.0 -Dpackaging=jar
+> ```
+> and then just go to your local repository and copy the produced files. It just reduces the risk of typos.
+>
+> Thanks!
+
+
+  **Leonid Dubinsky** Monday, April 09, 2012 12:24:00 PM
+
+  Thank you for your kind words and suggestions (which I incorporated into the post).
+
+> **[Rajiv Nair](https://www.blogger.com/profile/11026523356003215779)** Tuesday, June 12, 2012 8:46:00 PM
+> 
+> Thank you so much!! We're doing a big move to maven from ant and your solution really helps get rid of a large part of
+> my daily pains :)
+
+  **Leonid Dubinsky** Tuesday, June 26, 2012 6:42:00 PM
+
+  Thanks!
+
+
+> **[chris](https://www.blogger.com/profile/06710695481203187688)** Tuesday, June 26, 2012 6:41:00 AM
+> 
+> very nice article.....it helped me a lot.....
+
+  **Leonid Dubinsky** Tuesday, June 26, 2012 6:43:00 PM
+
+  Thanks!
+
+> **Erwin** Wednesday, September 05, 2012 5:38:00 AM
+> 
+> Went the systemPath way...until I read you blog post. Thanks!
+
+  **Leonid Dubinsky** Thursday, October 18, 2012 4:57:00 PM
+
+  Thanks! Glad it helped.
+
+> **[Răzvan Rotaru](https://www.blogger.com/profile/01144730032959489977)** Friday, September 21, 2012 9:07:00 AM
+> 
+> I'm not the first to say this, but thanks. This is exactly what I was looking for.
+
+
+  **Leonid Dubinsky** Thursday, October 18, 2012 4:58:00 PM
+
+  Thank you for your kind words!
+
+> **[nathan](http://nathan.seedoftruth.net/)** Monday, October 22, 2012 1:05:00 AM
+> 
+> Awesome! Had issues at first because I was using nested modules and had everything in the child project, however after
+> moving the repo folder and info to the parent, and adding the dependency to the child pom then it worked.
+
+  **Leonid Dubinsky** Monday, November 12, 2012 4:50:00 PM
+
+  Thanks! Glad it worked :)
+
+
+> **[Siva Prasad Reddy](https://www.blogger.com/profile/04244498738186957602)** Monday, December 10, 2012 7:10:00 AM
+>
+> Leonid Dubinsky,
+> Java community is moving ahead because of the good, passionate developers like you who shares knowledge with the community.
+>
+> Thanks for the info.
+>
+> Cheers,
+> Siva
+> www.sivalabs.in
+
+  **Leonid Dubinsky** Sunday, December 16, 2012 9:25:00 PM
+
+  Thank you for your kind words!
+
+
+> **[stef](https://www.blogger.com/profile/01286838048317579381)** Monday, December 10, 2012 7:33:00 AM
+>
+> +1 for the Nexus solution. That is what we are using.
+
+  **Leonid Dubinsky** Sunday, December 16, 2012 9:29:00 PM
+
+  As you should. Sometimes it is not practical, and then in-project repository is the way to go for the repeatable,
+  no-configuration-needed builds.
+
+
+> **Anonymous** Tuesday, December 18, 2012 8:58:00 AM
+>
+> It's not working into follwing case: if you have "mirrors" section into your settings.xml file.
+> ```xml
+> <mirrors>
+>   <mirror>
+>     <mirrorOf>*</mirrorOf>
+>     <url>some.url</url>
+>     <id>some.id</id>
+>   </mirror>
+> </mirrors>
+> ```
+
+  **[Ajay](http://www.google.com/)** Monday, April 22, 2013 2:26:00 AM
+
+  Hi, 
+  what is reason for that, if I use with mirror tag. 
+  It true that when I remove the mirros tag then it works fine.
+  But I need mirror tag as well as this soluntion.
+
+  **Anonymous** Tuesday, May 07, 2013 9:55:00 AM
+
+  Please, see my comment above about mirror and in-project repo. You can use "external:*" to avoid mirroring private repo.
+  Denis.
+
+
+> **[Jeremy](https://www.blogger.com/profile/06300558549133430072)** Sunday, December 30, 2012 4:46:00 PM
+>
+> Thanks! One additional tip if you are using the mvn install:install-file mechanism and/or if the JAR file you want to
+> use doesn't have a POM you can use the `-DgeneratePom=true` parameter. For instance I'm using db4o:
+> 
+> ```
+> mvn install:install-file -DgroupId="com.db4o" -DartifactId="db4o-all" -Dversion="8.0.249.16098" -Dfile=db4o-all-8.0.249.16098.jar -Dpackaging=jar -DgeneratePom=true
+> ```
+> 
+> Thanks for the tip on creating an in project dependency!
+
+  **Leonid Dubinsky** Sunday, December 30, 2012 11:08:00 PM
+
+  Added "generatePom" to the post. Thanks!
+
+**Anonymous** Tuesday, May 07, 2013 9:03:00 AM
+
+Also, if your company uses some kind of Maven proxy (ex. Nexus) to mirror all public repos (like central), you can
+connect it in your local maven settings.xml
+  
+http://maven.apache.org/guides/mini/guide-mirror-settings.html
+
+But be careful: in case of in-project repo you have to set mirror for `"external:*"`, not `"*"`. Otherwise maven will
+not be able to find artefacts from in-project repo.

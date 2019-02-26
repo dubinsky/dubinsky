@@ -11,5 +11,7 @@ blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-66284329302872587
 blogger_orig_url: https://blog.dub.podval.org/2014/05/best-scala-books.html
 ---
 
-"<a href="http://www.amazon.com/Programming-Scala-Comprehensive-Step-Step/dp/0981531644/">Programming in Scala: A Comprehensive Step-by-Step Guide</a>", 2nd Edition<br />Martin Odersky, Lex Spoon, Bill Venners<div>
-<br /></div>
+"[Programming in Scala: A Comprehensive Step-by-Step Guide](http://www.amazon.com/Programming-Scala-Comprehensive-Step-Step/dp/0981531644/)",
+2nd Edition, Martin Odersky, Lex Spoon, Bill Venners
+
+
