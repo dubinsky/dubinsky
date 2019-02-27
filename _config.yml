@@ -24,18 +24,24 @@ url: "http://dub.podval.org" # the base hostname & protocol for your site, e.g. 
 
 twitter_username: leoniddubinsky
 github_username:  dubinsky
+linkedin_username: leoniddubinsky
 
-# Build settings
-markdown: kramdown
-theme: minima
-plugins:
-  - jekyll-feed
-
+# for minima v3.0:
 minima:
   social_links:
     twitter: leoniddubinsky
     github: dubinsky
     linkedin: leoniddubinsky
+
+# Build settings
+markdown: kramdown
+theme: minima
+
+plugins:
+  - jekyll-mentions
+  - jekyll-avatar
+  - jekyll-feed
+  - jekyll-sitemap
 
 
 # Exclude from processing.
@@ -50,5 +56,17 @@ exclude:
   - vendor/gems/
   - vendor/ruby/
   - .idea/
+  - \*.iml
 
 timezone: America/New_York
+
+header_pages:
+  - index.md
+  - blog.md
+
+#defaults:
+#  -
+#    scope:
+#      path: "..."
+#    values:
+#      sitemap: false
