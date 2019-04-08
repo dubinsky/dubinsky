@@ -3,8 +3,7 @@ layout: post
 title: Maven in-project repository
 date: '2010-01-28T14:24:00.004-05:00'
 author: dub
-tags:
-- maven
+tags: [maven]
 modified_time: '2013-06-20T16:19:10.864-04:00'
 blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-343750537477523036
 blogger_orig_url: https://blog.dub.podval.org/2010/01/maven-in-project-repository.html

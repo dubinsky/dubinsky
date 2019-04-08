@@ -39,8 +39,8 @@ There are three XML formats that can be used: [TEI](http://www.tei-c.org/), [Doc
 [DITA](http://dita.xml.org/).
 
 For a project that uses TEI to publish Jewish texts, I tried (in 2007) to use TEI for the paper about the project, too.
-Sebastian Rahtz fixed some bugs in TEI stylesheets - the same day I reported them! But in the end, DocBook turned out to be easier
-(I didn't find Maven plugin for TEI).
+Sebastian Rahtz fixed some bugs in TEI stylesheets - the same day I reported them! But in the end, DocBook turned out
+to be easier (I didn't find Maven plugin for TEI).
 This is understandable: TEI is targeting humanities, with their "critical apparatus", "phrase structure" etc., while DocBook
 deals with publishing technical papers :)
 It is quite possible that TEI stylesheets drastically improved since then. After all, the TEI/DocBook unification paper
@@ -102,19 +102,20 @@ becoming better. For instance, since 2010 there is no need to deal with font met
 
 ### Equations: MathML with MathJax and JEuclid ###
 
-There is an XML format designed for equation - <a href="http://www.w3.org/Math/">MathML</a>. It has two flavors: presentation and content.
-Content MathML seems cleaner - but less supported :(
+There is an XML format designed for equation - [MathML](http://www.w3.org/Math/). It has two flavors: presentation and
+content. Content MathML seems cleaner - but less supported :(
 
-Browser support for MathML varies. Chrome, for instance, <a href="http://www.cnet.com/news/google-subtracts-mathml-from-chrome-and-anger-multiplies/">
-dropped</a> MathML support in 2013. To make sure that MathML displays properly in the browser, JavaScript polyfill has to be used.
-<a href="http://www.mathjax.org/">MathJax</a> seems to be the most actively developed one (and the one Chrome developers recommend).
+Browser support for MathML varies. Chrome, for instance,
+[dropped](http://www.cnet.com/news/google-subtracts-mathml-from-chrome-and-anger-multiplies/) MathML support in 2013.
+To make sure that MathML displays properly in the browser, JavaScript polyfill has to be used.
+[MathJax](http://www.mathjax.org/) seems to be the most actively developed one (and the one Chrome developers recommend).
 
 For PDF, I need something that will render MathML. The only non-commercial candidate that I am aware of is
-<a href="http://jeuclid.sourceforge.net/">
-JEuclid</a> <a href="http://jeuclid.sourceforge.net/jeuclid-fop/index.html">plugin</a> for FOP. JEuclid seems to be dead (again).
-Fedora ships jeuclid-fop, but it is completely <a href="https://bugzilla.redhat.com/show_bug.cgi?id=869806">broken for years</a>.
+[JEuclid](http://jeuclid.sourceforge.net) [plugin](http://jeuclid.sourceforge.net/jeuclid-fop/index.html) for FOP.
+JEuclid seems to be dead (again).
+Fedora ships jeuclid-fop, but it is completely [broken for years](https://bugzilla.redhat.com/show_bug.cgi?id=869806).
 Althoug the latest version of jeuclid-core (3.1.9) is available from Maven central, jeuclid-fop is
-<a href="http://sourceforge.net/p/jeuclid/feature-requests/22/">not</a> - it must be made available locally.
+[not](http://sourceforge.net/p/jeuclid/feature-requests/22/) - it must be made available locally.
 JEuclid only supports presentation MathML :)
 
 EPUB3 mandates support for presentation MathML (support for content MathML is optional), so for EPUB3 e-readers at least
@@ -150,12 +151,21 @@ Relevant parts of the POM:
   <images.directory>src/main/images</images.directory>  <!-- Static content -->
 
   <!-- Output directories -->
-  <docbkx.output.directory>${project.build.directory}/docbkx</docbkx.output.directory>
-  <docbkx.pdf.output.directory>${docbkx.output.directory}/pdf</docbkx.pdf.output.directory>
-  <docbkx.html.output.directory>${docbkx.output.directory}/html</docbkx.html.output.directory>
-  <!-- EPUB has two directories configured, since docbkx plugin puts expanded EPUB
-    where it is told, and resulting EPUB file into the parent directory :) -->
-  <docbkx.epub.output.directory>${docbkx.output.directory}/epub</docbkx.epub.output.directory>
+  <docbkx.output.directory>
+    ${project.build.directory}/docbkx
+  </docbkx.output.directory>
+  <docbkx.pdf.output.directory>
+    ${docbkx.output.directory}/pdf
+  </docbkx.pdf.output.directory>
+  <docbkx.html.output.directory>
+    ${docbkx.output.directory}/html
+  </docbkx.html.output.directory>
+  <!-- EPUB has two directories configured, since docbkx plugin puts
+   expanded EPUB where it is told, and resulting EPUB file into the
+   parent directory :) -->
+  <docbkx.epub.output.directory>
+    ${docbkx.output.directory}/epub
+  </docbkx.epub.output.directory>
   <docbkx.epub.expanded.output.directory>
     ${docbkx.epub.output.directory}/expanded
   </docbkx.epub.expanded.output.directory>
@@ -164,7 +174,8 @@ Relevant parts of the POM:
   <body.font.family>Noto Sans, Noto Sans Hebrew</body.font.family>
   <body.font.master>14</body.font.master>
   <title.font.family>Noto Sans, Noto Sans Hebrew</title.font.family>
-  <!-- In addition, symbol.font.family can be configured with catch-all symbol fonts. -->
+  <!-- In addition, symbol.font.family can be configured with
+     catch-all symbol fonts. -->
 </properties>
 
 <build>
@@ -256,9 +267,10 @@ Relevant parts of the POM:
       </configuration>
 
       <!-- Some configuration that could be placed in the XSL files was placed
-           in the POM: img.src.path: to be near the related - copying of the images
-           font configuration: to centralize configuration and avoid duplication
-           (filtering is used to patch font configuration into CSS files)
+           in the POM: img.src.path: to be near the related - copying of the
+           images font configuration: to centralize configuration and avoid
+           duplication (filtering is used to patch font configuration into
+           CSS files)
       -->
 
       <executions>
@@ -304,12 +316,15 @@ Relevant parts of the POM:
             <imgSrcPath>images/</imgSrcPath>
 
             <preProcess>
-              <copy todir="${docbkx.html.output.directory}/css" filtering="true">
+              <copy todir="${docbkx.html.output.directory}/css"
+                filtering="true">
                 <fileset dir="${css.directory}"/>
                 <!-- Fonts (via filtering) -->
                 <filterset>
-                  <filter token="body.font.family" value="${body.font.family}"/>
-                  <filter token="title.font.family" value="${title.font.family}"/>
+                  <filter token="body.font.family"
+                    value="${body.font.family}"/>
+                  <filter token="title.font.family"
+                    value="${title.font.family}"/>
                 </filterset>
               </copy>
               <copy todir="${docbkx.html.output.directory}/images">
@@ -327,7 +342,9 @@ Relevant parts of the POM:
           </goals>
 
           <configuration>
-            <targetDirectory>${docbkx.epub.expanded.output.directory}</targetDirectory>
+            <targetDirectory>
+              ${docbkx.epub.expanded.output.directory}
+            </targetDirectory>
             <epubCustomization>${xsl.directory}/epub.xsl</epubCustomization>
 
             <!-- CSS -->
@@ -337,12 +354,15 @@ Relevant parts of the POM:
             <imgSrcPath>images/</imgSrcPath>
 
             <preProcess>
-              <copy todir="${docbkx.epub.expanded.output.directory}/css" filtering="true">
+              <copy todir="${docbkx.epub.expanded.output.directory}/css"
+                filtering="true">
                 <fileset dir="${css.directory}"/>
                 <!-- Fonts (via filtering) -->
                 <filterset>
-                  <filter token="body.font.family" value="${body.font.family}"/>
-                  <filter token="title.font.family" value="${title.font.family}"/>
+                  <filter token="body.font.family"
+                    value="${body.font.family}"/>
+                  <filter token="title.font.family"
+                    value="${title.font.family}"/>
                 </filterset>
               </copy>
               <copy todir="${docbkx.epub.expanded.output.directory}/images">
@@ -355,9 +375,9 @@ Relevant parts of the POM:
     </plugin>
 
     <!-- Results are packaged using assembly plugin.
-      This way there is no need to align the directories between the "paper" project and
-      "web site" project: resulting artifact can be retrieved and unpacked using
-      dependency plugin. -->
+      This way there is no need to align the directories between the "paper"
+      project and "web site" project: resulting artifact can be retrieved
+      and unpacked using dependency plugin. -->
     <plugin>
       <artifactId>maven-assembly-plugin</artifactId>
       <version>2.5.3</version>
@@ -393,12 +413,13 @@ or, for chunked HTML:
 ```xml
 <xsl:import href="urn:docbkx:stylesheet/chunk.xsl"/>
 ```
-To avoid repeating common customizations, I use two more XSLT file: common-html.xsl and common.xsl. I import common-html.xsl in
-both html.xsl and epub.xsl, immediately after the import of the DocBook stylesheet and before other customization.
-Both common-html.xsl and pdf.xsl import common.xsl.
+To avoid repeating common customizations, I use two more XSLT file: `common-html.xsl` and `common.xsl`. I import
+`common-html.xsl` in both `html.xsl` and `epub.xsl`, immediately after the import of the DocBook stylesheet and before
+other customization. Both `common-html.xsl` and `pdf.xsl` import `common.xsl`.
 
-I do not use Oxygen's UI to set the transformation parameters, so that the build works even where Oxygen is not installed.
-The price: build from Oxygen is different from the "official" Maven-based build; but I can still use Oxygen to edit the documents.
+I do not use Oxygen's UI to set the transformation parameters, so that the build works even where Oxygen is not
+installed. The price: build from Oxygen is different from the "official" Maven-based build; but I can still use Oxygen
+to edit the documents.
 
 This is the customization that I use in html.xsl to enable MathJax:
 ```xml
@@ -410,7 +431,8 @@ This is the customization that I use in html.xsl to enable MathJax:
       }
     };
   </script>
-  <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=MML_HTMLorMML"/>
+  <script type="text/javascript"
+    src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=MML_HTMLorMML"/>
 </xsl:template>
 ```
 
@@ -450,13 +472,13 @@ element of the docbkx's configuration. In Oxygen, I'll need to write scripts...
 
 For HTML builds, font family and size need to be inserted into the CSS stylesheet (for PDF, setting appropriate
 parameters is enough). In Maven, I use filtering when copying the stylesheets. In Oxygen, I do not know how to do this
-without duplicating the information.</div>
+without duplicating the information.
 
 ### Tables (generated content) ###
 
-Included document has to be valid DocBook section or article, otherwise it isn't recognized as DocBook at all and is ignored.
-Strictly speaking, it is when DocBook namespace is used, but Oxygen, of course, complains about the included file.
-To shut everybody up, I have to wrap the table into:
+Included document has to be valid DocBook section or article, otherwise it isn't recognized as DocBook at all and is
+ignored. Strictly speaking, it is when DocBook namespace is used, but Oxygen, of course, complains about the included
+file. To shut everybody up, I have to wrap the table into:
 ```xml
 <section>
     <title>dummy title</title>
@@ -465,22 +487,24 @@ To shut everybody up, I have to wrap the table into:
 ```
 
 When I include this document, only the table itself has to be included. Oxygen uses (?) Xerxes to validate DocBook.
-Xerxes does not support xpointer() XPointer scheme, so to select what I want I can not say `xpointer="xpointer(//informaltable)"`
+Xerxes does not support xpointer() XPointer scheme, so to select what I want I can not say
+`xpointer="xpointer(//informaltable)"`
 Whatever DocBook Maven plugin I use, it does not understand the xpointer schema too.
 Both understand element(1/2), and it works, but it is ugly and fragile.
 Interestingly, Oxygen (Xerxes?) understands `xpointer="ID"`, but Maven plugin does not!
 
 ### Paper and Site ###
 
-I package the results using assembly plugin. This way I do not need to align the directories between the "paper" project that "web site" project:
-resulting artifact can be retrieved and unpacked using dependency plugin.
+I package the results using assembly plugin. This way I do not need to align the directories between the "paper" project
+that "web site" project: resulting artifact can be retrieved and unpacked using dependency plugin.
 
 Assembly descriptor is in /src/main/assembly/assembly.xml and looks like this:
-
 ```xml
-<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+<assembly
+  xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2
+  http://maven.apache.org/xsd/assembly-1.1.2.xsd">
   <id>bin</id>
   <formats>
     <format>tar.gz</format>

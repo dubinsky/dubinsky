@@ -26,12 +26,12 @@ twitter_username: leoniddubinsky
 github_username:  dubinsky
 linkedin_username: leoniddubinsky
 
-# for minima v3.0:
-minima:
-  social_links:
-    twitter: leoniddubinsky
-    github: dubinsky
-    linkedin: leoniddubinsky
+## for minima v3.0:
+#minima:
+#  social_links:
+#    twitter: leoniddubinsky
+#    github: dubinsky
+#    linkedin: leoniddubinsky
 
 # Build settings
 markdown: kramdown
@@ -56,17 +56,12 @@ exclude:
   - vendor/gems/
   - vendor/ruby/
   - .idea/
-  - \*.iml
+  - dub.podval.org.iml
+  - CNAME
 
 timezone: America/New_York
 
 header_pages:
   - index.md
   - blog.md
-
-#defaults:
-#  -
-#    scope:
-#      path: "..."
-#    values:
-#      sitemap: false
+  - tags.html
