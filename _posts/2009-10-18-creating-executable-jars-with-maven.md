@@ -3,9 +3,7 @@ layout: post
 title: Creating executable JARs with Maven
 date: '2009-10-18T15:50:00.027-04:00'
 author: dub
-tags:
-- maven
-- java
+tags: [maven, java]
 modified_time: '2013-04-25T15:21:13.777-04:00'
 blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-2506818829173082354
 blogger_orig_url: https://blog.dub.podval.org/2009/10/creating-executable-jars-with-maven.html

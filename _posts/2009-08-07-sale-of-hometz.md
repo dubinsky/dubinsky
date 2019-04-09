@@ -3,8 +3,7 @@ layout: post
 title: Продажа хомца
 date: '2009-08-07T14:30:00.005-04:00'
 author: dub
-tags:
-- иудаизм
+tags: [иудаизм]
 modified_time: '2010-01-18T16:44:58.417-05:00'
 blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-955516106404764258
 blogger_orig_url: https://blog.dub.podval.org/2009/08/sale-of-hometz.html

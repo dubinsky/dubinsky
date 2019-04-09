@@ -3,8 +3,7 @@ layout: post
 title: К вопросу о перьевых ручках
 date: '2009-09-29T02:17:00.042-04:00'
 author: dub
-tags:
-- pens
+tags: [pens]
 modified_time: '2014-05-25T22:37:57.659-04:00'
 thumbnail: http://1.bp.blogspot.com/-dKgE4NJP4Hk/Trf2xgILt2I/AAAAAAAAHcQ/G8OvkSNPvVY/s72-c/IMG_20111107_100542.jpg
 blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-1460095116415523357

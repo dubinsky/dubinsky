@@ -3,8 +3,7 @@ layout: post
 title: The Cantonists' Neila Story
 date: '2014-05-22T17:28:00.000-04:00'
 author: Leonid Dubinsky
-tags:
-- иудаизм
+tags: [иудаизм]
 modified_time: '2014-05-25T18:56:35.938-04:00'
 blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-3485277967085041433
 blogger_orig_url: https://blog.dub.podval.org/2014/05/the-cantonists-neila-story.html

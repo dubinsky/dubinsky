@@ -3,9 +3,7 @@ layout: post
 title: Еврейский Закон о альтернативной медицине
 date: '2011-11-06T19:27:00.000-05:00'
 author: Leonid Dubinsky
-tags:
-- иудаизм
-- альтернативная медицина
+tags: [иудаизм]
 modified_time: '2012-12-16T23:33:53.669-05:00'
 blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-7710844513501244125
 blogger_orig_url: https://blog.dub.podval.org/2011/11/blog-post.html

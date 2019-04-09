@@ -3,8 +3,7 @@ layout: post
 title: К вопросу о потирании рук
 date: '2009-08-09T18:52:00.005-04:00'
 author: dub
-tags:
-- иудаизм
+tags: [иудаизм]
 modified_time: '2013-08-29T12:37:02.166-04:00'
 blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-7503388719760348397
 blogger_orig_url: https://blog.dub.podval.org/2009/08/washing-hands.html

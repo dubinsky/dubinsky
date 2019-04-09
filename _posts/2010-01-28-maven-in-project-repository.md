@@ -305,7 +305,7 @@ anonymous commenter!)
 Also, if your company uses some kind of Maven proxy (ex. Nexus) to mirror all public repos (like central), you can
 connect it in your local maven settings.xml
   
-http://maven.apache.org/guides/mini/guide-mirror-settings.html
+[http://maven.apache.org/guides/mini/guide-mirror-settings.html](http://maven.apache.org/guides/mini/guide-mirror-settings.html)
 
 But be careful: in case of in-project repo you have to set mirror for `"external:*"`, not `"*"`. Otherwise maven will
 not be able to find artefacts from in-project repo.

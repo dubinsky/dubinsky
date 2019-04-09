@@ -3,8 +3,7 @@ layout: post
 title: Best Bookbinding Resources
 date: '2014-05-26T13:04:00.002-04:00'
 author: Leonid Dubinsky
-tags:
-- best
+tags: [best]
 modified_time: '2014-05-26T13:04:44.137-04:00'
 blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-4154086718732596226
 blogger_orig_url: https://blog.dub.podval.org/2014/05/best-bookbinding-resources.html

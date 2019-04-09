@@ -3,9 +3,7 @@ layout: post
 title: Scala and Tag Soup
 date: '2010-08-02T15:16:00.009-04:00'
 author: dub
-tags:
-- scala
-- xml
+tags: [scala, xml]
 modified_time: '2015-02-15T00:39:16.509-05:00'
 blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-5712231194807527541
 blogger_orig_url: https://blog.dub.podval.org/2010/08/scala-and-tag-soup.html

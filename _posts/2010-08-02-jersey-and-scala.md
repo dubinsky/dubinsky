@@ -3,10 +3,7 @@ layout: post
 title: Jersey and Scala
 date: '2010-08-02T14:47:00.008-04:00'
 author: dub
-tags:
-- scala
-- web services
-- xml
+tags: [scala, web services, xml]
 modified_time: '2014-05-25T22:01:07.890-04:00'
 blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-7794478870804755238
 blogger_orig_url: https://blog.dub.podval.org/2010/08/jersey-and-scala.html
@@ -33,18 +30,18 @@ Scala has XML support built into the language. XML literals can be embedded in t
 (or Seq[Node]).
 
 ```scala
-@GET
-@Produces(Array("text/html"))
-final def getHtml() = {
+  @GET
+  @Produces(Array("text/html"))
+  final def getHtml() = {
     <html>
-        <head>
-            <title>{getTitle()}</title>
-            <link rel="stylesheet" type="text/css" href="/system/style.css"/>
-        </head>
-        <body>
-            <h class="title">{getTitle()}</h>
-            {getBody()}
-        </body>
+      <head>
+        <title>{getTitle()}</title>
+        <link rel="stylesheet" type="text/css" href="/system/style.css"/>
+      </head>
+      <body>
+        <h class="title">{getTitle()}</h>
+        {getBody()}
+      </body>
     </html>
 }
 ```

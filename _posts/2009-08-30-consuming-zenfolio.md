@@ -3,12 +3,7 @@ layout: post
 title: Consuming Zenfolio Web Service in Java with Maven
 date: '2009-08-30T23:11:00.020-04:00'
 author: dub
-tags:
-- photo-sync
-- web services
-- zenfolio
-- maven
-- java
+tags: [web services, maven, java]
 modified_time: '2013-04-25T15:24:26.476-04:00'
 blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-2449706731507148845
 blogger_orig_url: https://blog.dub.podval.org/2009/08/consuming-zenfolio.html

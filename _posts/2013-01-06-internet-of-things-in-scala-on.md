@@ -3,9 +3,7 @@ layout: post
 title: Internet of Things in Scala on Raspberry Pi
 date: '2013-01-06T19:46:00.001-05:00'
 author: Leonid Dubinsky
-tags:
-- electronics
-- scala
+tags: [electronics, scala]
 modified_time: '2013-04-15T01:22:18.322-04:00'
 blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-8876003498529001840
 blogger_orig_url: https://blog.dub.podval.org/2013/01/internet-of-things-in-scala-on.html

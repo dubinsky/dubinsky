@@ -3,9 +3,7 @@ layout: post
 title: Publishing Papers on the Web
 date: '2011-11-07T10:39:00.000-05:00'
 author: Leonid Dubinsky
-tags:
-- oxygen
-- docbook
+tags: [oxygen, docbook]
 modified_time: '2019-01-29T16:41:30.901-05:00'
 blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-5496117829521544043
 blogger_orig_url: https://blog.dub.podval.org/2011/11/publishing-papers-on-web.html

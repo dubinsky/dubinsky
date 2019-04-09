@@ -3,8 +3,7 @@ layout: post
 title: Свадьба в реформистской синагоге
 date: '2011-11-06T22:57:00.002-05:00'
 author: Leonid Dubinsky
-tags:
-- иудаизм
+tags: [иудаизм]
 modified_time: '2018-08-02T15:42:37.993-04:00'
 blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-8658014004221595717
 blogger_orig_url: https://blog.dub.podval.org/2011/11/blog-post_06.html

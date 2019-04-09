@@ -3,8 +3,7 @@ layout: post
 title: City bicycle
 date: '2011-09-22T14:17:00.001-04:00'
 author: Leonid Dubinsky
-tags:
-- bicycle
+tags: [bicycle]
 modified_time: '2013-06-20T16:53:16.194-04:00'
 blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-5118836444259826773
 blogger_orig_url: https://blog.dub.podval.org/2011/09/city-bicycle.html

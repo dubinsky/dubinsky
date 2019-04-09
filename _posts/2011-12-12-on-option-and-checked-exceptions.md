@@ -3,8 +3,7 @@ layout: post
 title: On Option and checked exceptions
 date: '2011-12-12T11:27:00.002-05:00'
 author: Leonid Dubinsky
-tags:
-- scala
+tags: [scala]
 modified_time: '2011-12-27T14:45:30.785-05:00'
 blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-7679403351251874158
 blogger_orig_url: https://blog.dub.podval.org/2011/12/on-option-and-checked-exceptions.html

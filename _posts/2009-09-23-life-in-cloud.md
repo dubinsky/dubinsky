@@ -3,8 +3,7 @@ layout: post
 title: Life in the Cloud
 date: '2009-09-23T08:30:00.003-04:00'
 author: dub
-tags:
-- life in the cloud
+tags: [life in the cloud]
 modified_time: '2015-02-13T11:33:36.880-05:00'
 blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-4471311622524428152
 blogger_orig_url: https://blog.dub.podval.org/2009/09/life-in-cloud.html

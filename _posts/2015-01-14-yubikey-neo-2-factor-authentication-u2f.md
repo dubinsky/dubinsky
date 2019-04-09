@@ -3,9 +3,7 @@ layout: post
 title: 'Yubikey: 2-factor authentication (U2F, OATH and OTP) and SSH'
 date: '2015-01-14T20:15:00.000-05:00'
 author: Leonid Dubinsky
-tags:
-- authentication
-- life in the cloud
+tags: [authentication, life in the cloud, linux]
 modified_time: '2018-11-11T03:44:06.602-05:00'
 blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-3229372978474069876
 blogger_orig_url: https://blog.dub.podval.org/2015/01/yubikey-neo-2-factor-authentication-u2f.html
@@ -52,7 +50,7 @@ in some other way.
 Not all features are enabled initially; to turn the Yubikey into “OTP/U2F/CCID composite device” issue command (from the
  “ykpers” package that you already installed):
 ```
-$ ykpersonalize -m6
+  $ ykpersonalize -m6
 ``` 
 (Adding 80 to the mode activates an “eject flag” that I do not think I need.)
 
@@ -126,66 +124,66 @@ and Yubico [documentation](https://developers.yubico.com/yubico-piv-tool/).
 We need the smart-card demon installed and running (as far as I can tell, it doesn't interfere with the GPG
 functionality any more):
 ```
-   # dnf install pcsc-lite opensc yubico-piv-tool
-   # systemctl enable pcscd; systemctl start pcscd
-   $ opensc-tool -l
+  # dnf install pcsc-lite opensc yubico-piv-tool
+  # systemctl enable pcscd; systemctl start pcscd
+  $ opensc-tool -l
 ```
 Change PIN and PUK:
 ```
-   $ yubico-piv-tool -a change-pin   # from default 123456
-   $ yubico-piv-yool -a change-puk   # from default 12345678
+  $ yubico-piv-tool -a change-pin   # from default 123456
+  $ yubico-piv-yool -a change-puk   # from default 12345678
 ```
 Default Management Key is: `010203040506070801020304050607080102030405060708`
 
 (It is possible to generate the private key directly on the Yubikey:
 ```
-   $ yubico-piv-tool -s 9a -a generate -o key.pub.pem
+  $ yubico-piv-tool -s 9a -a generate -o key.pub.pem
 ```
 but I prefer to do it on the outside, so that I can put the same private key onto multiple tokens, stash it somewhere
 etc.)
 
 Generate the keypair in the current directory:
 ```
-$ ssh-keygen -f key
+  $ ssh-keygen -f key
 ```
 Export the public key in PEM format (known to ssh-keygen as PKCS8, not PEM :)):
 ```
-   $ ssh-keygen -f key -e -m PKCS8 &gt; key.pub.pem
+  $ ssh-keygen -f key -e -m PKCS8 &gt; key.pub.pem
 ```
 Import the key:
 ```
-   $ yubico-piv-tool -s 9a -a import-key -i key
+  $ yubico-piv-tool -s 9a -a import-key -i key
 ```
 Certify the key (for one year):
 ```
-   $ yubico-piv-tool -s 9a -a verify-pin -a selfsign-certificate -S '/CN=login@domain SSH key' -i key.pub.pem -o cert.pem
+  $ yubico-piv-tool -s 9a -a verify-pin -a selfsign-certificate -S '/CN=login@domain SSH key' -i key.pub.pem -o cert.pem
 ```
 If you get `error: Failed to begin pcsc transaction, rc=80100003` see Temporary Detour below :)
 
 Import the certificate:
 ```
-   $ yubico-piv-tool -s 9a -a import-certificate -i cert.pem
+  $ yubico-piv-tool -s 9a -a import-certificate -i cert.pem
 ```
 Check status:
 ```
-   $ yubico-piv-tool -a status
+  $ yubico-piv-tool -a status
 ```
 Export public key from the token in OpenSSH format:
 ```
-   $ ssh-keygen -D /usr/lib64/opensc-pkcs11.so -e
+  $ ssh-keygen -D /usr/lib64/opensc-pkcs11.so -e
 ```
 To use the key from the token, add to  `~/.ssh/config` (for specific hosts or globally):
 ```
-   PKCS11Provider /usr/lib64/opensc-pkcs11.so
+  PKCS11Provider /usr/lib64/opensc-pkcs11.so
 ```
 This way, SSH agent is running, but identity isn't added to it - and so it can't be reused on machines SSHed into; to
 add Yubikey SSH identity to SSH agent:
 ```
-   $ ssh-add -s /usr/lib64/opensc-pkcs11.so
+  $ ssh-add -s /usr/lib64/opensc-pkcs11.so
 ```
 See it:
 ```
-   $ ssh-add -L
+  $ ssh-add -L
 ```   
 
 Running gpg-agent (needed for the GPG approach below) may cause problems.

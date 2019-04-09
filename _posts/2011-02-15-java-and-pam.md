@@ -3,8 +3,7 @@ layout: post
 title: Java and PAM
 date: '2011-02-15T12:22:00.003-05:00'
 author: Leonid Dubinsky
-tags:
-- java
+tags: [authentication, java, linux]
 modified_time: '2011-10-28T09:07:38.766-04:00'
 blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-6310548426443273906
 blogger_orig_url: https://blog.dub.podval.org/2011/02/java-and-pam.html

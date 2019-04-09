@@ -3,7 +3,7 @@ layout: post
 title: Linux on Lenovo ThinkPad p50
 date: '2016-02-07T17:21:00.000-05:00'
 author: Leonid Dubinsky
-tags: 
+tags: [linux] 
 modified_time: '2016-09-25T15:12:23.835-04:00'
 blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-5982252303112752973
 blogger_orig_url: https://blog.dub.podval.org/2016/02/linux-on-lenovo-thinkpad-p50.html
