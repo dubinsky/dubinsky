@@ -5,4 +5,4 @@ title: Home
 
 {% avatar dubinsky size=100 %}
 
-[Photos](https://photos.google.com/albums)
+[Photos](https://picasaweb.google.com/104594373274257415932)

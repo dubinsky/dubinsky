@@ -3,5 +3,5 @@ layout: home
 title: Blog
 ---
 
-[Old blog](https://blog.dub.podval.org/)
+[Old blog](https://leonid-dubinsky.blogspot.com)
 

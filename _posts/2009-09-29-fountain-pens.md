@@ -291,9 +291,12 @@ Reserve American Blue - самое оно! Очень хорошие зелён�
 Но: даже на такой отличной бумаге, как в Rhodia Webnotebook, пишет она, к сожалению, слишком толсто. А вот Паркер 51 - в
 порядке! Впрочем, похоже, у разных экземпляров чуть разная ширина линии, так что надежда есть, хотя и небольшая.
 
-Мой размер: 03, "F".
+Это - в размере 08; размер 03, "F" - нормальной толщины. Но всё равно - дешевовата: трескается, течет. 
 
 Platinum Plaisir: перо то же, что у Preppy, только Preppy дешевле и привлекательнее :)
+
+Platinum Balance - too scratchy.
+
 
 ## Lamy Vista/Safari/Al-Star ##
 
@@ -333,6 +336,11 @@ Pilot <a href="http://www.blogger.com/post-edit.g?blogID=8681083740214020499&amp
 </tbody></table>
 
 Pilot 78G "M" - пошире, для любителей беззубых перьев; Pilot 78G "B" - "stub", для красивого письма.
+
+## Pilot Kakuno ##
+
+- EF - kind-of scratchy;
+- F - kind of too wide (in 1917) :)
 
 # Паркер "51" ##
 
@@ -412,6 +420,24 @@ Pilot Custom 74:
 <tr><td class="tr-caption" style="font-size: 13px; text-align: center;">Pilot Custom 74
 </td></tr>
 </tbody></table>
+
+## Заметки от Б. Г. ##
+
+
+[Platinum Preppy](http://www.jetpens.com/Platinum-Preppy-Fountain-Pen-03-Fine-Nib-Black-Ink/pd/1454) –
+ nice flow, not too fat, pleasant experience, use [this converter](http://www.jetpens.com/Platinum-Fountain-Pen-Converter/pd/3463)
+
+[Pilot Prera](http://www.jetpens.com/Pilot-Prera-Clear-Body-Fountain-Pen-Fine-Nib-Clear-Black-Accent/pd/6579) – good for writing,
+slower ink flow, very exact, with [this converter](http://www.jetpens.com/Pilot-Fountain-Pen-CON-50-Converter/pd/1531)
+
+[Sailor HighAce](http://www.jetpens.com/Sailor-HighAce-Neo-Beginner-s-Fountain-Pen-Steel-Nib-Fine-Black-Body/pd/5526) –
+a little long and thin. writes very well.
+
+[Pilot 78G – Medium Nib](http://hisnibs.com/pilot_pens.htm) – nice flex, good for drawing. Same pen with fine nib –
+great for writing and small sketches. [hisnibs.com](http://hisnibs.com/) is, however, retarded website, have to order via email. 
+
+Pilot Custom 74 at [richardspens.com](http://richardspens.com/) – (you can tell him how to adjust your pen, he is a nib master)
+perfect for drawing, very nice flow.
 
 ## Что ещё бывает ##
 
