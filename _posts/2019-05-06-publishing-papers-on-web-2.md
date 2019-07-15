@@ -227,6 +227,9 @@ Also, because JavaScript is single-threaded, and I am too lazy to spend time cod
 J2V8 documentation for limited gain, I ended up instantiating new V8 runtime for every typesetting call. Even then,
 it isn't entirely stable: some times, JVM crashes; some times, stopping Gradle daemon helps etc.  
 
+That is why DocBook plugin tries to use J2V8 only if it is specifically configured, and even then if it fails to load it
+falls back to calling Node in an external process for each typesetting.   
+
 
 ## Weird Stuff ##
 
@@ -253,3 +256,12 @@ Turns out that `ImageImplRegistry` instance used by `FopFactory` is global (`def
 registered on one FopFactory interfere with another. Since `ImageManager` is not settable on the `FopFactory` or
 `FopFactoryConfig`, and `ImageImplRegistry` is not settable on the `ImageManager`, I had to write and use
 `FopFactoryConfigProxy` to counteract the effect of this invisible global. 
+
+
+## Future ##
+
+Extending DocBook math support to the non-MathML math using an XML filter made me think that it may be possible to
+recover some of the benefits of using MarkDown (simpler markup, like tutorial generators and such) via preprocessing
+MarkDown markup in the input file using MarkDown parser like
+[`CommonMark` parser](https://github.com/commonmark/commonmark-spec). This is non-trivial, for instance, because
+MarkDown can have multiple interlinked files, but warrants further thought.  
