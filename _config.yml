@@ -21,6 +21,8 @@ description: >- # this means to ignore newlines until "baseurl:"
   Projects and thoughts
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://dub.podval.org" # the base hostname & protocol for your site, e.g. http://example.com
+timezone: America/New_York
+google_analytics: UA-18415116-1
 
 twitter_username: leoniddubinsky
 github_username:  dubinsky
@@ -58,8 +60,6 @@ exclude:
   - .idea/
   - dub.podval.org.iml
   - CNAME
-
-timezone: America/New_York
 
 header_pages:
   - index.md
