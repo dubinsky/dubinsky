@@ -8,7 +8,7 @@ date: '2020-06-29'
 
 #### или ["блядский пиздец"](https://github.com/bintray/gradle-bintray-plugin/issues/302)
 
-##Introduction
+## Introduction ##
 
 [GitHub](https://github.com/) is important for software development: almost all the sources are there.
 [Bintray](https://bintray.com/) is also important: almost all packages are in
@@ -35,7 +35,7 @@ uploads its artifacts to Bintray. This is far from being an edge case: it is how
 the [fans](https://danluu.com/monorepo/) of
 [monorepos](https://www.bitquabit.com/post/unorthodocs-abandon-your-dvcs-and-return-to-sanity/) :)
 
-##'Cannot cast'
+## 'Cannot cast' ##
 
 Let's say you have in your Gradle project at least two subprojects that need to upload artifacts
 to Bintray. You configure Bintray plugin for each of them. Yes, it leads to code duplication, since
@@ -101,7 +101,7 @@ so everybody has to re-discover it for themselves, wasting a lot (at least in my
 This is bad enough, but what is worse is - this workaround should not be necessary at all;
 the underlying problem with the plugin should be fixed instead.     
 
-##'BuildStepsExecutionException: INSTANCE'
+## 'BuildStepsExecutionException: INSTANCE' ##
 
 As the result of the above workaround, Bintray plugin's classes are on the `buildEnvironment` classpath
 of every subproject, even ones that do not need or use that plugin. This increases chances of
@@ -146,7 +146,7 @@ buildscript {
 }
 ```
 
-##Sharing Bintray configuration
+## Sharing Bintray configuration ##
 
 Assuming you managed to get Bintray plugin working with multiple subprojects using it,
 you'll notice that there is a lot of duplication: most of the necessary Bintray-related
