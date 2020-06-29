@@ -6,9 +6,9 @@ tags: [bintray, gradle]
 date: '2020-06-29'
 ---
 
-#### или ["блядский пиздец"](https://github.com/bintray/gradle-bintray-plugin/issues/302)
-
-## Introduction ##
+* TOC
+{:toc}
+## Introduction, или ["блядский пиздец"](https://github.com/bintray/gradle-bintray-plugin/issues/302) ##
 
 [GitHub](https://github.com/) is important for software development: almost all the sources are there.
 [Bintray](https://bintray.com/) is also important: almost all packages are in
@@ -180,7 +180,7 @@ It is possible that plugin applications could be moved into the `configureLibrar
 but I prefer to use the "new" `plugins` DSL instead of the `apply plugin`, and declare all the
 subproject's plugins upfront. 
 
-This is how the `library.gradle` file looks like:
+This is how the `library.gradle` file looks:
 
 ```groovy
 ext.configureLibrary = {
