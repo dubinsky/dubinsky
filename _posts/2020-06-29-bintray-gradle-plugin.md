@@ -120,12 +120,14 @@ it (later), Apache HTTP client that JIB calls gets downgraded from v4.5.10 to v4
 actually *needs* the later version of the Apache HTTP client, and this downgrade results
 in an error when running `$ ./gradlew jibDockerBuild`:
 ```
-  com.google.cloud.tools.jib.plugins.common.BuildStepsExecutionException: INSTANCE
+  com.google.cloud.tools.jib.plugins.common.BuildStepsExecutionException:
+    INSTANCE
 ```
 Of course, since Gradle daemon caches loaded classes, this error looks differently on the subsequent runs:
 ```
   com.google.cloud.tools.jib.plugins.common.BuildStepsExecutionException:
-    Could not initialize class org.apache.http.conn.ssl.SSLConnectionSocketFactory
+    Could not initialize class
+      org.apache.http.conn.ssl.SSLConnectionSocketFactory
 ```
 To get back to the the clean break, you need to stop the daemons with `$ ./gradlew --stop` (or run Gradle
 with `--no-daemon` to begin with).
@@ -207,8 +209,9 @@ ext.configureLibrary = {
 
   jar.archiveBaseName.set(projectArtifact)
 
-  // Gradle plugin [publishing?] plugin, if it is applied, adds tasks publishPluginJar and
-  // publishPluginJavaDocsJar that create sources and javadoc archives;
+  // Gradle plugin [publishing?] plugin, if it is applied,
+  // adds tasks publishPluginJar and publishPluginJavaDocsJar
+  // that create sources and javadoc archives;
   // attempts to use them as artifacts in the Maven publication failed,
   // so I make my own, replacing javadoc with ScalaDoc :)
 
