@@ -39,8 +39,9 @@ the [fans](https://danluu.com/monorepo/) of
 
 Let's say you have in your Gradle project at least two subprojects that need to upload artifacts
 to Bintray. You configure Bintray plugin for each of them. Yes, it leads to code duplication, since
-most of the plugin configuration is the same for all the artifacts produced by the monorepo, and I will
-describe a way to cut down on this code duplication later, but at least it works, right? Well, not always!
+most of the plugin configuration is the same for all the artifacts produced by the monorepo
+(I describe a way to cut down on this code duplication in the last section of this post),
+but at least it works, right? Well, not always!
 Sometimes, when you run `$ ./gradlew bintrayUpload` you get an error message
 from `bintrayPublish` task of one of your Bintray-uploading subprojects:  
 ```
