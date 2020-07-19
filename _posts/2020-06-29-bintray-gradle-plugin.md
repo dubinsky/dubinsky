@@ -27,7 +27,7 @@ It is sad that such an important plugin seems to be neglected: updates and bug-f
 [rare](https://github.com/bintray/gradle-bintray-plugin/commits/master),
 [documentation](https://github.com/bintray/gradle-bintray-plugin) is incomplete,
 [examples](https://github.com/bintray/bintray-examples) are obsolete (Gradle 2?!) etc. - but
-ate least it works.
+at least it works.
 
 In this post, I focus on a setting where the plugin actually breaks, and describe some workarounds for
 the breakage. This setting is: Gradle project with multiple subprojects where more than one subproject
