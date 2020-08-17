@@ -8,5 +8,5 @@
 ![](https://img.shields.io/badge/Tools-Docker-informational?style=plastic&logo=Docker)
 ![](https://img.shields.io/badge/Cloud-GCP-informational?style=plastic&logo=google-cloud)
 
-![GitHub Statistics](https://github-readme-stats.vercel.app/api?username=dubinsky&show_icons=true&count_private=false)
+[![GitHub Statistics](https://github-readme-stats.vercel.app/api?username=dubinsky)](https://github.com/dubinsky/)
 
