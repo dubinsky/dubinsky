@@ -30,6 +30,4 @@ exclude:
   - .idea
 
 header_pages:
-  - index.md
-  - blog.md
   - tags.html
