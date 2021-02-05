@@ -110,7 +110,7 @@ version conflicts between dependencies of plugins applied to the same subproject
 
 Indeed, there is such a conflict betweem Bintray plugin and 
 [JIB Gradle plugin](https://github.com/GoogleContainerTools/jib/tree/master/jib-gradle-plugin)
-(great tool forDocker-conteinerizing applications). Specifically, current version of the JIB plugin -
+(great tool for Docker-conteinerizing applications). Specifically, current version of the JIB plugin -
 v2.4.0 - uses Apache HTTP client (`org.apache.httpcomponents:httpclient`) v4.5.10
 (via `com.google.http-client:google-http-client:1.34.0`); current Bintray plugin - v1.8.5 - also
 uses Apache HTTP client, but an older version: v4.2.1.

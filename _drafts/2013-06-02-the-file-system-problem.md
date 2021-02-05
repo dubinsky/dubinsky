@@ -44,7 +44,7 @@ only be expressed via generics, this duplication becomes even worse.
 In addition, generics-based declarations are unwieldy since all types in the family reference one another, and return
 types of methods need to evolve.
 
-In Scala, mixins help dealing with code duplication, but generics-based declarations are still
+In Scala, mixins help to deal with code duplication, but generics-based declarations are still
 unwieldy, and it is not clear how to "tie the knot" so that no casts are needed. Even when
 abstract type members are used, making declarations cleaner, "knot tying" is an issue. Both
 approaches (generics and abstract type members) are helped somewhat by the self-types, but some
@@ -65,3 +65,28 @@ Miles Sabin?
 
 ["Objects and Modules - Two Sides of the Same Coin?" (Odersky)](http://events.inf.ed.ac.uk/Milner2012/slides/Odersky/Odersky.pdf)
 
+
+[A Path to DOT: Formalizing Fully Path-Dependent Types](https://arxiv.org/pdf/1904.07298.pdf)
+
+
+
+## Scala 2.13 and Scala 3 ##
+
+My encoding of the familty polymorphism uses type projections `Family#Member`;
+in Scala 2.13, they [stopped working for my project](https://github.com/scala/bug/issues/11963).
+Martin Odersky explained that in Scala 3 they won't even be legal. I have to modify the encoding
+to use type members instead of the type parameters.
+
+Before I could attempt the switch, I had to clean the code up:
+- some members of the family were not accessible through the family type ay all,
+ so I brought them in as type members of the family type;
+- with family type no longer a type parameter, some constructor parameters had to become abstract members;
+- with self-type no longer a type parameter, instead of extending `Ordered[N]` I now expose an explicit `ordering: Ordering[N]`; 
+
+I think this cleanup was beneficial regardless of the swicth :)
+
+I am in the process of the switch itself now, and inability to supply self-type from the type member causes
+a lot of casts... Is there a way to deal with this?
+
+Also, and probably for the same reason, implicits supplying the orderings and related operations are no longer found in many cases...
+ 

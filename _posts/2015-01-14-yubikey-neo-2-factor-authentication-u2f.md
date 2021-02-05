@@ -148,7 +148,7 @@ Generate the keypair in the current directory:
 ```
 Export the public key in PEM format (known to ssh-keygen as PKCS8, not PEM :)):
 ```
-  $ ssh-keygen -f key -e -m PKCS8 &gt; key.pub.pem
+  $ ssh-keygen -f key -e -m PKCS8 > key.pub.pem
 ```
 Import the key:
 ```
@@ -262,7 +262,7 @@ I picked “RSA and RSA (default)”, 4096 bits long key, key does not expire.
   
 To create a backup of the generated key XXXXXX:
 ```
-  $ gpg2 --armor --export XXXXXX &gt; XXXXXX-master.txt
+  $ gpg2 --armor --export XXXXXX > XXXXXX-master.txt
 ```  
 To generate subkeys:
 ```
