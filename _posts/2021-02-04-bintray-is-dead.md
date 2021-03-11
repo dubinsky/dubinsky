@@ -1,8 +1,8 @@
 ---
 layout: post
-title: 'Bintray is Dead!'
+title: 'Bintray is dead!'
 author: Leonid Dubinsky
-tags: [bintray, gradle]
+tags: [bintray, gradle, mavencentral]
 date: '2021-02-04'
 ---
 
@@ -82,7 +82,8 @@ In addition to `podval.org`, I control the domain (and GitHub organization) `ope
 I want to sign artifacts in it with a key associated with an appropriate email address 
 dub@opentorah.org. It seems that Maven Central verification does not require for the signing
 key to be associated with email address of the Sonatype account, so I didn't have to create
-another Sonatype account, and claimed the `org.opentorah` namespace under the same one!
+another Sonatype account, and [claimed](https://issues.sonatype.org/browse/OSSRH-64024) the
+`org.opentorah` namespace under the same one!
 
 ## GPG Keys and Signing ##
 
@@ -124,7 +125,6 @@ $ gpg2 --armor --export-secret-keys dub@podval.org | awk '1' ORS='\\n\\\n'
 and removed the final `\n\`.
 
 I then added to `~/.gradle/gradle.properties`:
-
 ```properties
 gnupg.dub-podval-org.key=<see above>
 gnupg.dub-podval-org.password=...
@@ -149,12 +149,19 @@ After artifacts are deployed to the staging repository:
 - log into Nexus at https://oss.sonatype.org/
 - "close" the staging repository (verify that their requirements are satisfied)
 - "release" it
-- if this is a first release in this namespace, comment on the Jira ticket so that Sonatype 
-can start synchronizing the artifacts to Maven Central.
   
-TODO multi-module projects
+
+If this is a first release in this namespace, comment on the namespace claim ticket so that Sonatype 
+can start synchronizing the artifacts to Maven Central. Formy second namespace I received this reply:
+> Central sync is activated for org.opentorah.
+> After you successfully release, your component will be published to Central,
+> typically within 10 minutes, though updates to search.maven.org can take up to two hours.
+
+In this context, "Central" means https://repo1.maven.org/maven2/
+
 
 TODO nexus Gradle plugin(s)
+//id 'io.codearte.nexus-staging' version '0.22.0' ? or something else that gets credentials from maven-publish?
 
 
 

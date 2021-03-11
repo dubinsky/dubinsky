@@ -9,7 +9,7 @@ blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-26052775496708258
 blogger_orig_url: https://blog.dub.podval.org/2011/11/how-do-you-identify-talented.html
 ---
 
-In a wonderful book, [Coders at Work](http://www.amazon.com/Coders-Work-Reflections-Craft-Programming/dp/1430219483)",
+In a wonderful book, ["Coders at Work"](http://www.amazon.com/Coders-Work-Reflections-Craft-Programming/dp/1430219483),
 [Peter Seibel](http://gigamonkeys.wordpress.com/) asks a bunch of well-known programmers interesting quetions. Highly
 recommended!
 
