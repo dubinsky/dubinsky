@@ -1,9 +1,9 @@
 [website: http://dub.podval.org](http://dub.podval.org)
 
 ![](https://img.shields.io/badge/OS-Linux-informational?logo=linux)
-![](https://img.shields.io/badge/OS-Red_Hat-informational?logo=red-hat)
+![](https://img.shields.io/badge/OS-Red_Hat-informational?logo=red-hat&logoColor=red)
 ![](https://img.shields.io/badge/IDE-Intellij-important?logo=intellij-idea)
-![](https://img.shields.io/badge/Code-Scala-critical?logo=Scala)
+[![](https://img.shields.io/badge/Code-Scala-critical?logo=Scala&logoColor=red)](https://www.scala-lang.org/)
 ![](https://img.shields.io/badge/Tools-Gradle-important?logo=Gradle)
 ![](https://img.shields.io/badge/Tools-Docker-informational?logo=Docker)
 ![](https://img.shields.io/badge/Cloud-GCP-informational?logo=google-cloud)
