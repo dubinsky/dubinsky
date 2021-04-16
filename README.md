@@ -38,14 +38,14 @@
  [16](https://github.com/github-actions-x/commit/issues/16);
 [Scala](https://github.com/scala/bug/):
  [11963](https://github.com/scala/bug/issues/11963);
-[Scala XML](https://github.com/scala/scala-xml):
- [506](https://github.com/scala/scala-xml/issues/506),
- [508](https://github.com/scala/scala-xml/issues/508);
 [http4s](https://github.com/http4s/http4s):
  [3565](https://github.com/http4s/http4s/issues/3565);
 [Jib](https://github.com/GoogleContainerTools/jib):
  [2105](https://github.com/GoogleContainerTools/jib/issues/2105);
 [Bintray](https://github.com/bintray):
  [329](https://github.com/bintray/gradle-bintray-plugin/issues/329);
+[Scala XML](https://github.com/scala/scala-xml):
+ [506](https://github.com/scala/scala-xml/issues/506),
+ [508](https://github.com/scala/scala-xml/issues/508);
 [ScalaTest Gradle plugin](https://github.com/maiflai):
  [92](https://github.com/maiflai/gradle-scalatest/issues/92).
