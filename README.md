@@ -1,5 +1,3 @@
-[website: http://dub.podval.org](http://dub.podval.org)
-
 [![](https://img.shields.io/badge/OS-Linux-informational?logo=linux)](https://www.linux.org/)
 [![](https://img.shields.io/badge/OS-Red_Hat-informational?logo=red-hat&logoColor=red)](https://getfedora.org/)
 [![](https://img.shields.io/badge/IDE-Intellij-important?logo=intellij-idea)](https://www.jetbrains.com/idea/)
