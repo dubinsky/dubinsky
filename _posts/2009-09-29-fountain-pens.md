@@ -540,7 +540,7 @@ Sakura [Micron Pigma](http://www.sakuraofamerica.com/Pen-Archival):
 
 ## Бумага и причиндалы ##
 
-</b>Рассуждения о бумаге и смежных вопросах я вынес в отдельную <a href="http://blog.dub.podval.org/2011/03/what-to-write-in-what.html">статью</a>.an&gt;
+Рассуждения о бумаге и смежных вопросах я вынес в отдельную <a href="http://blog.dub.podval.org/2011/03/what-to-write-in-what.html">статью</a>
 
 <a href="http://diamondearringsnow.net/wp-content/plugins/WPRobot3/images/3fc28_diamond_grading_612B0HaQX-bL._SL160_.gif" imageanchor="1" style="clear: right; float: right; margin-bottom: 1em; margin-left: 1em;"><img border="0" src="http://diamondearringsnow.net/wp-content/plugins/WPRobot3/images/3fc28_diamond_grading_612B0HaQX-bL._SL160_.gif" /></a> Бывает, что кончик пера надо слегка поправить. Например, одна половинка зацепилась за другую. Для того, чтобы видеть, что происходит, <a href="http://www.amateurgeologist.com/">нужно</a> <a href="http://www.geo-tools.com/lens.htm">купить</a> <a href="http://www.richardspens.com/?page=extrafine/xf0709.htm">лупу</a> - вещь, полезную в хозяйстве.
 

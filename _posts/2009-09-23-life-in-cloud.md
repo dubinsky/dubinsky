@@ -15,12 +15,12 @@ I want to try "living in the cloud" - no packages installed on my server.
 
 I prefer to use Google services in general - for simplicity.
 I strongly prefer to use Google services for the collaborative functions, because I can express permissions in terms
-of Google ids (which everybody have). Also, there is a potential for the integration between the services that are
+of Google ids (which everybody has). Also, there is a potential for the integration between the services that are
 owned by the same company - although Google does not always develops this potential ;)
 
 ### Email ###
 
-In the beginning I realized that I wan to be able to access my email from multiple computers. Which means that all the
+In the beginning I realized that I want to be able to access my email from multiple computers. Which means that all the
 mail had to be kept on the server. Although that is possible with POP, finding anything among years of accumulated email
 is only practical when it can be filed in folders, which POP does not support. It turned out that there is an
 alternative: IMAP. IMAP has its drawbacks: email application has to be configured on every machine; search across the
@@ -38,7 +38,7 @@ provider cut me off until I closed the open email relay I inadvertently created.
 to all my users was about to bounce! Then I remembered that Google just opened for testing a new service: Google Apps
 for your Domain! I applied, was approved, and moved the email flow to Google in one day.
   
-After the move, I can access my emal from any computer without any setup. Search capabilities, compared to IMAP,
+After the move, I can access my email from any computer without any setup. Search capabilities, compared to IMAP,
 improved drastically. Switch from folder hierarchy to one-level labels what somewhat trying, but GMail now supports
 multiple levels of labels anyway :)
 
@@ -109,9 +109,9 @@ between Google Bookmarks and Chrome Bookmarks...
 I switched to [Pinboard](Pinboard) in 2013; it does not have social features, but I do not need them either.
 (As a bonus, it has an interesting pricing model.)
 
-### Notetaking ###
+### Note-taking ###
 
-Research: Goole Keep (and not Evernote :)); how about a merge between bookmarks, news and research?
+Research: Google Keep (and not Evernote :)); how about a merge between bookmarks, news and research?
 
 ### Tasks List ###
 
