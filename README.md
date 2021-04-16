@@ -2,9 +2,9 @@
 
 ![](https://img.shields.io/badge/OS-Linux-informational?logo=linux)
 ![](https://img.shields.io/badge/OS-Red_Hat-informational?logo=red-hat)
-![](https://img.shields.io/badge/IDE-Intellij-informational?logo=intellij-idea)
-![]([https://img.shields.io/badge/Code-Scala-informational?logo=Scala])
-![](https://img.shields.io/badge/Tools-Gradle-informational?logo=Gradle)
+![](https://img.shields.io/badge/IDE-Intellij-important?logo=intellij-idea)
+![](https://img.shields.io/badge/Code-Scala-critical?logo=Scala)
+![](https://img.shields.io/badge/Tools-Gradle-important?logo=Gradle)
 ![](https://img.shields.io/badge/Tools-Docker-informational?logo=Docker)
 ![](https://img.shields.io/badge/Cloud-GCP-informational?logo=google-cloud)
 
@@ -14,7 +14,7 @@
  [5](https://github.com/rototor/jeuclid/pull/5);
 [CETEIcean](https://github.com/TEIC/CETEIcean):
  [23](https://github.com/TEIC/CETEIcean/pull/23),
- [35](https://github.com/TEIC/CETEIcean/pull/35)
+ [35](https://github.com/TEIC/CETEIcean/pull/35),
  [37](https://github.com/TEIC/CETEIcean/pull/37);
 [XMLResolver](https://github.com/ndw/xmlresolver):
  [28](https://github.com/ndw/xmlresolver/pull/28);

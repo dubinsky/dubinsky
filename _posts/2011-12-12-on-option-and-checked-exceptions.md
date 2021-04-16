@@ -14,10 +14,10 @@ I went to a Scala [workshop](http://www.artima.com/shop/scala_boston) run by
 [Dick Wall](https://www.artima.com/weblogs/index.jsp?blogger=dickwall). Among other useful tidbits I learned, there
 happened an interesting discussion about Option types and exceptions. Here is the gist.
 
-Disck is a proponent of Option types. He said that once he switched from the
+Dick is a proponent of Option types. He said that once he switched from the
 [evil nulls](http://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mistake-Tony-Hoare) to Option, 80% of
 the bugs in his code - caused by NullPointerException - went away. I commented that NPEs did not go away, but turned
-into whatever gets thrown when you do ".get" on an undefined Option. Dick explained that that the bugs went away because
+into whatever gets thrown when you do ".get" on an undefined Option. Dick explained that the bugs went away because
 the use of Option forces the programmer to explicitly deal with the handling of undefined Option values - or the code
 won't compile.
 
@@ -73,7 +73,7 @@ Scala anyway :)).
 
 (Either <u>is</u> (I think) used in Haskell l to represent exceptions, but jumping over stack frame is not really an
 option in a purely functional setting :) Also, the pain of explicit propagation of the Either values is alleviated by
-monads and syntax sugar, if the memory serves.)
+monads and syntax sugar, if memory serves.)
 
 Dick mentioned that just like with Option, there are combinators in Scala that allow computation to be expressed in a
 smooth way, without analyzing the intermediary Either values at each step - and still taking them into account.
