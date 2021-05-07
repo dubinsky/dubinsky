@@ -33,7 +33,7 @@ line - and not from within the process?
 I am starting to understand that, I think. I tried a simplified approach - just `&` on the command line; close
 everything from within the process. It works fine on Fedora 14 under bash: shell prints the pid of the backgrounded
 process and continues; the process logs to console and to log file, then closes everything and runs as a daemon. On
-CentOs under tcsh the results are very different: the shell prints the pid, but after I press <enter>, the shell prints
+CentOs under tcsh the results are very different: the shell prints the pid, but after I press `<enter>`, the shell prints
 "Suspended (tty output)"; nothing gets logged to console; only the first line gets logged to the log file; the process
 is not running.
 

@@ -22,6 +22,16 @@
  [22](https://github.com/owo-lang/intellij-dtlc/pull/22).
 
 **issues:**
+[Gradle](https://github.com/gradle/gradle):
+ [9885](https://github.com/gradle/gradle/issues/9855),
+ [16527](https://github.com/gradle/gradle/issues/16527);
+[Bintray](https://github.com/bintray):
+ [329](https://github.com/bintray/gradle-bintray-plugin/issues/329);
+[Jib](https://github.com/GoogleContainerTools/jib):
+ [2105](https://github.com/GoogleContainerTools/jib/issues/2105);
+[GitHub Commit Action](https://github.com/github-actions-x/commit):
+ [2](https://github.com/github-actions-x/commit/issues/2),
+ [16](https://github.com/github-actions-x/commit/issues/16);
 [cloud-builders](https://github.com/GoogleCloudPlatform/cloud-builders):
  [417](https://github.com/GoogleCloudPlatform/cloud-builders/issues/417);
 [CETEIcean](https://github.com/TEIC/CETEIcean):
@@ -29,21 +39,12 @@
  [36](https://github.com/TEIC/CETEIcean/issues/36),
  [38](https://github.com/TEIC/CETEIcean/issues/38),
  [39](https://github.com/TEIC/CETEIcean/issues/39);
-[Gradle](https://github.com/gradle/gradle):
- [9885](https://github.com/gradle/gradle/issues/9855);
-[GitHub Commit Action](https://github.com/github-actions-x/commit):
- [2](https://github.com/github-actions-x/commit/issues/2),
- [16](https://github.com/github-actions-x/commit/issues/16);
 [Scala](https://github.com/scala/bug/):
  [11963](https://github.com/scala/bug/issues/11963);
-[http4s](https://github.com/http4s/http4s):
- [3565](https://github.com/http4s/http4s/issues/3565);
-[Jib](https://github.com/GoogleContainerTools/jib):
- [2105](https://github.com/GoogleContainerTools/jib/issues/2105);
-[Bintray](https://github.com/bintray):
- [329](https://github.com/bintray/gradle-bintray-plugin/issues/329);
 [Scala XML](https://github.com/scala/scala-xml):
  [506](https://github.com/scala/scala-xml/issues/506),
  [508](https://github.com/scala/scala-xml/issues/508);
 [ScalaTest Gradle plugin](https://github.com/maiflai):
- [92](https://github.com/maiflai/gradle-scalatest/issues/92).
+ [92](https://github.com/maiflai/gradle-scalatest/issues/92);
+[http4s](https://github.com/http4s/http4s):
+ [3565](https://github.com/http4s/http4s/issues/3565).

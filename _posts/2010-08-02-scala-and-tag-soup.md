@@ -24,20 +24,20 @@ both by Florian Hars.
 Unless I am missing something, at least in Scala 2.8 there is a simpler solution:
 ```scala
 import scala.xml.{Elem, XML}
-  import scala.xml.factory.XMLLoader
+import scala.xml.factory.XMLLoader
     
-  import org.ccil.cowan.tagsoup.jaxp.SAXFactoryImpl
+import org.ccil.cowan.tagsoup.jaxp.SAXFactoryImpl
     
     
-  object TagSoupXmlLoader {
+object TagSoupXmlLoader {
     
-    private val factory = new SAXFactoryImpl()
+  private val factory = new SAXFactoryImpl()
   
     
-    def get(): XMLLoader[Elem] = {
-      XML.withSAXParser(factory.newSAXParser())
-    }
+  def get(): XMLLoader[Elem] = {
+    XML.withSAXParser(factory.newSAXParser())
   }
+}
 ```
 
 Strictly speaking, the class is not needed; one-liner

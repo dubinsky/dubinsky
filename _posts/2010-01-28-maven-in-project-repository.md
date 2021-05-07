@@ -79,11 +79,11 @@ SHA1 checksums are not necessary either - if you indicate in the repository defi
 ignored.
 
 This structure can be created manually - or using Maven itself, thus reducing the risk of typos
-(thank you +[vmp](http://www.blogger.com/profile/18172568217105448018) for the idea
-and +[Jeremy](http://www.blogger.com/profile/06300558549133430072) for the generatePom tip!):
+(thank you @[vmp](http://www.blogger.com/profile/18172568217105448018) for the idea
+and @[Jeremy](http://www.blogger.com/profile/06300558549133430072) for the generatePom tip!):
 
 Install the artifact in the local repository with
-```
+```shell
 mvn install:install-file -Dfile=myArtifact.jar -DgroupId=x.y.z -DartifactId=${artifactId} -Dversion=${version} -Dpackaging=jar -DgeneratePom=true
 ```
 and then copy resulting files from the local repository into the in-project one.
