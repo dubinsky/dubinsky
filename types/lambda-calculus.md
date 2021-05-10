@@ -2,6 +2,7 @@
 layout: page
 math: true
 ---
+
 # Untyped lambda-calculus #
 
 ## Definition ##
@@ -106,15 +107,15 @@ sub = λmn.n pred m
 
 leq = λmn.iszero (sub m n)
 
-## Fixpoints ##
+## Fixed points ##
 
-u is a _fixpoint_ of term u if t u →*<sub>β</sub> u; in lambda-calculus,
-**every** term has a fixpoint, **and** there is a term Y (_fixpoint combinator_)
-such that Yt is a fixpoint of t! For example:
+u is a _fixed point_ of term u if t u →*<sub>β</sub> u; in lambda-calculus,
+**every** term has a fixed point, **and** there is a term Y (_fixed point combinator_)
+such that Yt is a fixed point of t! For example:
 - _Curry fixpoint combinator_: Y = λf.(λx.f(xx))(λx.f(xx))
 - _Turing fixpoint combinator_: ϴ = (λfx.x(ffx))(λfx.x(ffx))
 
-(Fixpoint combinator is the Russel paradox in disguise when terms are read as
+(Fixed point combinator is the Russel paradox in disguise when terms are read as
 predicates, λx.t is read as {x | t}, and tu is read as u ∈ t.)
 
 Functions definable in lambda-calculus are precisely the recursive ones 
@@ -165,13 +166,23 @@ used in implementation of functional programming languages.
 ## Models ##
 
 Setting aside combinatory algebra models, classic model of the untyped
-lambda calculus is [domains](https://ncatlab.org/nlab/show/domain+theory)
-introduced by Dana Scott in 1969,
+lambda calculus uses [domains](https://ncatlab.org/nlab/show/domain+theory),
 where the conundrum of D≅D⇒D resulting from the fact that in untyped lambda calculus
 everything is a function and anything can be applied to anything gets resolved by
 considering _continuous_ functions.
 
-## Bibliography ##
+## Problems ##
+
+Some properties contradict our intuitions about functions:
+- everything can be applied to everything (including itself);
+- everything has a fixed point;
+- a term is not guaranteed to have a normal form (some calculations get stuck).
+
+# Simply typed lambda-calculus #
+
+TODO
+
+# Bibliography #
 
 [Mim20] "Program = Proof", Mimram, [2020](https://www.lix.polytechnique.fr/Labo/Samuel.Mimram/teaching/INF551/course.pdf)
 
@@ -184,3 +195,5 @@ considering _continuous_ functions.
 [NG14] "Type Theory and Formal Proof", Nederpelt & Geuvers, 2014
 
 [Sch24] "Uber die Bausteine der mathematischen Logik", Schonfinkel, 1924.
+
+[SS71] "Toward a Mathematical Semantics for Computer Languages", Scott & Strachey, 1971.
