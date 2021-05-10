@@ -2,7 +2,7 @@
 layout: page
 math: true
 ---
-# Lambda-calculus #
+# Untyped lambda-calculus #
 
 ## Definition ##
 
@@ -25,13 +25,14 @@ term with no free variables is _closed_.
 
 _χ-reduction_ is the smallest binary relation on terms
 such that when t →<sub>χ</sub> t' then also:
-- λx.t →<sub>χ</sub> λx.t';
+- λx.t →<sub>χ</sub> λx.t' (ξ-reduction);
 - tu →<sub>χ</sub> t'u;
 - ut →<sub>χ</sub> ut'
 
 and:
 
-α-reduction: λx.t →<sub>α</sub> λy.t', where t' is t with all free occurrences of x renamed to y.
+α-reduction: λx.t →<sub>α</sub> λy.t', where t' is t with all free occurrences of x
+renamed to y;
 
 β-reduction: (λx.t)u →<sub>β</sub> t[u/x], where substitution t[u/x] is the t
 with all free occurrences of x replaced by u ((λx.t)u is called a _redex_);
@@ -124,6 +125,9 @@ together with the corresponding reduction rules.
 
 ## Reduction strategies ##
 
+Order of reduction (arguments first, function first etc.) can affect
+the length of the reduction, length of intermediate terms and its termination.
+
 Orders on redexes:
  - all the redexes of t and u are _inside_ the redex (λx.t)u;
  - all the redexes of t are to the _left_ of all the redexes of u in tu.
@@ -157,6 +161,15 @@ So, every λ-term can be encoded as a binary word ;)
 
 Besides being cute, nameless (combinator-based) representations of λ-terms are
 used in implementation of functional programming languages.
+
+## Models ##
+
+Setting aside combinatory algebra models, classic model of the untyped
+lambda calculus is [domains](https://ncatlab.org/nlab/show/domain+theory)
+introduced by Dana Scott in 1969,
+where the conundrum of D≅D⇒D resulting from the fact that in untyped lambda calculus
+everything is a function and anything can be applied to anything gets resolved by
+considering _continuous_ functions.
 
 ## Bibliography ##
 
