@@ -1,5 +1,6 @@
 ---
 layout: page
+title: Lambda-calculus
 math: true
 ---
 
@@ -173,10 +174,14 @@ considering _continuous_ functions.
 
 ## Problems ##
 
-Some properties contradict our intuitions about functions:
+Some properties of the untyped lambda-calculus contradict intuitions about functions:
 - everything can be applied to everything (including itself);
 - everything has a fixed point;
 - a term is not guaranteed to have a normal form (some calculations get stuck).
+
+The main problem is that since there is only one type, and propositions **are** types,
+it is impossible to express the properties of the functions being defined.
+We need to introduce types - starting with the simple ones.
 
 # Simply typed lambda-calculus #
 
