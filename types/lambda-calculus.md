@@ -4,9 +4,9 @@ title: Lambda-calculus
 math: true
 ---
 
-# Untyped lambda-calculus #
+## Untyped lambda-calculus ##
 
-## Definition ##
+### Definition ###
 
 When we get to dependent types, where well-formedness of the terms depends on the
 types of the variables, terms will need to be defined using judgements; here a
@@ -60,12 +60,15 @@ Term is _strongly normalizing_ when every sequence of reductions will eventually
 normal form.
 
 Not all terms a strongly normalizing; for example, Ω = (λx.xx)(λx.xx) reduces
-to itself. But, if t →*<sub>β</sub> u<sub>1</sub> and t →*<sub>β</sub> u<sub>2</sub>,
-there exists such v that u<sub>1</sub> →*<sub>β</sub> v and u<sub>2</sub> →*<sub>β</sub> v
-(_confluence_, _Church-Rosser property_).
+to itself. But (_confluence_, _Church-Rosser property_):
+ - if t →*<sub>β</sub> u<sub>1</sub>
+ - and t →*<sub>β</sub> u<sub>2</sub>,
 
+there exists such v that:
+- u<sub>1</sub> →*<sub>β</sub> v
+- and u<sub>2</sub> →*<sub>β</sub> v.
 
-## Encodings ##
+### Encodings ###
 
 We can (and will eventually) _extend_ the calculus by adding new term forms together with the corresponding reduction rules.
 It is possible to _encode_ common types and data structures in the untyped lambda calculus.
@@ -106,7 +109,7 @@ sub = λmn.n pred m
 
 leq = λmn.iszero (sub m n)
 
-## Fixed points ##
+### Fixed points ###
 
 u is a _fixed point_ of term u if t u →*<sub>β</sub> u; in lambda-calculus,
 **every** term has a fixed point, **and** there is a term Y (_fixed point combinator_)
@@ -120,7 +123,7 @@ predicates, λx.t is read as {x | t}, and tu is read as u ∈ t.)
 Functions definable in lambda-calculus are precisely the recursive ones 
 (_Kleene theorem_).
 
-## Reduction strategies ##
+### Reduction strategies ###
 
 Orders on redexes:
  - all the redexes of t and u are _inside_ the redex (λx.t)u;
@@ -135,7 +138,7 @@ Reduction strategy determines the order in which the redexes in a term get reduc
 - _normal order_ strategy is leftmost outermost; it is normalizing: if the term has
   a normal form, this strategy will find it (_standartization theorem_).
 
-## Combinatory logic ##
+### Combinatory logic ###
 
 All λ-terms can be built (up to β-equivalence) from just three _combinators_, thus avoiding
 variables, α-conversion and all that, and formulating β-reduction directly on the combinators:
@@ -156,7 +159,7 @@ So, every λ-term can be encoded as a binary word ;)
 Besides being cute, nameless (combinator-based) representations of λ-terms are
 used in implementation of functional programming languages.
 
-## Models ##
+### Models ###
 
 Setting aside combinatory algebra models, classic model of the untyped
 lambda calculus uses [domains](https://ncatlab.org/nlab/show/domain+theory),
@@ -164,7 +167,7 @@ where the conundrum of D≅D⇒D resulting from the fact that in untyped lambda 
 everything is a function and anything can be applied to anything gets resolved by
 considering _continuous_ functions.
 
-## Problems ##
+### Problems ###
 
 Some properties of the untyped lambda-calculus contradict intuitions about functions:
 - everything can be applied to everything (including itself);
@@ -175,11 +178,11 @@ The main problem is that since there is only one type, and propositions **are** 
 it is impossible to express the properties of the functions being defined.
 We need to introduce types - starting with the simple ones.
 
-# Simply typed lambda-calculus #
+## Simply typed lambda-calculus ##
 
 TODO
 
-# Bibliography #
+## Bibliography ##
 
 [Mim20] "Program = Proof", Mimram, [2020](https://www.lix.polytechnique.fr/Labo/Samuel.Mimram/teaching/INF551/course.pdf)
 
