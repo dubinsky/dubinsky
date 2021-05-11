@@ -12,10 +12,10 @@ When we get to dependent types, where well-formedness of the terms depends on th
 types of the variables, terms will need to be defined using judgements; here a
 simple grammar is sufficient; assuming infinite countable set Variable of variables:
 
-Term ::=          (t, u...)
- - Variable |     (x, y, ...)
- - λ Variable . Term |  (_abstraction_)
- - Term Term            (_application_)
+Term ::=               (t, u...)
+ - Variable            (x, y, ...)
+ - λ Variable . Term   (_abstraction_)
+ - Term Term           (_application_)
 
 Conventions:
   - application associates to the left: tuv means (tu)v;
@@ -32,14 +32,11 @@ such that when t →<sub>χ</sub> t' then also:
 - ut →<sub>χ</sub> ut'
 
 and:
-
-α-reduction: λx.t →<sub>α</sub> λy.t', where t' is t with all free occurrences of x
+- α-reduction: λx.t →<sub>α</sub> λy.t', where t' is t with all free occurrences of x
 renamed to y;
-
-β-reduction: (λx.t)u →<sub>β</sub> t[u/x], where substitution t[u/x] is the t
+- β-reduction: (λx.t)u →<sub>β</sub> t[u/x], where substitution t[u/x] is the t
 with all free occurrences of x replaced by u ((λx.t)u is called a _redex_);
-
-η-reduction (extensionality): λx.t →<sub>η</sub> t.
+- η-reduction (extensionality): λx.t →<sub>η</sub> t.
 
 When substituting a term for a bound variable, care needs to be taken not to
 accidentally "capture" a variable that is free in that term. This is a great pain
@@ -62,7 +59,7 @@ Term t is _weekly normalizing_ if there exist a normal form u such that t →*<s
 Term is _strongly normalizing_ when every sequence of reductions will eventually produce a
 normal form.
 
-Not all terms a strongly normalizing: Ω = (λx.xx)(λx.xx) reduces
+Not all terms a strongly normalizing; for example, Ω = (λx.xx)(λx.xx) reduces
 to itself. But, if t →*<sub>β</sub> u<sub>1</sub> and t →*<sub>β</sub> u<sub>2</sub>,
 there exists such v that u<sub>1</sub> →*<sub>β</sub> v and u<sub>2</sub> →*<sub>β</sub> v
 (_confluence_, _Church-Rosser property_).
@@ -70,7 +67,8 @@ there exists such v that u<sub>1</sub> →*<sub>β</sub> v and u<sub>2</sub> →
 
 ## Encodings ##
 
-It is possible to encode common types and data structures in lambda calculus.
+We can (and will eventually) _extend_ the calculus by adding new term forms together with the corresponding reduction rules.
+It is possible to _encode_ common types and data structures in the untyped lambda calculus.
 
 identity: I = λx.x
 
@@ -122,13 +120,7 @@ predicates, λx.t is read as {x | t}, and tu is read as u ∈ t.)
 Functions definable in lambda-calculus are precisely the recursive ones 
 (_Kleene theorem_).
 
-Instead of encoding things like products, new term forms can be added
-together with the corresponding reduction rules.
-
 ## Reduction strategies ##
-
-Order of reduction (arguments first, function first etc.) can affect
-the length of the reduction, length of intermediate terms and its termination.
 
 Orders on redexes:
  - all the redexes of t and u are _inside_ the redex (λx.t)u;
@@ -154,7 +146,7 @@ variables, α-conversion and all that, and formulating β-reduction directly on 
 Actually, just S and K suffice as the "basis" of the λ-calculus, 
 since I can be defined as S K K.
 
-Indeed, one combinator is sufficient: ι = λx.xSK; we can then define:
+Indeed, _one_ combinator is sufficient: ι = λx.xSK; we can then define:
 - I = ιι;
 - K = ι(ι(ιι));
 - S = ι(ι(ι(ιι))).
