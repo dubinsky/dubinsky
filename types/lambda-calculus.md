@@ -28,8 +28,8 @@ term with no free variables is _closed_.
 _χ-reduction_ is the smallest binary relation on terms
 such that when t →<sub>χ</sub> t' then also:
 - λx.t →<sub>χ</sub> λx.t' (ξ-reduction);
-- tu →<sub>χ</sub> t'u;
-- ut →<sub>χ</sub> ut'
+- tu →<sub>χ</sub> t'u (congruence);
+- ut →<sub>χ</sub> ut' (congruence)
 
 and:
 - α-reduction: λx.t →<sub>α</sub> λy.t', where t' is t with all free occurrences of x
@@ -71,7 +71,7 @@ there exists such v that:
 ### Encodings ###
 
 We can (and will eventually) _extend_ the calculus by adding new term forms together with the corresponding reduction rules.
-It is possible to _encode_ common types and data structures in the untyped lambda calculus.
+It is also possible to _encode_ common types and data structures in the untyped lambda calculus:
 
 identity: I = λx.x
 
@@ -114,8 +114,8 @@ leq = λmn.iszero (sub m n)
 u is a _fixed point_ of term u if t u →*<sub>β</sub> u; in lambda-calculus,
 **every** term has a fixed point, **and** there is a term Y (_fixed point combinator_)
 such that Yt is a fixed point of t! For example:
-- _Curry fixpoint combinator_: Y = λf.(λx.f(xx))(λx.f(xx))
-- _Turing fixpoint combinator_: ϴ = (λfx.x(ffx))(λfx.x(ffx))
+- _Curry fixed point combinator_: Y = λf.(λx.f(xx))(λx.f(xx))
+- _Turing fixed point combinator_: ϴ = (λfx.x(ffx))(λfx.x(ffx))
 
 (Fixed point combinator is the Russel paradox in disguise when terms are read as
 predicates, λx.t is read as {x | t}, and tu is read as u ∈ t.)
@@ -136,18 +136,17 @@ Reduction strategy determines the order in which the redexes in a term get reduc
 - left strategy is _head_ if it never reduces variable applications x t1 ... tn even
   if some ti has redexes.
 - _normal order_ strategy is leftmost outermost; it is normalizing: if the term has
-  a normal form, this strategy will find it (_standartization theorem_).
+  a normal form, this strategy will find it (_standardization theorem_).
 
 ### Combinatory logic ###
 
 All λ-terms can be built (up to β-equivalence) from just three _combinators_, thus avoiding
 variables, α-conversion and all that, and formulating β-reduction directly on the combinators:
-- I = λx.x (identity; using the variable);
-- S = λxyz.(xz)(yz) (duplicating the variable);
+- I = λx.x (using a variable);
+- S = λxyz.(xz)(yz) (duplicating a variable);
 - K = λxy.x (erasing a variable).
 
-Actually, just S and K suffice as the "basis" of the λ-calculus, 
-since I can be defined as S K K.
+Actually, just S and K suffice as the "basis" of the λ-calculus, since I = S K K.
 
 Indeed, _one_ combinator is sufficient: ι = λx.xSK; we can then define:
 - I = ιι;
