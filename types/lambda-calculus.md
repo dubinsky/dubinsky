@@ -12,12 +12,14 @@ When we get to dependent types, where well-formedness of the terms depends on th
 types of the variables, terms will need to be defined using judgements; here a
 simple grammar is sufficient; assuming infinite countable set Variable of variables:
 
-Term ::=                 (t, u...)
- - Variable           \| (x, y, ...)
+Term ::=                 
+ - Variable           \|
  - λ Variable . Term  \| (_abstraction_)
  - Term Term             (_application_)
 
 Conventions:
+  - x, y, ... are variables;
+  - t, u... are terms;  
   - application associates to the left: tuv means (tu)v;
   - application binds stronger than the abstraction: λx.xy means λx.(xy);
   - abstractions can be grouped: λxyz.xz(yz) means λx.λy.λz.xz(yz).
@@ -38,12 +40,6 @@ renamed to y;
 with all free occurrences of x replaced by u ((λx.t)u is called a _redex_);
 - η-reduction (extensionality): λx.t →<sub>η</sub> t.
 
-When substituting a term for a bound variable, care needs to be taken not to
-accidentally "capture" a variable that is free in that term. This is a great pain
-for the implementer, and various tricks were developed to ease it (de-Brujin
-indices, Barendregt convention); we will say no more about it, and just assume
-that before substitution all variables that need to be distinct are given fresh names :)
-
 _χ-expansion_ is a relation opposite to →<sub>χ</sub>;
 ↠<sub>χ</sub> (multi-step reduction; reduction path) is the reflexive and transitive
 closure of →<sub>χ</sub>; ＝<sub>χ</sub> (χ-equivalence, χ-convertability) is the symmetric closure
@@ -57,25 +53,28 @@ reduces to itself), but (_confluence_, _Church-Rosser property_):
 if t ↠<sub>β</sub> u<sub>1</sub> and t ↠<sub>β</sub> u<sub>2</sub>,
 there exists such v that: u<sub>1</sub> ↠<sub>β</sub> v and u<sub>2</sub> ↠<sub>β</sub> v.
 
+When substituting a term for a bound variable, care needs to be taken not to
+accidentally "capture" a variable that is free in that term. This is a great pain
+for the implementers (who can't just say that terms are equivalence classes
+by ＝<sub>α</sub>), and various tricks were developed to ease it (de-Brujin
+indices, Barendregt convention); we will say no more about it, and just assume
+that before substitution all variables that need to be distinct are given fresh names :)
+
 ### Encodings ###
 
 We can (and eventually will) _extend_ the calculus by adding new term forms together
 with the corresponding reduction rules.
 It is also possible to just _encode_ common types and data structures in the untyped lambda calculus:
 - identity: I = λx.x
-- boolean 'true': T = λxy.x
-- boolean 'false': F = λxy.y
+- booleans: T = λxy.x; F = λxy.y
 - if-then-else: if = λbxy.bxy (if T t u ↠<sub>β</sub> t etc.)
 - logical operations: and = λxy.xyF; or = λxy.xTy; nor = λx.xFT;
-- product: pair = λxyb. if b x y 
-- projections: π<sub>1</sub> = λp.pT; π<sub>2</sub> = λp.pF
+- product and projections: pair = λxyb. if b x y; π<sub>1</sub> = λp.pT; π<sub>2</sub> = λp.pF
 (π<sub>1</sub>(pair t u) ↠<sub>β</sub> t; π<sub>2</sub>(pair t u) ↠<sub>β</sub> u)
 - Church numerals: **n** = λfx.f(f(...(fx))) where f is applied n times
-- 0 = λnfx.x
+- **0** = λnfx.x
 - succ = λnfx.f(nfx)
-- add = λmnfx.m succ n
-- mul = λmnfx.m (add n) 0
-- exp = λmn.n (mul m) 1
+- add = λmnfx.m succ n; mul = λmnfx.m (add n) 0; exp = λmn.n (mul m) 1
 - iszero = λnxy.n(λz.y)x
 - pred = λnfx.n(λgh.h(gf))(λy.x)(λy.y)
 - sub = λmn.n pred m
