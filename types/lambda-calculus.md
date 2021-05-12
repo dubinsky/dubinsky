@@ -6,20 +6,13 @@ math: true
 
 ## Untyped lambda-calculus ##
 
-### Definition ###
-
-When we get to dependent types, where well-formedness of the terms depends on the
-types of the variables, terms will need to be defined using judgements; here a
-simple grammar is sufficient; assuming infinite countable set Variable of variables:
-
-Term ::=                 
- - Variable           \|
- - λ Variable . Term  \| (_abstraction_)
- - Term Term             (_application_)
+Assuming infinite (countable) set Variable of variables (x, y, ...),
+Term (t, u, ...) is:
+- Variable           or
+- λ Variable . Term  (_abstraction_) or
+- Term Term          (_application_)
 
 Conventions:
-  - x, y, ... are variables;
-  - t, u... are terms;  
   - application associates to the left: tuv means (tu)v;
   - application binds stronger than the abstraction: λx.xy means λx.(xy);
   - abstractions can be grouped: λxyz.xz(yz) means λx.λy.λz.xz(yz).
@@ -27,7 +20,7 @@ Conventions:
 Variable x in λx.t is _bound_; variable than is not bound is _free_;
 term with no free variables is _closed_.
 
-_χ-reduction_ is the smallest binary relation on terms
+_χ-reduction_ is the least binary relation on terms
 such that when t →<sub>χ</sub> t' then also:
 - λx.t →<sub>χ</sub> λx.t' (ξ-reduction);
 - tu →<sub>χ</sub> t'u (congruence);
@@ -36,11 +29,11 @@ such that when t →<sub>χ</sub> t' then also:
 and:
 - α-reduction: λx.t →<sub>α</sub> λy.t', where t' is t with all free occurrences of x
 renamed to y;
-- β-reduction: (λx.t)u →<sub>β</sub> t[u/x], where substitution t[u/x] is the t
-with all free occurrences of x replaced by u ((λx.t)u is called a _redex_);
+- β-reduction: (λx.t)u →<sub>β</sub> t', where t' is t with all free occurrences of x
+replaced by u (_substitution_, t[u/x]);
 - η-reduction (extensionality): λx.t →<sub>η</sub> t.
 
-_χ-expansion_ is a relation opposite to →<sub>χ</sub>;
+if t →<sub>χ</sub> u, t is a χ-redex; _χ-expansion_ is a relation opposite to →<sub>χ</sub>;
 ↠<sub>χ</sub> (multi-step reduction; reduction path) is the reflexive and transitive
 closure of →<sub>χ</sub>; ＝<sub>χ</sub> (χ-equivalence, χ-convertability) is the symmetric closure
 of ↠<sub>χ</sub>.
@@ -63,16 +56,19 @@ that before substitution all variables that need to be distinct are given fresh 
 ### Encodings ###
 
 We can (and eventually will) _extend_ the calculus by adding new term forms together
-with the corresponding reduction rules.
+with the corresponding reduction rules. For example, for products,
+we can add three forms of terms -
+〈t<sub>1</sub>, t<sub>2</sub>〉, π<sub>1</sub> and π<sub>2</sub> and two
+β-reduction rules - π<sub>i</sub>〈t<sub>1</sub>, t<sub>2</sub>〉→<sub>β</sub> t<sub>i</sub>.
+
 It is also possible to just _encode_ common types and data structures in the untyped lambda calculus:
 - identity: I = λx.x
 - booleans: T = λxy.x; F = λxy.y
-- if-then-else: if = λbxy.bxy (if T t u ↠<sub>β</sub> t etc.)
+- if-then-else: if = λbxy.bxy (if T t u ↠<sub>β</sub> t; if F t u ↠<sub>β</sub> u)
 - logical operations: and = λxy.xyF; or = λxy.xTy; nor = λx.xFT;
 - product and projections: pair = λxyb. if b x y; π<sub>1</sub> = λp.pT; π<sub>2</sub> = λp.pF
-(π<sub>1</sub>(pair t u) ↠<sub>β</sub> t; π<sub>2</sub>(pair t u) ↠<sub>β</sub> u)
-- Church numerals: **n** = λfx.f(f(...(fx))) where f is applied n times
-- **0** = λnfx.x
+(π<sub>i</sub>(pair t<sub>1</sub> t<sub>2</sub>) ↠<sub>β</sub> t<sub>i</sub>)
+- Church numerals: **n** = λfx.f(f(...(fx))) where f is applied n times; **0** = λnfx.x
 - succ = λnfx.f(nfx)
 - add = λmnfx.m succ n; mul = λmnfx.m (add n) 0; exp = λmn.n (mul m) 1
 - iszero = λnxy.n(λz.y)x
@@ -135,6 +131,8 @@ considering _monotone_/_continuous_ functions.
 
 ### Problems ###
 
+Encoding everything is not an approach suitable for human programmers.
+
 Some properties of the untyped lambda-calculus contradict intuitions about functions:
 - everything can be applied to everything (including itself);
 - everything has a fixed point;
@@ -150,7 +148,7 @@ TODO
 
 ## Bibliography ##
 
-[Mim20] "Program ＝ Proof", Mimram, [2020](https://www.lix.polytechnique.fr/Labo/Samuel.Mimram/teaching/INF551/course.pdf)
+[Mim20] "Program ＝ Proof", Mimram, [2020](https://www.lix.polytechnique.fr/Labo/Samuel.Mimram/teaching/INF551/course.pdf).
 
 [SU06] "Lectures on the Curry-Howard Isomorphism", Sorensen & Urzyczyn, 2006.
 
@@ -158,7 +156,10 @@ TODO
 
 [Bar84] "The Lambda Calculus: Its Syntax and Semantics", Barendregd, 1984.
 
-[NG14] "Type Theory and Formal Proof", Nederpelt & Geuvers, 2014
+[ML20] "How did 'judgement' come to be a term of logic?", Per Martin Löf,
+ [2020](https://www.youtube.com/watch?v=FGUzgcLXNuk&ab_channel=LogicandFoundationsofMathematics).
+
+[NG14] "Type Theory and Formal Proof", Nederpelt & Geuvers, 2014.
 
 [Sch24] "Uber die Bausteine der mathematischen Logik", Schonfinkel, 1924.
 
