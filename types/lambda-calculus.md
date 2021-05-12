@@ -12,10 +12,10 @@ When we get to dependent types, where well-formedness of the terms depends on th
 types of the variables, terms will need to be defined using judgements; here a
 simple grammar is sufficient; assuming infinite countable set Variable of variables:
 
-Term ::=               (t, u...)
- - Variable            (x, y, ...)
- - λ Variable . Term   (_abstraction_)
- - Term Term           (_application_)
+Term ::=                 (t, u...)
+ - Variable           \| (x, y, ...)
+ - λ Variable . Term  \| (_abstraction_)
+ - Term Term             (_application_)
 
 Conventions:
   - application associates to the left: tuv means (tu)v;
@@ -44,74 +44,46 @@ for the implementer, and various tricks were developed to ease it (de-Brujin
 indices, Barendregt convention); we will say no more about it, and just assume
 that before substitution all variables that need to be distinct are given fresh names :)
 
-_χ-expansion_ is a relation opposite to →<sub>χ</sub>. 
+_χ-expansion_ is a relation opposite to →<sub>χ</sub>;
+↠<sub>χ</sub> (multi-step reduction; reduction path) is the reflexive and transitive
+closure of →<sub>χ</sub>; ＝<sub>χ</sub> (χ-equivalence, χ-convertability) is the symmetric closure
+of ↠<sub>χ</sub>.
 
-→*<sub>χ</sub> (multi-step reduction; reduction path) is the reflexive and transitive
-closure of →<sub>χ</sub>.
-
-=<sub>χ</sub> (χ-equivalence, χ-convertability) is the symmetric closure
-of →*<sub>χ</sub>.
-
-Term that can not be reduced is in _normal form_ (a _value_).
-
-Term t is _weekly normalizing_ if there exist a normal form u such that t →*<sub>β</sub> u.
-
-Term is _strongly normalizing_ when every sequence of reductions will eventually produce a
-normal form.
-
-Not all terms a strongly normalizing; for example, Ω = (λx.xx)(λx.xx) reduces
-to itself. But (_confluence_, _Church-Rosser property_):
- - if t →*<sub>β</sub> u<sub>1</sub>
- - and t →*<sub>β</sub> u<sub>2</sub>,
-
-there exists such v that:
-- u<sub>1</sub> →*<sub>β</sub> v
-- and u<sub>2</sub> →*<sub>β</sub> v.
+Term that can not be reduced is in _normal form_ (a _value_). Term t is _weekly
+normalizing_ if there exist a normal form u such that t ↠<sub>β</sub> u. Term is
+_strongly normalizing_ when every sequence of reductions will eventually produce a
+normal form. Not all terms a strongly normalizing (for example, Ω = (λx.xx)(λx.xx)
+reduces to itself), but (_confluence_, _Church-Rosser property_):
+if t ↠<sub>β</sub> u<sub>1</sub> and t ↠<sub>β</sub> u<sub>2</sub>,
+there exists such v that: u<sub>1</sub> ↠<sub>β</sub> v and u<sub>2</sub> ↠<sub>β</sub> v.
 
 ### Encodings ###
 
-We can (and will eventually) _extend_ the calculus by adding new term forms together with the corresponding reduction rules.
-It is also possible to _encode_ common types and data structures in the untyped lambda calculus:
-
-identity: I = λx.x
-
-boolean 'true': T = λxy.x
-
-boolean 'false': F = λxy.y
-
-if-then-else: if = λbxy.bxy (if T t u →*<sub>β</sub> t etc.)
-
-logical operations: and = λxy.xyF; or = λxy.xTy; nor = λx.xFT;
-
-product: pair = λxyb. if b x y 
-
-projections: fst = λp.pT; snd = λp.pF (fst(pair t u) →*<sub>β</sub> t etc.)
-
-(n-tuples can also be defined)
-
-n-th Church numeral: **n** = λfx.f(f(...(fx))) where f is applied n times
-
-0 = λnfx.x
-
-succ = λnfx.f(nfx)
-
-add = λmnfx.m succ n
-
-mul = λmnfx.m (add n) 0
-
-exp = λmn.n (mul m) 1
-
-iszero = λnxy.n(λz.y)x
-
-pred = λnfx.n(λgh.h(gf))(λy.x)(λy.y)
-
-sub = λmn.n pred m
-
-leq = λmn.iszero (sub m n)
+We can (and eventually will) _extend_ the calculus by adding new term forms together
+with the corresponding reduction rules.
+It is also possible to just _encode_ common types and data structures in the untyped lambda calculus:
+- identity: I = λx.x
+- boolean 'true': T = λxy.x
+- boolean 'false': F = λxy.y
+- if-then-else: if = λbxy.bxy (if T t u ↠<sub>β</sub> t etc.)
+- logical operations: and = λxy.xyF; or = λxy.xTy; nor = λx.xFT;
+- product: pair = λxyb. if b x y 
+- projections: π<sub>1</sub> = λp.pT; π<sub>2</sub> = λp.pF
+(π<sub>1</sub>(pair t u) ↠<sub>β</sub> t; π<sub>2</sub>(pair t u) ↠<sub>β</sub> u)
+- Church numerals: **n** = λfx.f(f(...(fx))) where f is applied n times
+- 0 = λnfx.x
+- succ = λnfx.f(nfx)
+- add = λmnfx.m succ n
+- mul = λmnfx.m (add n) 0
+- exp = λmn.n (mul m) 1
+- iszero = λnxy.n(λz.y)x
+- pred = λnfx.n(λgh.h(gf))(λy.x)(λy.y)
+- sub = λmn.n pred m
+- leq = λmn.iszero (sub m n)
 
 ### Fixed points ###
 
-u is a _fixed point_ of term u if t u →*<sub>β</sub> u; in lambda-calculus,
+u is a _fixed point_ of term u if t u ↠<sub>β</sub> u; in lambda-calculus,
 **every** term has a fixed point, **and** there is a term Y (_fixed point combinator_)
 such that Yt is a fixed point of t! For example:
 - _Curry fixed point combinator_: Y = λf.(λx.f(xx))(λx.f(xx))
@@ -149,14 +121,10 @@ variables, α-conversion and all that, and formulating β-reduction directly on 
 Actually, just S and K suffice as the "basis" of the λ-calculus, since I = S K K.
 
 Indeed, _one_ combinator is sufficient: ι = λx.xSK; we can then define:
-- I = ιι;
-- K = ι(ι(ιι));
-- S = ι(ι(ι(ιι))).
-
-So, every λ-term can be encoded as a binary word ;)
+I = ιι; K = ι(ι(ιι)); S = ι(ι(ι(ιι))). So, every λ-term can be encoded as a binary word ;)
 
 Besides being cute, nameless (combinator-based) representations of λ-terms are
-used in implementation of functional programming languages.
+used in implementation of functional programming languages. But people normally do not program in it.
 
 ### Models ###
 
@@ -164,7 +132,7 @@ Setting aside combinatory algebra models, classic model of the untyped
 lambda calculus uses [domains](https://ncatlab.org/nlab/show/domain+theory),
 where the conundrum of D≅D⇒D resulting from the fact that in untyped lambda calculus
 everything is a function and anything can be applied to anything gets resolved by
-considering _continuous_ functions.
+considering _monotone_/_continuous_ functions.
 
 ### Problems ###
 
@@ -174,7 +142,7 @@ Some properties of the untyped lambda-calculus contradict intuitions about funct
 - a term is not guaranteed to have a normal form (some calculations get stuck).
 
 The main problem is that since there is only one type, and propositions **are** types,
-it is impossible to express the properties of the functions being defined.
+it is impossible to express any properties of the functions being defined.
 We need to introduce types - starting with the simple ones.
 
 ## Simply typed lambda-calculus ##
@@ -183,7 +151,7 @@ TODO
 
 ## Bibliography ##
 
-[Mim20] "Program = Proof", Mimram, [2020](https://www.lix.polytechnique.fr/Labo/Samuel.Mimram/teaching/INF551/course.pdf)
+[Mim20] "Program ＝ Proof", Mimram, [2020](https://www.lix.polytechnique.fr/Labo/Samuel.Mimram/teaching/INF551/course.pdf)
 
 [SU06] "Lectures on the Curry-Howard Isomorphism", Sorensen & Urzyczyn, 2006.
 
