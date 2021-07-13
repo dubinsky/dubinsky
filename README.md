@@ -39,12 +39,17 @@
  [36](https://github.com/TEIC/CETEIcean/issues/36),
  [38](https://github.com/TEIC/CETEIcean/issues/38),
  [39](https://github.com/TEIC/CETEIcean/issues/39);
+[XMLResolver](https://github.com/ndw/xmlresolver):
+ [44](https://github.com/xmlresolver/xmlresolver/issues/44);
 [Scala](https://github.com/scala/bug/):
  [11963](https://github.com/scala/bug/issues/11963);
 [Scala XML](https://github.com/scala/scala-xml):
  [506](https://github.com/scala/scala-xml/issues/506),
  [508](https://github.com/scala/scala-xml/issues/508);
 [ScalaTest Gradle plugin](https://github.com/maiflai):
- [92](https://github.com/maiflai/gradle-scalatest/issues/92);
+ [92](https://github.com/maiflai/gradle-scalatest/issues/92),
+ [96](https://github.com/maiflai/gradle-scalatest/issues/96);
 [http4s](https://github.com/http4s/http4s):
- [3565](https://github.com/http4s/http4s/issues/3565).
+ [3565](https://github.com/http4s/http4s/issues/3565);
+[Playwright Java](https://github.com/microsoft/playwright-java):
+ [471](https://github.com/microsoft/playwright-java/issues/471).
