@@ -1,12 +1,16 @@
-[![](https://img.shields.io/badge/OS-Linux-informational?logo=linux)](https://www.linux.org/)
-[![](https://img.shields.io/badge/OS-Red_Hat-informational?logo=red-hat&logoColor=red)](https://getfedora.org/)
-[![](https://img.shields.io/badge/IDE-Intellij-important?logo=intellij-idea)](https://www.jetbrains.com/idea/)
+[![](https://img.shields.io/badge/Resume-LinkedIn-informational?logo=LinkedIn&logoColor=blue)](https://www.linkedin.com/in/leoniddubinsky/)
+
 [![](https://img.shields.io/badge/Code-Scala-critical?logo=Scala&logoColor=red)](https://www.scala-lang.org/)
-[![](https://img.shields.io/badge/Tools-Gradle-important?logo=Gradle)](https://gradle.org/)
-[![](https://img.shields.io/badge/Tools-Docker-informational?logo=Docker)](https://www.docker.com/)
+[![](https://img.shields.io/badge/Build-Gradle-important?logo=Gradle)](https://gradle.org/)
+[![](https://img.shields.io/badge/IDE-Intellij-important?logo=intellij-idea)](https://www.jetbrains.com/idea/)
+
+[![](https://img.shields.io/badge/Deploy-Docker-informational?logo=Docker)](https://www.docker.com/)
 [![](https://img.shields.io/badge/Cloud-GCP-informational?logo=google-cloud)](https://cloud.google.com/)
 
-#### Small Contributions ####
+[![](https://img.shields.io/badge/OS-Linux-informational?logo=linux)](https://www.linux.org/)
+[![](https://img.shields.io/badge/OS-Red_Hat-informational?logo=red-hat&logoColor=red)](https://getfedora.org/)
+
+#### Small Open Source Contributions ####
 **pull requests:**
 [JEuclid](https://github.com/rototor/jeuclid):
  [5](https://github.com/rototor/jeuclid/pull/5);
