@@ -1,4 +1,4 @@
-[![](https://img.shields.io/badge/Resume-LinkedIn-informational?logo=LinkedIn&logoColor=blue)](https://www.linkedin.com/in/leoniddubinsky/)
+[![](https://img.shields.io/badge/Bio-LinkedIn-informational?logo=LinkedIn&logoColor=blue)](https://www.linkedin.com/in/leoniddubinsky/)
 
 [![](https://img.shields.io/badge/Code-Scala-critical?logo=Scala&logoColor=red)](https://www.scala-lang.org/)
 [![](https://img.shields.io/badge/Build-Gradle-important?logo=Gradle)](https://gradle.org/)
