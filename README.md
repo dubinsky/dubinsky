@@ -1,12 +1,12 @@
 [![](https://img.shields.io/badge/Bio-LinkedIn-informational?logo=LinkedIn&logoColor=blue)](https://www.linkedin.com/in/leoniddubinsky/)
 
 [![](https://img.shields.io/badge/Code-Scala-critical?logo=Scala&logoColor=red)](https://www.scala-lang.org/)
+[![](https://img.shields.io/badge/Framework-ZIO-important?logo=zio&logoColor=red)](https://www.scala-lang.org/)
 [![](https://img.shields.io/badge/Build-Gradle-important?logo=Gradle)](https://gradle.org/)
 [![](https://img.shields.io/badge/IDE-Intellij-important?logo=intellij-idea)](https://www.jetbrains.com/idea/)
 
 [![](https://img.shields.io/badge/Deploy-Docker-informational?logo=Docker)](https://www.docker.com/)
 [![](https://img.shields.io/badge/Cloud-GCP-informational?logo=google-cloud)](https://cloud.google.com/)
-
 [![](https://img.shields.io/badge/OS-Linux-informational?logo=linux)](https://www.linux.org/)
 [![](https://img.shields.io/badge/OS-Red_Hat-informational?logo=red-hat&logoColor=red)](https://getfedora.org/)
 
