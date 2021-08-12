@@ -10,50 +10,63 @@
 [![](https://img.shields.io/badge/OS-Linux-informational?logo=linux)](https://www.linux.org/)
 [![](https://img.shields.io/badge/OS-Red_Hat-informational?logo=red-hat&logoColor=red)](https://getfedora.org/)
 
-#### Small Open Source Contributions ####
-**pull requests:**
-[JEuclid](https://github.com/rototor/jeuclid):
- [5](https://github.com/rototor/jeuclid/pull/5);
-[CETEIcean](https://github.com/TEIC/CETEIcean):
- [23](https://github.com/TEIC/CETEIcean/pull/23),
- [35](https://github.com/TEIC/CETEIcean/pull/35),
- [37](https://github.com/TEIC/CETEIcean/pull/37);
-[XMLResolver](https://github.com/ndw/xmlresolver):
- [28](https://github.com/ndw/xmlresolver/pull/28);
-[Jib](https://github.com/GoogleContainerTools/jib):
- [2906](https://github.com/GoogleContainerTools/jib/pull/2906);
-[intellij-dtlc](https://github.com/owo-lang/intellij-dtlc):
- [22](https://github.com/owo-lang/intellij-dtlc/pull/22).
+## Open Source Work ##
 
-**issues:**
-[Gradle](https://github.com/gradle/gradle):
- [9885](https://github.com/gradle/gradle/issues/9855),
- [16527](https://github.com/gradle/gradle/issues/16527);
-[Bintray](https://github.com/bintray):
- [329](https://github.com/bintray/gradle-bintray-plugin/issues/329);
-[Jib](https://github.com/GoogleContainerTools/jib):
- [2105](https://github.com/GoogleContainerTools/jib/issues/2105);
-[GitHub Commit Action](https://github.com/github-actions-x/commit):
- [2](https://github.com/github-actions-x/commit/issues/2),
- [16](https://github.com/github-actions-x/commit/issues/16);
-[cloud-builders](https://github.com/GoogleCloudPlatform/cloud-builders):
- [417](https://github.com/GoogleCloudPlatform/cloud-builders/issues/417);
-[CETEIcean](https://github.com/TEIC/CETEIcean):
- [20](https://github.com/TEIC/CETEIcean/issues/20),
- [36](https://github.com/TEIC/CETEIcean/issues/36),
- [38](https://github.com/TEIC/CETEIcean/issues/38),
- [39](https://github.com/TEIC/CETEIcean/issues/39);
-[XMLResolver](https://github.com/ndw/xmlresolver):
- [44](https://github.com/xmlresolver/xmlresolver/issues/44);
-[Scala](https://github.com/scala/bug/):
- [11963](https://github.com/scala/bug/issues/11963);
-[Scala XML](https://github.com/scala/scala-xml):
- [506](https://github.com/scala/scala-xml/issues/506),
- [508](https://github.com/scala/scala-xml/issues/508);
-[ScalaTest Gradle plugin](https://github.com/maiflai):
- [92](https://github.com/maiflai/gradle-scalatest/issues/92),
- [96](https://github.com/maiflai/gradle-scalatest/issues/96);
-[http4s](https://github.com/http4s/http4s):
- [3565](https://github.com/http4s/http4s/issues/3565);
-[Playwright Java](https://github.com/microsoft/playwright-java):
- [471](https://github.com/microsoft/playwright-java/issues/471).
+- [parsing XML with ZIO and pretty-printing it with Paiges](https://github.com/opentorah/opentorah/tree/master/base)
+- [DocBook Gradle plugin](https://github.com/opentorah/opentorah/tree/master/docbook)
+- [Google Cloud Run Gradle Plugin](https://github.com/dubinsky/cloud-run)
+- [Where is this code running?](https://github.com/dubinsky/podval-run)
+- [Jewish Calendrical Calculations](https://github.com/opentorah/opentorah/tree/master/calendar)
+- [Learning schedules](https://github.com/opentorah/opentorah/tree/master/schedule) for
+  [various Jewish texts](https://github.com/opentorah/opentorah/tree/master/schedule)
+- [TEI](https://github.com/opentorah/opentorah/tree/master/tei):
+  [site generation](https://github.com/opentorah/opentorah/tree/master/site) and
+  [publishing of document collections](https://github.com/opentorah/opentorah/tree/master/collector)
+- [Raspberry Pi GPIO in Scala](https://github.com/dubinsky/podval-iot)
+- [Photo Metadata Extraction](https://github.com/dubinsky/podval-imageio) and
+  [Archive Synchronization](https://github.com/dubinsky/podval-photo-sync)
+
+## Small Open Source Contributions ##
+
+- [Gradle](https://github.com/gradle/gradle):
+  [9885](https://github.com/gradle/gradle/issues/9855),
+  [16527](https://github.com/gradle/gradle/issues/16527),
+  _[18003](https://github.com/gradle/gradle/pull/18003)_.
+- [Jib](https://github.com/GoogleContainerTools/jib):
+  [2105](https://github.com/GoogleContainerTools/jib/issues/2105),
+  _[2906](https://github.com/GoogleContainerTools/jib/pull/2906)_.
+- [GitHub Commit Action](https://github.com/github-actions-x/commit):
+  [2](https://github.com/github-actions-x/commit/issues/2),
+  [16](https://github.com/github-actions-x/commit/issues/16).
+- [Google Cloud Builders](https://github.com/GoogleCloudPlatform/cloud-builders):
+  [417](https://github.com/GoogleCloudPlatform/cloud-builders/issues/417).
+- [Bintray Gradle Plugin](https://github.com/bintray):
+  [329](https://github.com/bintray/gradle-bintray-plugin/issues/329).
+- [Scala](https://github.com/scala/bug/):
+  [11963](https://github.com/scala/bug/issues/11963).
+- [ScalaTest Gradle plugin](https://github.com/maiflai):
+  [92](https://github.com/maiflai/gradle-scalatest/issues/92),
+  [96](https://github.com/maiflai/gradle-scalatest/issues/96).
+- [Scala XML](https://github.com/scala/scala-xml):
+  [506](https://github.com/scala/scala-xml/issues/506),
+  [508](https://github.com/scala/scala-xml/issues/508).
+- [XMLResolver](https://github.com/ndw/xmlresolver):
+  _[28](https://github.com/ndw/xmlresolver/pull/28)_,
+  [44](https://github.com/xmlresolver/xmlresolver/issues/44).
+- [intellij-dtlc](https://github.com/owo-lang/intellij-dtlc):
+  _[22](https://github.com/owo-lang/intellij-dtlc/pull/22)_.
+- [http4s](https://github.com/http4s/http4s):
+  [3565](https://github.com/http4s/http4s/issues/3565).
+- [Playwright Java](https://github.com/microsoft/playwright-java):
+  [471](https://github.com/microsoft/playwright-java/issues/471).  
+- [JEuclid](https://github.com/rototor/jeuclid):
+ _[5](https://github.com/rototor/jeuclid/pull/5)_.
+- [CETEIcean](https://github.com/TEIC/CETEIcean):
+  [20](https://github.com/TEIC/CETEIcean/issues/20),
+ _[23](https://github.com/TEIC/CETEIcean/pull/23)_,
+ _[35](https://github.com/TEIC/CETEIcean/pull/35)_,
+  [36](https://github.com/TEIC/CETEIcean/issues/36),
+ _[37](https://github.com/TEIC/CETEIcean/pull/37)_,
+  [38](https://github.com/TEIC/CETEIcean/issues/38),
+  [39](https://github.com/TEIC/CETEIcean/issues/39).
+  
