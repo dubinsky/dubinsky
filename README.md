@@ -14,17 +14,17 @@
 
 - [parsing XML with ZIO and pretty-printing it with Paiges](https://github.com/opentorah/opentorah/tree/master/base)
 - [DocBook Gradle plugin](https://github.com/opentorah/opentorah/tree/master/docbook)
-- [Google Cloud Run Gradle Plugin](https://github.com/dubinsky/cloud-run)
-- [Where is this code running?](https://github.com/dubinsky/podval-run)
-- [Jewish Calendrical Calculations](https://github.com/opentorah/opentorah/tree/master/calendar)
-- [Learning schedules](https://github.com/opentorah/opentorah/tree/master/schedule) for
+- [Google Cloud Run Gradle plugin](https://github.com/dubinsky/cloud-run)
+- [where is this code running?](https://github.com/dubinsky/podval-run)
+- [Jewish calendrical calculations](https://github.com/opentorah/opentorah/tree/master/calendar)
+- [learning schedules](https://github.com/opentorah/opentorah/tree/master/schedule) for
   [various Jewish texts](https://github.com/opentorah/opentorah/tree/master/schedule)
 - [TEI](https://github.com/opentorah/opentorah/tree/master/tei):
   [site generation](https://github.com/opentorah/opentorah/tree/master/site) and
   [publishing of document collections](https://github.com/opentorah/opentorah/tree/master/collector)
 - [Raspberry Pi GPIO in Scala](https://github.com/dubinsky/podval-iot)
-- [Photo Metadata Extraction](https://github.com/dubinsky/podval-imageio) and
-  [Archive Synchronization](https://github.com/dubinsky/podval-photo-sync)
+- [photo metadata extraction](https://github.com/dubinsky/podval-imageio) and
+  [archive synchronization](https://github.com/dubinsky/podval-photo-sync)
 
 ## Small Open Source Contributions ##
 
