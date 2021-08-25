@@ -49,7 +49,8 @@
   [96](https://github.com/maiflai/gradle-scalatest/issues/96).
 - [Scala XML](https://github.com/scala/scala-xml):
   [506](https://github.com/scala/scala-xml/issues/506),
-  [508](https://github.com/scala/scala-xml/issues/508).
+  [508](https://github.com/scala/scala-xml/issues/508),
+  _[549](https://github.com/scala/scala-xml/pull/549)_.
 - [XMLResolver](https://github.com/ndw/xmlresolver):
   _[28](https://github.com/ndw/xmlresolver/pull/28)_,
   [44](https://github.com/xmlresolver/xmlresolver/issues/44).
