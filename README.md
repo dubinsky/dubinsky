@@ -53,7 +53,8 @@
   _[549](https://github.com/scala/scala-xml/pull/549)_.
 - [XMLResolver](https://github.com/ndw/xmlresolver):
   _[28](https://github.com/ndw/xmlresolver/pull/28)_,
-  [44](https://github.com/xmlresolver/xmlresolver/issues/44).
+  [44](https://github.com/xmlresolver/xmlresolver/issues/44),
+  [54](https://github.com/xmlresolver/xmlresolver/issues/54).
 - [intellij-dtlc](https://github.com/owo-lang/intellij-dtlc):
   _[22](https://github.com/owo-lang/intellij-dtlc/pull/22)_.
 - [http4s](https://github.com/http4s/http4s):
