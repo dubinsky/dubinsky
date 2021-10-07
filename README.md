@@ -18,7 +18,7 @@
 - [where is this code running?](https://github.com/dubinsky/podval-run)
 - [Jewish calendrical calculations](https://github.com/opentorah/opentorah/tree/master/calendar)
 - [learning schedules](https://github.com/opentorah/opentorah/tree/master/schedule) for
-  [various Jewish texts](https://github.com/opentorah/opentorah/tree/master/schedule)
+  [various Jewish texts](https://github.com/opentorah/opentorah/tree/master/texts)
 - [TEI](https://github.com/opentorah/opentorah/tree/master/tei):
   [site generation](https://github.com/opentorah/opentorah/tree/master/site) and
   [publishing of document collections](https://github.com/opentorah/opentorah/tree/master/collector)
