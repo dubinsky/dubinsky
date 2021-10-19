@@ -32,7 +32,8 @@
   [9885](https://github.com/gradle/gradle/issues/9855),
   [16527](https://github.com/gradle/gradle/issues/16527),
   _[18003](https://github.com/gradle/gradle/pull/18003)_,
-  [18559](https://github.com/gradle/gradle/issues/18559).
+  [18559](https://github.com/gradle/gradle/issues/18559),
+  [18248](https://github.com/gradle/gradle/pull/18248#issuecomment-946284352).
 - [Jib](https://github.com/GoogleContainerTools/jib):
   [2105](https://github.com/GoogleContainerTools/jib/issues/2105),
   _[2906](https://github.com/GoogleContainerTools/jib/pull/2906)_.
