@@ -32,8 +32,10 @@
   [9885](https://github.com/gradle/gradle/issues/9855),
   [16527](https://github.com/gradle/gradle/issues/16527),
   _[18003](https://github.com/gradle/gradle/pull/18003)_,
+  [18001](https://github.com/gradle/gradle/pull/18001#issuecomment-899107656),
   [18559](https://github.com/gradle/gradle/issues/18559),
-  [18248](https://github.com/gradle/gradle/pull/18248#issuecomment-946284352).
+  [18248](https://github.com/gradle/gradle/pull/18248#issuecomment-946284352),
+  [18732](https://github.com/gradle/gradle/issues/18732).
 - [Jib](https://github.com/GoogleContainerTools/jib):
   [2105](https://github.com/GoogleContainerTools/jib/issues/2105),
   _[2906](https://github.com/GoogleContainerTools/jib/pull/2906)_.
@@ -59,12 +61,12 @@
   _[28](https://github.com/ndw/xmlresolver/pull/28)_,
   [44](https://github.com/xmlresolver/xmlresolver/issues/44),
   [54](https://github.com/xmlresolver/xmlresolver/issues/54).
-- [intellij-dtlc](https://github.com/owo-lang/intellij-dtlc):
-  _[22](https://github.com/owo-lang/intellij-dtlc/pull/22)_.
 - [http4s](https://github.com/http4s/http4s):
   [3565](https://github.com/http4s/http4s/issues/3565).
 - [Playwright Java](https://github.com/microsoft/playwright-java):
   [471](https://github.com/microsoft/playwright-java/issues/471).  
+- [intellij-dtlc](https://github.com/owo-lang/intellij-dtlc):
+  _[22](https://github.com/owo-lang/intellij-dtlc/pull/22)_.
 - [JEuclid](https://github.com/rototor/jeuclid):
  _[5](https://github.com/rototor/jeuclid/pull/5)_.
 - [CETEIcean](https://github.com/TEIC/CETEIcean):
