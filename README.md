@@ -30,6 +30,7 @@
 
 - [Gradle](https://github.com/gradle/gradle):
   [9885](https://github.com/gradle/gradle/issues/9855),
+  [15491](https://github.com/gradle/gradle/issues/15491#issuecomment-1003832976),
   [16527](https://github.com/gradle/gradle/issues/16527),
   _[18003](https://github.com/gradle/gradle/pull/18003)_,
   [18001](https://github.com/gradle/gradle/pull/18001#issuecomment-899107656),
@@ -63,6 +64,8 @@
   [54](https://github.com/xmlresolver/xmlresolver/issues/54).
 - [http4s](https://github.com/http4s/http4s):
   [3565](https://github.com/http4s/http4s/issues/3565).
+- [zhttp](https://github.com/dream11/zio-http):
+  [613](https://github.com/dream11/zio-http/issues/613).
 - [Playwright Java](https://github.com/microsoft/playwright-java):
   [471](https://github.com/microsoft/playwright-java/issues/471).  
 - [intellij-dtlc](https://github.com/owo-lang/intellij-dtlc):
