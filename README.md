@@ -71,6 +71,8 @@
   [471](https://github.com/microsoft/playwright-java/issues/471).  
 - [intellij-dtlc](https://github.com/owo-lang/intellij-dtlc):
   _[22](https://github.com/owo-lang/intellij-dtlc/pull/22)_.
+- [JetBrains Gateway](https://www.jetbrains.com/remote-development/gateway/):
+  [732](https://youtrack.jetbrains.com/issue/GTW-732).
 - [JEuclid](https://github.com/rototor/jeuclid):
  _[5](https://github.com/rototor/jeuclid/pull/5)_.
 - [CETEIcean](https://github.com/TEIC/CETEIcean):
@@ -81,4 +83,3 @@
  _[37](https://github.com/TEIC/CETEIcean/pull/37)_,
   [38](https://github.com/TEIC/CETEIcean/issues/38),
   [39](https://github.com/TEIC/CETEIcean/issues/39).
-  
