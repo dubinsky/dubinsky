@@ -12,7 +12,7 @@
 
 ## Open Source Work ##
 
-- [parsing XML with ZIO and pretty-printing it with Paiges](https://github.com/opentorah/opentorah/tree/master/base)
+- [parsing XML with ZIO and pretty-printing it with Paiges](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/xml)
 - [DocBook processing](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/docbook)
   and [DocBook Gradle plugin](https://github.com/opentorah/opentorah/tree/master/docbook)
 - [Google Cloud Run Gradle plugin](https://github.com/dubinsky/cloud-run)
