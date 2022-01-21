@@ -13,14 +13,15 @@
 ## Open Source Work ##
 
 - [parsing XML with ZIO and pretty-printing it with Paiges](https://github.com/opentorah/opentorah/tree/master/base)
-- [DocBook Gradle plugin](https://github.com/opentorah/opentorah/tree/master/docbook)
+- [DocBook processing](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/docbook)
+  and [DocBook Gradle plugin](https://github.com/opentorah/opentorah/tree/master/docbook)
 - [Google Cloud Run Gradle plugin](https://github.com/dubinsky/cloud-run)
 - [where is this code running?](https://github.com/dubinsky/podval-run)
-- [Jewish calendrical calculations](https://github.com/opentorah/opentorah/tree/master/calendar)
-- [learning schedules](https://github.com/opentorah/opentorah/tree/master/schedule) for
-  [various Jewish texts](https://github.com/opentorah/opentorah/tree/master/texts)
-- [TEI](https://github.com/opentorah/opentorah/tree/master/tei):
-  [site generation](https://github.com/opentorah/opentorah/tree/master/site) and
+- [Jewish calendrical calculations](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/calendar)
+- [learning schedules](https://github.com/opentorah/opentorah/tree/master/texts/src/main/scala/org/opentorah/schedule) for
+  [various Jewish texts](https://github.com/opentorah/opentorah/tree/master/texts/src/main/scala/org/opentorah/texts)
+- [TEI](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/tei):
+  [site generation](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/site) and
   [publishing of document collections](https://github.com/opentorah/opentorah/tree/master/collector)
 - [Raspberry Pi GPIO in Scala](https://github.com/dubinsky/podval-iot)
 - [photo metadata extraction](https://github.com/dubinsky/podval-imageio) and
