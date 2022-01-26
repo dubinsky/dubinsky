@@ -57,10 +57,8 @@ repositories {
       'https://oss.sonatype.org/content/repositories/snapshots' :
       'https://oss.sonatype.org/service/local/staging/deploy/maven2'
 
-    credentials {
-      username = mavenCentralUsername
-      password = mavenCentralPassword
-    }
+    // Note: this will use mavenCentralUsername and mavenCentralPassword properties - if they are available
+    credentials(PasswordCredentials)
   }
 }
 ```
@@ -136,8 +134,8 @@ To the Gradle build file, I added:
 ```groovy
 signing {
   useInMemoryPgpKeys(
-    getProperty('gnupg.dub-podval-org.key'),
-    getProperty('gnupg.dub-podval-org.password')
+    findProperty('gnupg.dub-podval-org.key'),
+    findProperty('gnupg.dub-podval-org.password')
   )
   sign publishing.publications.library
 }
@@ -162,7 +160,3 @@ In this context, "Central" means https://repo1.maven.org/maven2/
 
 TODO nexus Gradle plugin(s)
 //id 'io.codearte.nexus-staging' version '0.22.0' ? or something else that gets credentials from maven-publish?
-
-
-
-
