@@ -4,6 +4,7 @@
 [![](https://img.shields.io/badge/Framework-ZIO-important?logo=zio&logoColor=red)](https://www.scala-lang.org/)
 [![](https://img.shields.io/badge/Build-Gradle-important?logo=Gradle)](https://gradle.org/)
 [![](https://img.shields.io/badge/IDE-Intellij-important?logo=intellij-idea)](https://www.jetbrains.com/idea/)
+[![](https://img.shields.io/badge/Code-Scala.js-important?logo=Scala&logoColor=red)](https://www.scala-js.org/)
 
 [![](https://img.shields.io/badge/Deploy-Docker-informational?logo=Docker)](https://www.docker.com/)
 [![](https://img.shields.io/badge/Cloud-GCP-informational?logo=google-cloud)](https://cloud.google.com/)
