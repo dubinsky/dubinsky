@@ -18,18 +18,27 @@
   and [DocBook Gradle plugin](https://github.com/opentorah/opentorah/tree/master/docbook)
 - [Google Cloud Run Gradle plugin](https://github.com/dubinsky/cloud-run)
 - [where is this code running?](https://github.com/dubinsky/podval-run)
-- [Jewish calendrical calculations](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/calendar)
-- [learning schedules](https://github.com/opentorah/opentorah/tree/master/texts/src/main/scala/org/opentorah/schedule) for
-  [various Jewish texts](https://github.com/opentorah/opentorah/tree/master/texts/src/main/scala/org/opentorah/texts)
 - [TEI](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/tei):
   [site generation](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/site) and
   [publishing of document collections](https://github.com/opentorah/opentorah/tree/master/collector)
+- [Jewish calendrical calculations](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/calendar)
+- [learning schedules](https://github.com/opentorah/opentorah/tree/master/texts/src/main/scala/org/opentorah/schedule) for
+  [various Jewish texts](https://github.com/opentorah/opentorah/tree/master/texts/src/main/scala/org/opentorah/texts)
 - [Raspberry Pi GPIO in Scala](https://github.com/dubinsky/podval-iot)
 - [photo metadata extraction](https://github.com/dubinsky/podval-imageio) and
   [archive synchronization](https://github.com/dubinsky/podval-photo-sync)
 
 ## Small Open Source Contributions ##
 
+- [Scala](https://github.com/scala/bug/):
+  [11963](https://github.com/scala/bug/issues/11963).
+- [Scala XML](https://github.com/scala/scala-xml):
+  [506](https://github.com/scala/scala-xml/issues/506),
+  [508](https://github.com/scala/scala-xml/issues/508),
+  _[549](https://github.com/scala/scala-xml/pull/549)_,
+  _[558](https://github.com/scala/scala-xml/pull/558)_,
+  _[560](https://github.com/scala/scala-xml/pull/560)_,
+  _[587](https://github.com/scala/scala-xml/pull/587)_.
 - [Gradle](https://github.com/gradle/gradle):
   [9885](https://github.com/gradle/gradle/issues/9855),
   [15491](https://github.com/gradle/gradle/issues/15491#issuecomment-1003832976),
@@ -39,28 +48,14 @@
   [18559](https://github.com/gradle/gradle/issues/18559),
   [18248](https://github.com/gradle/gradle/pull/18248#issuecomment-946284352),
   [18732](https://github.com/gradle/gradle/issues/18732).
-- [Jib](https://github.com/GoogleContainerTools/jib):
-  [2105](https://github.com/GoogleContainerTools/jib/issues/2105),
-  _[2906](https://github.com/GoogleContainerTools/jib/pull/2906)_.
-- [GitHub Commit Action](https://github.com/github-actions-x/commit):
-  [2](https://github.com/github-actions-x/commit/issues/2),
-  [16](https://github.com/github-actions-x/commit/issues/16).
-- [Google Cloud Builders](https://github.com/GoogleCloudPlatform/cloud-builders):
-  [417](https://github.com/GoogleCloudPlatform/cloud-builders/issues/417).
-- [Bintray Gradle Plugin](https://github.com/bintray):
-  [329](https://github.com/bintray/gradle-bintray-plugin/issues/329).
-- [Scala](https://github.com/scala/bug/):
-  [11963](https://github.com/scala/bug/issues/11963).
 - [ScalaTest Gradle plugin](https://github.com/maiflai):
   [92](https://github.com/maiflai/gradle-scalatest/issues/92),
   [96](https://github.com/maiflai/gradle-scalatest/issues/96).
-- [Scala XML](https://github.com/scala/scala-xml):
-  [506](https://github.com/scala/scala-xml/issues/506),
-  [508](https://github.com/scala/scala-xml/issues/508),
-  _[549](https://github.com/scala/scala-xml/pull/549)_,
-  _[558](https://github.com/scala/scala-xml/pull/558)_,
-  _[560](https://github.com/scala/scala-xml/pull/560)_,
-  _[587](https://github.com/scala/scala-xml/pull/587)_.
+- [Bintray Gradle Plugin](https://github.com/bintray):
+  [329](https://github.com/bintray/gradle-bintray-plugin/issues/329).
+- [Jib](https://github.com/GoogleContainerTools/jib):
+  [2105](https://github.com/GoogleContainerTools/jib/issues/2105),
+  _[2906](https://github.com/GoogleContainerTools/jib/pull/2906)_.
 - [XMLResolver](https://github.com/ndw/xmlresolver):
   _[28](https://github.com/ndw/xmlresolver/pull/28)_,
   [44](https://github.com/xmlresolver/xmlresolver/issues/44),
@@ -69,12 +64,17 @@
   [3565](https://github.com/http4s/http4s/issues/3565).
 - [zhttp](https://github.com/dream11/zio-http):
   [613](https://github.com/dream11/zio-http/issues/613).
+- [JetBrains Gateway](https://www.jetbrains.com/remote-development/gateway/):
+  [732](https://youtrack.jetbrains.com/issue/GTW-732).
+- [GitHub Commit Action](https://github.com/github-actions-x/commit):
+  [2](https://github.com/github-actions-x/commit/issues/2),
+  [16](https://github.com/github-actions-x/commit/issues/16).
+- [Google Cloud Builders](https://github.com/GoogleCloudPlatform/cloud-builders):
+  [417](https://github.com/GoogleCloudPlatform/cloud-builders/issues/417).
 - [Playwright Java](https://github.com/microsoft/playwright-java):
   [471](https://github.com/microsoft/playwright-java/issues/471).  
 - [intellij-dtlc](https://github.com/owo-lang/intellij-dtlc):
   _[22](https://github.com/owo-lang/intellij-dtlc/pull/22)_.
-- [JetBrains Gateway](https://www.jetbrains.com/remote-development/gateway/):
-  [732](https://youtrack.jetbrains.com/issue/GTW-732).
 - [JEuclid](https://github.com/rototor/jeuclid):
  _[5](https://github.com/rototor/jeuclid/pull/5)_.
 - [CETEIcean](https://github.com/TEIC/CETEIcean):
