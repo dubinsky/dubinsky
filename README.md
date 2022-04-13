@@ -14,11 +14,11 @@
 ## Open Source Work ##
 
 - [parsing XML with ZIO and pretty-printing it with Paiges](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/xml)
-- [DocBook processing](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/docbook)
-  and [DocBook Gradle plugin](https://github.com/opentorah/opentorah/tree/master/docbook)
 - [Google Cloud Run Gradle plugin](https://github.com/dubinsky/cloud-run)
 - [where is this code running?](https://github.com/dubinsky/podval-run)
-- [TEI](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/tei):
+- [DocBook processing](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/docbook)
+  and [DocBook Gradle plugin](https://github.com/opentorah/opentorah/tree/master/docbook)
+- [TEI](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/tei)
   [site generation](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/site) and
   [publishing of document collections](https://github.com/opentorah/opentorah/tree/master/collector)
 - [Jewish calendrical calculations](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/calendar)
