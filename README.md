@@ -15,6 +15,7 @@
 
 - [parsing XML with ZIO and pretty-printing it with Paiges](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/xml)
 - [Google Cloud Run Gradle plugin](https://github.com/dubinsky/cloud-run)
+- [Scala.js Gradle plugin](https://github.com/dubinsky/scalajs-gradle)
 - [where is this code running?](https://github.com/dubinsky/podval-run)
 - [DocBook processing](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/docbook)
   and [DocBook Gradle plugin](https://github.com/opentorah/opentorah/tree/master/docbook)
