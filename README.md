@@ -56,6 +56,7 @@
   [329](https://github.com/bintray/gradle-bintray-plugin/issues/329).
 - [Jib](https://github.com/GoogleContainerTools/jib):
   [2105](https://github.com/GoogleContainerTools/jib/issues/2105),
+  [2905](https://github.com/GoogleContainerTools/jib/issues/2905),
   _[2906](https://github.com/GoogleContainerTools/jib/pull/2906)_.
 - [XMLResolver](https://github.com/ndw/xmlresolver):
   _[28](https://github.com/ndw/xmlresolver/pull/28)_,
