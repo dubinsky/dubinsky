@@ -33,6 +33,7 @@
 
 - [Scala](https://github.com/scala/bug/):
   [11963](https://github.com/scala/bug/issues/11963).
+- [Dotty](https://github.com/lampepfl/dotty): [13814](https://github.com/lampepfl/dotty/issues/13814).
 - [Scala XML](https://github.com/scala/scala-xml):
   [506](https://github.com/scala/scala-xml/issues/506),
   [508](https://github.com/scala/scala-xml/issues/508),
