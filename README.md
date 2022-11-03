@@ -67,6 +67,8 @@
   [3565](https://github.com/http4s/http4s/issues/3565).
 - [zhttp](https://github.com/dream11/zio-http):
   [613](https://github.com/dream11/zio-http/issues/613).
+- [tapir](https://tapir.softwaremill.com/en/latest/):
+ _[2543](https://github.com/softwaremill/tapir/pull/2543)_.
 - [JetBrains Gateway](https://www.jetbrains.com/remote-development/gateway/):
   [732](https://youtrack.jetbrains.com/issue/GTW-732).
 - [GitHub Commit Action](https://github.com/github-actions-x/commit):
