@@ -67,7 +67,7 @@
   [3565](https://github.com/http4s/http4s/issues/3565).
 - [zhttp](https://github.com/dream11/zio-http):
   [613](https://github.com/dream11/zio-http/issues/613).
-- [tapir](https://tapir.softwaremill.com/en/latest/):
+- [tapir documentation](https://tapir.softwaremill.com/en/latest/):
  _[2543](https://github.com/softwaremill/tapir/pull/2543)_.
 - [JetBrains Gateway](https://www.jetbrains.com/remote-development/gateway/):
   [732](https://youtrack.jetbrains.com/issue/GTW-732).
@@ -90,3 +90,9 @@
  _[37](https://github.com/TEIC/CETEIcean/pull/37)_,
   [38](https://github.com/TEIC/CETEIcean/issues/38),
   [39](https://github.com/TEIC/CETEIcean/issues/39).
+
+## Proofreading ##
+
+Some of the corrections I suggested were accepted by the author of the (excellent!) book
+["Program = Proof"](https://www.lix.polytechnique.fr/Labo/Samuel.Mimram/teaching/INF551/course.pdf)
+by Samuel Mimram.
