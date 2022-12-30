@@ -40,7 +40,9 @@
   _[549](https://github.com/scala/scala-xml/pull/549)_,
   _[558](https://github.com/scala/scala-xml/pull/558)_,
   _[560](https://github.com/scala/scala-xml/pull/560)_,
-  _[587](https://github.com/scala/scala-xml/pull/587)_.
+  _[587](https://github.com/scala/scala-xml/pull/587)_,
+  _[636](https://github.com/scala/scala-xml/pull/636)_,
+  _[637](https://github.com/scala/scala-xml/pull/637)_.
 - [Gradle](https://github.com/gradle/gradle):
   [9885](https://github.com/gradle/gradle/issues/9855),
   [15491](https://github.com/gradle/gradle/issues/15491#issuecomment-1003832976),
@@ -65,9 +67,9 @@
   [54](https://github.com/xmlresolver/xmlresolver/issues/54).
 - [http4s](https://github.com/http4s/http4s):
   [3565](https://github.com/http4s/http4s/issues/3565).
-- [zhttp](https://github.com/dream11/zio-http):
-  [613](https://github.com/dream11/zio-http/issues/613).
-- [tapir documentation](https://tapir.softwaremill.com/en/latest/):
+- [zio-http](https://github.com/dream11/zio-http):
+  [613](https://github.com/zio/zio-http/issues/613).
+- [Tapir documentation](https://tapir.softwaremill.com/en/latest/):
  _[2543](https://github.com/softwaremill/tapir/pull/2543)_.
 - [JetBrains Gateway](https://www.jetbrains.com/remote-development/gateway/):
   [732](https://youtrack.jetbrains.com/issue/GTW-732).
