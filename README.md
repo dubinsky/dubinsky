@@ -42,7 +42,9 @@
   _[560](https://github.com/scala/scala-xml/pull/560)_,
   _[587](https://github.com/scala/scala-xml/pull/587)_,
   _[636](https://github.com/scala/scala-xml/pull/636)_,
-  _[637](https://github.com/scala/scala-xml/pull/637)_.
+  _[637](https://github.com/scala/scala-xml/pull/637)_,
+  _[643](https://github.com/scala/scala-xml/pull/643)_,
+  _[648](https://github.com/scala/scala-xml/pull/648)_.
 - [Gradle](https://github.com/gradle/gradle):
   [9885](https://github.com/gradle/gradle/issues/9855),
   [15491](https://github.com/gradle/gradle/issues/15491#issuecomment-1003832976),
@@ -70,7 +72,9 @@
 - [zio-http](https://github.com/dream11/zio-http):
   [613](https://github.com/zio/zio-http/issues/613).
 - [Tapir documentation](https://tapir.softwaremill.com/en/latest/):
- _[2543](https://github.com/softwaremill/tapir/pull/2543)_.
+  _[2543](https://github.com/softwaremill/tapir/pull/2543)_.
+- [SASS Gradle plugin](https://github.com/EtienneMiret/sass-gradle-plugin):
+  [28](https://github.com/EtienneMiret/sass-gradle-plugin/issues/28).
 - [JetBrains Gateway](https://www.jetbrains.com/remote-development/gateway/):
   [732](https://youtrack.jetbrains.com/issue/GTW-732).
 - [GitHub Commit Action](https://github.com/github-actions-x/commit):
