@@ -44,7 +44,8 @@
   _[636](https://github.com/scala/scala-xml/pull/636)_,
   _[637](https://github.com/scala/scala-xml/pull/637)_,
   _[643](https://github.com/scala/scala-xml/pull/643)_,
-  _[648](https://github.com/scala/scala-xml/pull/648)_.
+  _[648](https://github.com/scala/scala-xml/pull/648)_,
+  _[649](https://github.com/scala/scala-xml/pull/649)_.
 - [Gradle](https://github.com/gradle/gradle):
   [9885](https://github.com/gradle/gradle/issues/9855),
   [15491](https://github.com/gradle/gradle/issues/15491#issuecomment-1003832976),
@@ -53,7 +54,8 @@
   [18001](https://github.com/gradle/gradle/pull/18001#issuecomment-899107656),
   [18559](https://github.com/gradle/gradle/issues/18559),
   [18248](https://github.com/gradle/gradle/pull/18248#issuecomment-946284352),
-  [18732](https://github.com/gradle/gradle/issues/18732).
+  [18732](https://github.com/gradle/gradle/issues/18732),
+  _[24088](https://github.com/gradle/gradle/pull/24088)_.
 - [ScalaTest Gradle plugin](https://github.com/maiflai):
   [92](https://github.com/maiflai/gradle-scalatest/issues/92),
   [96](https://github.com/maiflai/gradle-scalatest/issues/96).
