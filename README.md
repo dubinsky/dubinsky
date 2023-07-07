@@ -53,7 +53,11 @@
   _[659](https://github.com/scala/scala-xml/pull/659)_,
   _[663](https://github.com/scala/scala-xml/pull/663)_,
   _[668](https://github.com/scala/scala-xml/pull/668)_,
-  _[672](https://github.com/scala/scala-xml/pull/672)_.
+  _[672](https://github.com/scala/scala-xml/pull/672)_,
+  _[673](https://github.com/scala/scala-xml/pull/673)_,
+  _[675](https://github.com/scala/scala-xml/pull/675)_,
+  _[676](https://github.com/scala/scala-xml/pull/676)_,
+  _[678](https://github.com/scala/scala-xml/pull/678)_.
 - [Gradle](https://github.com/gradle/gradle):
   [9885](https://github.com/gradle/gradle/issues/9855),
   [15491](https://github.com/gradle/gradle/issues/15491#issuecomment-1003832976),
