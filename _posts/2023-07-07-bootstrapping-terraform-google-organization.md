@@ -58,7 +58,8 @@ $ gcloud projects create "domain-infra" \
 $ gcloud beta billing accounts list
 
 # link the project to the billing account
-$ gcloud beta billing projects link "domain-infra" --billing-account ACCOUNT_ID
+$ gcloud beta billing projects link "domain-infra" \
+  --billing-account ACCOUNT_ID
 $ gcloud config set project "domain-infra"
 
 # enable APIs used by Terraform
@@ -267,23 +268,32 @@ resource "google_project_service" "infra" {
   disable_on_destroy = true
   service            = "${each.value}.googleapis.com"
   for_each = toset([
-    "admin",                # "Admin SDK API" for user/group operations
-    "cloudasset",           #  for 'gcloud beta resource-config bulk-export'
-    "cloudbilling",         # "Cloud Billing API"
-    "cloudidentity",        #
-    "cloudresourcemanager", # "Cloud Resource Manager API" for project operations
-    "dns",                  #
-    "domains",              #
-    "drive",                # "Google Drive" for rclone
-    "groupssettings",       # "Groups Settings API"
-    "iam",                  # "Identity and Access Management (IAM) API" for Service Account creation
-    "iamcredentials",       # "IAM Service Account Credentials API"
-    "logging",              #
-    "monitoring",           #
-    "serviceusage",         # "Service Usage API" for listing/enabling/disabling services
-    "storage",              #
-    "storage-api",          #
-    "storage-component",    #
+    # "Admin SDK API" for user/group operations
+    "admin",
+    #  for 'gcloud beta resource-config bulk-export'
+    "cloudasset",
+    # "Cloud Billing API"
+    "cloudbilling",         
+    "cloudidentity",
+    # "Cloud Resource Manager API" for project operations
+    "cloudresourcemanager", 
+    "dns",                  
+    "domains",
+    # "Google Drive" for rclone
+    "drive",
+    # "Groups Settings API"
+    "groupssettings",
+    # "Identity and Access Management (IAM) API" for Service Account creation
+    "iam",
+    # "IAM Service Account Credentials API"
+    "iamcredentials",       
+    "logging",              
+    "monitoring",
+    # "Service Usage API" for listing/enabling/disabling services
+    "serviceusage",        
+    "storage",              
+    "storage-api",          
+    "storage-component",
   ])
 }
 ```
@@ -424,8 +434,10 @@ $ terraform init -migrate-state
 
 In [Admin Console](https://admin.google.com/ac/apps/sites/address):
 - activate Cloud Identity Free (optional)
-  [Cloud Identity](https://cloud.google.com/identity/docs/set-up-cloud-identity-admin)
-  [Identity Setup](https://cloud.google.com/identity/docs/how-to/setup)
+
+References:
+  - [Cloud Identity](https://cloud.google.com/identity/docs/set-up-cloud-identity-admin)
+  - [Identity Setup](https://cloud.google.com/identity/docs/how-to/setup)
 
 ## Domains ##
 
