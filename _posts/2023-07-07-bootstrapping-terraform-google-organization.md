@@ -10,17 +10,25 @@ date: '2023-07-07'
 {:toc}
 ## Introduction ##
 
-`gcloud` needs to be installed.
+The goal is to do the minimum required to bootstrap Terraform,
+so that further configuration is handled by Terraform.
+Manual steps that can be done in various UI consoles _or_ using command line are given in the command line form. 
 
-Terraform CLI is installed from https://learn.hashicorp.com/tutorials/terraform/install-cli
+Install:
+- `gcloud` (`google-cloud-cli`) from https://cloud.google.com/sdk/docs/install
+- `terraform` from https://learn.hashicorp.com/tutorials/terraform/install-cli (or `google-cloud-cli-terraform-tools`)
+- `direnv` from https://direnv.net/ (for project-scoped keys)
 
+In the following:
+- `domain.tld` is the domain of the organization involved,
+- `admin@domain.tld` is the super-admin of the domain.
 
 ## Manual Start ##
 
-In Google Domains:
+In [Google Domains](https://domains.google.com/):
 - transfer Workspace subscription from Google Domains to Google Workspace
 
-In GCP Console:
+In [GCP Console](https://console.cloud.google.com/):
 - GCP organization gets auto-created upon login (?)
 - start GCP trial if applicable
 - set up billing
@@ -29,21 +37,22 @@ In [Admin Console](https://admin.google.com/ac/apps/sites/address):
 - set up billing
 - turn off automatic Google Workspace licensing
 - activate Google Groups for Business (optional)
-- activate Cloud Identity Free (optional)
- [Cloud Identity](https://cloud.google.com/identity/docs/set-up-cloud-identity-admin) 
- [Identity Setup](https://cloud.google.com/identity/docs/how-to/setup)
-
 
 ## Bootstrap ##
 
-The idea here is to do the minimum required to bootstrap Terraform.
+Here we:
+- create project
+- enable services in it
+- create service account
+- assign roles to it
 
 ```shell
 # log in as a super-admin
 $ gcloud auth login admin@domain.tld
 
 # create project
-$ gcloud projects create "domain-infra" --name="Domain Cloud Infrastructure" --no-enable-cloud-apis
+$ gcloud projects create "domain-infra" \
+  --name="Domain Cloud Infrastructure" --no-enable-cloud-apis
 
 # find out billing `ACCOUNT_ID`
 $ gcloud beta billing accounts list
@@ -55,31 +64,42 @@ $ gcloud config set project "domain-infra"
 # enable APIs used by Terraform
 $ gcloud services list --available # all
 $ gcloud services list             # enabled
-$ gcloud services enable admin.googleapis.com                 # " Admin SDK API"
-$ gcloud services enable cloudbilling.googleapis.com          # "Cloud Billing API"
-$ gcloud services enable cloudresourcemanager.googleapis.com  # "Cloud Resource Manager API": project operations
-$ gcloud services enable iam.googleapis.com                   # "Identity and Access Management (IAM) API": Service Account creation;
-                                                              # also enables iamcredentials.googleapis.com
-$ gcloud services enable serviceusage.googleapis.com          # "Service Usage API": listing/enabling/disabling services
+
+# "Admin SDK API"
+$ gcloud services enable admin.googleapis.com  
+# "Cloud Billing API"               
+$ gcloud services enable cloudbilling.googleapis.com       
+# "Cloud Resource Manager API": project operations   
+$ gcloud services enable cloudresourcemanager.googleapis.com  
+# "Identity and Access Management (IAM) API": Service Account creation;
+# also enables iamcredentials.googleapis.com
+$ gcloud services enable iam.googleapis.com                   
+# "Service Usage API": listing/enabling/disabling services                               
+$ gcloud services enable serviceusage.googleapis.com          
 
 # create Terraform Service Account
-$ gcloud iam service-accounts create terraform --display-name="terraform" --description="Service Account for Terraform"
+$ gcloud iam service-accounts create terraform \
+  --display-name="terraform" --description="Service Account for Terraform"
 
 # obtain the organization id (org_id)
 $ gcloud organizations list
 
 # grant the Terraform Service Account roles needed to bootstrap the rest
-$ gcloud organizations add-iam-policy-binding org_id --member="serviceAccount:terraform@domain-infra.iam.gserviceaccount.com" \
+$ gcloud organizations add-iam-policy-binding org_id \
+  --member="serviceAccount:terraform@domain-infra.iam.gserviceaccount.com" \
   --role="roles/resourcemanager.organizationAdmin"
 
-$ gcloud organizations add-iam-policy-binding org_id --member="serviceAccount:terraform@domain-infra.iam.gserviceaccount.com" \
+$ gcloud organizations add-iam-policy-binding org_id \
+  --member="serviceAccount:terraform@domain-infra.iam.gserviceaccount.com" \
   --role="roles/billing.admin"
 
-$ gcloud organizations add-iam-policy-binding org_id --member="serviceAccount:terraform@domain-infra.iam.gserviceaccount.com" \
+$ gcloud organizations add-iam-policy-binding org_id \
+  --member="serviceAccount:terraform@domain-infra.iam.gserviceaccount.com" \
   --role="roles/iam.serviceAccountAdmin"
   
 # optional: bulk export of the existing Google Cloud Platform setup in Terraform format
-$ gcloud beta resource-config bulk-export --path=entire-tf-output --organization=org_id --resource-format=terraform
+$ gcloud beta resource-config bulk-export --path=entire-tf-output \
+  --organization=org_id --resource-format=terraform
 ```
 
 ## Keys ##
@@ -131,6 +151,8 @@ in [Google Admin Console](https://admin.google.com/ac/roles).
 
 ## Core Terraform Files ##
 
+Create Terraform files describing the setup:
+
 `main.tf` file:
 ```terraform
 locals {
@@ -152,9 +174,7 @@ terraform {
     }
   }
 
-# This stays commented out until we get to the "State Bucket" step:
-#  # store state in a bucket
-#  # see also https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/data-sources/remote_state
+# This stays commented out until the state is migrated into the bucket:
 #  backend "gcs" {
 #    bucket = "state.domain.tld" # locals are not allowed here
 #    prefix = "terraform"
@@ -244,7 +264,7 @@ resource "google_project_service" "infra" {
     "dns",                  #
     "domains",              #
     "drive",                # "Google Drive" for rclone
-    "groupssettings",       # "Groups Settings API" for group settings
+    "groupssettings",       # "Groups Settings API"
     "iam",                  # "Identity and Access Management (IAM) API" for Service Account creation
     "iamcredentials",       # "IAM Service Account Credentials API"
     "logging",              #
@@ -333,7 +353,7 @@ resource "google_organization_iam_member" "admin" {
 }
 ```
 
-## Initialize and Import ##
+## Initialize, Import and Migrate State ##
 
 Now we are ready to initialize Terraform:
 
@@ -344,7 +364,7 @@ $ cd terraform
 $ terraform init
 ```
 
-At this point, existing resources are imported into Terraform.
+Import existing resources into Terraform:
 
 ```shell
 # project(s)
@@ -356,7 +376,7 @@ $ terraform import google_service_account.terraform "projects/domain-infra/servi
 # Google Workspace user(s)
 $ terraform import googleworkspace_user.admin admin@domain.tld
 
-# pre-existing buckets
+# Google Storage buckets (if any were created before the switch to Terraform)
 # TODO
 
 # enabled APIs: instead of importing them individually like this
@@ -366,36 +386,29 @@ $ terraform import googleworkspace_user.admin admin@domain.tld
 ```
 
 And finally, the state described by the Terraform files is applied - which means, see the output of `terraform plan` first
-and make sure that - for instance - that Google Workspace user's last and first names are reflected in the files
+and make sure that - for instance - Google Workspace user's last and first names are reflected in the files
 and do not get wiped out on `terraform apply` :)
 
 ```shell
 $ terraform apply
 ```
 
-
-## State Bucket ##
-
-Migrating Terraform state into a GCS Bucket.
+By now, Terraform state bucket exists, and we migrate Terraform state into it (
+see https://registry.terraform.io/providers/hashicorp/terraform/latest/docs/data-sources/remote_state):
 
 In `main.tf`, uncomment `backend "gcs" {...}`.
+Then, move the state to the bucket:
 
 ```shell
-#  authenticate
-$ gcloud auth application-default login
-```
-***IMPORTANT*** if Terraform reports
-"querying Cloud Storage failed ... oauth2: cannot fetch token: 400 Bad Request ... invalid_grant" -
-do this again (it lasts 60 days)
-
-TODO how do I configure this to use my service account (and its credentials) instead?!
-
-```shell
-# move the state to the bucket
 $ terraform init -migrate-state
 ```
 
+## Cloud Identity ##
 
+In [Admin Console](https://admin.google.com/ac/apps/sites/address):
+- activate Cloud Identity Free (optional)
+  [Cloud Identity](https://cloud.google.com/identity/docs/set-up-cloud-identity-admin)
+  [Identity Setup](https://cloud.google.com/identity/docs/how-to/setup)
 
 ## Domains ##
 
@@ -448,7 +461,7 @@ results in:
     This app tried to access sensitive info in your Google Account. To keep your account safe, Google blocked this access.
 ```
 and `terraform apply` (with all the scopes enabled in the Google Workspace provider!) of
-```hcl
+```terraform
 data "googleworkspace_role" "groups-admin" {
   name = "_GROUPS_ADMIN_ROLE"
 }
@@ -483,15 +496,8 @@ results in:
 │   }
 │ ]
 │
-│ More details:
-│ Reason: insufficientPermissions, Message: Insufficient Permission
-│
-│
-│   with data.googleworkspace_role.groups-admin,
-│   on main.tf line 165, in data "googleworkspace_role" "groups-admin":
-│  165: data "googleworkspace_role" "groups-admin" {
-│
-╵
+│ More details: Reason: insufficientPermissions, Message: Insufficient Permission
+│   with data.googleworkspace_role.groups-admin ... in data "googleworkspace_role" "groups-admin":
 ```
 References:
 - [domain-wide delegation](https://admin.google.com/ac/owl/domainwidedelegation)
