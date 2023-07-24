@@ -15,9 +15,9 @@ so that further configuration is handled by Terraform.
 Manual steps that can be done in various UI consoles _or_ using command line are given in the command line form. 
 
 Install:
-- `gcloud` (`google-cloud-cli`) from https://cloud.google.com/sdk/docs/install
-- `terraform` from https://learn.hashicorp.com/tutorials/terraform/install-cli (or `google-cloud-cli-terraform-tools`)
-- `direnv` from https://direnv.net/ (for project-scoped keys)
+- `gcloud` (`google-cloud-cli`) from [cloud.google.com/sdk](https://cloud.google.com/sdk/docs/install)
+- `terraform` from [hashicorp.com](https://learn.hashicorp.com/tutorials/terraform/install-cli) (or `google-cloud-cli-terraform-tools`)
+- `direnv` from [direnv.net](https://direnv.net) (for project-scoped keys)
 
 In the following:
 - `domain.tld` is the domain of the organization involved,
@@ -97,7 +97,8 @@ $ gcloud organizations add-iam-policy-binding org_id \
   --member="serviceAccount:terraform@domain-infra.iam.gserviceaccount.com" \
   --role="roles/iam.serviceAccountAdmin"
   
-# optional: bulk export of the existing Google Cloud Platform setup in Terraform format
+# optional: bulk export of the existing Google Cloud Platform setup
+# in Terraform format
 $ gcloud beta resource-config bulk-export --path=entire-tf-output \
   --organization=org_id --resource-format=terraform
 ```
@@ -124,7 +125,9 @@ This is the approach I use.
 
 Create and retrieve service account key:
 ```shell
-$ gcloud iam service-accounts keys create /path/to/keys/terraform-domain-infra.json --iam-account=terraform@domain-infra.iam.gserviceaccount.com
+$ gcloud iam service-accounts keys create \
+  /path/to/keys/terraform-domain-infra.json \
+  --iam-account=terraform@domain-infra.iam.gserviceaccount.com
 ```
 
 Create `.envrc` file containing:
@@ -151,7 +154,18 @@ in [Google Admin Console](https://admin.google.com/ac/roles).
 
 ## Core Terraform Files ##
 
-Create Terraform files describing the setup:
+Create Terraform files describing the setup.
+
+Note: documentation on the [storage bucket](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket)
+states:
+> If the project id is not set on the resource or in the provider block
+> it will be dynamically determined which will require enabling the compute api.
+
+I think it is a good idea to attribute resources to their projects _explicitly_,
+especially since there would normally be multiple projects under Terraform's control...
+
+Note: looping approach borrowed from a [blog post](https://blog.gruntwork.io/terraform-tips-tricks-loops-if-statements-and-gotchas-f739bbae55f9).
+
 
 `main.tf` file:
 ```terraform
@@ -181,9 +195,6 @@ terraform {
 #  }
 }
 
-# Note: see https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket
-# "If the project id is not set on the resource or in the provider block
-#  it will be dynamically determined which will require enabling the compute api."
 provider "google" {
   region      = local.gcp_region
   # zone        =
@@ -203,7 +214,8 @@ data "google_billing_account" "account" {
 }
 
 # TODO
-# Note: removed IAM that was in place from before the organization resource took over:
+# Note: removed IAM that was in place from before
+# the organization resource took over:
 // domain: Project Creator and Billing Account Creator roles
 #resource "google_organization_iam_member" "domain" {
 #  org_id = data.google_organization.org.org_id
@@ -250,7 +262,6 @@ resource "google_project" "infra" {
  # number -> "..."
 }
 
-# Looping approach from https://blog.gruntwork.io/terraform-tips-tricks-loops-if-statements-and-gotchas-f739bbae55f9
 resource "google_project_service" "infra" {
   project            = google_project.infra.project_id
   disable_on_destroy = true
@@ -368,21 +379,27 @@ Import existing resources into Terraform:
 
 ```shell
 # project(s)
-$ terraform import google_project.infra "projects/domain-infra"
+$ terraform import google_project.infra \
+  "projects/domain-infra"
 
 # service account
-$ terraform import google_service_account.terraform "projects/domain-infra/serviceAccounts/terraform@domain-infra.iam.gserviceaccount.com"
+$ terraform import google_service_account.terraform \
+  "projects/domain-infra/serviceAccounts/terraform@domain-infra.iam.gserviceaccount.com"
 
 # Google Workspace user(s)
-$ terraform import googleworkspace_user.admin admin@domain.tld
+$ terraform import googleworkspace_user.admin \
+  admin@domain.tld
 
 # Google Storage buckets (if any were created before the switch to Terraform)
 # TODO
 
 # enabled APIs: instead of importing them individually like this
-#   $ terraform import google_project_service.admin_googleapis_com domain-infra/admin.googleapis.com
-# I rely on the idempotency and just Terraform the whole map google_project_service.project["..."] over;
-# as a result, initial `terraform apply` might fail and will need to be repeated - depending on the order of modifications.
+#   $ terraform import google_project_service.admin_googleapis_com \
+#     domain-infra/admin.googleapis.com
+# I rely on the idempotency and just Terraform the whole map
+# google_project_service.project["..."] over;
+# as a result, initial `terraform apply` might fail
+# and will need to be repeated - depending on the order of modifications.
 ```
 
 And finally, the state described by the Terraform files is applied - which means, see the output of `terraform plan` first
@@ -439,12 +456,13 @@ $ gcloud domains registrations list-importable-domains
 $ gcloud domains registrations import domain.tld
 $ # TODO terraform import
 # assuming zones are terraformed:
-$ gcloud domains registrations configure dns domain.tld --cloud-dns-zone=domain-tld
-...
-```
+$ gcloud domains registrations configure dns domain.tld \
+  --cloud-dns-zone=domain-tld
 
-To import a zone into Terraform:
-$ terraform import google_dns_managed_zone.domain_tld projects/domain-infra/managedZones/domain-tld
+# import a zone into Terraform:
+$ terraform import google_dns_managed_zone.domain_tld \
+  projects/domain-infra/managedZones/domain-tld
+```
 
 
 ## Failure to bootstrap for Google Workspace ##
@@ -453,12 +471,14 @@ I tried to use Terraform to assign _GROUPS_ADMIN_ROLE and _USER_MANAGEMENT_ADMIN
 Terraform Service Account; even if it worked, it is probably easier to use the Admin Console - but it didn't work:
 
 ```shell
-$ gcloud auth application-default login --scopes "https://www.googleapis.com/auth/admin.directory.rolemanagement"
+$ gcloud auth application-default login \
+  --scopes "https://www.googleapis.com/auth/admin.directory.rolemanagement"
 ```
 results in:
 ```text
-    This app is blocked
-    This app tried to access sensitive info in your Google Account. To keep your account safe, Google blocked this access.
+This app is blocked
+This app tried to access sensitive info in your Google Account.
+To keep your account safe, Google blocked this access.
 ```
 and `terraform apply` (with all the scopes enabled in the Google Workspace provider!) of
 ```terraform
@@ -470,7 +490,6 @@ resource "googleworkspace_role_assignment" "terraform-groups-admin" {
   assigned_to = google_service_account.terraform.unique_id
   scope_type  = "CUSTOMER"
 }
-
 data "googleworkspace_role" "user-management-admin" {
   name = "_USER_MANAGEMENT_ADMIN_ROLE"
 }
@@ -484,20 +503,17 @@ results in:
 ```text
 │ Error: googleapi: Error 403: Request had insufficient authentication scopes.
 │ Details:
-│ [
-│   {
-│     "@type": "type.googleapis.com/google.rpc.ErrorInfo",
-│     "domain": "googleapis.com",
-│     "metadata": {
-│       "method": "ccc.hosted.frontend.directory.v1.DirectoryRoles.List",
-│       "service": "admin.googleapis.com"
-│     },
-│     "reason": "ACCESS_TOKEN_SCOPE_INSUFFICIENT"
-│   }
-│ ]
+│ [{
+│   "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+│   "domain": "googleapis.com",
+│   "metadata": {
+│     "method": "ccc.hosted.frontend.directory.v1.DirectoryRoles.List",
+│     "service": "admin.googleapis.com"
+│   },
+│   "reason": "ACCESS_TOKEN_SCOPE_INSUFFICIENT"
+│ }]
 │
-│ More details: Reason: insufficientPermissions, Message: Insufficient Permission
-│   with data.googleworkspace_role.groups-admin ... in data "googleworkspace_role" "groups-admin":
+│ Insufficient Permission ... in data "googleworkspace_role" "groups-admin"
 ```
 References:
 - [domain-wide delegation](https://admin.google.com/ac/owl/domainwidedelegation)
