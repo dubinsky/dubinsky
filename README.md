@@ -57,7 +57,9 @@
   _[673](https://github.com/scala/scala-xml/pull/673)_,
   _[675](https://github.com/scala/scala-xml/pull/675)_,
   _[676](https://github.com/scala/scala-xml/pull/676)_,
-  _[678](https://github.com/scala/scala-xml/pull/678)_.
+  _[678](https://github.com/scala/scala-xml/pull/678)_,
+  [689](https://github.com/scala/scala-xml/issues/689),
+  [694](https://github.com/scala/scala-xml/discussions/694).
 - [Gradle](https://github.com/gradle/gradle):
   [9885](https://github.com/gradle/gradle/issues/9855),
   [15491](https://github.com/gradle/gradle/issues/15491#issuecomment-1003832976),
@@ -81,6 +83,8 @@
   _[28](https://github.com/ndw/xmlresolver/pull/28)_,
   [44](https://github.com/xmlresolver/xmlresolver/issues/44),
   [54](https://github.com/xmlresolver/xmlresolver/issues/54).
+- [Xalan](https://github.com/apache/xalan-java):
+  _[83](https://github.com/apache/xalan-java/pull/83)_.
 - [http4s](https://github.com/http4s/http4s):
   [3565](https://github.com/http4s/http4s/issues/3565).
 - [zio-http](https://github.com/dream11/zio-http):
