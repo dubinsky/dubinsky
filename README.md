@@ -91,6 +91,8 @@
   [613](https://github.com/zio/zio-http/issues/613).
 - [Tapir documentation](https://tapir.softwaremill.com/en/latest/):
   _[2543](https://github.com/softwaremill/tapir/pull/2543)_.
+- [Besom](https://virtuslab.github.io/besom/):
+  [295](https://github.com/VirtusLab/besom/issues/295).
 - [SASS Gradle plugin](https://github.com/EtienneMiret/sass-gradle-plugin):
   [28](https://github.com/EtienneMiret/sass-gradle-plugin/issues/28).
 - [JetBrains Gateway](https://www.jetbrains.com/remote-development/gateway/):
