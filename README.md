@@ -92,7 +92,8 @@
 - [Tapir documentation](https://tapir.softwaremill.com/en/latest/):
   _[2543](https://github.com/softwaremill/tapir/pull/2543)_.
 - [Besom](https://virtuslab.github.io/besom/):
-  [295](https://github.com/VirtusLab/besom/issues/295).
+  [295](https://github.com/VirtusLab/besom/issues/295),
+  [303](https://github.com/VirtusLab/besom/issues/303).
 - [SASS Gradle plugin](https://github.com/EtienneMiret/sass-gradle-plugin):
   [28](https://github.com/EtienneMiret/sass-gradle-plugin/issues/28).
 - [JetBrains Gateway](https://www.jetbrains.com/remote-development/gateway/):
