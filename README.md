@@ -87,8 +87,10 @@
   _[83](https://github.com/apache/xalan-java/pull/83)_.
 - [http4s](https://github.com/http4s/http4s):
   [3565](https://github.com/http4s/http4s/issues/3565).
-- [zio-http](https://github.com/dream11/zio-http):
+- [zio-http](https://github.com/zio/zio-http):
   [613](https://github.com/zio/zio-http/issues/613).
+- [zio-schema](https://github.com/zio/zio-schema):
+  [667](https://github.com/zio/zio-schema/issues/667).
 - [Tapir documentation](https://tapir.softwaremill.com/en/latest/):
   _[2543](https://github.com/softwaremill/tapir/pull/2543)_.
 - [Besom](https://virtuslab.github.io/besom/):
