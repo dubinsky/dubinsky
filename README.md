@@ -91,6 +91,7 @@
   [613](https://github.com/zio/zio-http/issues/613).
 - [zio-schema](https://github.com/zio/zio-schema):
   [667](https://github.com/zio/zio-schema/issues/667).
+  [668](https://github.com/zio/zio-schema/issues/668).
 - [Tapir documentation](https://tapir.softwaremill.com/en/latest/):
   _[2543](https://github.com/softwaremill/tapir/pull/2543)_.
 - [Besom](https://virtuslab.github.io/besom/):
