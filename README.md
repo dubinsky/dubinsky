@@ -88,7 +88,8 @@
 - [http4s](https://github.com/http4s/http4s):
   [3565](https://github.com/http4s/http4s/issues/3565).
 - [zio-http](https://github.com/zio/zio-http):
-  [613](https://github.com/zio/zio-http/issues/613).
+  [613](https://github.com/zio/zio-http/issues/613),
+  [2767](https://github.com/zio/zio-http/issues/2767).
 - [zio-schema](https://github.com/zio/zio-schema):
   [667](https://github.com/zio/zio-schema/issues/667),
   [668](https://github.com/zio/zio-schema/issues/668).
