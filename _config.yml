@@ -22,12 +22,13 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
 
-
 exclude:
   - Gemfile
   - Gemfile.lock
   - CNAME
   - .idea
+  - vendor
+  - bundle
 
 header_pages:
   - tags.html
