@@ -17,3 +17,14 @@
     color: $background-color;
   }
 }
+
+.page-list {
+  font-size: 18px;
+
+  & i {
+    font-size: 14px;
+    // Based on blockquote.
+    color: #828282;
+  }
+}
+

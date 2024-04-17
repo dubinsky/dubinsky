@@ -1,8 +1,8 @@
-  * #computer
-  * Create a VM on Google Cloud Platform
-  * Inspiration: https://itnext.io/how-ive-slashed-the-cost-of-my-dev-environments-by-90-9c1082ad1baf
-  * Setup
-    * ```shell
+* #computer
+* Create a VM on Google Cloud Platform
+* Inspiration: https://itnext.io/how-ive-slashed-the-cost-of-my-dev-environments-by-90-9c1082ad1baf
+* Setup
+```shell
 # Project
 $ gcloud auth list
 $ gcloud auth login dub@opentorah.org
@@ -110,9 +110,10 @@ $ sudo resize2fs /dev/sdb
 # user configuration:
 $ git config --global user.name "Leonid Dubinsky"
 $ git config --global user.email "dub@podval.org"
-OpenTorah $ git config -f ./.gitconfig user.email "dub@opentorah.org"```
-  * JetBrains Gateway:
-    * ```shell
+OpenTorah $ git config -f ./.gitconfig user.email "dub@opentorah.org"
+```
+* JetBrains Gateway:
+```shell
 # SSH connection:
 # - fails to connect using the PIV SSH key from my Yubikey...
 # - even with a key in a file, connection fails when host name from the .ssh/config is used (but only the real connection; test connection in the full configuration dialog works).
@@ -134,4 +135,5 @@ $ .../remote-dev-server.sh --help
 $ .../remote-dev-server.sh installPlugins ~/Projects/run org.intellij.scala
 
 # server-to-client workflow:
-$ .../remote-dev-server.sh run <path/to/project> --ssh-link-host <host>```
+$ .../remote-dev-server.sh run <path/to/project> --ssh-link-host <host>
+```

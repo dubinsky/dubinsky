@@ -64,21 +64,7 @@
       * [code](https://github.com/logseq/logseq)
       * [ ] look into it! 
       * data is local; sync (currently only to GitHub) needs to be triggered manually
-    * **Obsidian**
-      * sync with Google Drive?
-      * publish?
-        * https://obsidian-publisher.netlify.app/
-        * https://quartz.jzhao.xyz/
-        * https://github.com/oleeskild/Obsidian-digital-garden
-        * https://publishkit.dev/
-      * Zotero
-        * https://github.com/vanakat/zotero-link
-        * https://github.com/windingwind/zotero-better-notes
-      * old remarks, some probably obsolete by now 
-        * [obsidian](https://obsidian.md/community) [code](https://github.com/orgs/obsidianmd/repositories)
-        * Supports more Markdown (block-quotes) at a price: no block transclusion (page, not block is a fundamental entity).
-        * For backlinks to appear under the TODO page, a task needs to be done like this: `[][[TODO]]`.
-        * No backlink filtering?
+    * [[Obsidian]]
     * **Zettler**
       * [x] look into it - but not too hard ;)
         * not online... well, it's not Roam :)

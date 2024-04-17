@@ -1,0 +1,16 @@
+{
+  "alwaysUpdateLinks": true,
+  "attachmentFolderPath": "attachments",
+  "propertiesInDocument": "hidden",
+  "useMarkdownLinks": false,
+  "tabSize": 2,
+  "newFileLocation": "folder",
+  "newFileFolderPath": "notes",
+  "userIgnoreFilters": [
+    "_includes/",
+    "_layouts/",
+    "_sass/",
+    "_site/",
+    "assets/"
+  ]
+}

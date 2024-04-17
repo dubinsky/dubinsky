@@ -17,6 +17,8 @@ markdown: kramdown
 theme: minima
 
 plugins:
+# to process files that do not have front matter
+  - jekyll-optional-front-matter
   - jekyll-mentions
   - jekyll-avatar
   - jekyll-feed
@@ -30,8 +32,22 @@ exclude:
   - vendor
   - bundle
 
-include:
-  - _notes
-
 header_pages:
   - tags.html
+  - notes/index.md
+  - days/index.md
+
+# see https://github.com/jekyll/minima/issues/709
+sass:
+  quiet_deps: true
+
+optional_front_matter:
+  remove_originals: true
+
+# to assign the correct layout to the files that do not have it - probably, because they do not have front matter altogether
+defaults:
+  -
+    scope:
+      path: "" # an empty string here means all files in the project
+    values:
+      layout: "page"

@@ -1,5 +1,6 @@
   * #computer
-  * FIDO2 SSH key:```shell
+  * FIDO2 SSH key:
+```shell
 # generate
 $ ssh-keygen -t ed25519-sk -O resident -O application=ssh:dub@podval.org-yk5c-fido2
 
@@ -20,7 +21,8 @@ $ ssh-add -D
 
 # activate permanently
 # writes identity files for all resident keys disamgiuating by the `application` parameter
-$ ssh-keygen -K```
+$ ssh-keygen -K
+```
   * Key comment:
     * `ssh-keygen -C "comment"` is not stored in the key
     * public key written during key generation has the default comment `user@host`

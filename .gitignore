@@ -3,4 +3,6 @@ _site
 .jekyll-metadata
 *.iml
 .idea
-/_notes/.obsidian/workspace.json
+Gemfile.lock
+/.obsidian/plugins/
+/.obsidian/workspace.json
