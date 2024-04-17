@@ -30,5 +30,8 @@ exclude:
   - vendor
   - bundle
 
+include:
+  - _notes
+
 header_pages:
   - tags.html
