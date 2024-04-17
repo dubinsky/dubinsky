@@ -1,0 +1,20 @@
+  * #Scala
+    * get XML declaration as a processing instruction
+  * Plans - create issues describing them:
+    * DTD parsing:
+      * parseDTD()
+      * https://docs.oracle.com/cd/A87860_01/doc/appdev.817/a86030/adx17p14.htm
+      * https://github.com/eclipse-ee4j/jaxb-dtd-parser/blob/master/dtd-parser/src/main/java/com/sun/xml/dtdparser/DTDParser.java
+    * Binary incompatible plans:
+      * Remove include-related classes
+      * Replace element content model
+      * XMLLoader's T type parameter is always Elem and should be removed
+      * XMLLoader.adapter should be removed
+      * do not derive FactoryAdapter from XMLLoader
+    * ConstructingParser:
+      * https://github.com/apache/daffodil/blob/main/daffodil-lib/src/main/scala/org/apache/daffodil/lib/xml/DaffodilConstructingLoader.scala
+      * CData and Xerces?
+      * see if they can be weened off of it to normal XMLReader...
+      * for my use?
+      * for feature-parity with the SAX-based parser
+      * is this what the includer is for? remove it?

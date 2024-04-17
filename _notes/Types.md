@@ -1,0 +1,25 @@
+  * Agda
+    * [Introduction to Univalent Foundations of Mathematics with Agda](https://www.cs.bham.ac.uk/~mhe/HoTT-UF-in-Agda-Lecture-Notes/HoTT-UF-Agda.html#mlttinagda)
+    * [Programming Language Foundations in Agda](https://plfa.github.io/)
+    * [Agda mode for VSCode](https://github.com/banacorn/agda-mode-vscode)
+      * invitation to port it to [intellij-dtlc](https://github.com/owo-lang/intellij-dtlc/pull/22)
+    * [Agda Documentation](https://agda.readthedocs.io/en/stable/)
+    * [Learn You An Agda](http://learnyouanagda.liamoc.net/pages/introduction.html)
+  * Haskell
+    * [A Type of Programming](https://atypeofprogramming.com/auth?token=4c949432-09dc-4c9f-a9e0-9cf7eabb1d7d&email=dub@podval.org&next=%2Fread)
+  * [Arend Theorem Prover](https://arend-lang.github.io/documentation/tutorial.html)
+  * HoTT
+    * [Martin Escardo's course](https://www.cs.bham.ac.uk/~mhe/HoTT-UF-in-Agda-Lecture-Notes/HoTT-UF-Agda.html#mlttinagda)
+    * [Andrei Bauer's course](https://github.com/andrejbauer/homotopy-type-theory-course)
+    * [Egbert Rijke's course](https://github.com/EgbertRijke/HoTT-Intro)
+    * [Homotopy type theory](https://en.wikipedia.org/wiki/Homotopy_type_theory)
+    * [Homotopy Type System](https://ncatlab.org/homotopytypetheory/show/Homotopy+Type+System)
+    * [principle of equivalence in nLab](https://ncatlab.org/nlab/show/principle+of+equivalence)
+    * [Univalent Foundations: “No Comment.” | Mathematics without Apologies, by Michael Harris](https://mathematicswithoutapologies.wordpress.com/2015/05/13/univalent-foundations-no-comment/)
+    * [What is an explicit bijection? - Bauer](http://videolectures.net/FPSAC2019_bauer_explicit_bijection/)
+  * [The visitor pattern is essentially the same thing as Church encoding](https://www.haskellforall.com/2021/01/the-visitor-pattern-is-essentially-same.html)
+  * Type Theory
+    * [I don't like judgemental equality - Martin Escardo](![](https://twitter.com/EscardoMartin/status/1608577126546157568))
+    * [Proof by contradiction - Martin Escardo](![](https://twitter.com/EscardoMartin/status/1587183814085935106))
+    * [ON THE MEANINGS OF THE LOGICAL CONSTANTS AND THE JUSTIFICATIONS OF THE LOGICAL LAWS - Per Martin Löf](https://ncatlab.org/nlab/files/MartinLofOnTheMeaning96.pdf)
+    * [How did 'judgement' come to be a term of logic? - Per Martin Löf](https://www.youtube.com/watch?v=FGUzgcLXNuk)

@@ -1,0 +1,166 @@
+  * Title: Program = Proof
+  * Author(s): [[Samuel Mimram]]
+  * Type: [[Book]]
+  * Publication: 
+  * Date Added: [[2022-11-06]]
+  * PDF original:  [original](http://www.lix.polytechnique.fr/Labo/Samuel.Mimram/teaching/INF551/course.pdf)
+  * Typos ('-' - rejected):
+    * Submitted:
+      * 1.4.2 "Principal types. A program can admit multiple types. For instance, the identity function admits the following types - change "admit" to "have"and "admits" to "has"
+      * 1.4.3 "Since p1 and p2 admit at most one type" - change "admit" to "have"
+      * 2.1.2 "Logic rejecting these principles is called intuitionistic and, by opposition, we speak of classical logic when they are admitted." - change "admitted" to "included"
+      * 2.3 "we want to show that 6 admits a half" - change "admits" to "has"
+      * 2.3 "every even number admits a half" - change "admits" to "has"
+      * 2.3 "proof of the fact that 6 admits a half" - change "admits" to "has"
+      * 2.3 "Lemma 2.3.0.1. Every even number admits a half." - change "admits" to "has"
+      * 2.3 "If n = 0 then it admits 0 as half" - change "admits" to "has"
+      * 2.3 "n′ admits a half m" - change "admits" to "has"
+      * 2.3 "n admits m + 1 as half" - change "admits" to "has"
+      * 2.5.8 "this observation admits a converse" - **change** to "a converse of this observation is true"
+      * 2.6.4 "it admits a proof without using the (cut) rule" - change "admits" to "has"
+      * 3.3.5 "every term t admits a fixpoint" - change "admits" to "has"
+      * 3.6.3 "if a term admits a normal form" - change "admits" to "has"
+      * 4.1.6 "whether t admits a type" - change "admits" to "has"
+      * 4.1.6 "the type admits no type" - **change** to "the term does not have a type"
+      * 4.1.6 "a term admits a unique type" - change "admits" to "has"
+      * 4.1.6 "a term t admits a type A" - change "admits" to "has"
+      * 4.1.6 "if the term admits the given type" - change "admits" to "has"
+      * 4.1.6 "whether a terms admits a type or not" - change "admits" to "has"
+      * 4.1.8 "reduced term does admit the same type" - change "admits" to "has"
+      * 4.2.4 "u admits a normal form" - change "admits" to "has"
+      * 4.4.1 "a given λ-term might admit multiple types" - change "admit" to "have"
+      * 4.4.1 "the identity λ-term admits the following types" - change "admits" to "has"
+      * 4.4.1 "the identity admits the type" - change "admits" to "has"
+      * 4.4.1 "it also admits the same type" - change "admits" to "has"
+      * 4.4.1 "any term admits a type which is “most general”" - change "admits" to "has"
+      * 4.4.2 "if a term admits a type, it also admits a less general type" - change "admits" to "has" (2 times)
+      * 4.4.3 "t admits a type A in the context Γ" - change "admits" to "has"
+      * 4.4.3 "if a system of equations admits a solution then it admits a most general one" - change "admits" to "has" (2 times)
+      * 4.4.3 "is there a context in which t admits a type?" - change "admits" to "has"
+      * 4.4.3 "t admits a type if and only if it admits a type in the context Γ" - change "admits" to "has" (2 times)
+      * 4.4.3 "λ-term usually admits multiple types" - change "admits" to "has"
+      * 4.4.5 "it admits multiple types" - change "admits" to "has"
+      * 5.1.4 "every element admits an inverse" - change "admits" to "has"
+      * 5.1.9 "Theorem 5.1.9.1. A sequent Γ ⊢ A admits a proof if and only if it admits a cut free proof." - change "admits" to "has" (2 times)
+      * 5.2.3 "A theory is satisfiable when it admits a model." - change "admits" to "has"
+      * 5.2.3 "When this formula admits a model" - change "admits" to "has"
+      * 5.3.2 "every surjective function admits a section" - change "admits" to "has"
+      * 5.3.3 "any set y, whose elements x are not empty, admits a choice function" - change "admits" to "has"; **remove** the first comma
+      * 5.3.3 "not not containing an element does not mean that we contain an element, because we do not admit double negation elimination" - change "admits" to "has"; **change** "we contain" to "it contains"
+      * 5.3.3 "admits a choice function" - change "admits" to "has"
+      * 5.3.3 "admitting no basis, and one admitting two basis of different cardinalities" - **change** to "that does not have a basis, and one that has two bases of different cardinalities"
+      * 5.4.3 "when an equation systems admits an unifier, it always admits a most general one" - change "admits" to "has" (2 times)
+      * 6.1 "the program actually admits the given type" - change "admits" to "has"
+      * 6.5.7 "some of the connectives admit dependent generalizations" - change "admit" to "have"
+      * 7.1 "p admits the type A, then p′ also admits the type A" - change "admits" to "has" (2 times)
+      * 7.1 "Given a program p which admits a type A" - change "admits" to "has"
+      * 7.1 "program actually admits this type" - change "admits" to "has"
+      * 8 "types are simply the terms which admit a particular type, called “Type”" - change "admit" to "have"
+      * 9 "a type should admit various proofs" - change "admit" to "have"
+      * 9.2 "concatenation is associative and admits constant paths as neutral elements on both sides" - change "admits" to "has"; **change** "neutral elements" to "units" (or the other way around above :))
+      * 9.2 "every path admits a path which is an inverse on both sides" - change "admits" to "has"; **change** "an" to "its"
+      * 9.2 "unital and admits inverses" - **change** to "has units and inverses"
+      * 9.2.2 "unital and admits inverses" - **change** to "has units and inverses"
+      * 9.3.4 "this function admits a root" - change "admits" to "has"
+      * 9.3.4 "f might admit multiple roots" - change "admit" to "have"
+      * 9.4.2 "bijective, i.e. which admits an inverse g" - change "admits" to "has"; **remove** "which"
+      * A.3.5 "tree T admits an infinite branch" - change "admits" to "has"
+      * A.4.2 "every element of B admits a pre-image under f" - change "admits" to "has"
+    * Also submitted:
+      * 0.1 "if the property is experimentally always verified" - change to "if the property is always confirmed experimentally"
+      * 0.1 "While I understand your point, I have two remarks to provide for this." - drop "to provide for this"
+      * 0.4 "A few years later ... Voevodsky thought for more than 20 years ..." - I do not see 20 years in the Voevodsky's story...
+      * 1.2.1 "the definition of the variable y is only valid in the following expression y * y" - change "valid" to "visible"
+      * 1.3.1 "which are labeled by an integer" - change to "which are labeled by integers"
+      * 1.3.3 "the set of all “trees” where we allow to have an infinite number of nodes" - change to "the set of all “trees” if we allow them to have an infinite number of nodes"
+      * 1.3.3 "closed under successor then" - add "function" after "successor"?
+      * 1.4.3 "language with much more [features] as OCaml" - change to "language with many more features, such as OCaml"
+      * 1.4.3 "is either a value or reduces" - change to "either is a value or it reduces"
+      * 2.5.2 "we can actually extract a proof of A" - change "extract" to "produce"
+      * 2.5.3 "it amounts to randomly add an axiom from the list given in theorem 2.5.1.1" - change "add" to "adding"
+      * 2.5.3 "We would like to present another approach which consists in slightly changing the calculus" - change "consists in" to "amounts to"
+      * 2.5.6 "generalize the notion of boolean model, so that intuitionistic natural deduction is complete with respect to this generalized notion of model" - remove the comma; insert "a" before "boolean" and the second occurrence of "model"
+      * 2.5.8 "the conjunction of its clauses, see section 2.5.5" - remove "the"
+      * 2.5.9 "A more economic translation" - change "economic" to "economical"
+      * 2.6 "negated at most once, see section 2.5.5." - replace the comma after "once" with "-"
+      * 2.8 "Kripke [Kri65] and Joyal for modal logic" - add literature reference for Joyal
+      * 9.1.1 "the proof of left unitality" - **change** to "the proof of existence of left unit"
+      * 9.1.1 "the right unitality" - **change** "the proof of existence of right unit"
+    * To submit - Chapter 3, second pass:
+      * 3 "In mathematics, we are somewhat used to this in other situations than functions." - change to "In mathematics, we are familiar with this in situations other than functions."
+      * 3 "Believe it or not this simple matter is a major source of bugs and headaches." - add comma after "not"
+      * 3 "The properties of this reduction relation is one of our main objects of interest here." - change to "Properties of reduction are among our main objects of interest here."
+      * 3.1.1 "function which to x associates t" - change to "function which takes x to t"
+      * 3.1.1 "application is associative to the left" - change to "application associates to the left"
+      * 3.1.1 "abstraction extends as far as possible on the right" - change "on" to "to"
+      * 3.1.2 "this will be made formal below" - change "formal" to "precise"
+      * 3.1.2 "there is always the possibility of renaming bound variables" - change to "it is always possible to rename bound variables"
+      * 3.1.2 "We define the set FV(t) of a term t, by induction on t, by" - remove comma after "t"; change "by induction on t, by" to "by induction on t:"
+      * 3.1.3 "There is one subtlety though, we only want to rename free occurrences of x" - replace comma after "though" with colon
+      * 3.1.3 "Formally, the renaming t{y/x} is defined by" - change "by" to "by induction on t:" 
+      * 3.1.3 "The three last lines handle the possible cases when renaming a variable in an abstraction" - change to "The last three lines handle cases possible when renaming a variable in an abstraction"
+      * 3.1.4 "take care of issues" - add "the" before "issues"
+      * 3.1.4 "but not u(λxy.u)" - change "but" to "and"
+      * 3.1.4 "but not  λx.xx" - change "but" to "and"
+      * 3.1.4 "Formally, the substitution t[u/x] is defined by induction on t by" - change "by induction on t by" to "by induction on t:"
+      * 3.2 "It intuitively consists of a function expecting an argument x and returning a result t(x), which is given an argument u." - change "It intuitively consists" to "Intuitively, it consists"; remove comma after "t(x)"?
+      * 3.2.1 "to reason about β-reduction steps, by induction on the derivation tree" - remove the comma after "steps"
+      * 3.2.2 "were each time we have underlined" - change "each time" to "in each"
+      * 3.2.4 "The reduction is not deterministic" - drop "The" before "reduction"
+      * 3.2.4 "eventually, the order in which we chose to perform β-reductions does not matter" - change "eventually" to "in the end"
+      * 3.2.6 "Some terms cannot reduce, they are called normal forms" - change "cannot" to "do not"; change comma to semi-colon
+      * 3.2.7 "The notion of β-equivalence is very natural on λ-terms" - change "on" to "for"
+      * 3.2.8 "function which to x associates t x" - change "to x associates t x" to "takes x to t x"
+      * 3.3.2 "we have defined conjunction (and other operations) from conditionals" - change "from" to "using"
+      * 3.3.2 "n-uples" - change to "n-tuples"
+      * 3.3.2 "uple" - change to "tuple" (2 occurrences)
+      * 3.3.4 "If we iterate n times this function" - change to "If we iterate this function n times"
+      * 3.3.4 "projecting to the first element" - change "to" to "on"?
+      * 3.3.5 "it might still be useful because since there might be other possible reductions" - drop "because"
+      * 3.3.6 "The previous encodings of usual functions, should make it more or less clear" - remove comma
+      * 3.4.1 "The easiest way to prove this confluence result first requires to introduce a variant of the β-reduction." - change to "The easiest way to prove this confluence result uses a variant of the β-reduction."
+      * 3.4.3 "both cases are handled similarly as above." - change "similarly as above" to "similarly to the above"
+      * 3.4.3 "From this follows easily the confluence property of the relation −↠ in two steps:" - change to "From this the confluence property of the relation −↠ follows easily in two steps:"
+      * 3.4.4 "we can finally deduce the confluence property of λ-calculus"   change "deduce" to "prove"
+      * 3.4.4 "From theorem 3.4.3.7, we deduce the existence of" - change "deduce" to "have"
+      * 3.5.1 "(resp. head, resp. weak head)" - drop the second "resp." (2 occurrences)
+      * 3.5.1 "The reduction function associated to this strategy" - change to "The reduction function for this strategy"
+      * 3.5.1 "once for all" - add "and" after "once"
+      * 3.5.2 "are not really efficient because of one small reason: the substitution function is not implemented efficiently" - change to "are not really efficient because the substitution function is not implemented efficiently"
+      * 3.5.2 "We shall now see how to perform that in practice." - change "perform" to "do"
+      * 3.5.2 "to a term u associates the term t with occurrences of x replaced by u" - change to "takes term u to the term t with occurrences of x replaced by u"
+      * 3.5.2 "we thus actually describe values in this way by" - change to "we thus actually describe values like this:"
+      * 3.5.2 "initially, this environment will typically be the empty list []" - drop "typically"
+      * 3.5.2 "in which case we return it, and return the variable x otherwise" - change ", and" to "- or"
+      * 3.5.2 "to a value v associates the evaluation..." - change to "takes a value v to the evaluation"
+      * 3.5.2 "does not “randomly” generate fresh variables, but incrementing the counter i starting from 0" - change "incrementing" to "increments"
+      * 3.5.2 "we might ensure that two terms are not equivalent without fully normalizing" - change "we might ensure" to "we can detect"
+      * 3.5.2 "In such a situation, there is thus no need to fully normalize the two terms to compare them." - drop "thus"
+      * 3.6 "alternative syntaxes for λ-calculus which allow taking care of α-conversion in terms and implement β-reduction correctly and efficiently" - change "allow taking" to "help take"
+      * 3.6.2 "We thus consider a variant of the λ-calculus where terms are generated by the grammar" - drop "thus"
+      * 3.6.2 "Our goal is now to implement β-reduction in the de Bruijn representation of terms." - change "is now" to "now is"
+      * 3.6.3 "This motivates the study, in the following of terms constructed from those, with the above rules as reduction." - add comma after "following"
+      * 3.6.3 "we avoid normalizing multiple times the same term" - change to "we avoid normalizing the same term multiple times"
+      * 3.6.3 "Therefore the combinatory I is superfluous in our system"   change "combinatory" to "combinator"
+    * To consider:
+      * 2.2.1 "by induction" - "by recursion"?
+      * change "deduce" to ???
+      * "contrarily"
+      * "associates"
+      * change "cannot reduce" to "does not reduce"?
+      * 2.5.8 "Its main interest lies in the fact"
+      * 2.5.8 "clauses that can be deduced which cannot using resolution only"
+      * 2.6 Sequent calculus is introduced as if for the first time, but it was introduced already in 2.5.3?!
+      * 2.6 "which is most simple to do using the single-sided presentation,"
+      * 2.6 "this is quite impractical"
+      * 2.8.2 "we can restrict to Kripke models which are tree-shaped"
+      * 3.1.2 "A variable x is fresh with respect to a term t when it does not occur in t, i.e. x ∈ X \ FV(t)." - is a variable fresh with respect to a term if it does not occur free in it but does occur bound?
+      * 3.5.2 "let eval t = eval [] t" - Is this correct? Function eval with two parameters (environment, term) was already defined; now  a function with the same name is being defined, but with only one parameter (term)?
+      * 6.1.1 "... differences ... Coq ... No type inference." - is there type inference in Coq? If yes, state it explicitly; if not - this is not a difference between Agda and Coq, but a difference between Agda and functional programming languages (e.g. OCaml)...
+      * 9.3.4 "given a relation R ⊆ A × B ... such that ... contains a function" - change to "a relation R ⊆ A × B ... such that ... defines a function"?
+      * 2.4.2 PSPACE-complete (it is harder than any other problem in PSPACE, which in particular implies that it is harder than any problem in NP)
+  * Not mentioned:
+    * Calculus of Inductive Constructions
+    * Lambda-cube and Pure Type Systems
+    * Difference between space and conjunction, line and implication etc.: theory/metatheory? not just for connectives judgements? spectrum?
+    * F. Cardone and J.R. Hindley. Lambda-Calculus and Combinators in the 20th Century. In: Volume 5, pp. 723-818, of Handbook of the History of Logic
