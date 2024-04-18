@@ -19,7 +19,7 @@ Besides, as I [wrote before](http://dub.podval.org/2020/06/29/bintray-gradle-plu
 Bintray seems to be abandonware...
 
 I am not ready to switch to the non-traditional [JitPack](https://jitpack.io/) (yet?),
-so [Maven Central](central.sonatype.org) seems to be the way to go.
+so [Maven Central](https://central.sonatype.org/) seems to be the way to go.
 
 One reason I did not use it before because it has a reputation of being slow, and the way it
 is struggling, returns `405 Not Allowed` and keeps being restarted 

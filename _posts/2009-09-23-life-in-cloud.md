@@ -106,7 +106,7 @@ integration: [Delicious Tools](https://chrome.google.com/webstore/detail/gclkcfl
 of 2010, the future of the service became uncertain. Google bookmarks still suck, and there is no good integration
 between Google Bookmarks and Chrome Bookmarks...
 
-I switched to [Pinboard](Pinboard) in 2013; it does not have social features, but I do not need them either.
+I switched to [Pinboard](https://pinboard.in/) in 2013; it does not have social features, but I do not need them either.
 (As a bonus, it has an interesting pricing model.)
 
 ### Note-taking ###

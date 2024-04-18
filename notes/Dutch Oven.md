@@ -1,6 +1,11 @@
-* Le Creuset
-	* 3.5 Qt: [Amazon](https://www.amazon.com/Creuset-Signature-Enameled-Cast-Iron-French/dp/B0076NOFSC?ref_=ast_sto_dp) flame: $290; Le Creuset: $305
-	* 4.5 Qt: [Amazon](https://www.amazon.com/Creuset-Signature-Enameled-Cast-Iron-Stainless/dp/B00VA5H8AY?ref_=ast_sto_dp) flame: $290; [Le Creuset](https://www.lecreuset.com/round-dutch-oven/LS2501.html): $335.
-	* 5.5 Qt: [Amazon](https://www.amazon.com/Creuset-Signature-Enameled-Cast-Iron-2-Quart/dp/B0076NOGPY?ref_=ast_sto_dp&th=1) cherry: $350; Le Creuset: $360.
-	* [Williams-Sonoma](https://www.williams-sonoma.com/products/le-creuset-signature-round-dutch-oven/?pkey=s%7Cle%20creuset%20dutch%20oven%7C20) 520 Legacy Place, Dedham, MA 02026 (781) 326-5120
-	* [Le Creuset Outlet](https://www.lecreuset.com/store?sid=the-outlets-at-assembly-row) 510 Assembly Row, Somerville, MA 02145 (617) 764-2998
+---
+title: Dutch Oven
+---
+- Le Creuset
+  - Sizes
+    - 3.5 Qt: [Amazon](https://www.amazon.com/Creuset-Signature-Enameled-Cast-Iron-French/dp/B0076NOFSC?ref_=ast_sto_dp) flame: $290; Le Creuset: $305
+    - 4.5 Qt: [Amazon](https://www.amazon.com/Creuset-Signature-Enameled-Cast-Iron-Stainless/dp/B00VA5H8AY?ref_=ast_sto_dp) flame: $290; [Le Creuset](https://www.lecreuset.com/round-dutch-oven/LS2501.html): $335.
+    - 5.5 Qt: [Amazon](https://www.amazon.com/Creuset-Signature-Enameled-Cast-Iron-2-Quart/dp/B0076NOGPY?ref_=ast_sto_dp&th=1) cherry: $350; Le Creuset: $360.
+  - Stores
+    - [Williams-Sonoma](https://www.williams-sonoma.com/products/le-creuset-signature-round-dutch-oven/?pkey=s%7Cle%20creuset%20dutch%20oven%7C20) 520 Legacy Place, Dedham, MA 02026 (781) 326-5120
+    - [Le Creuset Outlet](https://www.lecreuset.com/store?sid=the-outlets-at-assembly-row) 510 Assembly Row, Somerville, MA 02145 (617) 764-2998

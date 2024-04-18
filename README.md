@@ -1,4 +1,7 @@
+[![](https://img.shields.io/badge/Notes-dub.podval.org-informational)](https://dub.podval.org)
 [![](https://img.shields.io/badge/Bio-LinkedIn-informational?logo=LinkedIn&logoColor=blue)](https://www.linkedin.com/in/leoniddubinsky/)
+[![](https://img.shields.io/badge/Social-X/Twitter-informational?logo=Twitter&logoColor=blue)](https://twitter.com/leoniddubinsky)
+
 
 [![](https://img.shields.io/badge/Code-Scala-critical?logo=Scala&logoColor=red)](https://www.scala-lang.org/)
 [![](https://img.shields.io/badge/Framework-ZIO-important?logo=zio&logoColor=red)](https://www.scala-lang.org/)
@@ -14,14 +17,14 @@
 ## Open Source Work ##
 
 - [parsing XML with ZIO and pretty-printing it with Paiges](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/xml)
-- [Google Cloud Run Gradle plugin](https://github.com/dubinsky/cloud-run)
 - [Scala.js Gradle plugin](https://github.com/dubinsky/scalajs-gradle)
+- [Google Cloud Run Gradle plugin](https://github.com/dubinsky/cloud-run)
 - [where is this code running?](https://github.com/dubinsky/podval-run)
-- [DocBook processing](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/docbook)
-  and [DocBook Gradle plugin](https://github.com/opentorah/opentorah/tree/master/docbook)
 - [TEI](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/tei)
   [site generation](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/site) and
   [publishing of document collections](https://github.com/opentorah/opentorah/tree/master/collector)
+- [DocBook processing](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/docbook)
+  and [DocBook Gradle plugin](https://github.com/opentorah/opentorah/tree/master/docbook)
 - [Jewish calendrical calculations](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/calendar)
 - [learning schedules](https://github.com/opentorah/opentorah/tree/master/texts/src/main/scala/org/opentorah/schedule) for
   [various Jewish texts](https://github.com/opentorah/opentorah/tree/master/texts/src/main/scala/org/opentorah/texts)
@@ -122,6 +125,8 @@
  _[37](https://github.com/TEIC/CETEIcean/pull/37)_,
   [38](https://github.com/TEIC/CETEIcean/issues/38),
   [39](https://github.com/TEIC/CETEIcean/issues/39).
+- [wikibonsai/jekyll-wikirefs](https://github.com/wikibonsai/jekyll-wikirefs):
+  [1](https://github.com/wikibonsai/jekyll-wikirefs/issues/1).
 
 ## Proofreading ##
 

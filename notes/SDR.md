@@ -1,1 +1,4 @@
-  * sudo dnf install gqrx
+---
+title: SDR
+---
+- sudo dnf install gqrx

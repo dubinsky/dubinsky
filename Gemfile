@@ -15,6 +15,7 @@ group :jekyll_plugins do
   gem "jekyll-seo-tag"
   gem "jekyll-mentions"
   gem "jekyll-avatar"
+  # gem 'jekyll-wikirefs', '~> 0.0.14'
   gem "kramdown"
   gem "minima"
 end

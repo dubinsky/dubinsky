@@ -1,1 +1,16 @@
-  * Sample vials [mini-FAQ](https://www.penaddict.com/blog/2021/10/29/sample-vials-a-mini-faq)
+---
+title: Pens
+---
+- Sample vials [mini-FAQ](https://www.penaddict.com/blog/2021/10/29/sample-vials-a-mini-faq)
+- [The Best Notebooks for Fountain Pens, 2019 Review - JetPens](https://www.jetpens.com/blog/the-best-notebooks-for-fountain-pens/pt/32)
+- [ ] [[TODO]] publish the paper post
+- [ ] [[TODO]] update the pen post
+  - upload pictures
+  - update pictures
+  - add recommendations 
+- [ ] [[TODO]] update the pens post with [comments](https://mail.google.com/mail/u/0/?ui=2&pli=1#apps/gorkin+label%3Ainbox/13f33ac73d00d0a4) from Gorkin
+  - Platinum Preppy – nice flow, not too fat, pleasant experience, use this converter
+  - Pilot Prera – good fro writing, slower ink flow, very exact, with this converter
+  - Sailor HighAce – a little long and thin. writes very well.
+  - Pilot 78G – Medium Nib – nice flex, good for drawing. Same pen with fine nib – great for writing and small sketches. hisnibs.com is, however, retarded website, have to order via email. 
+  - Pilot Custom 74 at richardspens.com – (you can tell him how to adjust your pen, he is a nib master) perfect for drawing, very nice flow.

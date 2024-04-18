@@ -1,5 +1,6 @@
 ---
 layout: home
+disabled rules: [yaml-title]
 ---
 
 {% avatar dubinsky size=150 %}

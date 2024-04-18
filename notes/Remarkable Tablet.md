@@ -1,27 +1,31 @@
-  * Order
-    * 14/04/2020 12:17 AM +00:00 UTC
-    * Id: 2e6b4760-3aa1-4af2-9db7-450348dad239
-    * Serial: RM110-043-23722
-    * Free Connect: https://support.remarkable.com/hc/en-us/articles/4409609578001
-  * Setup
-    * SSH password (Settings | Help | Copyright and licenses): SVEPwWzjDP
-    * upload files via USB web interface (when enabled under "Storage" and the tablet connected) at http://10.11.99.1/ (see [File Transfer](https://remarkablewiki.com/tips/file_transfer))
-    * configured UniFi for the tablet's MAC address: remarkable.lan.podval.org (192.168.1.6); over USB: 10.11.99.1
-    * put the public SSH key on the tablet and configured local SSH so that `$ ssh remarkable` works (see [SSH](https://remarkablewiki.com/tech/ssh))
-    * works in `mc` as a shell link
-    * mount over SSH: `$ sshfs remarkable:/home/root <mountpoint>` (see [Linux Mount](https://remarkablewiki.com/tips/sshmount))
-    * [rclone](https://remarkablewiki.com/tips/rclone)?
-  * Resources
-    * https://my.remarkable.com
-    * [Calibre Companion](http://faq.calibrecompanion.co/)
-    * [Tips](https://remarkablewiki.com/tips/start)
-    * [Cloud Document Sync](https://www.einkpads.com/products/ep-binder)  $20
-  * [KoReader Support](https://github.com/koreader/koreader/issues/6792)
-    * [review](https://www.reddit.com/r/RemarkableTablet/comments/ks80ao/koreader_gamechanger_this_completes_the/)
-    * KoReader [toggler](https://github.com/ddvk/remarkable-autoinstall/tree/master/rm2)
-    * [toltec](https://github.com/toltec-dev/toltec)
-      * opkg install rm2fb
-      * opkg install [oxide](https://github.com/Eeems/oxide/releases)
-        * [config](https://github.com/toltec-dev/toltec/blob/c7f3198b2b7cb83e86cb4e0b237a4a1a8c1acfa8/package/oxide/package)
-        * [bug](https://github.com/Eeems/oxide/issues/149)
-        * [gesture daemon](https://rmkit.dev/apps/genie)
+---
+title: Remarkable Tablet
+---
+- Order
+  - 14/04/2020 12:17 AM +00:00 UTC
+  - Id: 2e6b4760-3aa1-4af2-9db7-450348dad239
+  - Serial: RM110-043-23722
+  - Free Connect: https://support.remarkable.com/hc/en-us/articles/4409609578001
+- Got: 2020-11-02
+- Setup
+  - SSH password (Settings | Help | Copyright and licenses): SVEPwWzjDP
+  - upload files via USB web interface (when enabled under "Storage" and the tablet connected) at http://10.11.99.1/ (see [File Transfer](https://remarkablewiki.com/tips/file_transfer))
+  - configured UniFi for the tablet's MAC address: remarkable.lan.podval.org (192.168.1.6); over USB: 10.11.99.1
+  - put the public SSH key on the tablet and configured local SSH so that `$ ssh remarkable` works (see [SSH](https://remarkablewiki.com/tech/ssh))
+  - works in `mc` as a shell link
+  - mount over SSH: `$ sshfs remarkable:/home/root <mountpoint>` (see [Linux Mount](https://remarkablewiki.com/tips/sshmount))
+  - [rclone](https://remarkablewiki.com/tips/rclone)?
+- Resources
+  - https://my.remarkable.com
+  - [Calibre Companion](http://faq.calibrecompanion.co/)
+  - [Tips](https://remarkablewiki.com/tips/start)
+  - [Cloud Document Sync](https://www.einkpads.com/products/ep-binder)  $20
+- [KoReader Support](https://github.com/koreader/koreader/issues/6792)
+  - [review](https://www.reddit.com/r/RemarkableTablet/comments/ks80ao/koreader_gamechanger_this_completes_the/)
+  - KoReader [toggler](https://github.com/ddvk/remarkable-autoinstall/tree/master/rm2)
+  - [toltec](https://github.com/toltec-dev/toltec)
+    - opkg install rm2fb
+    - opkg install [oxide](https://github.com/Eeems/oxide/releases)
+      - [config](https://github.com/toltec-dev/toltec/blob/c7f3198b2b7cb83e86cb4e0b237a4a1a8c1acfa8/package/oxide/package)
+      - [bug](https://github.com/Eeems/oxide/issues/149)
+      - [gesture daemon](https://rmkit.dev/apps/genie)

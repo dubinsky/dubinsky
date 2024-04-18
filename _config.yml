@@ -6,7 +6,7 @@ description: >- # this means to ignore newlines until "baseurl:"
   Projects and thoughts
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://dub.podval.org" # the base hostname & protocol for your site, e.g. http://example.com
-timezone: America/New_York
+timezone: "America/New_York"
 google_analytics: UA-18415116-1
 
 twitter_username: leoniddubinsky
@@ -19,23 +19,18 @@ theme: minima
 plugins:
 # to process files that do not have front matter
   - jekyll-optional-front-matter
+  - jekyll-sitemap
+  - jekyll-feed
   - jekyll-mentions
   - jekyll-avatar
-  - jekyll-feed
-  - jekyll-sitemap
+#  - jekyll-wikirefs
 
 exclude:
+  - CNAME
   - Gemfile
   - Gemfile.lock
-  - CNAME
-  - .idea
   - vendor
   - bundle
-
-header_pages:
-  - tags.html
-  - notes/index.md
-  - days/index.md
 
 # see https://github.com/jekyll/minima/issues/709
 sass:
@@ -51,3 +46,28 @@ defaults:
       path: "" # an empty string here means all files in the project
     values:
       layout: "page"
+
+header_pages:
+  - tags.html
+  - notes/index.md
+  - days/index.md
+
+# wikirefs plugin defaults
+wikilinks:
+  attributes:
+    enabled: true
+  css:
+    exclude: []
+    name:
+      typed: 'typed'
+      wiki: 'wiki-link'
+      web: 'web-link'
+      invalid_wiki: 'invalid-wiki-link'
+      embed_container: 'embed-container'
+      embed_title: 'embed-title'
+      embed_content: 'embed-content'
+      embed_link: 'embed-wiki-link'
+      embed_image_container: 'embed-image-container'
+      embed_image: 'embed-image'
+  enabled: true
+  exclude: []

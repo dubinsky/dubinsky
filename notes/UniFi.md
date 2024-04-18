@@ -1,80 +1,85 @@
-  * #computer
-  * [UniFi Help](https://help.ui.com/hc/en-us/categories/200320654)
-  * Gateway: https://192.168.1.1/
-  * Controller in Docker
-    * Install [[//dub/Fedora Install#^SlVFpD61s|**Docker**]]
-    * UniFi Docker Image [rpository](https://github.com/jacobalberty/unifi-docker) and [Docker Hub page](https://hub.docker.com/r/jacobalberty/unifi/)
-    * Create `unifi` user: `$ sudo useradd unifi`
-    * Retrieve its uid and gid from `/etc/passwd` and `/etc/group` (`1001` below)
-    * using docker-run:
-      * `--rm --init -v /home/unifi:/unifi --name unifi jacobalberty/unifi:latest`
-      * expose the ports: `-p 8080:8080 -p 8443:8443 -p 3478:3478/udp`
-      * did not work with `--user unifi` - probably because the image hard-codes the uid and gid of the unifi user as 999
-      * tell the Docker image what uid and gid to use: `-e UNIFI_UID=1001 -e UNIFI_GID=1001 -e RUNAS_UID0=false`
-      * that did not work either, nor running as root
-    * using docker-compose:
-      * create `~unifi/docker-compose.yaml` from https://github.com/jacobalberty/unifi-docker/blob/master/docker-compose.yml
-      * create `~unifi/.env` from https://github.com/jacobalberty/unifi-docker/blob/master/.env
-      * start with `docker-compose up --detach` in `~unifi`
-      * stop with `docker-compose down`
-      * works, but not clear if it is running as the `unifi` user...
-      * tell the image what uid and gid to use, add under `services | controller | environment`:```yaml
+---
+title: UniFi
+tags: [computer]
+---
+- [UniFi Help](https://help.ui.com/hc/en-us/categories/200320654)
+- Gateway: https://192.168.1.1/
+- Controller in Docker
+  - Install [[Fedora Install#Docker]]
+  - UniFi Docker Image [rpository](https://github.com/jacobalberty/unifi-docker) and [Docker Hub page](https://hub.docker.com/r/jacobalberty/unifi/)
+  - Create `unifi` user: `$ sudo useradd unifi`
+  - Retrieve its uid and gid from `/etc/passwd` and `/etc/group` (`1001` below)
+  - using docker-run:
+    - `--rm --init -v /home/unifi:/unifi --name unifi jacobalberty/unifi:latest`
+    - expose the ports: `-p 8080:8080 -p 8443:8443 -p 3478:3478/udp`
+    - did not work with `--user unifi` - probably because the image hard-codes the uid and gid of the unifi user as 999
+    - tell the Docker image what uid and gid to use: `-e UNIFI_UID=1001 -e UNIFI_GID=1001 -e RUNAS_UID0=false`
+    - that did not work either, nor running as root
+  - using docker-compose:
+    - create `~unifi/docker-compose.yaml` from https://github.com/jacobalberty/unifi-docker/blob/master/docker-compose.yml
+    - create `~unifi/.env` from https://github.com/jacobalberty/unifi-docker/blob/master/.env
+    - start with `docker-compose up --detach` in `~unifi`
+    - stop with `docker-compose down`
+    - works, but not clear if it is running as the `unifi` user...
+    - tell the image what uid and gid to use, add under `services | controller | environment`:
+```yaml
 RUNAS_UID0: "false"
 UNIFI_UID: "1001"
-UNIFI_GID: "1001"```
-      * To make it restart on reboot: `restart: always` under each service in the docker-compose file.
-  * Setup
-    * Basics
-      * name: k39-2
-      * admin: dub/whatwhen
-      * device password: l7RGicx8ZAuTehfe
-      * LAN: lan.podval.org
-      * WiFi: all the bands on `podva-u` with my WiFi password
-      * DHCP range starting at 65
-    * Controller host
-      * Make sure that `unifi` host is resolvable - **OR**
-      * in the UniFi Console | Settings | System | Application Configuration
+UNIFI_GID: "1001"
+```
+     - To make it restart on reboot: `restart: always` under each service in the docker-compose file.
+- Setup
+  - Basics
+    - name: k39-2
+    - admin: dub/whatwhen
+    - device password: l7RGicx8ZAuTehfe
+    - LAN: lan.podval.org
+    - WiFi: all the bands on `podva-u` with my WiFi password
+    - DHCP range starting at 65
+  - Controller host
+    - Make sure that `unifi` host is resolvable - **OR**
+    - in the UniFi Console | Settings | System | Application Configuration
 enable "Override Inform Host" and set `Host for Inform` to the <controller host>
-    * Move devices from the old controller
-      * Reset to the factory state with a paperclip
-      * Default SSH credentials - ubnt/ubnt
-      * It may be necessary to `$ set-inform http://<controller host>:8080/inform`
-    * Enable SSH for UniFi devices
-      * in the UniFi Console | Settings | System | Application Configuration | Device SSH Authentication
-      * retrieve auto-generated SSH password
-      * add SSH key
-      * use it: `ssh -o PubkeyAcceptedKeyTypes=ssh-rsa 192.168.1.xx`
-    * DynDNS
-      * Google [article](https://support.google.com/domains/answer/6147083).
-      * in the UniFi Console | Settings | Advanced Features | Advanced Gateway Settings | Dynamic DNS
-        * Interface: WAN
-        * Service: dyndns
-        * Hostname: k39.podval.org
-        * User/Password: retrieve from the record in Google Domains
-        * Server: domains.google.com
-      * [ ] HOW DO I VERIFY THAT IT WORKED?
-    * Port forwarding
-      * in the UniFi Console | Settings | Advanced Features | Advanced Gateway Settings | Dynamic DNS
-        * 22 - ssh
-        * 80 - http
-        * 443 - https
-    * Static IP addresses (192.168.1.*  *.lan.podval.org)
-      * [ ] HOW DO I ASSIGN STATIC ADDRESSES TO UniFi DEVICES?
-      * 1         gateway 
-      * 2        dub
-      * 4        OBi202
-      * 21       printer
-      * 22       printer-colour2
-      * 30      should be tv
-      * 31      gatekeeper
-      * 32      gatekeeper-wifi
-      * 33      dub-phone
-      * 34      nina
-      * 35      nina-wifi
-      * 36      nina-phone
-      * 40      bedroom speaker
-      * 41       Anova oven
-      * 65      switch
-      * 71       AP2
-      * 72      AP1
-      * 78      dub-wifi
+  - Move devices from the old controller
+    - Reset to the factory state with a paperclip
+    - Default SSH credentials - ubnt/ubnt
+    - It may be necessary to `$ set-inform http://<controller host>:8080/inform`
+  - Enable SSH for UniFi devices
+    - in the UniFi Console | Settings | System | Application Configuration | Device SSH Authentication
+    - retrieve auto-generated SSH password
+    - add SSH key
+    - use it: `ssh -o PubkeyAcceptedKeyTypes=ssh-rsa 192.168.1.xx`
+  - DynDNS
+    - Google [article](https://support.google.com/domains/answer/6147083).
+    - in the UniFi Console | Settings | Advanced Features | Advanced Gateway Settings | Dynamic DNS
+      - Interface: WAN
+      - Service: dyndns
+      - Hostname: k39.podval.org
+      - User/Password: retrieve from the record in Google Domains
+      - Server: domains.google.com
+    - [ ] [[TODO]] HOW DO I VERIFY THAT IT WORKED?
+  - Port forwarding
+    - in the UniFi Console | Settings | Advanced Features | Advanced Gateway Settings | Dynamic DNS
+      - 22 - ssh
+      - 80 - http
+      - 443 - https
+  - Static IP addresses (192.168.1.*  *.lan.podval.org)
+    - [ ] [[TODO]] HOW DO I ASSIGN STATIC ADDRESSES TO UniFi DEVICES?
+    - 1       gateway 
+    - 2       dub
+    - 4       OBi202
+    - 21      printer
+    - 22      printer-colour2
+    - 30      should be tv
+    - 31      gatekeeper
+    - 32      gatekeeper-wifi
+    - 33      dub-phone
+    - 34      nina
+    - 35      nina-wifi
+    - 36      nina-phone
+    - 40      bedroom speaker
+    - 41      Anova oven
+    - 65      switch
+    - 71      AP2
+    - 72      AP1
+    - 78      dub-wifi

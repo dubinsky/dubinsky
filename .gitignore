@@ -4,5 +4,9 @@ _site
 *.iml
 .idea
 Gemfile.lock
-/.obsidian/plugins/
+/.obsidian/plugins/**/main.js
+/.obsidian/plugins/**/manifest.json
+/.obsidian/plugins/**/styles.css
+/.obsidian/plugins/**/store/
+/.obsidian/plugins/zotero-sync-client/data.json
 /.obsidian/workspace.json

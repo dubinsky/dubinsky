@@ -1,6 +1,6 @@
 ---
 layout: page
-title: Lambda-calculus
+title: lambda-calculus
 math: true
 ---
 

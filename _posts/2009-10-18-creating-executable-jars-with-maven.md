@@ -11,8 +11,8 @@ blogger_orig_url: https://blog.dub.podval.org/2009/10/creating-executable-jars-w
 
 ### Maven Assembly Plugin ###
 
-I wanted to make a self-contained executable JAR for the project mentioned in a previous
-[post](/2009/08/30/consuming-zenfolio.html). I used
+I wanted to make a self-contained executable JAR for the project mentioned in a previous post
+[[2009-08-30-consuming-zenfolio]]. I used
 [Assembly](http://www.sonatype.com/books/maven-book/reference/assemblies.html) plugin. Some of the transitive
 dependencies are not really needed in my case, and I did not want to include them. Assembly plugin provides full control
 over the contents of the archive through the assembly descriptor. Also, exclusions can be used on the direct
@@ -48,8 +48,7 @@ Maven with One Jar using Assembly plugin. Dependency on One-Jar has to be added:
 </dependency>
 ```
 
-I couldn't find One-Jar in any Maven repository, so it has to be loaded into your corporate repository, or to a
-[in-project](/2010/01/28/maven-in-project-repository.html) repository.
+I couldn't find One-Jar in any Maven repository, so it has to be loaded into your corporate repository, or to a in-project repository (see [[2010-01-28-maven-in-project-repository]]).
 
 Here is my Assembly plugin stanza:
 ```xml

@@ -1,32 +1,29 @@
 <!DOCTYPE html>
 <html lang="{{ page.lang | default: site.lang | default: "en" }}">
+  {%- include head.html -%}
 
-{%- include head.html -%}
+  <body>
+    {%- include header.html -%}
 
-<body>
-
-{%- include header.html -%}
-
-<main class="page-content" aria-label="Content">
-    <div class="wrapper">
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
         {% assign contentarray = content | split:'[[' %}
         {% for item in contentarray %}
-          {% if forloop.index > 1 %}
-            {% assign itemparts = item | split:']]' %}
-            {% assign link = itemparts[0] %}
-            {% if forloop.index == 2 %}
-              {% assign links = link %}
-            {% else %}
-              {% assign links = links | append: ',' | append: link %}
-            {% endif %}
-            {% assign filename = link | append: '.md' %}
-            {% assign result = site.pages | where: 'name', filename %}
-            {% if forloop.index == 2 %}
-              {% assign urls = result[0].url %}
-            {% else %}
-              {% assign urls = urls | append: ',' | append: result[0].url %}
-            {% endif %}
-          {% endif %}
+        {% if forloop.index > 1 %}
+        {% assign itemparts = item | split:']]' %}
+        {% assign link = itemparts[0] %}
+        {% if forloop.index == 2 %}
+        {% assign links = link %}
+        {% else %}
+        {% assign links = links | append: ',' | append: link %}
+        {% endif %}
+        {% assign result = site.pages | where: 'title', link %}
+        {% if forloop.index == 2 %}
+        {% assign urls = result[0].url %}
+        {% else %}
+        {% assign urls = urls | append: ',' | append: result[0].url %}
+        {% endif %}
+        {% endif %}
         {% endfor %}
 
         {% assign urlarray = urls | split:',' %}
@@ -34,17 +31,15 @@
 
         {% assign replacedcontent = content %}
         {% for item in linkarray %}
-          {% assign linktext = '<a href="' | append: urlarray[forloop.index0] | append: '">' | append: '[[' | append: item | append: ']]' | append: '</a>' %}
-          {% assign bracketlink = '[[' | append: item | append: ']]' %}
-          {% assign replacedcontent = replacedcontent | replace: bracketlink,linktext %}
+        {% assign linktext = '<a href="' | append: urlarray[forloop.index0] | append: '">' | append: '[[' | append: item | append: ']]' | append: '</a>' %}
+        {% assign bracketlink = '[[' | append: item | append: ']]' %}
+        {% assign replacedcontent = replacedcontent | replace: bracketlink, linktext %}
         {% endfor %}
 
         {{ replacedcontent | markdownify }}
-    </div>
-</main>
+      </div>
+    </main>
 
-{%- include footer.html -%}
-
-</body>
-
+    {%- include footer.html -%}
+  </body>
 </html>

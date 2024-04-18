@@ -1,7 +1,13 @@
-* #computer
-* Create a VM on Google Cloud Platform
-* Inspiration: https://itnext.io/how-ive-slashed-the-cost-of-my-dev-environments-by-90-9c1082ad1baf
-* Setup
+---
+title: Cloud Development
+tags: [computer]
+---
+ 
+Create a VM on Google Cloud Platform
+
+Inspiration: https://itnext.io/how-ive-slashed-the-cost-of-my-dev-environments-by-90-9c1082ad1baf
+
+Setup
 ```shell
 # Project
 $ gcloud auth list
@@ -112,7 +118,8 @@ $ git config --global user.name "Leonid Dubinsky"
 $ git config --global user.email "dub@podval.org"
 OpenTorah $ git config -f ./.gitconfig user.email "dub@opentorah.org"
 ```
-* JetBrains Gateway:
+
+JetBrains Gateway
 ```shell
 # SSH connection:
 # - fails to connect using the PIV SSH key from my Yubikey...

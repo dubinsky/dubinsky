@@ -1,7 +1,7 @@
 {
   "alwaysUpdateLinks": true,
   "attachmentFolderPath": "attachments",
-  "propertiesInDocument": "hidden",
+  "propertiesInDocument": "visible",
   "useMarkdownLinks": false,
   "tabSize": 2,
   "newFileLocation": "folder",

@@ -1,9 +1,12 @@
 <ul class="page-list">
-    {% assign pages = site.pages | sort_natural: 'name' %}
-
-    {%- for item in pages %}
-    {%- if item.dir == page.dir and item.path != page.path %}
-    <li><a href="{{ item.url | relative_url }}"><span>{{ item.name | remove: ".md" }}</span></a></li>
-    {% endif -%}
-    {% endfor -%}
+  {% assign pages = site.pages | set_titles_from_names | sort_natural: 'title' %}
+  {%- for item in pages %}
+  {%- if item.dir == page.dir and item.path != page.path %}
+  <li>
+    <a href="{{ item.url | relative_url }}">
+      <span>{{ item.title }}</span>
+    </a>
+  </li>
+  {% endif -%}
+  {% endfor -%}
 </ul>

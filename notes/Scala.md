@@ -1,24 +1,27 @@
-  * [Magic Tricks with Functional Effects by John A. De Goes - YouTube](https://www.youtube.com/watch?v=xpz4rf1RS8c&ab_channel=BeeScala)
-  * [ ] #learn Optics
-    * https://github.com/julien-truffaut/Monocle
-    * https://kubuszok.com/2018/adt-through-the-looking-glass/
-    * current state of affairs? 
-  * [Scala Best Practices](https://github.com/alexandru/scala-best-practices/)
-  * [Strategic Scala Style: Principle of Least Power](http://www.lihaoyi.com/post/StrategicScalaStylePrincipleofLeastPower.html)
-  * [Type members are (almost) type parameters](http://typelevel.org/blog/2015/07/13/type-members-parameters.html)
-  * [Four ways to escape a cake](http://typelevel.org/blog/2017/03/01/four-ways-to-escape-a-cake.html)
-  * [Constraints Liberate, Liberties Constrain — Runar Bjarnason - YouTube](https://www.youtube.com/watch?v=GqmsQeSzMdw)
-  * [Introduction to programming with dependent types in Scala - Stepik](https://stepik.org/course/ThCS-Introduction-to-programming-with-dependent-types-in-Scala-2294/)
-  * [Recursion schemes fundamentals | 47 Degrees](https://www.47deg.com/blog/recursion-schemes-introduction/)
-  * [Growing Trees from Seeds](https://www.youtube.com/watch?v=ZlW1922pf2M&feature=youtu.be&ab_channel=Ziverge)
-  * Scala 3
-    * [Dotty Overview](https://dotty.epfl.ch/docs/reference/overview.html)
-    * [Dotty](http://dotty.epfl.ch/docs/internals/higher-kinded-v2.html)
-    * [Scala 3 Migration Guide](https://scalacenter.github.io/scala-3-migration-guide/)
-    * [Explicit Term Inference with Scala 3](https://www.scala-lang.org/2020/11/06/explicit-term-inference-in-scala-3.html)
-    * [Notes on Category Theory in Scala 3](https://typista.org/categories-in-dotty/)
-    * [Monad is just...](https://blog.rockthejvm.com/monads-are-monoids-in-the-category-of-endofunctors/)
-  * [ ] #learn Scala.js
-    * https://www.scalawilliam.com/importance-scalajs/
-  * [ ] #learn Magnolia
-  * [ ] #learn Laminar
+---
+title: Scala
+---
+- [Magic Tricks with Functional Effects by John A. De Goes - YouTube](https://www.youtube.com/watch?v=xpz4rf1RS8c&ab_channel=BeeScala)
+- [ ] [[TODO]] [[learn]] Optics
+  - https://github.com/julien-truffaut/Monocle
+  - https://kubuszok.com/2018/adt-through-the-looking-glass/
+  - current state of affairs? 
+- [Scala Best Practices](https://github.com/alexandru/scala-best-practices/)
+- [Strategic Scala Style: Principle of Least Power](http://www.lihaoyi.com/post/StrategicScalaStylePrincipleofLeastPower.html)
+- [Type members are (almost) type parameters](http://typelevel.org/blog/2015/07/13/type-members-parameters.html)
+- [Four ways to escape a cake](http://typelevel.org/blog/2017/03/01/four-ways-to-escape-a-cake.html)
+- [Constraints Liberate, Liberties Constrain — Runar Bjarnason - YouTube](https://www.youtube.com/watch?v=GqmsQeSzMdw)
+- [Introduction to programming with dependent types in Scala - Stepik](https://stepik.org/course/ThCS-Introduction-to-programming-with-dependent-types-in-Scala-2294/)
+- [Recursion schemes fundamentals | 47 Degrees](https://www.47deg.com/blog/recursion-schemes-introduction/)
+- [Growing Trees from Seeds](https://www.youtube.com/watch?v=ZlW1922pf2M&feature=youtu.be&ab_channel=Ziverge)
+- Scala 3
+  - [Dotty Overview](https://dotty.epfl.ch/docs/reference/overview.html)
+  - [Dotty](http://dotty.epfl.ch/docs/internals/higher-kinded-v2.html)
+  - [Scala 3 Migration Guide](https://scalacenter.github.io/scala-3-migration-guide/)
+  - [Explicit Term Inference with Scala 3](https://www.scala-lang.org/2020/11/06/explicit-term-inference-in-scala-3.html)
+  - [Notes on Category Theory in Scala 3](https://typista.org/categories-in-dotty/)
+  - [Monad is just...](https://blog.rockthejvm.com/monads-are-monoids-in-the-category-of-endofunctors/)
+- [ ] [[TODO]] [[learn]] Scala.js
+  - https://www.scalawilliam.com/importance-scalajs/
+- [ ] [[TODO]] [[learn]] Magnolia
+- [ ] [[TODO]] [[learn]] Laminar

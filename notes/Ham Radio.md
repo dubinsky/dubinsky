@@ -1,38 +1,41 @@
-  * Exams
-    * Study: https://hamstudy.org/tech2022
-    * [ARRL practice](https://arrlexamreview.appspot.com/main)
-    * [MIT Exams](https://w1mx.mit.edu/ham-exams/)
-    * [Natic Exams](https://nescitech.org/content.aspx?page_id=22&club_id=508616&module_id=572713)
-    * [All Exams](https://hamstudy.org/sessions/all)
-  * FCC
-    * FRN: 0026945063
-    * Call Sign: KC1TUZ
-    * [Official License](https://wireless2.fcc.gov/UlsEntry/licManager/login.jsp) and modifications
-    * [My Application](https://wireless2.fcc.gov/UlsApp/ApplicationSearch/applMain.jsp?applID=14407749)
-    * [CORES FRN Database](https://www.fcc.gov/licensing-databases/commission-registration-system-fcc)
-    * [Universal Licensing System](https://www.fcc.gov/wireless/universal-licensing-system)
-    * [License Search](https://www.arrl.org/advanced-call-sign-search)
-  * Equipment
-    * [Yaesu](https://www.yaesu.com/)
-    * [Baofeng](https://www.baofengradio.com/)
-    * [Elecraft K4](https://elecraft.com/products/k4-transceiver)
-    * [Icom](https://www.icomamerica.com/lineup/result/?type=1&class=4&genre=2)
-    * [FlexEradio]()
-    * [lab599](https://lab599.com/)
-  * Software
-    * [CHIRP](https://chirp.danplanet.com/projects/chirp/wiki/Home)  [on Linux](https://chirp.danplanet.com/projects/chirp/wiki/ChirpOnLinux)
-  * Information
-    * [eham.net]()
-    * [radioreference.com](https://www.radioreference.com/)
-    * [Repeater Book](https://www.repeaterbook.com/index.php/en-us/)
-  * Store
-    * [hamradio outlet](https://www.hamradio.com/)
-    * [dxengineering](https://www.dxengineering.com/)
-    * [gigaparts](https://www.gigaparts.com/)
-  * Typos
-    * www.arrl.org/ham-radio-license-manual
-    * pubsfdbk@arrl.org
-    * Ham Radio License Manual 5th edition
-      * 1-6 "The annual get-together is being held in ..." - in 2022, it is too late for 2018 "being held"
-      * 1-6 "JacobsEns, Tammy, ... and Kevin ..." - but under their picture: "Kevin JacobsOn"
-      * 1-20 "The set of questions put in place in July of 2018 will be replaced in 2022." - this IS the 2022 edition!
+---
+title: Ham Radio
+---
+- Exams
+  - Study: https://hamstudy.org/tech2022
+  - [ARRL practice](https://arrlexamreview.appspot.com/main)
+  - [MIT Exams](https://w1mx.mit.edu/ham-exams/)
+  - [Natic Exams](https://nescitech.org/content.aspx?page_id=22&club_id=508616&module_id=572713)
+  - [All Exams](https://hamstudy.org/sessions/all)
+- FCC
+  - FRN: 0026945063
+  - Call Sign: KC1TUZ
+  - [Official License](https://wireless2.fcc.gov/UlsEntry/licManager/login.jsp) and modifications
+  - [My Application](https://wireless2.fcc.gov/UlsApp/ApplicationSearch/applMain.jsp?applID=14407749)
+  - [CORES FRN Database](https://www.fcc.gov/licensing-databases/commission-registration-system-fcc)
+  - [Universal Licensing System](https://www.fcc.gov/wireless/universal-licensing-system)
+  - [License Search](https://www.arrl.org/advanced-call-sign-search)
+- Equipment
+  - [Yaesu](https://www.yaesu.com/)
+  - [Baofeng](https://www.baofengradio.com/)
+  - [Elecraft K4](https://elecraft.com/products/k4-transceiver)
+  - [Icom](https://www.icomamerica.com/lineup/result/?type=1&class=4&genre=2)
+  - [FlexEradio]()
+  - [lab599](https://lab599.com/)
+- Software
+  - [CHIRP](https://chirp.danplanet.com/projects/chirp/wiki/Home)  [on Linux](https://chirp.danplanet.com/projects/chirp/wiki/ChirpOnLinux)
+- Information
+  - [eham.net]()
+  - [radioreference.com](https://www.radioreference.com/)
+  - [Repeater Book](https://www.repeaterbook.com/index.php/en-us/)
+- Store
+  - [hamradio outlet](https://www.hamradio.com/)
+  - [dxengineering](https://www.dxengineering.com/)
+  - [gigaparts](https://www.gigaparts.com/)
+- Typos
+  - www.arrl.org/ham-radio-license-manual
+  - pubsfdbk@arrl.org
+  - Ham Radio License Manual 5th edition
+    - 1-6 "The annual get-together is being held in ..." - in 2022, it is too late for 2018 "being held"
+    - 1-6 "JacobsEns, Tammy, ... and Kevin ..." - but under their picture: "Kevin JacobsOn"
+    - 1-20 "The set of questions put in place in July of 2018 will be replaced in 2022." - this IS the 2022 edition!
