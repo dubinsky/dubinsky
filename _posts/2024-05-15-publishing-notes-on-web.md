@@ -184,7 +184,6 @@ In `_includes/page-list.html`:
 ```
 {% endraw %}
 
-
 In `_sass/custom.scss`:
 {% raw %}
 ```css

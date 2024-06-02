@@ -117,6 +117,8 @@
   _[22](https://github.com/owo-lang/intellij-dtlc/pull/22)_.
 - [JEuclid](https://github.com/rototor/jeuclid):
  _[5](https://github.com/rototor/jeuclid/pull/5)_.
+- [Asciidoctor Gradle plugin](https://github.com/asciidoctor/asciidoctor-gradle-plugin):
+  [658](https://github.com/asciidoctor/asciidoctor-gradle-plugin/issues/658#issuecomment-1637346784).
 - [CETEIcean](https://github.com/TEIC/CETEIcean):
   [20](https://github.com/TEIC/CETEIcean/issues/20),
  _[23](https://github.com/TEIC/CETEIcean/pull/23)_,

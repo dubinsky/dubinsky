@@ -1,10 +1,19 @@
 ---
 layout: post
-title: 'Bintray is dead!'
+title: Bintray is dead - long live Maven Central!
 author: Leonid Dubinsky
-tags: [bintray, gradle, mavencentral]
-date: '2021-02-04'
+tags:
+  - bintray
+  - gradle
+  - mavencentral
+date: 2021-02-04
 ---
+Notes on my Maven Central setup.
+
+As of 2024, Maven Central is moving towards a new way of publishing - [Central Portal](https://central.sonatype.org/register/central-portal/#releasing-to-central);
+there is still no official Gradle support and no clear way to move verified namespaces from the old way (now called "legacy OSSRH") to the new, but the old way still works (although a token must now be used instead of the web credentials).
+
+It is also still possible to request the old way of publishing to be enabled for the new projects, but registration and namespace verification is completely different from what is described below ;)
 
 * TOC
 {:toc}
@@ -41,8 +50,10 @@ Official (but somewhat outdated) documentation is available:
 
 I signed up for Sonatype at https://issues.sonatype.org/secure/Signup!default.jspa
 with dub@podval.org email address.
-The same credentials are used at https://oss.sonatype.org/ (OSSRH) and for deploying
-artifacts. To make them available to Gradle, I put them into `~/.gradle/gradle.properties`:
+
+Originally, I used the same credentials for deploying artifacts are use to log into https://oss.sonatype.org/ (OSSRH). In early 2024, those stopped working: now, a token needs to be [generated](https://central.sonatype.org/publish/generate-token/#releasing-to-central) and used [supplied](https://central.sonatype.org/publish/publish-gradle/#releasing-to-central), together with its password, as credentials.
+
+To make credentials available to Gradle, I put them into `~/.gradle/gradle.properties`:
 ```properties
 mavenCentralUsername=dub
 mavenCentralPassword=...
