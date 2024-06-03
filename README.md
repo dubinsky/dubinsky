@@ -118,7 +118,9 @@
 - [JEuclid](https://github.com/rototor/jeuclid):
  _[5](https://github.com/rototor/jeuclid/pull/5)_.
 - [Asciidoctor Gradle plugin](https://github.com/asciidoctor/asciidoctor-gradle-plugin):
-  [658](https://github.com/asciidoctor/asciidoctor-gradle-plugin/issues/658#issuecomment-1637346784).
+  [658](https://github.com/asciidoctor/asciidoctor-gradle-plugin/issues/658#issuecomment-1637346784),
+  [709](https://github.com/asciidoctor/asciidoctor-gradle-plugin/issues/709#issuecomment-2146117002),
+  [726](https://github.com/asciidoctor/asciidoctor-gradle-plugin/pull/726#issuecomment-2146131724).
 - [CETEIcean](https://github.com/TEIC/CETEIcean):
   [20](https://github.com/TEIC/CETEIcean/issues/20),
  _[23](https://github.com/TEIC/CETEIcean/pull/23)_,
