@@ -2,7 +2,6 @@
 title: Cloud Development
 tags: [computer]
 ---
- 
 Create a VM on Google Cloud Platform
 
 Inspiration: https://itnext.io/how-ive-slashed-the-cost-of-my-dev-environments-by-90-9c1082ad1baf
