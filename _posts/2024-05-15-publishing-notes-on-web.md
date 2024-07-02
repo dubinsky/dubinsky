@@ -36,8 +36,8 @@ Also, there is something to be said for the ability to edit my notes using tools
 To move my notes from [[Roam]], I installed [Importer](https://help.obsidian.md/Plugins/Importer) plugin in Obsidian and followed the export/import [instructions](https://help.obsidian.md/import/roam); results of the import required manual clean-up:
 - outline bullets from Roam got translated into stars at wrong indent level;
 - tags like `#jewish-calendar` that I had at the start of some Roam notes moved into the YAML frontmatter's `tags` array;
-- tags like `#buy` and `#learn` were converted to page references like `[[buy]]` and `[[learn]]` so that thy are recognized as links by Obsidian and back-links are available at the appropriate pages;
-- similarly, TODOs were prefixed by `[[TODO]]`, to facilitate seeing them in the list of back-links; once done, `[[TODO]]` becomes a `[[DONE]]`;
+- tags like `#buy` and `#learn` were converted to page references like `[​[buy]]` and `[​[learn]]` so that thy are recognized as links by Obsidian and back-links are available at the appropriate pages;
+- similarly, TODOs were prefixed by `[​[TODO]]`, to facilitate seeing them in the list of back-links; once done, `[​[TODO]]` becomes a `[​[DONE]]`;
 	- [ ] [[TODO]] look into Obsidian plugins that support TODOs
 - code blocks needed touch-up;
 - I used [Find Orphaned Files and Broken Links](https://github.com/Vinzent03/find-unlinked-files) Obsidian plugin to clean up broken links (it found two block references :)).
@@ -118,7 +118,7 @@ math: true
 
 In `_includes/head.html`:
 {% raw %}
-```html
+```liquid
 <head>
   ...
   {%- if page.math == true -%}  
@@ -156,7 +156,7 @@ Also, there does not seem to be any way to paginate the page lists.
 
 In `_layouts/page.html`:
 {% raw %}
-```html
+```liquid
 <div class="post-content">
   {{ content }}
   {% if page.name == 'index.md' %}  
@@ -168,7 +168,7 @@ In `_layouts/page.html`:
 
 In `_includes/page-list.html`:
 {% raw %}
-```html
+```liquid
 <ul class="page-list">  
   {% assign pages = site.pages | sort_natural: 'title' %}  
   {%- for item in pages %}  
@@ -201,20 +201,26 @@ In `_sass/custom.scss`:
 
 ### Wiki Links
 
-Unlike [[Obsidian]], Jekyll does not understand wiki-links. There is a Jekyll plugin for that: [Jekyll Wikirefs](https://github.com/wikibonsai/jekyll-wikirefs), but it ts latest release does not work with current Jekyll.
+Unlike [[Obsidian]], Jekyll does not understand wiki-links. There is a Jekyll plugin for that: [Jekyll Wikirefs](https://github.com/wikibonsai/jekyll-wikirefs), but its 0.0.14 release did not work with current Jekyll; I [asked for an update](https://github.com/wikibonsai/jekyll-wikirefs/issues/1) - and release 0.0.15 [relaxed the dependency requirements](https://github.com/wikibonsai/jekyll-wikirefs/releases/tag/v0.0.15)! Thank you, [manunamz](https://github.com/manunamz)!
 
-- [ ] [[TODO]] see if I need this plugin handle *fancy* wikilinks, and if yes - ask maintainers for a refresher release
-- [ ] [[TODO]] Is there a way to get the graph view and the like?
-- [ ] [[TODO]] look deeper into [wikibonsai](https://github.com/wikibonsai/wikibonsai?tab=readme-ov-file)
+In the interim, I used (after tweaking it a bit) a piece of Liquid code that does what needs to be done with *basic* wiki-links: [brackettest](https://github.com/jhvanderschee/brackettest):
 
-I found (and tweaked a bit) a piece of Liquid code that does what needs to be done with *basic* wiki-links: [brackettest](https://github.com/jhvanderschee/brackettest):
-
-In `_layouts/default.html`:
+In `_layouts/default.html`, change:
 {% raw %}
-```html
+```liquid
+<main ...>
+  <div class="wrapper">
+    {{ content }}
+  </div>
+</main>
+```
+{% endraw %}
+to:
+{% raw %}
+```liquid
 <main ...>  
   <div class="wrapper">  
-    {% assign contentarray = content | split:'[[' %}  
+    {% assign contentarray = content | split:'[​[' %}  
     {% for item in contentarray %}  
       {% if forloop.index > 1 %}  
         {% assign itemparts = item | split:']]' %}  
@@ -249,11 +255,58 @@ In `_layouts/default.html`:
 ```
 {% endraw %}
 
+When using the [Jekyll Wikirefs](https://github.com/wikibonsai/jekyll-wikirefs) plugin, the above change is, of course, not needed.
+
+Plugin down-cases page titles; I [asked](https://github.com/wikibonsai/jekyll-wikirefs/issues/2) for this down-casing to be configurable.
+
+Plugin does not respect the boundaries of the code blocks, so to stop it from processing wiki-links inside such blocks (for instance, in this post :)), insert a zero-width space between the two opening brackets: `​​[​[`. I [asked](https://github.com/wikibonsai/jekyll-wikirefs/issues/3) for the plugin to not process links within the code blocks.
+
+To show a list of back-links on a page, in `_layouts/default.html`  add (note the use of the `concat` filter to make sure that links from both pages and posts are resolved):
+{% raw %}
+```liquid
+<main ...>  
+  <div class="wrapper">  
+    {{ content }}  
+  
+    <div class="backlinks">  
+    {% if page.backlinks %}  
+    <hr/>  
+    <h4>Backlinks</h4>  
+    {% for backlink in page.backlinks %}  
+    {% assign linked_doc = site.pages | concat: site.posts | where: "url", backlink.url | first %}  
+    • <a class="backlink" href="{{ linked_doc.url }}">{{ linked_doc.title }}</a>  
+    {% endfor %}  
+    {% endif %}  
+    </div>  
+  </div></main>
+```
+{% endraw %}
+
+Links can be styled in `_sass/custom.scss`:
+```css
+.wiki-link::before {  
+  content: "[[";  
+}  
+.wiki-link::after {  
+  content: "]]";  
+}  
+.invalid-wiki-link {  
+  background: red;  
+}  
+  
+.backlink {  
+  font-style: italic;  
+}
+```
+
+- [ ] [[TODO]] look into showing the graph with https://github.com/wikibonsai/jekyll-graph
+- [ ] [[TODO]] look deeper into [wikibonsai](https://github.com/wikibonsai/wikibonsai?tab=readme-ov-file)
+
 ### Page Tags
 
 To display tags for posts and for pages like notes, in `_includes/tags.html`:
 {% raw %}
-```html
+```liquid
 {% if page.tags %} |  
 {% for tag in page.tags %}  
 <a class="post-tag" href="{{ site.baseurl }}/tags/#{{ tag | slugify }}">{{ tag }}</a>  
@@ -264,14 +317,14 @@ To display tags for posts and for pages like notes, in `_includes/tags.html`:
 
 In `_layouts/post.html`, between the date and the author:
 {% raw %}
-```html
+```liquid
 {%- include tags.html -%}
 ```
 {% endraw %}
 
 And in `_layouts/page.html`, after the title:
 {% raw %}
-```html
+```liquid
 <p class="post-meta">  
 {%- include tags.html -%}  
 </p>
@@ -318,7 +371,7 @@ and any overall list of tags, tag cloud or whatever I end up publishing on the s
 There are many code snippets floating around that add listing of tags and documents tagged with them to a site generated by [[Jekyll]] (for example: ["an easy way to support tags in a jekyll blog"](https://stackoverflow.com/questions/1408824/an-easy-way-to-support-tags-in-a-jekyll-blog/21002505#21002505), ["listing jekyll posts by tag"](https://www.jokecamp.com/blog/listing-jekyll-posts-by-tag/), ["https://www.maggie98choy.com/Add Tags in Jekyll/"](https://www.maggie98choy.com/Add-Tags-in-Jekyll/),  [jekyll-tagging](https://github.com/pattex/jekyll-tagging) [[Jekyll]] plugin ); I am using a file `tags.html` (which I list under `header_pages` in `_config.yml`):
 
 {% raw %}
-```html
+```liquid
 ---  
 layout: page  
 title: "Tags"  
@@ -352,11 +405,11 @@ permalink: /tags/
 {% endraw %}
 
 All of the samples I saw use `site.tags`, which maps tags to lists of posts that have the tags, but only *posts* are included, not *pages*; it seems that I will have to build a similar map that includes both posts and pages myself!
-- [ ] [[TODO]] do it!
+- [ ] [[TODO]] do it! maybe filter `site.pages | concat: site.posts |` can help...
 
 In addition, I may want to look into tag pages aliased to tags
 (with the help of the [Tag Wrangler](https://github.com/pjeby/tag-wrangler) Obsidian plugin?)
-to bring tags like `#computer` closer to classifier pages like `[[buy]]` and `[[learn]]`
+to bring tags like `#computer` closer to classifier pages like `[​[buy]]` and `[​[learn]]`
 (while in [[Roam]] they were equivalent).
 - [ ] [[TODO]] do it!
 

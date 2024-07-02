@@ -354,7 +354,7 @@ uninstallation won't be necessary.
 On Gnome desktop (Fedora, not Raspberry Pi) gnome-keyring-daemon used to interfere with the gpg-agent and had to be
 disabled before smart-card applet on the Neo could be used:
 ```  
-  $ if [[ $(gconftool-2 --get /apps/gnome-keyring/daemon-components/ssh) != "false" ]]; then
+  $ if [​[ $(gconftool-2 --get /apps/gnome-keyring/daemon-components/ssh) != "false" ]]; then
         gconftool-2 --type bool --set /apps/gnome-keyring/daemon-components/ssh false
     fi
 ```

@@ -5,7 +5,6 @@
 source 'https://rubygems.org'
 
 # gem "github-pages"
-# gem "jekyll"
 gem "jekyll", "~> 4.2"
 
 group :jekyll_plugins do
@@ -15,7 +14,7 @@ group :jekyll_plugins do
   gem "jekyll-seo-tag"
   gem "jekyll-mentions"
   gem "jekyll-avatar"
-  # gem 'jekyll-wikirefs', '~> 0.0.14'
+  gem 'jekyll-wikirefs'
   gem "kramdown"
   gem "minima"
 end

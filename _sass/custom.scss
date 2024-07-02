@@ -27,3 +27,17 @@
     color: #828282;
   }
 }
+
+.wiki-link::before {
+  content: "[[";
+}
+.wiki-link::after {
+  content: "]]";
+}
+.invalid-wiki-link {
+  background: red;
+}
+
+.backlink {
+  font-style: italic;
+}

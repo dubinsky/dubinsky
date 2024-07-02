@@ -7,36 +7,18 @@
 
     <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        {% assign contentarray = content | split:'[[' %}
-        {% for item in contentarray %}
-        {% if forloop.index > 1 %}
-        {% assign itemparts = item | split:']]' %}
-        {% assign link = itemparts[0] %}
-        {% if forloop.index == 2 %}
-        {% assign links = link %}
-        {% else %}
-        {% assign links = links | append: ',' | append: link %}
-        {% endif %}
-        {% assign result = site.pages | where: 'title', link %}
-        {% if forloop.index == 2 %}
-        {% assign urls = result[0].url %}
-        {% else %}
-        {% assign urls = urls | append: ',' | append: result[0].url %}
-        {% endif %}
-        {% endif %}
+        {{ content }}
+
+        <div class="backlinks">
+        {% if page.backlinks %}
+        <hr/>
+        <h4>Backlinks</h4>
+        {% for backlink in page.backlinks %}
+        {% assign linked_doc = site.pages | concat: site.posts | where: "url", backlink.url | first %}
+        • <a class="backlink" href="{{ linked_doc.url }}">{{ linked_doc.title }}</a>
         {% endfor %}
-
-        {% assign urlarray = urls | split:',' %}
-        {% assign linkarray = links | split:',' %}
-
-        {% assign replacedcontent = content %}
-        {% for item in linkarray %}
-        {% assign linktext = '<a href="' | append: urlarray[forloop.index0] | append: '">' | append: '[[' | append: item | append: ']]' | append: '</a>' %}
-        {% assign bracketlink = '[[' | append: item | append: ']]' %}
-        {% assign replacedcontent = replacedcontent | replace: bracketlink, linktext %}
-        {% endfor %}
-
-        {{ replacedcontent | markdownify }}
+        {% endif %}
+        </div>
       </div>
     </main>
 

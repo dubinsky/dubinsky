@@ -23,7 +23,7 @@ plugins:
   - jekyll-feed
   - jekyll-mentions
   - jekyll-avatar
-#  - jekyll-wikirefs
+  - jekyll-wikirefs
 
 exclude:
   - CNAME

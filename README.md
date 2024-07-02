@@ -130,7 +130,9 @@
   [38](https://github.com/TEIC/CETEIcean/issues/38),
   [39](https://github.com/TEIC/CETEIcean/issues/39).
 - [wikibonsai/jekyll-wikirefs](https://github.com/wikibonsai/jekyll-wikirefs):
-  [1](https://github.com/wikibonsai/jekyll-wikirefs/issues/1).
+  [1](https://github.com/wikibonsai/jekyll-wikirefs/issues/1),
+  [2](https://github.com/wikibonsai/jekyll-wikirefs/issues/2)
+  [3](https://github.com/wikibonsai/jekyll-wikirefs/issues/3).
 
 ## Proofreading ##
 

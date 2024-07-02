@@ -3,7 +3,7 @@ title: OpenTorah
 tags: [Jewish]
 ---
 - [x] [[DONE]] create Twitter account
-  - [[days/2020-10-26]] created @theopentorah (@opentorah is taken) - "the Open Torah Project"
+  - [[/days/2020-10-26]] created @theopentorah (@opentorah is taken) - "the Open Torah Project"
 - Tools
   - [Extracting Content From the Chaos of the Web — Postlight](https://postlight.com/trackchanges/extracting-content-from-the-chaos-of-the-web-introducing-the-mercury-web-parser)
   - [MarkMail](http://markmail.org/)
