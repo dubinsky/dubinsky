@@ -29,6 +29,8 @@ exclude:
   - CNAME
   - Gemfile
   - Gemfile.lock
+  - .idea
+  - .obsidian
   - vendor
   - bundle
 

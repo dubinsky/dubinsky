@@ -1,5 +1,6 @@
 ---
 title: Dewey Rods
+tags: [guns]
 ---
 2021-07-16:
 - .38/.357/9mm Caliber Brass Jag - Male Threaded. Model# 38JM  ($4.15)

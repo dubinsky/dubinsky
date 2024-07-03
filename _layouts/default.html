@@ -10,7 +10,7 @@
         {{ content }}
 
         <div class="backlinks">
-        {% if page.backlinks %}
+        {% if page.backlinks != blank %}
         <hr/>
         <h4>Backlinks</h4>
         {% for backlink in page.backlinks %}

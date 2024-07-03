@@ -148,10 +148,9 @@ In `_includes.mathjax.html`:
 With the notes published on my website, I want a list of them to be published too - otherwise, nobody can find the individual notes. I [found](https://talk.jekyllrb.com/t/directory-listing-plugin-help/5513/4) a [solution](https://github.com/MichaelCurrin/fractal/blob/master/_includes/structure/page-list.html); thank you, [Michael Currin]( https://github.com/MichaelCurrin)!
 
 I did not make sub-folders appear in the lists automatically yet, not just files, so I add them manually, as content of the index files.
+
 - [ ] [[TODO]] add sub-folders to the folder listing automatically;
 - [ ] [[TODO]] generate the index files themselves automatically.
-
-Also, there does not seem to be any way to paginate the page lists.
 - [ ] [[TODO]] paginate the page list.
 
 In `_layouts/page.html`:
@@ -203,65 +202,13 @@ In `_sass/custom.scss`:
 
 Unlike [[Obsidian]], Jekyll does not understand wiki-links. There is a Jekyll plugin for that: [Jekyll Wikirefs](https://github.com/wikibonsai/jekyll-wikirefs), but its 0.0.14 release did not work with current Jekyll; I [asked for an update](https://github.com/wikibonsai/jekyll-wikirefs/issues/1) - and release 0.0.15 [relaxed the dependency requirements](https://github.com/wikibonsai/jekyll-wikirefs/releases/tag/v0.0.15)! Thank you, [manunamz](https://github.com/manunamz)!
 
-In the interim, I used (after tweaking it a bit) a piece of Liquid code that does what needs to be done with *basic* wiki-links: [brackettest](https://github.com/jhvanderschee/brackettest):
-
-In `_layouts/default.html`, change:
-{% raw %}
-```liquid
-<main ...>
-  <div class="wrapper">
-    {{ content }}
-  </div>
-</main>
-```
-{% endraw %}
-to:
-{% raw %}
-```liquid
-<main ...>  
-  <div class="wrapper">  
-    {% assign contentarray = content | split:'[​[' %}  
-    {% for item in contentarray %}  
-      {% if forloop.index > 1 %}  
-        {% assign itemparts = item | split:']]' %}  
-        {% assign link = itemparts[0] %}  
-        {% if forloop.index == 2 %}  
-          {% assign links = link %}  
-        {% else %}  
-          {% assign links = links | append: ',' | append: link %}  
-        {% endif %}  
-        {% assign result = site.pages | where: 'title', link %}
-        {% if forloop.index == 2 %}  
-          {% assign urls = result[0].url %}  
-        {% else %}  
-          {% assign urls = urls | append: ',' | append: result[0].url %}  
-        {% endif %}  
-      {% endif %}  
-    {% endfor %}  
-  
-    {% assign urlarray = urls | split:',' %}  
-    {% assign linkarray = links | split:',' %}  
- 
-    {% assign replacedcontent = content %}  
-    {% for item in linkarray %}  
-      {% assign linktext = '<a href="' | append: urlarray[forloop.index0] | append: '">' | append: '[[' | append: item | append: ']]' | append: '</a>' %}  
-      {% assign bracketlink = '[[' | append: item | append: ']]' %}  
-      {% assign replacedcontent = replacedcontent | replace: bracketlink, linktext %}  
-    {% endfor %}  
-  
-    {{ replacedcontent | markdownify }}  
-  </div>  
-</main>
-```
-{% endraw %}
-
-When using the [Jekyll Wikirefs](https://github.com/wikibonsai/jekyll-wikirefs) plugin, the above change is, of course, not needed.
+In the interim, I used (after tweaking it a bit) a piece of Liquid code that does what needs to be done with *basic* wiki-links: [brackettest](https://github.com/jhvanderschee/brackettest) (listed on the plugin's website :)).
 
 Plugin down-cases page titles; I [asked](https://github.com/wikibonsai/jekyll-wikirefs/issues/2) for this down-casing to be configurable.
 
-Plugin does not respect the boundaries of the code blocks, so to stop it from processing wiki-links inside such blocks (for instance, in this post :)), insert a zero-width space between the two opening brackets: `​​[​[`. I [asked](https://github.com/wikibonsai/jekyll-wikirefs/issues/3) for the plugin to not process links within the code blocks.
+Plugin does not respect the boundaries of the code blocks (which  [brackettest](https://github.com/jhvanderschee/brackettest) somehow does), so to stop it from processing wiki-links inside such blocks (for instance, in this post :)), I insert a zero-width space between the two opening brackets: `​​[​[`. I [asked](https://github.com/wikibonsai/jekyll-wikirefs/issues/3) for the plugin to not process links within the code blocks, since the ZWSP work-around is broken: code copied from the affected code blocks is not what it looks like...
 
-To show a list of back-links on a page, in `_layouts/default.html`  add (note the use of the `concat` filter to make sure that links from both pages and posts are resolved):
+Plugin gathers and puts into the front-matter of each page list of back-links to it. To show a list of back-links on a page, in `_layouts/default.html` add (note the use of the `concat` filter to make sure that links from both pages and posts are resolved):
 {% raw %}
 ```liquid
 <main ...>  
@@ -269,7 +216,7 @@ To show a list of back-links on a page, in `_layouts/default.html`  add (note th
     {{ content }}  
   
     <div class="backlinks">  
-    {% if page.backlinks %}  
+    {% if page.backlinks != blank %}
     <hr/>  
     <h4>Backlinks</h4>  
     {% for backlink in page.backlinks %}  
@@ -284,19 +231,11 @@ To show a list of back-links on a page, in `_layouts/default.html`  add (note th
 
 Links can be styled in `_sass/custom.scss`:
 ```css
-.wiki-link::before {  
-  content: "[[";  
-}  
-.wiki-link::after {  
-  content: "]]";  
-}  
-.invalid-wiki-link {  
-  background: red;  
-}  
+.wiki-link::before {  content: "[[";  }  
+.wiki-link::after {  content: "]]";  }  
+.invalid-wiki-link {  background: red;  }  
   
-.backlink {  
-  font-style: italic;  
-}
+.backlink {  font-style: italic; }
 ```
 
 - [ ] [[TODO]] look into showing the graph with https://github.com/wikibonsai/jekyll-graph
@@ -333,7 +272,7 @@ And in `_layouts/page.html`, after the title:
 
 In `_sass/custom.scss`:
 ```css
-.post-tag {  
+.page-tag {  
   display: inline-block;  
   background: $grey-color-light;  
   padding: 0 .5rem;  
@@ -368,7 +307,27 @@ To use the fancy tag character, make fancy font available in `_includes/head.htm
 Now that I have my blog and my notes in the same repository and in the same Obsidian vault, I can cross-link blog posts and notes; both can have tags in their YAML frontmatter,
 and any overall list of tags, tag cloud or whatever I end up publishing on the site needs to include both posts and notes.
 
-There are many code snippets floating around that add listing of tags and documents tagged with them to a site generated by [[Jekyll]] (for example: ["an easy way to support tags in a jekyll blog"](https://stackoverflow.com/questions/1408824/an-easy-way-to-support-tags-in-a-jekyll-blog/21002505#21002505), ["listing jekyll posts by tag"](https://www.jokecamp.com/blog/listing-jekyll-posts-by-tag/), ["https://www.maggie98choy.com/Add Tags in Jekyll/"](https://www.maggie98choy.com/Add-Tags-in-Jekyll/),  [jekyll-tagging](https://github.com/pattex/jekyll-tagging) [[Jekyll]] plugin ); I am using a file `tags.html` (which I list under `header_pages` in `_config.yml`):
+There are many code snippets floating around that add listing of tags and documents tagged with them to a site generated by [[Jekyll]], for example: ["an easy way to support tags in a jekyll blog"](https://stackoverflow.com/questions/1408824/an-easy-way-to-support-tags-in-a-jekyll-blog/21002505#21002505), ["listing jekyll posts by tag"](https://www.jokecamp.com/blog/listing-jekyll-posts-by-tag/), ["https://www.maggie98choy.com/Add Tags in Jekyll/"](https://www.maggie98choy.com/Add-Tags-in-Jekyll/),  [jekyll-tagging](https://github.com/pattex/jekyll-tagging) [[Jekyll]] plugin.
+
+All of the samples I saw use `site.tags`, which maps tags to lists of posts that have the tags, but only *posts* are included, not *pages*. To gather tags and associated files across the posts and pages, I copied a [chunk of Jekyll code](https://github.com/jekyll/jekyll/blob/60a9cd73569552b858e807cbd3c0e23455023cbc/lib/jekyll/site.rb#L255), tweaked it to include all posts and pages, tweaked the sorting, packaged it as a Liquid filter and put it into `_plugins/all-tags.rb`:
+```ruby
+module Jekyll  
+  module AllTagsFilter  
+    def all_tags(site)  
+      @all_tags ||= begin  
+       hash = Hash.new { |h, key| h[key] = [] }  
+       (site.documents + site.pages).each do |p|  
+         p.data["tags"]&.each { |t| hash[t] << p }  
+       end  
+       hash.each_value { |pages| pages.sort { |a,b| a.data["title"] <=> b.data["title"] }.reverse! }  
+       hash  
+     end  
+    end  endend  
+  
+Liquid::Template.register_filter(Jekyll::AllTagsFilter)
+```
+
+List of tags and pages for each is generated using the `all_tags` filter in the file `tags.html` (which I list under `header_pages` in `_config.yml`):
 
 {% raw %}
 ```liquid
@@ -376,18 +335,19 @@ There are many code snippets floating around that add listing of tags and docume
 layout: page  
 title: "Tags"  
 disabled rules: [yaml-title]  
-description: "Posts by tags"  
+description: "Pages by tags"  
 permalink: /tags/  
----
+---  
+  
 <div id="tags">  
-  {% assign sorted_tags = site.tags | sort %}  
+  {% assign sorted_tags = site | all_tags | sort %}  
   <h2>All tags</h2>  
   <p>
     {% for tag in sorted_tags %}  
-    <a class="post-tag" href="{{ site.baseurl }}/tags/#{{ tag[0] | slugify }}">{{ tag[0] }}</a>  
+    <a class="page-tag" href="{{ site.baseurl }}/tags/#{{ tag[0] | slugify }}">{{ tag[0] }}</a>  
     {% endfor %}  
   </p>  
-  <h2>Posts by tags</h2>  
+  <h2>Pages by tags</h2>  
   {% for tag in sorted_tags %}  
   <div id="{{ tag[0] | slugify }}">  
     <h3>{{ tag[0] }}</h3>  
@@ -404,15 +364,8 @@ permalink: /tags/
 ```
 {% endraw %}
 
-All of the samples I saw use `site.tags`, which maps tags to lists of posts that have the tags, but only *posts* are included, not *pages*; it seems that I will have to build a similar map that includes both posts and pages myself!
-- [ ] [[TODO]] do it! maybe filter `site.pages | concat: site.posts |` can help...
-
-In addition, I may want to look into tag pages aliased to tags
-(with the help of the [Tag Wrangler](https://github.com/pjeby/tag-wrangler) Obsidian plugin?)
-to bring tags like `#computer` closer to classifier pages like `[​[buy]]` and `[​[learn]]`
-(while in [[Roam]] they were equivalent).
-- [ ] [[TODO]] do it!
-
+- [ ] [[TODO]] Sort the tags and the files in the case-insensitive way.
+- [ ] [[TODO]] Look into tag pages aliased to tags (with the help of the [Tag Wrangler](https://github.com/pjeby/tag-wrangler) Obsidian plugin?) to bring tags like `#computer` closer to classifier pages like `[​[buy]]` and `[​[learn]]` (while in [[Roam]] they were equivalent).
 ### Zotero Integration
 
 - [ ] [[TODO]] [Zotero Sync Client](https://github.com/frthjf/obsidian-zotero-sync-client)
