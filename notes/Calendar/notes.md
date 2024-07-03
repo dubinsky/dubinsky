@@ -1,5 +1,5 @@
 ---
-title: jewish-calendar
+title: notes
 ---
 - Sicho 17 Bo
 - [Birkat Hachama - Wikipedia](https://en.wikipedia.org/wiki/Birkat_Hachama)

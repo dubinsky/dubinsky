@@ -13,7 +13,7 @@ Around 04/16/2024, after hearing again somewhere on the Internet that [[Roam]] i
 I decided to try some alternatives, and this time around,
 I focused on [Obsidian](https://obsidian.md).
 
-I would prefer an [[AsciiDoc]]-based system to a [[MarkDown]]-based one,
+I would prefer an [[AsciiDoc]]-based system to a [[Markdown]]-based one,
 but such does not exist...
 
 I am not paranoid about my notes being stored in the cloud, and actually prefer them to be,
@@ -62,7 +62,7 @@ I looked (briefly) at [Obsidian digital garden](https://github.com/oleeskild/Obs
 
 [GitHub Publisher](https://obsidian-publisher.netlify.app/) is an Obsidian plugin which converts [[Obsidian]] document into a form suitable for publication and pushes them into a GitHub repository. Unfortunately, it can not handle the situation where the source documents are kept in the same GitHub repository: "If you use your vault directly in a repository, the upload will corrupt your files! This module is not intended for this type of workflow."
 
-Even if there was a way to keep both the sources of the notes and the result of their conversion to the publishable form in the same repository, just as I rely on Jekyll running on GitHub pages to convert my [[MarkDown]] to HTML, and do not check in the results of running [[Jekyll]] locally, I prefer not to check in the notes processed for publication by some Obsidian plugins. For now I am pursuing the approach where all the processing needed for publication is handled by Jekyll (with some plugins and other customization), without relying on any Obsidian plugins. Of course, if it turns out to be impossible to make Jekyll produce the results I want, I may have to reconsider this choice of approach.
+Even if there was a way to keep both the sources of the notes and the result of their conversion to the publishable form in the same repository, just as I rely on Jekyll running on GitHub pages to convert my [[Markdown]] to HTML, and do not check in the results of running [[Jekyll]] locally, I prefer not to check in the notes processed for publication by some Obsidian plugins. For now I am pursuing the approach where all the processing needed for publication is handled by Jekyll (with some plugins and other customization), without relying on any Obsidian plugins. Of course, if it turns out to be impossible to make Jekyll produce the results I want, I may have to reconsider this choice of approach.
 
 It used to be the case that GitHub Pages restricted Jekyll plugins that could be used; since I recently switched to [running Jekyll using GitHub Actions workflow](https://jekyllrb.com/docs/continuous-integration/github-actions/) (and soon [everyone will switch](https://docs.github.com/en/pages/getting-started-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#publishing-with-a-custom-github-actions-workflow)), this is no longer a problem: all Jekyll trickery is available now ;)
 The question is: how to make Jekyll do what needs to be done?

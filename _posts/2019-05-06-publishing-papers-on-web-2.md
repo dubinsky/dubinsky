@@ -12,23 +12,23 @@ modified_time: '2019-07-14T23:30:00.000-05:00'
 
 Some things changed since I [last wrote on this subject](http://dub.podval.org/2011/11/07/publishing-papers-on-web.html):
 - it is easy to publish static websites or blogs (like this one) on GutHub [Pages](https://pages.github.com/);
-- syntactic highlighting using [MarkDown](https://daringfireball.net/projects/markdown/) is trivial compared to what had
+- syntactic highlighting using [Markdown](https://daringfireball.net/projects/markdown/) is trivial compared to what had
   to be done using - for example - Blogger;
 - GitHub Pages natively supports [Jekyll](https://jekyllrb.com/) and quite a few of the Jekyll extensions, so I don't
   even have to check in generated files;
-- MarkDown editing is available in IDEs like [IntelliJ Idea](https://www.jetbrains.com/idea/)
+- Markdown editing is available in IDEs like [IntelliJ Idea](https://www.jetbrains.com/idea/)
   and authoring editors like [Oxygen](https://www.oxygenxml.com/);
 - tutorial generators like [Tut](https://github.com/tpolecat/tut) make possible inclusion of code output in the
  published pages;
 
-On the other hand, to make editing the text easier, MarkDown simplifies presentation markup - but removes most of the
+On the other hand, to make editing the text easier, Markdown simplifies presentation markup - but removes most of the
 semantic markup features and general include mechanisms supported by the traditional XML-based systems.
 That makes creation of indexes, glossaries and bibliographies and inclusion of programmatically-generated data either
 impossible or dependent on the specific static site generator. For example, it is possible to use MathJax on GitHub
-Pages, but to include one MarkDown file in another one has to resort to Jekyll-specific `include-relative` - which may
+Pages, but to include one Markdown file in another one has to resort to Jekyll-specific `include-relative` - which may
 not even be supported on GitHub pages. 
    
-As a result, producing reasonable-quality PDF from MarkDown sources is non-trivial.
+As a result, producing reasonable-quality PDF from Markdown sources is non-trivial.
 For instance, conversion of a recent book published as a series of
 [blog posts](https://bartoszmilewski.com/2014/10/28/category-theory-for-programmers-the-preface/)
 required a lot of [steps](https://github.com/hmemcpy/milewski-ctfp-pdf/) (and manual intervention).
@@ -261,7 +261,7 @@ registered on one FopFactory interfere with another. Since `ImageManager` is not
 ## Future ##
 
 Extending DocBook math support to the non-MathML math using an XML filter made me think that it may be possible to
-recover some of the benefits of using MarkDown (simpler markup, like tutorial generators and such) via preprocessing
-MarkDown markup in the input file using MarkDown parser like
+recover some of the benefits of using Markdown (simpler markup, like tutorial generators and such) via preprocessing
+Markdown markup in the input file using Markdown parser like
 [`CommonMark` parser](https://github.com/commonmark/commonmark-spec). This is non-trivial, for instance, because
-MarkDown can have multiple interlinked files, but warrants further thought.  
+Markdown can have multiple interlinked files, but warrants further thought.  

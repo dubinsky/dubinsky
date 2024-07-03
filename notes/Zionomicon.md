@@ -1,5 +1,6 @@
 ---
 title: Zionomicon
+tags: [scala]
 ---
 - bought: 2020-10-29
 
