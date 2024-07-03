@@ -1,6 +1,6 @@
 ---
 title: Bloop
-tags: [Scala, Gradle]
+tags: [scala, gradle]
 ---
 - [plug](![](https://twitter.com/hmemcpy/status/1320661670683959296))
 - [install](https://scalacenter.github.io/bloop/setup#universal)

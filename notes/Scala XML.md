@@ -1,6 +1,6 @@
 ---
 title: Scala XML
-tags: [Scala]
+tags: [scala]
 ---
 - get XML declaration as a processing instruction
 - Plans - create issues describing them:

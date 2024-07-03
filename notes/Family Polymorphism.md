@@ -1,7 +1,7 @@
 ---
 title: Family Polymorphism
 date: "2020-10-22"
-tags: [Scala]
+tags: [scala]
 ---
 - Papers
   - [Family Polymorphism](https://www.researchgate.net/publication/213878848_Family_Polymorphism)  Erik Ernst  2001

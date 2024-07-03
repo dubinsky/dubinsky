@@ -1,6 +1,6 @@
 ---
 title: OpenTorah
-tags: [Jewish]
+tags: [jewish]
 ---
 - [x] [[DONE]] create Twitter account
   - [[/days/2020-10-26]] created @theopentorah (@opentorah is taken) - "the Open Torah Project"

@@ -1,6 +1,6 @@
 ---
 title: Icy Carrot Cooler Smoothy
-tags: [Recipe]
+tags: [recipe]
 ---
 - Yield: 2 servings
 - 1 carrot, sliced

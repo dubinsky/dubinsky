@@ -1,5 +1,5 @@
 ---
-tags: [Recipe]
+tags: [recipe]
 title: Limoncello
 ---
 750ml of 190-proof alcohol seems to weigh 546-558 grams (multiplier: 1.34-1.38) - or 700?
