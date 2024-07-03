@@ -7,15 +7,15 @@ permalink: /tags/
 ---
 
 <div id="tags">
-  {% assign sorted_tags = site | all_tags | sort %}
+  {% assign tags = site | all_tags %}
   <h2>All tags</h2>
   <p>
-    {% for tag in sorted_tags %}
+    {% for tag in tags %}
     <a class="page-tag" href="{{ site.baseurl }}/tags/#{{ tag[0] | slugify }}">{{ tag[0] }}</a>
     {% endfor %}
   </p>
   <h2>Pages by tags</h2>
-  {% for tag in sorted_tags %}
+  {% for tag in tags %}
   <div id="{{ tag[0] | slugify }}">
     <h3>{{ tag[0] }}</h3>
     {% for post in tag[1] %}
