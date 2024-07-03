@@ -128,7 +128,7 @@ In `_includes/head.html`:
 ```
 {% endraw %}
 
-In `_includes.mathjax.html`:
+In `_includes/mathjax.html`:
 ```html
 <script>  
   MathJax = {  
@@ -240,6 +240,7 @@ Links can be styled in `_sass/custom.scss`:
 
 - [ ] [[TODO]] look into showing the graph with https://github.com/wikibonsai/jekyll-graph
 - [ ] [[TODO]] look deeper into [wikibonsai](https://github.com/wikibonsai/wikibonsai?tab=readme-ov-file)
+
 ### Pages by Tag
 
 Now that I have my blog and my notes in the same repository and in the same Obsidian vault, I can cross-link blog posts and notes; both can have tags in their YAML frontmatter,
@@ -302,7 +303,7 @@ permalink: /tags/
 ```
 {% endraw %}
 
-- [ ] [[TODO]] Look into tag pages aliased to tags (with the help of the [Tag Wrangler](https://github.com/pjeby/tag-wrangler) Obsidian plugin?) to bring tags like `#computer` closer to classifier pages like `[​[buy]]` and `[​[learn]]` (while in [[Roam]] they were equivalent).
+- [ ] [[TODO]] Look into tag pages aliased to tags (with the help of the [Tag Wrangler](https://github.com/pjeby/tag-wrangler) Obsidian plugin?) to bring tags like `#computer` closer to classifier pages like `[​[buy]]` and `[​[learn]]` (while in [[Roam]] they were equivalent) - or!, just link the tag header in the by-tag list to a page with the same name if it exists :) (possibly ignoring case).
 
 ### Page Tags
 
