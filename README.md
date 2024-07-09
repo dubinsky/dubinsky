@@ -131,12 +131,19 @@
   [39](https://github.com/TEIC/CETEIcean/issues/39).
 - [wikibonsai/jekyll-wikirefs](https://github.com/wikibonsai/jekyll-wikirefs):
   [1](https://github.com/wikibonsai/jekyll-wikirefs/issues/1),
-  [2](https://github.com/wikibonsai/jekyll-wikirefs/issues/2)
+  [2](https://github.com/wikibonsai/jekyll-wikirefs/issues/2),
   [3](https://github.com/wikibonsai/jekyll-wikirefs/issues/3).
 - [DevPod](https://github.com/loft-sh/devpod):
-  _[1150](https://github.com/loft-sh/devpod/pull/1150)_.
+  _[1150](https://github.com/loft-sh/devpod/pull/1150)_,
+  [1152](https://github.com/loft-sh/devpod/issues/1152),
+  [1153](https://github.com/loft-sh/devpod/issues/1153),
+  [1170](https://github.com/loft-sh/devpod/issues/1170).
 - [DevPod GCloud Provider](https://github.com/loft-sh/devpod-provider-gcloud):
-  _[22](https://github.com/loft-sh/devpod-provider-gcloud/pull/22)_.
+  [21](https://github.com/loft-sh/devpod-provider-gcloud/issues/21),
+  _[22](https://github.com/loft-sh/devpod-provider-gcloud/pull/22)_,
+  [23](https://github.com/loft-sh/devpod-provider-gcloud/issues/23),
+  _[24](https://github.com/loft-sh/devpod-provider-gcloud/pull/24)_,
+  _[25](https://github.com/loft-sh/devpod-provider-gcloud/pull/25)_.
 
 ## Proofreading ##
 

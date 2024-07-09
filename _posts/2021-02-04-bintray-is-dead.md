@@ -5,7 +5,7 @@ author: Leonid Dubinsky
 tags:
   - bintray
   - gradle
-  - mavencentral
+  - maven-central
 date: 2021-02-04
 ---
 Notes on my Maven Central setup.

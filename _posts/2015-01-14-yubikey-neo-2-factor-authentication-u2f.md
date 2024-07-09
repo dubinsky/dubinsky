@@ -1,13 +1,18 @@
 ---
 layout: post
-title: 'Yubikey: 2-factor authentication (U2F, OATH and OTP) and SSH'
-date: '2015-01-14T20:15:00.000-05:00'
+title: "Yubikey: 2-factor authentication (U2F, OATH and OTP) and SSH"
+date: 2015-01-14T20:15:00.000-05:00
 author: Leonid Dubinsky
-tags: [authentication, life in the cloud, linux]
-modified_time: '2018-11-11T03:44:06.602-05:00'
+tags:
+  - authentication
+  - linux
+  - life-in-the-cloud
+modified_time: 2018-11-11T03:44:06.602-05:00
 blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-3229372978474069876
 blogger_orig_url: https://blog.dub.podval.org/2015/01/yubikey-neo-2-factor-authentication-u2f.html
 ---
+* TOC
+{:toc}
 
 ## Why Yubikey ##
 
@@ -34,7 +39,6 @@ new firmware :)
 Recently, I bought myself a Yubikey 4C, which doesn't have NFC, but it plugs directly into my phone's USB-C port, so
 that's ok.
 
-
 ### udev ###
 
 It seems that recent Linux releases recognize the token out of the box, but custom udev rules are needed to allow
@@ -43,7 +47,6 @@ non-root users accessing the USB device representing the YubiKey (which is neede
 On current Fedora releases, you need to install package "ykpers" (or "yubikey-personalization-gui" that drags it in);
 it puts appropriate udev rules in `/lib/udev/rules.d/69-yubikey.rules`. Reboot or force udev daemon to reload the rules
 in some other way.
-
 
 ### Enabling yubikey features ###
 
@@ -77,7 +80,7 @@ to include, for instance, GitHub and WordPress (it seems that Github does suppor
 Inconvenience of entering codes manually can theoretically be alleviated by the
 [yubioath-desktop](https://github.com/Yubico/yubioath-desktop) application, which in practice didn't work for me.
 
-## LastPass ##
+## Password Manager ##
 
 For sites that do not support U2F or codes-based 2-factor authentication, the only line of defence is the password, so
 it needs to be strong - which means, long, weird, unique - and hard to remember.
@@ -86,21 +89,16 @@ While we are waiting for U2F to become universal so that we can go back to havin
 password on all the sites, strong passwords are only practical if you use a password manager - a service that stores
 your passwords, detects when you are logging into a site it knows about, and supplies the password.
 
-I chose one such password manager - [LastPass](https://www.lastpass.com/). I stored login information about the sites I
-frequent in it, drained passwords from the browser's built-in password manager and told the browser to stop collecting
+I stored login information about the sites I
+frequent in the password manager, drained passwords from the browser's built-in password manager and told the browser to stop collecting
 my passwords.
 
-When all the passwords are stored in a password manager, the question arises: how secure is the password manager itself?
-Well, one of the reasons why I chose LastPass (in addition to raving reviews) is - it supports multiple flavors of
-2-factor authentication, including the Authenticator codes - and the OTP (one-time passwords) that Yubikey Neo supports
-directly!
+When all the passwords are stored in a password manager, the question arises: how secure is the password manager itself? Current password managers support multiple flavors of 2-factor authentication, including the Authenticator codes - and the OTP (one-time passwords) that Yubikey supports directly.
 
-I paid for LastPass Premium to gain access to the 2-factor authentication feature ($12/year) and registered my token.
-Now to log into my LastPass account I need to type in my password *and* insert and tap the Yubikey Neo.
-
-LastPass allows up to three tokens to be registered for one account, to allow for the recovery in case the token is lost.
-One can get a (cheaper) OTP-only Yubico token for this purpose - or get Yubike Neo/4C tokens for the family members and
+Usually, Yubikey support requires a for paid accounts, but the price is reasonable: around $40/year for a family. Multiple tokens can be registered for one account, to allow for the recovery in case the token is lost. One can get a (cheaper) OTP-only Yubico token for this purpose - or get Yubike Neo/4C tokens for the family members and
 cross-register them :)
+
+Originally, I chose [LastPass](https://www.lastpass.com/) as the password manager because of raving reviews; later, after a few security breaches in LastPass, I switched to [BitWarden](https://bitwarden.com/).
 
 ## SSH ##
 
@@ -197,25 +195,6 @@ alias in `~./bashrc:`
 - Is there a way to avoid this?
 - How to hook graphical pin-entry into this flow?
 - How to make the identity from the token default one?
-
-### Temporary Detour (no longer needed) ###
-Current version of Fedora ships with yubico-piv-tool version 1.5.0; current latest version is 1.5.2; both seem to suffer
-from an [issue](https://github.com/Yubico/yubico-piv-tool/issues/134) that causes the tool to crash truing to sign the
-certificate. The issue is fixed in the trunk, but until version 1.5.3 is released and percolates down to the
-distribution, the workaround is to build the tool from [GIT](https://github.com/Yubico/yubico-piv-tool).
-
-Prerequisites (some checked by ./configure, some not):
-```
-  # dnf install openssl-devel check-devel pcsc-lib-devel gengetopt help2man
-```
-
-Then, in the sources distribution:
-```
-  $ autoreconf --install
-  $ ./configure
-  $ make
-  $ make install   # I used the resulting tool without installing
-```
 
 ## Yubikey as a GPG Smart Card ##
 
@@ -317,7 +296,7 @@ I never had to do this before, but on fc28 in order for the ssh key to work, I h
 If the public key is published somewhere, GPG applet on the token can be configured with the URL so that it can fetch
 the key. On a machine where GPG doesn't know about my the key, I used "fetch" in gpg2 --card-edit.
 
-### Obsolete ###
+## Obsolete ##
 
 Previously, additional steps were required to set things up. In recent releases, some of them are no longer needed - but
 I preserved previous instructions here just in case :)
