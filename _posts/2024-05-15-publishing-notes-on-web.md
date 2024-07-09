@@ -204,9 +204,11 @@ Unlike [[Obsidian]], Jekyll does not understand wiki-links. There is a Jekyll pl
 
 In the interim, I used (after tweaking it a bit) a piece of Liquid code that does what needs to be done with *basic* wiki-links: [brackettest](https://github.com/jhvanderschee/brackettest) (listed on the plugin's website :)).
 
-Plugin down-cases page titles; I [asked](https://github.com/wikibonsai/jekyll-wikirefs/issues/2) for this down-casing to be configurable.
+Plugin does not respect the boundaries of the code blocks (but  [brackettest](https://github.com/jhvanderschee/brackettest) does), so to stop it from processing wiki-links inside such blocks (for instance, in this post :)), I insert a zero-width space between the two opening brackets: `[​[`. This is sub-optimal, since the invisible zero-width space ends up in the rendered code, which, as a result, can not be re-used by copying it: it is not what it looks like (in addition, the use of ZWSP throws off the code colorizer and requires an editor that shows invisible characters).
 
-Plugin does not respect the boundaries of the code blocks (which  [brackettest](https://github.com/jhvanderschee/brackettest) somehow does), so to stop it from processing wiki-links inside such blocks (for instance, in this post :)), I insert a zero-width space between the two opening brackets: `​​[​[`. I [asked](https://github.com/wikibonsai/jekyll-wikirefs/issues/3) for the plugin to not process links within the code blocks, since the ZWSP work-around is broken: code copied from the affected code blocks is not what it looks like...
+Another way - back-slash-escaping the opening bracket (`\[`) does not work within the code block. I [asked](https://github.com/wikibonsai/jekyll-wikirefs/issues/3) for the plugin to not process links within the code blocks, but this seems to be unfeasible in the "legacy system" Jekyll; awaiting [manunamz](https://github.com/manunamz)'s suggestion for a non-legacy system.
+
+Plugin down-cases page titles; I [asked](https://github.com/wikibonsai/jekyll-wikirefs/issues/2) for this down-casing to be configurable.
 
 Plugin gathers and puts into the front-matter of each page list of back-links to it. To show a list of back-links on a page, in `_layouts/default.html` add (note the use of the `concat` filter to make sure that links from both pages and posts are resolved):
 {% raw %}

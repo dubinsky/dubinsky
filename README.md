@@ -133,6 +133,10 @@
   [1](https://github.com/wikibonsai/jekyll-wikirefs/issues/1),
   [2](https://github.com/wikibonsai/jekyll-wikirefs/issues/2)
   [3](https://github.com/wikibonsai/jekyll-wikirefs/issues/3).
+- [DevPod](https://github.com/loft-sh/devpod):
+  _[1150](https://github.com/loft-sh/devpod/pull/1150)_.
+- [DevPod GCloud Provider](https://github.com/loft-sh/devpod-provider-gcloud):
+  _[22](https://github.com/loft-sh/devpod-provider-gcloud/pull/22)_.
 
 ## Proofreading ##
 
