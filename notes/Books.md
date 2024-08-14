@@ -1,15 +1,21 @@
 ---
 title: Books
 ---
-- [ ] [[TODO]] [[buy]] Kisvei AriZal 
-- [ ] [[TODO]] [[buy]] Zohar Matok MiDvash
-- [ ] [[TODO]] [[buy]] Beis Habhira (Meiri)
-- [ ] [[TODO]] [[buy]] 3rd volume of the Memoirs
-- [ ] [[TODO]] [[buy]] Avrom Mayor's biography "Father to so many Hasidim"
+[[TODO]] [[buy]] books
+- [ ] Kisvei AriZal 
+- [ ] Zohar Matok MiDvash
+- [ ] Beis Habhira (Meiri)
+- [ ] 3rd volume of the Memoirs
+- [ ] Encyclopaedia > 51?
+- [ ] Avrom Mayor's biography "Father to so many Hasidim"
+
+
+Ebooks
 - [Леонид Каганов](https://lleo.me/arhive)
-- Ebooks
-  - [x] [[DONE]] subscribe to Kobo plus?
-  - [ ] [[TODO]] get Stasheff's books in epub
-  - DeDrm for Kobo: [obok](https://www.epubor.com/convert-kobo-kepub-to-epub-and-remove-drm.html)
-  - [DeDRM - Apprentice Alf](https://apprenticealf.wordpress.com/)
-  - [Genesis Library](https://libgen.is/)
+- [ ] get Stasheff's books in epub
+- DeDrm for Kobo: [obok](https://www.epubor.com/convert-kobo-kepub-to-epub-and-remove-drm.html)
+- [DeDRM - Apprentice Alf](https://apprenticealf.wordpress.com/)
+
+Lots of books:
+- [Library Genesis](https://libgen.is/)
+- [Anna's Archive](https://annas-archive.org/)

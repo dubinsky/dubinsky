@@ -15,11 +15,11 @@ History:
 - 2020-11-04 - Imported (somewhat garbled) text of [[How to Take Smart Notes]] from the [[Roam]] [BookClub](https://roamresearch.com/#/app/roam-book-club-2/page/gtyivRnn6)
 - 2020-11-09 - [[Roam]] billed me for a year
 - 2022-11-06 - Installed [[Zotero]] and zotero-roam
+- 2024-05 - migrated to [[Obsidian]]
 
 
-
-- [ ] [[TODO]] figure out how to make pages public in a way that allows navigation (and shows linked pages?)
-- [ ] [[TODO]] add DNS URL redirect for roam.dub.podval.org  
+- [ ] figure out how to make pages public in a way that allows navigation (and shows linked pages?)
+- [ ] add DNS URL redirect for roam.dub.podval.org  
 - [PDF Highliting!](https://cwhitesullivan.lt.acemlna.com/Prod/link-tracker?redirectUrl=aHR0cHMlM0ElMkYlMkZ3d3cueW91dHViZS5jb20lMkZ3YXRjaCUzRnYlM0QteVZxUXFVRUhLSSUyNmFiX2NoYW5uZWwlM0RDQ0M=&a=66602312&account=cwhitesullivan%2Eactivehosted%2Ecom&email=6kuVu95DEBySs6GDBSi84A%3D%3D&s=04fb52eac0167cace592d38d91f22817&i=219A1123A17A2496)
 - Tutorials
   - 100 Tips: [video](https://t.co/nwUYoeZUsA?amp=1); [thread](![](https://twitter.com/MarcKoenig_/status/1361457957431615488)). [overview](https://youtu.be/28yMr1NHseY)

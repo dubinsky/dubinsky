@@ -96,6 +96,8 @@
 - [zio-schema](https://github.com/zio/zio-schema):
   [667](https://github.com/zio/zio-schema/issues/667),
   [668](https://github.com/zio/zio-schema/issues/668).
+- [ZIO documentation](https://github.com/zio/zio):
+  _[9219](https://github.com/zio/zio/pull/9219)_.
 - [Tapir documentation](https://tapir.softwaremill.com/en/latest/):
   _[2543](https://github.com/softwaremill/tapir/pull/2543)_.
 - [Besom](https://virtuslab.github.io/besom/):
@@ -144,6 +146,8 @@
   [23](https://github.com/loft-sh/devpod-provider-gcloud/issues/23),
   _[24](https://github.com/loft-sh/devpod-provider-gcloud/pull/24)_,
   _[25](https://github.com/loft-sh/devpod-provider-gcloud/pull/25)_.
+- [Home Assistant](https://github.com/home-assistant):
+  [126447](https://github.com/home-assistant/core/issues/126447).
 
 ## Proofreading ##
 

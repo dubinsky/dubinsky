@@ -1,6 +1,8 @@
 ---
 title: YubiKey
-tags: [computer]
+tags:
+  - computer
+  - sysadmin
 ---
 FIDO2 SSH key:
 ```shell
@@ -32,7 +34,7 @@ Key comment:
 - public key written during key generation has the default comment `user@host`
 - public key retrieved by `ssh-keygen -K` has the comment from the `-O application` parameter
 - `ykman fido credentials list` shows hex representation of the value of the `-O user` parameter 
-    
+
 By default, FIDO2 SSH keys require touch (presence detection) for each operation.
 It is possible to disable this at generation time with `ssh-keygen ... -O no-touch-required`,
 but such keys are rejected by default, and sshd needs to be re-configured to accept them.

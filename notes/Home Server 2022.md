@@ -2,7 +2,7 @@
 title: Home Server 2022
 tags: [computer]
 ---
-- Requirements
+Requirements
   - Intel Alder Lake, socket LGA1700
   - DDR5
   - PCI 4 SSD sockets

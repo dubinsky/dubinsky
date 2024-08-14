@@ -11,6 +11,7 @@ https://builtin.com/consumer-tech/roam-note-taking-app-personal-wiki
 - [[Zettelkasten]]
   - Another touchstone is Zettelkasten, a note-taking method popularized by Niklas Luhmann, a German sociologist. He credited Zettelkasten with helping him write dozens of books over the course of his career. The system calls for taking quick notes on paper index cards, giving each a number, tags and cross-references to other notes before sorting them into little boxes. That way you can quickly retrieve information and make connections between ideas that you might not notice if you took notes using traditional approaches.
 - [[Roam]]
+
 - Our dream system is all about backlinks
   - Kinds of backlinks:
     - statement -> proof
