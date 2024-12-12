@@ -1,6 +1,6 @@
 ---
 title: Rabbinical Mathematics and Astronomy
-tags: [jewish-calendar]
+tags: [jewish calendar]
 ---
 - W.M. Feldman, 1931.
 - Lots of quotes from Talmud. "Music of the spheres". Trigonometry!

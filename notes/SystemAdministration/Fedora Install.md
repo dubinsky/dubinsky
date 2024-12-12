@@ -21,28 +21,27 @@ $ sudo dnf update
 
 ## Gnome Settings
 In `Settings | Keyboard |`:
-  - In `Keyboard Shortcuts`:
-    - set `Switch windows` to `Alt-Tab`
+- In `Input Sources` add layout `Russian (phonetic)`
+- In `Keyboard Shortcuts`:
+    - set `Switch windows` to `Alt-Tab` (by default, it is `Switch applications`)
     - set `Switch to next input source` to `Alt-Space`
-  - In  `Input Sources` add Russian (US, phonetic) layout
 
 Starting with Fedora 38, GDM suspends the machine; to turn this off - say, for a server - do:
 ```shell
 $ sudo -u gdm dbus-run-session gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 0
 ```
-(see https://discussion.fedoraproject.org/t/gnome-suspends-after-15-minutes-of-user-inactivity-even-on-ac-power/79801)
+(see https://discussion.fedoraproject.org/t/gnome-suspends-after-15-minutes-of-user-inactivity-even-on-ac-power/79801) - and in Fedora 41 it no longer works...
 ## Chrome
 
+- Add `Google Chrome` YUM repository (download and install Chrome)
 - Install: `$ sudo dnf install google-chrome-stable`
 - Install Gnome Shell Integration Chrome Extension
 - Install Gnome Extensions from Chrome:
-  - Application Menu
-  - Places Status Indicator
+  - Apps Menu
   - Dash to Dock
-
-
-## Docker
-see [[Docker]]
+  - Places Status Indicator
+  - TopHat
+- Settings | Apps | Default Apps | Web - choose Chrome!
 
 ## Google Cloud SDK
 Install:
@@ -50,7 +49,7 @@ Install:
 $ sudo tee -a /etc/yum.repos.d/google-cloud-sdk.repo << EOM
 [google-cloud-cli]
 name=Google Cloud CLI
-baseurl=https://packages.cloud.google.com/yum/repos/cloud-sdk-el8-x86_64
+baseurl=https://packages.cloud.google.com/yum/repos/cloud-sdk-el9-x86_64
 enabled=1
 gpgcheck=1
 repo_gpgcheck=0
@@ -82,14 +81,15 @@ $ sudo dnf install nodejs yarnpkg
 ### System:
 ```shell
 $ sudo dnf install mc
-$ sudo dnf install java-17-openjdk-devel
-$ sudo dnf install solaar # Logitech mice
+$ sudo dnf install memtest86+
+$ sudo dnf install direnv
+$ sudo dnf install java-21-openjdk-devel
+$ sudo dnf install solaar            # Logitech mice
 $ sudo dnf install rclone
+$ sudo dnf install syncthing
 $ sudo dnf install vlc
-```
-### Leonid
-```shell
 $ sudo dnf install steam
+$ sudo dnf install chirp             # handheld radio
 $ sudo dnf install git-filter-repo
 $ sudo dnf group install "C Development Tools and Libraries"
 ```
@@ -100,7 +100,7 @@ $ sudo dnf install inkscape
 ($ sudo dnf install kolourpaint)
 ($ sudo dnf install krita)
 ($ sudo dnf install mypaint)
-# WebStorm/JetBrains Toolbox
+# WebStorm
 GDevelop
 (OBS Studion)
 # Skype Zoom Telegram
@@ -128,16 +128,15 @@ virsh net-autostart --network default --disable
 
 (see https://docs.openstack.org/mitaka/networking-guide/misc-libvirt.html)]
   
-## Wally
-https://github.com/zsa/wally/wiki/Linux-install
-
-## Oryx
-https://github.com/zsa/wally/wiki/Live-training-on-Linux
-```
-# groupadd plugdev; usermod -aG plugdev $USER
-```
-
 ## Manually Install
+
+[[Docker]]
+[[Obsidian]]
+[[Zotero]]
+[[Keyboards]] Utilities
+Solaar autostart
+devpod
+pulumi
 ### Printers
 - https://wiki.debian.org/CUPSDriverlessPrinting
 - Brother drivers (using their tool) for MFC-J5930DW: http://support.brother.com/g/b/downloadend.aspx?c=us&lang=en&prod=mfcj5930dw_us_eu&os=127&dlid=dlf006893_000&flang=4&type3=625
@@ -147,3 +146,4 @@ https://github.com/zsa/wally/wiki/Live-training-on-Linux
 ### JetBrains
 - JetBrains Toolbox
 - IntelliJ (it installs the license).
+

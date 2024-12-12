@@ -2,7 +2,7 @@
 title: Zotero
 ---
 Installed
-- [Zotero Standalone and Zotero Connector](https://www.researchgate.net/deref/https%3A%2F%2Fwww.zotero.org%2Fdownload%2F)
+- [Zotero Standalone and Zotero Connector](https://www.zotero.org/download/); [instructions](https://www.zotero.org/support/installation). On Fedora, Zotero is available from FlatHub.
 - Added ~/Books/Zotero to the rsynch.sh
 - Installed [Better BibTex](https://retorque.re/zotero-better-bibtex/) Zotero plugin
 - Installed [ZotFile plugin](http://zotfile.com/)
@@ -15,7 +15,5 @@ Installed
 - reader integration
 - [The Best Reference Manager Setup (Zotero + ZotFile + Cloud Storage)](https://www.researchgate.net/publication/325828616_Tutorial_The_Best_Reference_Manager_Setup_Zotero_ZotFile_Cloud_Storage)
 - [Zotero+Boox](https://www.youtube.com/watch?v=bLoxIm1Oms0)
-- [SyncThing](https://syncthing.net/downloads/)
-	- on [Kobo](https://anarc.at/hardware/tablet/kobo-clara-hd/)
-	- video https://www.youtube.com/watch?v=bLoxIm1Oms0
+- [[SyncThing]]
 - https://stormgrass.com/my-workflow/

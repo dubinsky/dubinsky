@@ -3,7 +3,7 @@ title: Virtual Machines
 ---
 At last, I have a use for virtual machines: run [[Home Assistant]] in one!
 
-Although I am running it on a always-on "lab" server, where I also run other things, I do not see the need to use something as elaborate as [ProxMox](https://www.proxmox.com/en/) - even if it [can be run on Fedora](https://ipv6.rs/tutorial/Fedora_Server_Latest/Proxmox_VE/) and not just on raw hardware.
+Although I am running it on a always-on "lab" server, where I also run other things, I do not see the need to use something as elaborate as [ProxMox](https://www.proxmox.com/en/) - even if it [can be run on Fedora](https://ipv6.rs/tutorial/Fedora_Server_Latest/Proxmox_VE/) and not just on raw hardware. - but, after some thought... [[ProxMox]]
 
 I think I'll stick with [virt-manager](https://virt-manager.org/ ) :)
 

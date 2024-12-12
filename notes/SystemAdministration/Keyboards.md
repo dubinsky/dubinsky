@@ -1,6 +1,16 @@
 ---
 title: Keyboards
 ---
+## Utilities
+### Wally
+https://github.com/zsa/wally/wiki/Linux-install
+
+### Oryx
+https://github.com/zsa/wally/wiki/Live-training-on-Linux
+```
+# groupadd plugdev; usermod -aG plugdev $USER
+```
+
 - Keyboards
   - [QMK Firmware](https://docs.qmk.fm/)
       - [Keycodes](https://docs.qmk.fm/#/keycodes)

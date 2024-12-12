@@ -68,7 +68,7 @@ https://cloud.google.com/docs/authentication/application-default-credentials
 
 TODO not global; no key for non-service account.
 
-Generate, retrieve and stash the JSON _key_ for the account you use to run `devpod` on your machine; this can be done using [Google Cloud Console UI](console.cloud.google.com) - or with a `gcloud` CLI command:
+Generate, retrieve and stash the JSON _key_ for the account you use to run `devpod` on your machine; this can be done using [Google Cloud Console UI](http://console.cloud.google.com) - or with a `gcloud` CLI command:
 ```shell
 $ gcloud iam service-accounts keys create \
   ./devpod.json 

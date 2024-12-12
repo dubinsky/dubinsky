@@ -1,6 +1,6 @@
 ---
 title: Theories of the World
-tags: [jewish-calendar]
+tags: [jewish calendar]
 ---
 - "Theories of the world", Michael J. Crowe, second revised edition, 2001.
 - I do not see material that should be quoted from this book and not from the prime sources or deeper analysis.

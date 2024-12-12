@@ -2,11 +2,8 @@
 title: Books
 ---
 [[TODO]] [[buy]] books
-- [ ] Kisvei AriZal 
-- [ ] Zohar Matok MiDvash
 - [ ] Beis Habhira (Meiri)
 - [ ] 3rd volume of the Memoirs
-- [ ] Encyclopaedia > 51?
 - [ ] Avrom Mayor's biography "Father to so many Hasidim"
 
 

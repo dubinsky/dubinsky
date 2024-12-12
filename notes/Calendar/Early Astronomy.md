@@ -1,6 +1,6 @@
 ---
 title: Early Astronomy
-tags: [jewish-calendar]
+tags: [jewish calendar]
 ---
 - Hugh Thurston, 1994.
 - Ptolemy p. 138-150.

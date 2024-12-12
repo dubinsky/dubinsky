@@ -7,21 +7,23 @@ I heard about [Home Assistant](https://www.home-assistant.io/) home automation p
 
 I installed Home Assistant using Docker; this installation method is called [Home Assistant Container](https://www.home-assistant.io/installation/linux#docker-compose); there is a warning concerning it: "This installation method **does not have access to add-ons**", but so far I did not run into any problems.
 
-Here is my `/home/homeassistant/homeassistant/docker-compose.yaml`:
-```yaml
-version: '3'
-services:
-  homeassistant:
-    container_name: homeassistant
-    image: "ghcr.io/home-assistant/home-assistant:stable"
-    volumes:
-      - /home/homeassistant/homeassistant/config:/config
-      - /etc/localtime:/etc/localtime:ro
-      - /run/dbus:/run/dbus:ro
-    restart: unless-stopped
-    privileged: true
-    network_mode: host
-```
+<details>
+  <summary>My /home/homeassistant/homeassistant/docker-compose.yaml</summary>
+  <pre language="yaml"><code>	
+	version: '3'
+	services:
+	  homeassistant:
+	    container_name: homeassistant
+	    image: "ghcr.io/home-assistant/home-assistant:stable"
+	    volumes:
+	      - /home/homeassistant/homeassistant/config:/config
+	      - /etc/localtime:/etc/localtime:ro
+	      - /run/dbus:/run/dbus:ro
+	    restart: unless-stopped
+	    privileged: true
+	    network_mode: host
+  </code></pre>
+</details>
 
 ## Viessmann Boiler
 
@@ -67,7 +69,9 @@ In the zwave-js-ui (see below), my Z-Wave USB stick reports firmware version v1.
 
 Since my Home Assistant runs in a Docker container, I had to install a separate zwave-js server; instead of the UI-less minimalist image https://hub.docker.com/r/kpine/zwave-js-server, I went with the official image that also has a very nice UI: https://github.com/zwave-js/zwave-js-ui/blob/master/docker/docker-compose.yml. Note: `zwave-js-ui` used to be called `jwazvejsmqtt`; some [instructions]( https://www.homeautomationguy.io/blog/docker-tips/installing-z-wave-js-with-docker-and-home-assistant) still use the old name...
 
-Here is my `/home/homeassistant/zwave-js-ui/docker-compose.yaml`:
+<details>
+<summary>My /home/homeassistant/zwave-js-ui/docker-compose.yaml</summary>
+
 ```yaml
 version: '3.7'
 services:
@@ -97,6 +101,7 @@ services:
 networks:
   zwave:
 ```
+</details>
 
 With zwave-js UI running on port 8091, I followed [instructions](https://zwave-js.github.io/zwave-js-ui/#/homeassistant/homeassistant-officia): 
 - in Settings / Home Assistant, enabled "WS Server"
@@ -143,12 +148,74 @@ I created a [backup](https://www.home-assistant.io/integrations/backup/) of my c
 
 For the dongles (Z-Wave and Zigbee) to be visible to the Home Assistant inside the VM, I added them in "Add Hardware" of the virt-manager.
 Same for the host Bluetooth controller - and it still does not work! See https://www.reddit.com/r/VFIO/comments/wbsqy1/how_to_fix_onboard_intel_bluetooth_error_code_10/...
-## Further Plans
 
-[https://github.com/merbanan/rtl_433](https://github.com/merbanan/rtl_433)
+## RTL 433
+
+https://github.com/merbanan/rtl_433
+
+sudo dnf install rtl-433
+
+just run
+
+see https://www.instructables.com/rtl-sdr-on-Ubuntu/
+
+$ lsusb
+
+0bda:2832 Realtek Semiconductor Corp. RTL2832U DVB-T
+
+/etc/udev/rules.d/20.rtlsdr.rules:
+
+```
+SUBSYSTEM=="usb", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="2832", GROUP="homeassistant", MODE="0666", SYMLINK+="rtl_sdr"
+```
+
+sudo udevadm control --reload
+
+plug in the dongle
+
+added it to the virtual machine hardware
+
+
+added MQTT integration with the Mosquitto broker
+
+Home Assistant / Settings / People / Add Person: mqtt with password mqtt
+
+https://github.com/home-assistant/addons/blob/master/mosquitto/DOCS.md
+
+
 
 [https://1projectaweek.com/blog/2023/8/7/rtl433-home-assistant-and-cheap-flood-sensors-oh-my](https://1projectaweek.com/blog/2023/8/7/rtl433-home-assistant-and-cheap-flood-sensors-oh-my)
 
+https://github.com/pbkhrv/rtl_433-hass-addons
+
+Home Assistant: Settings / Add-ons / Add-on store / dots / Repositories: add https://github.com/pbkhrv/rtl_433-hass-addons
+
+installed rtl_433_next add-on
+
+on Home Assistant, created (using the terminal add-on) a file `/config/rtl_433/config` with:
+```
+output      mqtt://homeassistant:1883,user=mqtt,pass=mqtt
+protocol    20
+convert     si
+```
+
+limiting protocols processed to prevent appearance of tire pressure sensor devices from cars passing by ;)
+
+configured the file into the add-on
+started the rtl_433_next add-on
+
+installed rtl_433 MQTT Auto Discovery (next) add-on
+configured it: host homeassistant, user mqtt, password mqtt
+
+istant: Settings / Add-ons / Add-on store / dots / Repositories: add https://github.com/GollumDom/addon-repository
+
+installed MQTT Explorer add-on
+saved the connection to homeassistant:1883,user=mqtt,pass=mqtt
+used it to prune parasitic tire pressure monitor sensor devices
+
+
+
+## Further Plans
 
 I can add Bluetooth Low Energy temperature, humidity and other [sensors](https://esphome.io/components/sensor/xiaomi_ble.html#lywsd03mmc) with either [ESP32 Tracking Hub](https://esphome.io/components/esp32_ble_tracker) or [Bluetooth Proxy](https://esphome.io/components/bluetooth_proxy).
 
@@ -156,7 +223,9 @@ Can I replace my Honeywell HumidiPRO H6062 with something compatible with Home A
 
 Subscribe to Home Assistant Cloud.
 
-Re-purpose an old laptop as a hardware dashboard...
+Wall-mounted touch screen with a Raspberry Pi in kiosk mode as a control panel:
+- https://www.waveshare.com/product/displays/lcd-oled/lcd-oled-1.htm
+- https://vilros.com/products/official-raspberry-pi-7-touchscreen-with-pi-4-compatible-case?variant=31280949264478&currency=USD&utm_medium=product_sync&utm_source=google&utm_content=sag_organic&utm_campaign=sag_organic&tw_source=google&tw_adid=90618046730&tw_campaign=316142330&gad_source=1&gclid=Cj0KCQjwmOm3BhC8ARIsAOSbapWslnnQY7N7Kb0L3loPB1ldWZ4WqcxF31JmNy2KGIKE0dK6rzzWZ34aAkr1EALw_wcB
 
 ## TODO
 
@@ -165,3 +234,11 @@ re-order, with installation options together
 table of content
 
 [https://www.home-assistant.io/integrations/zwave_js/#how-do-i-switch-between-the-official-z-wave-js-add-on-and-the-z-wave-js-ui-add-on](https://www.home-assistant.io/integrations/zwave_js/#how-do-i-switch-between-the-official-z-wave-js-add-on-and-the-z-wave-js-ui-add-on)
+
+https://www.home-assistant.io/dashboards/sections/#creating-a-sections-view
+
+https://samakroyd.com/2024/09/25/home-assistant-weve-done-smart-home-what-about-smart-garden/
+
+https://itead.cc/product/sonoff-zigbee-human-presence-sensor/
+
+Added and configured https://github.com/sabeechen/hassio-google-drive-backup

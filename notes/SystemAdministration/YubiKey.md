@@ -43,8 +43,8 @@ I am not going to fight this since:
 - it requires re-configuration of SSHD,
 - GitHub rejects `no-touch-required` keys,
 - it is more secure
-- even when the key is generated with -touch-required AND is prefixed in the authorized_keys file with -touch-required,
-rclone still requires touch, and sometimes - multiple...
+- even when the key is generated with no-touch-required AND is prefixed in the authorized_keys file with no-touch-required,
+- rclone still requires touch, and sometimes - multiple...
 - [ ] [[TODO]] Message about the touch wait is not being shown - link to the bug
 - Note about backup keys
 - [ ] [[TODO]] update blog post
