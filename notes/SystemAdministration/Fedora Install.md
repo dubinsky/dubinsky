@@ -35,13 +35,14 @@ $ sudo -u gdm dbus-run-session gsettings set org.gnome.settings-daemon.plugins.p
 
 - Add `Google Chrome` YUM repository (download and install Chrome)
 - Install: `$ sudo dnf install google-chrome-stable`
+- Settings | Apps | Default Apps | Web - choose Chrome!
 - Install Gnome Shell Integration Chrome Extension
 - Install Gnome Extensions from Chrome:
   - Apps Menu
   - Dash to Dock
   - Places Status Indicator
   - TopHat
-- Settings | Apps | Default Apps | Web - choose Chrome!
+
 
 ## Google Cloud SDK
 Install:
@@ -78,10 +79,11 @@ $ sudo dnf install nodejs yarnpkg
 ```
 
 ## Install Packages
-### System:
+### System
 ```shell
 $ sudo dnf install mc
 $ sudo dnf install memtest86+
+$ sudo dnf install btrfs-assistant
 $ sudo dnf install direnv
 $ sudo dnf install java-21-openjdk-devel
 $ sudo dnf install solaar            # Logitech mice
@@ -106,7 +108,7 @@ GDevelop
 # Skype Zoom Telegram
 ```
 
-- ## DNSMASQ
+## DNSMASQ
   To use dnsmasq started by the NetworkManager, under /etc/NetworkManager/:
   - In /conf.d/dnsmasq.conf:
   ```

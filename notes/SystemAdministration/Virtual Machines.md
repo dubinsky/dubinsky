@@ -1,11 +1,9 @@
 ---
 title: Virtual Machines
+tags:
+  - sysadmin
 ---
-At last, I have a use for virtual machines: run [[Home Assistant]] in one!
-
-Although I am running it on a always-on "lab" server, where I also run other things, I do not see the need to use something as elaborate as [ProxMox](https://www.proxmox.com/en/) - even if it [can be run on Fedora](https://ipv6.rs/tutorial/Fedora_Server_Latest/Proxmox_VE/) and not just on raw hardware. - but, after some thought... [[ProxMox]]
-
-I think I'll stick with [virt-manager](https://virt-manager.org/ ) :)
+At last, I have a use for virtual machines: run [[Home Assistant]] in one (on [[ProxMox]])!
 
 ## USB and Bluetooth
 
@@ -62,3 +60,5 @@ To make the interface persist through reboots, I used [nmcli](https://networkman
 ```
 
 TODO This probably can be used to turn Docker container applications into hosts on the network too!
+
+When I migrated to [[ProxMox]], which sets the network up automatically so that the virtual machines are accessible from the outside (and uses bridge, I think, and not macvlan), this became obsolete, so I did `mcli connection del mac0`

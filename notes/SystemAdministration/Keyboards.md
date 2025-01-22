@@ -1,5 +1,7 @@
 ---
 title: Keyboards
+tags:
+  - sysadmin
 ---
 ## Utilities
 ### Wally

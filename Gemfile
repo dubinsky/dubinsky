@@ -5,7 +5,7 @@
 source 'https://rubygems.org'
 
 # gem "github-pages"
-gem "jekyll", "~> 4.2"
+gem "jekyll", "~> 4.3"
 
 group :jekyll_plugins do
   gem 'jekyll-optional-front-matter'

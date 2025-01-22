@@ -1,6 +1,8 @@
 ---
 title: UniFi
-tags: [computer]
+tags:
+  - computer
+  - sysadmin
 ---
 [UniFi Help](https://help.ui.com/hc/en-us/categories/200320654)
 

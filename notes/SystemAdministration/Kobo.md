@@ -1,5 +1,7 @@
 ---
 title: Kobo
+tags:
+  - sysadmin
 ---
 - Installed [NickelMenu for Kobo](https://github.com/pgaskin/NickelMenu)
 - [KOReader installation](https://github.com/koreader/koreader/wiki/Installation-on-Kobo-devices)

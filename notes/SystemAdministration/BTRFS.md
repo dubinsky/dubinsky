@@ -15,5 +15,3 @@ $ sudo umount /mnt
 $ sudo grubby --update-kernel=ALL --args=rootflags=subvol=root
 $ sudo grubby --info=ALL
 ```
-
-btrfs UI: https://gitlab.com/btrfs-assistant/btrfs-assistant

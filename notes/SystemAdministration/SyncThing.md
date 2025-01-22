@@ -1,5 +1,7 @@
 ---
 title: SyncThing
+tags:
+  - sysadmin
 ---
 `$ sudo dnf install syncthing`
 Latest version: https://syncthing.net/downloads/

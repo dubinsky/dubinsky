@@ -1,5 +1,7 @@
 ---
 title: Remarkable Tablet
+tags:
+  - sysadmin
 ---
 - Order
   - 14/04/2020 12:17 AM +00:00 UTC
