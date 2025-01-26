@@ -5,7 +5,10 @@
 source 'https://rubygems.org'
 
 # gem "github-pages"
-gem "jekyll", "~> 4.3"
+gem "jekyll", "= 4.3.4"
+gem "jekyll-sass-converter", "= 3.0.0"
+gem "sass-embedded"
+# gem "sassc"
 
 group :jekyll_plugins do
   gem 'jekyll-optional-front-matter'
@@ -16,5 +19,5 @@ group :jekyll_plugins do
   gem "jekyll-avatar"
   gem 'jekyll-wikirefs'
   gem "kramdown"
-  gem "minima"
+  gem "minima", "= 2.5.2"
 end

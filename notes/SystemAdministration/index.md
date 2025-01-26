@@ -1,4 +1,5 @@
 ---
+title: System Administration
 disabled rules:
   - yaml-title
 tags:
