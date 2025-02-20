@@ -1,4 +1,5 @@
 [
   "find-unlinked-files",
-  "obsidian-linter"
+  "obsidian-linter",
+  "asciidoctor-editor"
 ]

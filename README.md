@@ -63,6 +63,8 @@
   _[678](https://github.com/scala/scala-xml/pull/678)_,
   [689](https://github.com/scala/scala-xml/issues/689),
   [694](https://github.com/scala/scala-xml/discussions/694).
+- [Scala.js](https://www.scala-js.org/):
+  _[5132](https://github.com/scala-js/scala-js/pull/5132)_.
 - [Gradle](https://github.com/gradle/gradle):
   [9885](https://github.com/gradle/gradle/issues/9855),
   [15491](https://github.com/gradle/gradle/issues/15491#issuecomment-1003832976),
