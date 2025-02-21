@@ -64,7 +64,8 @@
   [689](https://github.com/scala/scala-xml/issues/689),
   [694](https://github.com/scala/scala-xml/discussions/694).
 - [Scala.js](https://www.scala-js.org/):
-  _[5132](https://github.com/scala-js/scala-js/pull/5132)_.
+  _[5132](https://github.com/scala-js/scala-js/pull/5132)_
+  _[5134](https://github.com/scala-js/scala-js/pull/5134)_.
 - [Gradle](https://github.com/gradle/gradle):
   [9885](https://github.com/gradle/gradle/issues/9855),
   [15491](https://github.com/gradle/gradle/issues/15491#issuecomment-1003832976),
@@ -98,8 +99,9 @@
 - [zio-schema](https://github.com/zio/zio-schema):
   [667](https://github.com/zio/zio-schema/issues/667),
   [668](https://github.com/zio/zio-schema/issues/668).
-- [ZIO documentation](https://github.com/zio/zio):
-  _[9219](https://github.com/zio/zio/pull/9219)_.
+- [ZIO](https://zio.dev/):
+  _[9219](https://github.com/zio/zio/pull/9219)_,
+  [9629](https://github.com/zio/zio/issues/9629).
 - [Tapir documentation](https://tapir.softwaremill.com/en/latest/):
   _[2543](https://github.com/softwaremill/tapir/pull/2543)_.
 - [Besom](https://virtuslab.github.io/besom/):
