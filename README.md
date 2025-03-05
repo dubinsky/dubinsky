@@ -1,6 +1,6 @@
-[![](https://img.shields.io/badge/Notes-dub.podval.org-informational)](https://dub.podval.org)
-[![](https://img.shields.io/badge/Bio-LinkedIn-informational?logo=LinkedIn&logoColor=blue)](https://www.linkedin.com/in/leoniddubinsky/)
-[![](https://img.shields.io/badge/Social-X/Twitter-informational?logo=Twitter&logoColor=blue)](https://twitter.com/leoniddubinsky)
+[![](https://img.shields.io/badge/Notes-dub.podval.org-informational?style=for-the-badge)](https://dub.podval.org)
+[![](https://img.shields.io/badge/Bio-LinkedIn-informational?style=for-the-badge)](https://www.linkedin.com/in/leoniddubinsky/)
+[![](https://img.shields.io/badge/Social-X/Twitter-informational?logo=X&logoColor=blue&style=for-the-badge)](https://twitter.com/leoniddubinsky)
 
 
 [![](https://img.shields.io/badge/Code-Scala-critical?logo=Scala&logoColor=red)](https://www.scala-lang.org/)
@@ -16,27 +16,30 @@
 
 ## Open Source Work ##
 
-- [parsing XML with ZIO and pretty-printing it with Paiges](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/xml)
 - [Scala.js Gradle plugin](https://github.com/dubinsky/scalajs-gradle)
-- [Google Cloud Run Gradle plugin](https://github.com/dubinsky/cloud-run)
-- [where is this code running?](https://github.com/dubinsky/podval-run)
 - [TEI](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/tei)
   [site generation](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/site) and
   [publishing of document collections](https://github.com/opentorah/opentorah/tree/master/collector)
-- [DocBook processing](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/docbook)
-  and [DocBook Gradle plugin](https://github.com/opentorah/opentorah/tree/master/docbook)
 - [Jewish calendrical calculations](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/calendar)
 - [learning schedules](https://github.com/opentorah/opentorah/tree/master/texts/src/main/scala/org/opentorah/schedule) for
   [various Jewish texts](https://github.com/opentorah/opentorah/tree/master/texts/src/main/scala/org/opentorah/texts)
+- [Google Cloud Run Gradle plugin](https://github.com/dubinsky/cloud-run)
 - [Raspberry Pi GPIO in Scala](https://github.com/dubinsky/podval-iot)
 - [photo metadata extraction](https://github.com/dubinsky/podval-imageio) and
   [archive synchronization](https://github.com/dubinsky/podval-photo-sync)
+- [parsing XML with ZIO and pretty-printing it with Paiges](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/xml)
+- [DocBook processing](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/docbook)
+  and [DocBook Gradle plugin](https://github.com/opentorah/opentorah/tree/master/docbook)
+- [where is this code running?](https://github.com/dubinsky/podval-run)
 
 ## Small Open Source Contributions ##
 
 - [Scala](https://github.com/scala/bug/):
   [11963](https://github.com/scala/bug/issues/11963).
 - [Dotty](https://github.com/lampepfl/dotty): [13814](https://github.com/lampepfl/dotty/issues/13814).
+- [Scala.js](https://www.scala-js.org/):
+  _[5132](https://github.com/scala-js/scala-js/pull/5132)_
+  _[5134](https://github.com/scala-js/scala-js/pull/5134)_.
 - [Scala XML](https://github.com/scala/scala-xml):
   [506](https://github.com/scala/scala-xml/issues/506),
   [508](https://github.com/scala/scala-xml/issues/508),
@@ -63,9 +66,6 @@
   _[678](https://github.com/scala/scala-xml/pull/678)_,
   [689](https://github.com/scala/scala-xml/issues/689),
   [694](https://github.com/scala/scala-xml/discussions/694).
-- [Scala.js](https://www.scala-js.org/):
-  _[5132](https://github.com/scala-js/scala-js/pull/5132)_
-  _[5134](https://github.com/scala-js/scala-js/pull/5134)_.
 - [Gradle](https://github.com/gradle/gradle):
   [9885](https://github.com/gradle/gradle/issues/9855),
   [15491](https://github.com/gradle/gradle/issues/15491#issuecomment-1003832976),
@@ -76,42 +76,55 @@
   [18248](https://github.com/gradle/gradle/pull/18248#issuecomment-946284352),
   [18732](https://github.com/gradle/gradle/issues/18732),
   _[24088](https://github.com/gradle/gradle/pull/24088)_.
-- [ScalaTest Gradle plugin](https://github.com/maiflai):
-  [92](https://github.com/maiflai/gradle-scalatest/issues/92),
-  [96](https://github.com/maiflai/gradle-scalatest/issues/96).
-- [Bintray Gradle Plugin](https://github.com/bintray):
-  [329](https://github.com/bintray/gradle-bintray-plugin/issues/329).
-- [Jib](https://github.com/GoogleContainerTools/jib):
-  [2105](https://github.com/GoogleContainerTools/jib/issues/2105),
-  [2905](https://github.com/GoogleContainerTools/jib/issues/2905),
-  _[2906](https://github.com/GoogleContainerTools/jib/pull/2906)_.
+- [ZIO](https://zio.dev/):
+  _[9219](https://github.com/zio/zio/pull/9219)_,
+  [9629](https://github.com/zio/zio/issues/9629).
+- [ZIO HTTP](https://github.com/zio/zio-http):
+  [613](https://github.com/zio/zio-http/issues/613),
+  [2767](https://github.com/zio/zio-http/issues/2767).
+- [ZIO Schema](https://github.com/zio/zio-schema):
+  [667](https://github.com/zio/zio-schema/issues/667),
+  [668](https://github.com/zio/zio-schema/issues/668).
 - [XMLResolver](https://github.com/ndw/xmlresolver):
   _[28](https://github.com/ndw/xmlresolver/pull/28)_,
   [44](https://github.com/xmlresolver/xmlresolver/issues/44),
   [54](https://github.com/xmlresolver/xmlresolver/issues/54).
 - [Xalan](https://github.com/apache/xalan-java):
   _[83](https://github.com/apache/xalan-java/pull/83)_.
+- [Jib](https://github.com/GoogleContainerTools/jib):
+  [2105](https://github.com/GoogleContainerTools/jib/issues/2105),
+  [2905](https://github.com/GoogleContainerTools/jib/issues/2905),
+  _[2906](https://github.com/GoogleContainerTools/jib/pull/2906)_.
 - [http4s](https://github.com/http4s/http4s):
   [3565](https://github.com/http4s/http4s/issues/3565).
-- [zio-http](https://github.com/zio/zio-http):
-  [613](https://github.com/zio/zio-http/issues/613),
-  [2767](https://github.com/zio/zio-http/issues/2767).
-- [zio-schema](https://github.com/zio/zio-schema):
-  [667](https://github.com/zio/zio-schema/issues/667),
-  [668](https://github.com/zio/zio-schema/issues/668).
-- [ZIO](https://zio.dev/):
-  _[9219](https://github.com/zio/zio/pull/9219)_,
-  [9629](https://github.com/zio/zio/issues/9629).
-- [Tapir documentation](https://tapir.softwaremill.com/en/latest/):
-  _[2543](https://github.com/softwaremill/tapir/pull/2543)_.
 - [Besom](https://virtuslab.github.io/besom/):
   [295](https://github.com/VirtusLab/besom/issues/295),
   [303](https://github.com/VirtusLab/besom/issues/303),
   [387](https://github.com/VirtusLab/besom/issues/387).
-- [SASS Gradle plugin](https://github.com/EtienneMiret/sass-gradle-plugin):
-  [28](https://github.com/EtienneMiret/sass-gradle-plugin/issues/28).
+- [DevPod](https://github.com/loft-sh/devpod):
+  _[1150](https://github.com/loft-sh/devpod/pull/1150)_,
+  [1152](https://github.com/loft-sh/devpod/issues/1152),
+  [1153](https://github.com/loft-sh/devpod/issues/1153),
+  [1170](https://github.com/loft-sh/devpod/issues/1170).
+- [DevPod GCloud Provider](https://github.com/loft-sh/devpod-provider-gcloud):
+  [21](https://github.com/loft-sh/devpod-provider-gcloud/issues/21),
+  _[22](https://github.com/loft-sh/devpod-provider-gcloud/pull/22)_,
+  [23](https://github.com/loft-sh/devpod-provider-gcloud/issues/23),
+  _[24](https://github.com/loft-sh/devpod-provider-gcloud/pull/24)_,
+  _[25](https://github.com/loft-sh/devpod-provider-gcloud/pull/25)_.
 - [JetBrains Gateway](https://www.jetbrains.com/remote-development/gateway/):
   [732](https://youtrack.jetbrains.com/issue/GTW-732).
+- [ScalaTest Gradle plugin](https://github.com/maiflai):
+  [92](https://github.com/maiflai/gradle-scalatest/issues/92),
+  [96](https://github.com/maiflai/gradle-scalatest/issues/96).
+- [Asciidoctor Gradle plugin](https://github.com/asciidoctor/asciidoctor-gradle-plugin):
+  [658](https://github.com/asciidoctor/asciidoctor-gradle-plugin/issues/658#issuecomment-1637346784),
+  [709](https://github.com/asciidoctor/asciidoctor-gradle-plugin/issues/709#issuecomment-2146117002),
+  [726](https://github.com/asciidoctor/asciidoctor-gradle-plugin/pull/726#issuecomment-2146131724).
+- [Bintray Gradle Plugin](https://github.com/bintray):
+  [329](https://github.com/bintray/gradle-bintray-plugin/issues/329).
+- [SASS Gradle plugin](https://github.com/EtienneMiret/sass-gradle-plugin):
+  [28](https://github.com/EtienneMiret/sass-gradle-plugin/issues/28).
 - [GitHub Commit Action](https://github.com/github-actions-x/commit):
   [2](https://github.com/github-actions-x/commit/issues/2),
   [16](https://github.com/github-actions-x/commit/issues/16).
@@ -121,12 +134,12 @@
   [471](https://github.com/microsoft/playwright-java/issues/471).  
 - [intellij-dtlc](https://github.com/owo-lang/intellij-dtlc):
   _[22](https://github.com/owo-lang/intellij-dtlc/pull/22)_.
+- [Home Assistant](https://github.com/home-assistant):
+  [126447](https://github.com/home-assistant/core/issues/126447).
+- [Tapir](https://tapir.softwaremill.com/en/latest/):
+  _[2543](https://github.com/softwaremill/tapir/pull/2543)_.
 - [JEuclid](https://github.com/rototor/jeuclid):
  _[5](https://github.com/rototor/jeuclid/pull/5)_.
-- [Asciidoctor Gradle plugin](https://github.com/asciidoctor/asciidoctor-gradle-plugin):
-  [658](https://github.com/asciidoctor/asciidoctor-gradle-plugin/issues/658#issuecomment-1637346784),
-  [709](https://github.com/asciidoctor/asciidoctor-gradle-plugin/issues/709#issuecomment-2146117002),
-  [726](https://github.com/asciidoctor/asciidoctor-gradle-plugin/pull/726#issuecomment-2146131724).
 - [CETEIcean](https://github.com/TEIC/CETEIcean):
   [20](https://github.com/TEIC/CETEIcean/issues/20),
  _[23](https://github.com/TEIC/CETEIcean/pull/23)_,
@@ -139,19 +152,6 @@
   [1](https://github.com/wikibonsai/jekyll-wikirefs/issues/1),
   [2](https://github.com/wikibonsai/jekyll-wikirefs/issues/2),
   [3](https://github.com/wikibonsai/jekyll-wikirefs/issues/3).
-- [DevPod](https://github.com/loft-sh/devpod):
-  _[1150](https://github.com/loft-sh/devpod/pull/1150)_,
-  [1152](https://github.com/loft-sh/devpod/issues/1152),
-  [1153](https://github.com/loft-sh/devpod/issues/1153),
-  [1170](https://github.com/loft-sh/devpod/issues/1170).
-- [DevPod GCloud Provider](https://github.com/loft-sh/devpod-provider-gcloud):
-  [21](https://github.com/loft-sh/devpod-provider-gcloud/issues/21),
-  _[22](https://github.com/loft-sh/devpod-provider-gcloud/pull/22)_,
-  [23](https://github.com/loft-sh/devpod-provider-gcloud/issues/23),
-  _[24](https://github.com/loft-sh/devpod-provider-gcloud/pull/24)_,
-  _[25](https://github.com/loft-sh/devpod-provider-gcloud/pull/25)_.
-- [Home Assistant](https://github.com/home-assistant):
-  [126447](https://github.com/home-assistant/core/issues/126447).
 
 ## Proofreading ##
 
