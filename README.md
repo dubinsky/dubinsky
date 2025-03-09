@@ -78,7 +78,8 @@
   _[24088](https://github.com/gradle/gradle/pull/24088)_.
 - [ZIO](https://zio.dev/):
   _[9219](https://github.com/zio/zio/pull/9219)_,
-  [9629](https://github.com/zio/zio/issues/9629).
+  [9629](https://github.com/zio/zio/issues/9629),
+  _[9680](https://github.com/zio/zio/pull/9680)_.
 - [ZIO HTTP](https://github.com/zio/zio-http):
   [613](https://github.com/zio/zio-http/issues/613),
   [2767](https://github.com/zio/zio-http/issues/2767).
