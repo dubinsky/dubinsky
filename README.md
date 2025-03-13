@@ -75,7 +75,9 @@
   [18559](https://github.com/gradle/gradle/issues/18559),
   [18248](https://github.com/gradle/gradle/pull/18248#issuecomment-946284352),
   [18732](https://github.com/gradle/gradle/issues/18732),
-  _[24088](https://github.com/gradle/gradle/pull/24088)_.
+  _[24088](https://github.com/gradle/gradle/pull/24088)_,
+  _[32656](https://github.com/gradle/gradle/pull/32656)_,
+  [32666](https://github.com/gradle/gradle/issues/32666).
 - [ZIO](https://zio.dev/):
   _[9219](https://github.com/zio/zio/pull/9219)_,
   [9629](https://github.com/zio/zio/issues/9629),
