@@ -38,7 +38,7 @@
   [11963](https://github.com/scala/bug/issues/11963).
 - [Dotty](https://github.com/lampepfl/dotty): [13814](https://github.com/lampepfl/dotty/issues/13814).
 - [Scala.js](https://www.scala-js.org/):
-  _[5132](https://github.com/scala-js/scala-js/pull/5132)_
+  _[5132](https://github.com/scala-js/scala-js/pull/5132)_,
   _[5134](https://github.com/scala-js/scala-js/pull/5134)_.
 - [Scala XML](https://github.com/scala/scala-xml):
   [506](https://github.com/scala/scala-xml/issues/506),
@@ -115,8 +115,10 @@
   [23](https://github.com/loft-sh/devpod-provider-gcloud/issues/23),
   _[24](https://github.com/loft-sh/devpod-provider-gcloud/pull/24)_,
   _[25](https://github.com/loft-sh/devpod-provider-gcloud/pull/25)_.
-- [JetBrains Gateway](https://www.jetbrains.com/remote-development/gateway/):
-  [732](https://youtrack.jetbrains.com/issue/GTW-732).
+- [ScalaCheck](https://scalacheck.org):
+  [1105](https://github.com/typelevel/scalacheck/issues/1105).
+- [ScalaTest](https://www.scalatest.org/):
+  [2357](https://github.com/scalatest/scalatest/issues/2357).
 - [ScalaTest Gradle plugin](https://github.com/maiflai):
   [92](https://github.com/maiflai/gradle-scalatest/issues/92),
   [96](https://github.com/maiflai/gradle-scalatest/issues/96).
@@ -128,6 +130,8 @@
   [329](https://github.com/bintray/gradle-bintray-plugin/issues/329).
 - [SASS Gradle plugin](https://github.com/EtienneMiret/sass-gradle-plugin):
   [28](https://github.com/EtienneMiret/sass-gradle-plugin/issues/28).
+- [JetBrains Gateway](https://www.jetbrains.com/remote-development/gateway/):
+  [732](https://youtrack.jetbrains.com/issue/GTW-732).
 - [GitHub Commit Action](https://github.com/github-actions-x/commit):
   [2](https://github.com/github-actions-x/commit/issues/2),
   [16](https://github.com/github-actions-x/commit/issues/16).
