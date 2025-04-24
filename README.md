@@ -81,7 +81,8 @@
 - [ZIO](https://zio.dev/):
   _[9219](https://github.com/zio/zio/pull/9219)_,
   [9629](https://github.com/zio/zio/issues/9629),
-  _[9680](https://github.com/zio/zio/pull/9680)_.
+  _[9680](https://github.com/zio/zio/pull/9680)_,
+  _[9756](https://github.com/zio/zio/pull/9756)_.
 - [ZIO HTTP](https://github.com/zio/zio-http):
   [613](https://github.com/zio/zio-http/issues/613),
   [2767](https://github.com/zio/zio-http/issues/2767).
@@ -116,7 +117,8 @@
   _[24](https://github.com/loft-sh/devpod-provider-gcloud/pull/24)_,
   _[25](https://github.com/loft-sh/devpod-provider-gcloud/pull/25)_.
 - [ScalaCheck](https://scalacheck.org):
-  [1105](https://github.com/typelevel/scalacheck/issues/1105).
+  [1105](https://github.com/typelevel/scalacheck/issues/1105),
+  _[1107](https://github.com/typelevel/scalacheck/pull/1107)_.
 - [ScalaTest](https://www.scalatest.org/):
   [2357](https://github.com/scalatest/scalatest/issues/2357).
 - [ScalaTest Gradle plugin](https://github.com/maiflai):
