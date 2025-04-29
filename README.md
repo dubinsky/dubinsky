@@ -121,6 +121,8 @@
   _[1107](https://github.com/typelevel/scalacheck/pull/1107)_.
 - [ScalaTest](https://www.scalatest.org/):
   [2357](https://github.com/scalatest/scalatest/issues/2357).
+- [MUnit](https://scalameta.org/munit/):
+  _[918](https://github.com/scalameta/munit/pull/918)_.
 - [ScalaTest Gradle plugin](https://github.com/maiflai):
   [92](https://github.com/maiflai/gradle-scalatest/issues/92),
   [96](https://github.com/maiflai/gradle-scalatest/issues/96).
