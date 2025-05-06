@@ -40,6 +40,8 @@
 - [Scala.js](https://www.scala-js.org/):
   _[5132](https://github.com/scala-js/scala-js/pull/5132)_,
   _[5134](https://github.com/scala-js/scala-js/pull/5134)_.
+- [Scala Native](https://scala-native.org/):
+  _[4320](https://github.com/scala-native/scala-native/pull/4320)_.
 - [Scala XML](https://github.com/scala/scala-xml):
   [506](https://github.com/scala/scala-xml/issues/506),
   [508](https://github.com/scala/scala-xml/issues/508),
@@ -123,6 +125,8 @@
   [2357](https://github.com/scalatest/scalatest/issues/2357).
 - [MUnit](https://scalameta.org/munit/):
   _[918](https://github.com/scalameta/munit/pull/918)_.
+- [specs2](https://etorreborre.github.io/specs2/):
+  _[1327](https://github.com/etorreborre/specs2/pull/1327)_.
 - [ScalaTest Gradle plugin](https://github.com/maiflai):
   [92](https://github.com/maiflai/gradle-scalatest/issues/92),
   [96](https://github.com/maiflai/gradle-scalatest/issues/96).
