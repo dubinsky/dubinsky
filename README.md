@@ -41,7 +41,8 @@
   _[5132](https://github.com/scala-js/scala-js/pull/5132)_,
   _[5134](https://github.com/scala-js/scala-js/pull/5134)_.
 - [Scala Native](https://scala-native.org/):
-  _[4320](https://github.com/scala-native/scala-native/pull/4320)_.
+  _[4320](https://github.com/scala-native/scala-native/pull/4320)_,
+  [4323](https://github.com/scala-native/scala-native/issues/4323).
 - [Scala XML](https://github.com/scala/scala-xml):
   [506](https://github.com/scala/scala-xml/issues/506),
   [508](https://github.com/scala/scala-xml/issues/508),
