@@ -43,7 +43,8 @@
 - [Scala Native](https://scala-native.org/):
   _[4320](https://github.com/scala-native/scala-native/pull/4320)_,
   [4323](https://github.com/scala-native/scala-native/issues/4323),
-  _[4342](https://github.com/scala-native/scala-native/pull/4342)_.
+  _[4342](https://github.com/scala-native/scala-native/pull/4342)_,
+  [4370](https://github.com/scala-native/scala-native/issues/4370).
 - [Scala XML](https://github.com/scala/scala-xml):
   [506](https://github.com/scala/scala-xml/issues/506),
   [508](https://github.com/scala/scala-xml/issues/508),
