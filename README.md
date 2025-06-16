@@ -44,7 +44,8 @@
   _[4320](https://github.com/scala-native/scala-native/pull/4320)_,
   [4323](https://github.com/scala-native/scala-native/issues/4323),
   _[4342](https://github.com/scala-native/scala-native/pull/4342)_,
-  [4370](https://github.com/scala-native/scala-native/issues/4370).
+  [4370](https://github.com/scala-native/scala-native/issues/4370),
+  _[4371](https://github.com/scala-native/scala-native/pull/4371)_.
 - [Scala XML](https://github.com/scala/scala-xml):
   [506](https://github.com/scala/scala-xml/issues/506),
   [508](https://github.com/scala/scala-xml/issues/508),
@@ -89,7 +90,8 @@
   _[9219](https://github.com/zio/zio/pull/9219)_,
   [9629](https://github.com/zio/zio/issues/9629),
   _[9680](https://github.com/zio/zio/pull/9680)_,
-  _[9756](https://github.com/zio/zio/pull/9756)_.
+  _[9756](https://github.com/zio/zio/pull/9756)_,
+  _[9979](https://github.com/zio/zio/pull/9979)_.
 - [ZIO HTTP](https://github.com/zio/zio-http):
   [613](https://github.com/zio/zio-http/issues/613),
   [2767](https://github.com/zio/zio-http/issues/2767).
