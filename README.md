@@ -39,7 +39,8 @@
 - [Dotty](https://github.com/lampepfl/dotty): [13814](https://github.com/lampepfl/dotty/issues/13814).
 - [Scala.js](https://www.scala-js.org/):
   _[5132](https://github.com/scala-js/scala-js/pull/5132)_,
-  _[5134](https://github.com/scala-js/scala-js/pull/5134)_.
+  _[5134](https://github.com/scala-js/scala-js/pull/5134)_,
+  [5199](https://github.com/scala-js/scala-js/issues/5199).
 - [Scala Native](https://scala-native.org/):
   _[4320](https://github.com/scala-native/scala-native/pull/4320)_,
   [4323](https://github.com/scala-native/scala-native/issues/4323),
