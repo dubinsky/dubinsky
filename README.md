@@ -153,7 +153,9 @@
 - [Google Cloud Builders](https://github.com/GoogleCloudPlatform/cloud-builders):
   [417](https://github.com/GoogleCloudPlatform/cloud-builders/issues/417).
 - [Playwright Java](https://github.com/microsoft/playwright-java):
-  [471](https://github.com/microsoft/playwright-java/issues/471).  
+  [471](https://github.com/microsoft/playwright-java/issues/471).
+- [Playwright Scala.js](https://github.com/gmkumar2005/scala-js-env-playwright):
+  [17](https://github.com/gmkumar2005/scala-js-env-playwright/issues/17).
 - [intellij-dtlc](https://github.com/owo-lang/intellij-dtlc):
   _[22](https://github.com/owo-lang/intellij-dtlc/pull/22)_.
 - [Home Assistant](https://github.com/home-assistant):
