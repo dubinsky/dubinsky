@@ -108,13 +108,16 @@ Just as running Home Assistant in a virtual machine is more convenient than mana
 ## Add-Ons and Integrations
 With Home Assistant installed in a virtual machine, adding add-ons is trivial. I use:
 - [File Editor](https://github.com/home-assistant/addons/tree/master/configurator)
-- [Terminal & SSH](https://github.com/home-assistant/addons/tree/master/ssh)
-- [Z-Wave JS](https://github.com/home-assistant/addons/tree/master/zwave_js)
 - [Home Assistant Google Drive Backup](https://github.com/sabeechen/hassio-google-drive-backup)
-- [rtl_433 (next)](https://github.com/pbkhrv/rtl_433-hass-addons/tree/main/rtl_433-next)
-- [rtl_433 MQTT Auto Discovery (next)](https://github.com/pbkhrv/rtl_433-hass-addons/tree/main/rtl_433_mqtt_autodiscovery-next)
 - [Mosquitto broker](https://github.com/home-assistant/addons/tree/master/mosquitto)
 - [MQTT Explorer](http://192.168.1.245:8123/hassio)
+- [rtl_433 (next)](https://github.com/pbkhrv/rtl_433-hass-addons/tree/main/rtl_433-next)
+- [rtl_433 MQTT Auto Discovery (next)](https://github.com/pbkhrv/rtl_433-hass-addons/tree/main/rtl_433_mqtt_autodiscovery-next)
+- [Terminal & SSH](https://github.com/home-assistant/addons/tree/master/ssh)
+- [Z-Wave JS](https://github.com/home-assistant/addons/tree/master/zwave_js)
+- [Jewish Calendar](https://www.home-assistant.io/integrations/jewish_calendar/)
+
+I also added [https://www.hacs.xyz/](HACS - Home Assistant Community Store).
 
 Integrations I use:
 - ESPHome
@@ -136,6 +139,8 @@ To bring my new a Viessmann's [Vitodens 100-W](https://www.viessmann-us.com/en/p
 - followed instructions on the [ViCare integration](https://www.home-assistant.io/integrations/vicare), and it just worked!
 
 A few month later I noticed that there are things that I can do using the ViCare application that I can't do in Home Assistant. I filed a [bug](https://github.com/home-assistant/core/issues/126447) - and it got fixed (thank you, [@CFenner](https://github.com/CFenner)!). Now I can switch from ViCare to Home Assistant completely :)
+
+On July 10, 2025 I got a message from Viessmann about a Domain Change for the Viessmann API https://​api.​viessmann.​com to https://​api.​viessmann-climatesolutions.​com; not clear at this point what, if anything, I need to do about this...
 
 ## Garage Door Opener
 When I replaced my garage door openers in 2015, I wanted to be able to open the doors with my phone - just for fun! But it turned out that I needed some WiFi accessory that wasn't compatible with my model of the opener or some such...
@@ -205,6 +210,12 @@ Only the protocol my devices use is enabled; limiting protocols processed to pre
 - configure the connection to homeassistant:1883,user=mqtt,pass=mqtt
 - start the add-on
 
+## Garden
+
+Added a [SONOFF Sprinkler Timer Zigbee 3.0](https://www.amazon.com/dp/B0D5B8S8N8); since it is far from my server in the attic, placed a [Zigbee plug](https://www.amazon.com/dp/B09KNDM4VV?th=1) on the inside of the wall where the garden faucet is :) 
+
+## Security
+I want to replace my door bell with a video one and install some cameras; I am thinking [Reolink](https://reolink.com/us/product/reolink-video-doorbell-wifi/), which [integrates](https://www.home-assistant.io/integrations/reolink/) with Home Assistant - although it seems that some additional [trickery](https://github.com/AlexxIT/WebRTC) is needed for audio... Also, the head-to-toe version (white, not black) does not seem to be available...
 
 ## TODO
 
@@ -220,4 +231,5 @@ https://itead.cc/product/sonoff-zigbee-human-presence-sensor/
 
 [https://1projectaweek.com/blog/2023/8/7/rtl433-home-assistant-and-cheap-flood-sensors-oh-my](https://1projectaweek.com/blog/2023/8/7/rtl433-home-assistant-and-cheap-flood-sensors-oh-my)
 
-Integrate with ProxMox
+https://github.com/dummylabs/thewatchman
+

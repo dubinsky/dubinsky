@@ -149,6 +149,9 @@
   [329](https://github.com/bintray/gradle-bintray-plugin/issues/329).
 - [SASS Gradle plugin](https://github.com/EtienneMiret/sass-gradle-plugin):
   [28](https://github.com/EtienneMiret/sass-gradle-plugin/issues/28).
+- [IntelliJ IDEA Scala Plugin](https://github.com/JetBrains/intellij-scala):
+  [24127](https://youtrack.jetbrains.com/issue/SCL-24127/Scala-Test-Inconsistencies);
+  [24128](https://youtrack.jetbrains.com/issue/SCL-24128/Support-shared-sources-for-Gradle-not-just-sbt).
 - [JetBrains Gateway](https://www.jetbrains.com/remote-development/gateway/):
   [732](https://youtrack.jetbrains.com/issue/GTW-732).
 - [GitHub Commit Action](https://github.com/github-actions-x/commit):
