@@ -95,7 +95,8 @@
   [9629](https://github.com/zio/zio/issues/9629),
   _[9680](https://github.com/zio/zio/pull/9680)_,
   _[9756](https://github.com/zio/zio/pull/9756)_,
-  _[9979](https://github.com/zio/zio/pull/9979)_.
+  _[9979](https://github.com/zio/zio/pull/9979)_,
+  [10037](https://github.com/zio/zio/issues/10037).
 - [ZIO HTTP](https://github.com/zio/zio-http):
   [613](https://github.com/zio/zio-http/issues/613),
   [2767](https://github.com/zio/zio-http/issues/2767).
@@ -137,7 +138,8 @@
 - [MUnit](https://scalameta.org/munit/):
   _[918](https://github.com/scalameta/munit/pull/918)_.
 - [specs2](https://etorreborre.github.io/specs2/):
-  _[1327](https://github.com/etorreborre/specs2/pull/1327)_.
+  _[1327](https://github.com/etorreborre/specs2/pull/1327)_;
+  [1352](https://github.com/etorreborre/specs2/issues/1352);
 - [ScalaTest Gradle plugin](https://github.com/maiflai):
   [92](https://github.com/maiflai/gradle-scalatest/issues/92),
   [96](https://github.com/maiflai/gradle-scalatest/issues/96).
