@@ -144,7 +144,7 @@
   [92](https://github.com/maiflai/gradle-scalatest/issues/92),
   [96](https://github.com/maiflai/gradle-scalatest/issues/96).
 - [uTest](https://github.com/com-lihaoyi/utest):
- _https://github.com/com-lihaoyi/utest/pull/383[383]_.
+ _[383](https://github.com/com-lihaoyi/utest/pull/383)_.
 - [Asciidoctor Gradle plugin](https://github.com/asciidoctor/asciidoctor-gradle-plugin):
   [658](https://github.com/asciidoctor/asciidoctor-gradle-plugin/issues/658#issuecomment-1637346784),
   [709](https://github.com/asciidoctor/asciidoctor-gradle-plugin/issues/709#issuecomment-2146117002),
