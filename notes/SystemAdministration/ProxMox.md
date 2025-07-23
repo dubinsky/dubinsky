@@ -70,7 +70,7 @@ Library | Index
 ## Emby
 Did not have much luck with this one, but...
 
-In ProxMox sell, run the [community script](https://community-scripts.github.io/ProxmoxVE/scripts?id=emby):
+In ProxMox shell, run the [community script](https://community-scripts.github.io/ProxmoxVE/scripts?id=emby):
 ```shell
 $ bash -c "$(wget -qLO - https://github.com/community-scripts/ProxmoxVE/raw/main/ct/emby.sh)"
 ```
@@ -78,4 +78,11 @@ $ bash -c "$(wget -qLO - https://github.com/community-scripts/ProxmoxVE/raw/main
 Mount the file store in the Emby container:
 ```shell
 # pct set <container id> -mp0 /mnt/store,mp=/mnt/store
+```
+
+## Jellyfin
+
+In ProxMox shell, run the [community script](https://community-scripts.github.io/ProxmoxVE/scripts?id=jellyfin):
+```shell
+$ bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/jellyfin.sh)"
 ```

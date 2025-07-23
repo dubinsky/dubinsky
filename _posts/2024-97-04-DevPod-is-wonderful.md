@@ -234,6 +234,9 @@ where:
 - `<project>` is the PROJECT that was used when the machine was created;
 - `<zone>` is the ZONE that was used when the machine was created.
 
+## SSH
+
+
 ## Appendix
 
 ### The Manual Way

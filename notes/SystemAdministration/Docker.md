@@ -28,23 +28,7 @@ Now that I use [[ProxMox]] to run [[UniFi]] and [[Home Assistant]], I do not see
 ### Portainer
 https://github.com/portainer/portainer
 https://github.com/docker/awesome-compose/blob/master/portainer/compose.yaml
-
-My `/home/portainer/docker-compose.yaml`:
-```yaml
-services:
-  portainer:
-    image: portainer/portainer-ce:alpine
-    container_name: portainer
-    privileged: true
-    command: -H unix:///var/run/docker.sock
-    ports:
-      - "9000:9000"
-    volumes:
-      - "/var/run/docker.sock:/var/run/docker.sock"
-      - "/home/portainer/portainer_data:/data"
-    restart: always
-
-```
-
 ### Dockge
 https://github.com/louislam/dockge
+### Runtipio
+https://runtipi.io/
