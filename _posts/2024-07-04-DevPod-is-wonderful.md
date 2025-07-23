@@ -32,10 +32,10 @@ and stayed on my desktop ;)
 
 In July 2024 I stumbled onto [DevPod](https://devpod.sh/) - and it is a game-changer!
 
-TODO
-- Open Source
-- Client Only
-- Unopinionated
+DevPod is:
+- Open Source: No vendor lock-in. 100% free and open source built by developers for developers.
+- Client Only: No server side setup needed. Download the desktop app or the CLI to get started.
+- Unopinionated: Repeatable dev environment for any infra, any IDE, and any programming language.
 
 ## Google Cloud Platform Setup
 
@@ -97,7 +97,7 @@ Precedence:
 
 TODO
 - motivation!
-- traditional approach: application-scoped environment variables have the highest precedence and override corresponding "permanent" settings - see `GIT_`, `GCLOUD_*`, `GOOGLE_*`, etc.
+- traditional approach: application-scoped environment variables have the highest precedence and override corresponding "permanent" settings - see `GIT_`, `GCLOUD_*`, `GOOGLE_*`, Docker, etc.
 - `devpod context`: no documentation, no UI
 - everything scoped by
 - I use [DirEnv](https://direnv.net/) `.envrc` files to set the environment variables.
@@ -223,7 +223,7 @@ Even though my SSH key is on a Yubikey token, since `devpod` sets up SSH agent f
 
 ## Machine
 
-Until this [issue](https://github.com/loft-sh/devpod-provider-gcloud/issues/21) is resolved, machines do not stop automatically after configured inactivity period elapses, and need to be stopped manually with `devpod machine stop <name>`!
+Note: Even when the machine is stopped, its persistent disk costs money - around $1/10Gb on GCP.
 
 Until this [issue](https://github.com/loft-sh/devpod/issues/1152) is resolved, the only way to verify what values are actually used by a virtual machine instance is to use a non-`devpod` command specific to the provider, for instance, for GCloud:
 ```shell
@@ -233,6 +233,9 @@ where:
 - `<machine name>` is copied from the output of `devpod list` (note that `devpod-` has to be pre-pended to it);
 - `<project>` is the PROJECT that was used when the machine was created;
 - `<zone>` is the ZONE that was used when the machine was created.
+
+## SSH
+
 
 ## Appendix
 
