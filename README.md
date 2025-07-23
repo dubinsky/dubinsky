@@ -49,7 +49,9 @@
   _[4342](https://github.com/scala-native/scala-native/pull/4342)_,
   [4370](https://github.com/scala-native/scala-native/issues/4370),
   _[4371](https://github.com/scala-native/scala-native/pull/4371)_,
-  [4372](https://github.com/scala-native/scala-native/issues/4372).
+  [4372](https://github.com/scala-native/scala-native/issues/4372),
+  [4421](https://github.com/scala-native/scala-native/issues/4421),
+  _[4427](https://github.com/scala-native/scala-native/pull/4427)_.
 - [Scala XML](https://github.com/scala/scala-xml):
   [506](https://github.com/scala/scala-xml/issues/506),
   [508](https://github.com/scala/scala-xml/issues/508),
@@ -96,7 +98,9 @@
   _[9680](https://github.com/zio/zio/pull/9680)_,
   _[9756](https://github.com/zio/zio/pull/9756)_,
   _[9979](https://github.com/zio/zio/pull/9979)_,
-  [10037](https://github.com/zio/zio/issues/10037).
+  [10037](https://github.com/zio/zio/issues/10037),
+  _[10053](https://github.com/zio/zio/pull/10053)_,
+  _[10054](https://github.com/zio/zio/pull/10054).
 - [ZIO HTTP](https://github.com/zio/zio-http):
   [613](https://github.com/zio/zio-http/issues/613),
   [2767](https://github.com/zio/zio-http/issues/2767).
@@ -132,19 +136,28 @@
   _[25](https://github.com/loft-sh/devpod-provider-gcloud/pull/25)_.
 - [ScalaCheck](https://scalacheck.org):
   [1105](https://github.com/typelevel/scalacheck/issues/1105),
-  _[1107](https://github.com/typelevel/scalacheck/pull/1107)_.
+  _[1107](https://github.com/typelevel/scalacheck/pull/1107)_,
+  _[1117](https://github.com/typelevel/scalacheck/pull/1117)_.
 - [ScalaTest](https://www.scalatest.org/):
   [2357](https://github.com/scalatest/scalatest/issues/2357).
+- [ScalaTest website](https://www.scalatest.org):
+  _[253](https://github.com/scalatest/scalatest-website/pull/253)_.
 - [MUnit](https://scalameta.org/munit/):
-  _[918](https://github.com/scalameta/munit/pull/918)_.
+  _[918](https://github.com/scalameta/munit/pull/918)_,
+  _[968](https://github.com/scalameta/munit/pull/968)_.
 - [specs2](https://etorreborre.github.io/specs2/):
   _[1327](https://github.com/etorreborre/specs2/pull/1327)_;
   [1352](https://github.com/etorreborre/specs2/issues/1352);
+  [1353](https://github.com/etorreborre/specs2/issues/1353).
 - [ScalaTest Gradle plugin](https://github.com/maiflai):
   [92](https://github.com/maiflai/gradle-scalatest/issues/92),
   [96](https://github.com/maiflai/gradle-scalatest/issues/96).
 - [uTest](https://github.com/com-lihaoyi/utest):
- _[383](https://github.com/com-lihaoyi/utest/pull/383)_.
+ _[383](https://github.com/com-lihaoyi/utest/pull/383)_,
+ _[384](https://github.com/com-lihaoyi/utest/pull/384)_.
+- [Weaver Test](https://github.com/typelevel/weaver-test):
+  _[183](https://github.com/typelevel/weaver-test/pull/183)_,
+  [185](https://github.com/typelevel/weaver-test/issues/185).
 - [Asciidoctor Gradle plugin](https://github.com/asciidoctor/asciidoctor-gradle-plugin):
   [658](https://github.com/asciidoctor/asciidoctor-gradle-plugin/issues/658#issuecomment-1637346784),
   [709](https://github.com/asciidoctor/asciidoctor-gradle-plugin/issues/709#issuecomment-2146117002),
