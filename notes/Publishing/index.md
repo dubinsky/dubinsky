@@ -1,0 +1,4 @@
+---
+disabled rules:
+  - yaml-title
+---

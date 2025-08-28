@@ -6,5 +6,6 @@ disabled rules: [yaml-title]
 - [Cooking](Cooking/index)
 - [Guns](Guns/index)
 - [Programming](Programming/index)
+- [Publishing](Publishing/index)
 - [System Administration](SystemAdministration/index)
 - [Types](Types/index)
