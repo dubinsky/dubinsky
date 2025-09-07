@@ -1,0 +1,25 @@
+plugins {
+  id 'com.github.ben-manes.versions' version '0.52.0'
+  id 'scala'
+  id 'application'
+}
+
+description = 'Financial Calculations'
+
+application.mainClass = 'org.podval.finance.Main'
+
+scala.scalaVersion = '3.7.2'
+
+// There is no Java in the project :)
+project.gradle.startParameter.excludedTaskNames.add('compileJava')
+
+tasks.withType(ScalaCompile).configureEach {
+  scalaCompileOptions.with {
+    additionalParameters = [
+      '-new-syntax',
+      '-feature',
+      '-language:strictEquality',
+      '-source:future'
+    ]
+  }
+}
