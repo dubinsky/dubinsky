@@ -10,3 +10,11 @@ Gemfile.lock
 /.obsidian/plugins/**/store/
 /.obsidian/plugins/zotero-sync-client/data.json
 /.obsidian/workspace.json
+
+/.bsp/
+/.gradle/
+/.idea/
+/.scala-build/
+/build/
+/out/
+
