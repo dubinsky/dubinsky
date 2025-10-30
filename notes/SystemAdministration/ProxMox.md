@@ -86,3 +86,5 @@ In ProxMox shell, run the [community script](https://community-scripts.github.io
 ```shell
 $ bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/jellyfin.sh)"
 ```
+
+[[TODO]] upgrade to 9.x

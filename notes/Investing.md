@@ -9,6 +9,7 @@ Books:
 - [The Bogleheads' Guide to Investing 2nd Edition by Mel Lindauer, Taylor Larimore, Michael LeBoeuf, John C. Bogle](https://www.amazon.com/Bogleheads-Guide-Investing-Mel-Lindauer/dp/1119847672/)
 - [The Bogleheads' Guide to the Three-Fund Portfolio: How a Simple Portfolio of Three Total Market Index Funds Outperforms Most Investors with Less Risk by Taylor Larimore, John C. Bogle](https://www.amazon.com/Bogleheads-Guide-Three-Fund-Portfolio-Outperforms/dp/1394330952)
 - [The Bogleheads' Guide to Retirement Planning by Taylor Larimore, Mel Lindauer, Richard A. Ferri, Laura F. Dogu, John C. Bogle](https://www.amazon.com/Bogleheads-Guide-Retirement-Planning/dp/0470919019)
+- [All About Asset Allocation, Second Edition by Richard A. Ferri](https://www.amazon.com/dp/0071700781)
 
 Websites and posts:
 - [Investopedia](https://www.investopedia.com/)
@@ -20,13 +21,17 @@ Websites and posts:
 - [The Best Total U.S. Stock Market Funds](https://www.morningstar.com/columns/rekenthaler-report/best-total-us-stock-market-funds)
 - [Morningstar State of Retirement Income](https://www.morningstar.com/business/insights/research/the-state-of-retirement-income)
 - [Fidelity Planning and Guidance Center](https://digital.fidelity.com/ftgw/pna/customer/planning/goals/retirement/planning/)
+- [Low cost, total market index funds](https://smithplanet.com/stuff/BogleheadFunds.svg)
 
-
-# Diversification
-
+# Friendly Advice
 I need to avoid “tax efficient” funds, since what they are trying to avoid does not apply to me.
 
 [QQQI](https://neosfunds.com/qqqi/) is not a good idea, not because it uses call options, and not because of tax repercussions which do not apply to me, and not because of its 0.86% fee, but because it is too concentrated and thus not “safe”.
+
+# Cash and Bonds
+When stocks go down, income has to come from something else, to avoid selling the stocks low.
+
+# Diversification
 
 I need examples of high-quality funds in each category…
 
@@ -67,32 +72,35 @@ Malkiel allocation:
 | late sixties and beyond        | 10%  | 55%   | 40%    | 15%   |
 
 ## Funds
-It seems that I can buy Vanguard ETFs at Fidelity with no additional fees, but for mutual funds there are fees?
+I can buy Vanguard *ETF*s at Fidelity with no additional fees, but for mutual funds there are fees.
 
-### Money Market
-non tax-exempt
-Vanguard VMFXX 0.11% 44 days
-Fidelity **SPAXX** 0.15% 37 days
-TFDXX 0.17% (from Dima B.)
-
-tax-exempt
-Vanguard VMSXX 0.15% 11 days
-Fidelity FTEXX 0.16% 35 days
-
-### US Stocks
-Vanguard VTSAX 0.04% (CRSP)
-Vanguard ETF **VTI** 0.03% (CRSP)
-Fidelity **FSKAX** 0.015% FZROX - less coverage than FSKAX
-Fidelity FSTVX 0.04% (Dow Jones) - not good, price-weighted! 
-
-### International Stocks
-Vanguard VTIAX 0.11% (FTSE)
-Vanguard ETF VXUS/VEU 0.08%
-Fidelity **FSPSX** 0.04% (MSCI EAFE)
-
-### Corporate Bonds
-Fidelity **FCBFX** 0.45%
-
+| Assets           | Company  | Fund       | Index                                                                                                                               | Expense | Notes          |
+| ---------------- | -------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------------- | ------- | -------------- |
+| *US Stocks*      |          |            |                                                                                                                                     |         |                |
+|                  | Vanguard | VTSAX      | [CRSP](https://www.crsp.org/indexes/crsp-us-total-market-index/)                                                                    | 0.04%   |                |
+|                  | Vanguard | VTI (ETF)  | [CRSP](https://www.crsp.org/indexes/crsp-us-total-market-index/)                                                                    | 0.03%   |                |
+|                  | Fidelity | **FSKAX**  | Dow Jones                                                                                                                           | 0.02%   |                |
+|                  | Fidelity | FZROX      | Fidelity U.S. Total Investable Market Index                                                                                         | 0.00%   |                |
+|                  | Fidelity | FSTVX      | Dow Jones                                                                                                                           | 0.04%   | emulated       |
+| *Int. Stocks*    |          |            |                                                                                                                                     |         |                |
+|                  | Vanguard | VTIAX      | FTSE Global All Cap ex US                                                                                                           | 0.09%   |                |
+|                  | Vanguard | VXUS (ETF) | FTSE Global All Cap ex US                                                                                                           | 0.05%   |                |
+|                  | Fidelity | **FTIHX**  | Morgan Stanley Capital International All Country World Index ex US                                                                  | 0.06%   |                |
+|                  | Fidelity | FSPSX      | Morgan Stanley Capital International Europe, Australasia, Far East                                                                  | 0.035%  |                |
+|                  | Fidelity | FZILX      | Fidelity Global ex US                                                                                                               | 0.00%   | emulated       |
+| *Bonds*          |          |            |                                                                                                                                     |         |                |
+|                  | Vanguard | VBTLX      | Bloomberg U.S. Aggregate Float Adjusted Index, taxable investment-grade corporate, U.S. Treasury, mortgage-backed, and asset-backed | 0.04%   |                |
+|                  | Vanguard | BND (ETF)  | Bloomberg U.S. Aggregate Float Adjusted Index, taxable investment-grade corporate, U.S. Treasury, mortgage-backed, and asset-backed | 0.03%   |                |
+|                  | Fidelity | **FXNAX**  | Bloomberg U.S. Aggregate                                                                                                            | 0.025%  | emulated?      |
+|                  | Fidelity | FCBFX      |                                                                                                                                     | 0.45%   | corporate only |
+| **Money Market** |          |            | **Days**                                                                                                                            |         |                |
+| *non tax-exempt* |          |            |                                                                                                                                     |         |                |
+|                  | Fidelity | **SPAXX**  | 37                                                                                                                                  | 0.15%   |                |
+|                  | Vanguard | VMFXX      | 44                                                                                                                                  | 0.11%   |                |
+|                  |          | TFDXX      |                                                                                                                                     | 0.17%   | from Dima B.   |
+| *tax-exempt*     |          |            |                                                                                                                                     |         |                |
+|                  | Vanguard | VMSXX      | 11                                                                                                                                  | 0.15%   |                |
+|                  | Fidelity | FTEXX      | 35                                                                                                                                  | 0.16%   |                |
 ### Dividends
 Vanguard VYM 0.06%
 Vanguard VDAIX 0.08%

@@ -40,6 +40,10 @@ Enable SSH for UniFi devices:
 - in the UniFi Console | Settings | System | Application Configuration | Device SSH Authentication
 - retrieve auto-generated SSH password
 - use it: `ssh -o PubkeyAcceptedKeyTypes=ssh-rsa -o HostKeyAlgorithms=ssh-rsa -o RequiredRSASize=1024 192.168.1.157` (see https://kcore.org/2023/03/27/ssh-unifi-fedora-37/)
+
+## Dynamic DNS
+see [[ProxMox#Dynamic DNS]]
+
 ### Port forwarding
 
 TODO
