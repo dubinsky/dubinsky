@@ -8,6 +8,8 @@ description = 'Financial Calculations'
 
 application.mainClass = 'org.podval.finance.Main'
 
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
 scala.scalaVersion = '3.7.2'
 
 // There is no Java in the project :)

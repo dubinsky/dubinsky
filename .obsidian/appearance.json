@@ -1,3 +1,5 @@
 {
-  "accentColor": ""
+  "accentColor": "",
+  "baseFontSize": 24,
+  "baseFontSizeAction": true
 }
