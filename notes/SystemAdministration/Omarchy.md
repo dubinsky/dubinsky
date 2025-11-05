@@ -3,40 +3,39 @@ title: Omarchy
 ---
 * TOC
 {:toc}
-## Firmware Updates
+## Set Up
+`Omarchy | Setup | DNS`: use DHCP
 
-```shell
-# install fwupd
-$ pacman -S fwupd
-# update firmware
-$ fwupdmgr get-updates
-$ fwupdmgr update
+In `/etc/systemd/network/20-ethernet.network` and `/etc/systemd/network/20-wlan.network` add:
+```
+[Network]
+UseDomains=yes
 ```
 
-## Midnight Commander
+`Omarchy | Update | Firmware`
 
-```shell
-$ sudo pacman -S mc
-```
+`Omarchy | Install | Service | Bitwarden`
 
-## Pulumi
+To be able to log into Google account and synchronize bookmarks etc., run:
+`Omarchy | Install | Service | Chromium Account`
 
-```shell
-$ sudo pacman -S pulumi
-$ pulumi plugin install language scala 0.5.0 --server github://api.github.com/VirtusLab/besom
-```
-
-## Java
-Install Java Development Kit:
+## Install
 ```shell
 $ mise use java 21
+$ sudo pacman -S direnv
+$ sudo pacman -S mc
+$ sudo pacman -S solaar
+$ sudo pacman -S rclone
+$ sudo pacman -S syncthing
+$ sudo pacman -S calibre
+$ sudo yay -S zotero
+$ sudo pacman -S pulumi
+$ pulumi plugin install language scala 0.5.0 --server github://api.github.com/VirtusLab/besom
+$ sudo pacman -R 1password-cli 1password-beta
 ```
 
 ## DirEnv
-```shell
-$ sudo pacman -S direnv
-```
-to [hook direnv into the shell](https://direnv.net/docs/hook.html),
+To [hook direnv into the shell](https://direnv.net/docs/hook.html),
 add the following line at the end of the `~/.bashrc` file:
 ```shell
 eval "$(direnv hook bash)"
@@ -50,6 +49,10 @@ format = "[$symbol$allowed]($style)"
 symbol = "e"
 allowed_msg = ""
 not_allowed_msg = "✗"
+```
+and set:
+```toml
+format = "[$directory$git_branch$git_status]($style)$direnv$character"
 ```
 ## Yubikey
 Install Yubikey utilities:
@@ -78,21 +81,18 @@ $ ssh-add -K
 ```
 
 To list credentials added to the agent:
-```
+```shell
 $ ssh-add -L
 ```
-## Chromium
-To be able to log into Google account and synchronize bookmarks etc., run:
-`Omarchy | Install | Service | Chromium Account`.
 
 ## Obsidian
+Enable community plugins.
 
-TODO do I need to list my vault in
-`~/.local/state/omarchy/obsidian-vaults` for the Omarchy theme to become available? 
+For Obsidian to follow theme changes, its theme needs to be manually set to `Omarchy`; this theme becomes available in an Obsidian vault only after Omarchy theme was changed at least once after Obsidian vault was opened.
 
 TODO there is no way to increase the font size of the user interface that I can see
 ## Monitors
-Omarchy [maual](https://learn.omacom.io/2/the-omarchy-manual/86/monitors) mentions a TUI utility for setting up monitors - [Hyprmon](https://github.com/erans/hyprmon/) - but I found it easy enough to configure monitors by editing `~/.config/hypr/monitors.conf` directly.
+Omarchy [manual](https://learn.omacom.io/2/the-omarchy-manual/86/monitors) mentions a TUI utility for setting up monitors - [Hyprmon](https://github.com/erans/hyprmon/) - but I found it easy enough to configure monitors by editing `~/.config/hypr/monitors.conf` directly.
 
 In fact, the only lines I have there are:
 ```
@@ -100,6 +100,13 @@ env = GDK_SCALE,2
 monitor=,preferred,auto,auto
 ```
 and everything works fine with both my Framework laptop 13 OLED screen and my 6K Asus monitor :)
+
+To make adjustments independently of the port the monitor is plugged in, use monitor description as a name instead.
+
+To list connected monitors:
+```shell
+$ hyprctl monitors all
+```
 
 ## ZSA Moonlander Keyboard
 Follow [Keymapp installation](https://github.com/zsa/wally/wiki/Linux-install) instructions:
@@ -146,15 +153,15 @@ Terminal: font is configured in  `~/.config/alacritty/alacritty.toml`:
 ```toml
 [font]
 normal = { family = "JetBrainsMono Nerd Font" }
-size = 14
+size = 20
 ```
-There is a TUI for changing the (terminal?) font, but not for changing font size.
+There is a TUI for changing the terminal font, but not for changing font size.
 
-Top bar (`Waybar`): font is configured in `.config/waybar/style.css`:
+Top bar (`Waybar`): font is configured in `~/.config/waybar/style.css`:
 ```css
 * {
   font-family: 'JetBrainsMono Nerd Font';
-  font-size: 14px;
+  font-size: 20px;
 }
 ```
 ## Keyboard Layouts
@@ -226,7 +233,7 @@ bindd = SUPER SHIFT, J, IntelliJ Idea, exec, omarchy-launch-or-focus "^idea$" id
 
 When JetBrains IDEs are running on Wayland, their pop-ups are do not get focused, so pop-up where the IDE asks if you trust a project you are trying to open for a first time is not visible and there is no way to say "yes" (or even see the pop-up window) :(
 
-To fix this, windows rules [need](https://github.com/basecamp/omarchy/discussions/100) to be [added](https://notes.dsebastien.net/30+Areas/33+Permanent+notes/33.02+Content/How+to+install+IntelliJ+IDEA+on+Omarchy).
+To fix this, windows rules [need](https://github.com/basecamp/omarchy/discussions/100) to be [added](https://notes.dsebastien.net/30+Areas/33+Permanent+notes/33.02+Content/How+to+install+IntelliJ+IDEA+on+Omarchy). 
 
 Create `~/.config/hypr/jetbrains.conf` with:
 ```
@@ -259,32 +266,25 @@ In `~/.config/hypr/hyprland.conf`, add:
 source = ~/.config/hypr/jetbrains.conf
 ```
 
+Note: since Omarchy itself ships some windows rules in `~.local/share/omarchy/default/hypr/apps/jetbrains.conf`, it is not clear which (if any) of the above rules are actually needed...
 ## Bitwarden
-I do not use `1Password` password manager that comes pre-installed with Omarchy, so I uninstalled it:
-```shell
-$ sudo pacman -R 1password-cli
-$ sudo pacman -R 1password-beta
-```
 
-I use a different password manager - `Bitwarden`;
-It can be installed via `Omarchy | Install | Service | Bitwarden`.
-
-Newer version is available from `AUR`:
-```shell
-# install Bitwarden
-$ sudo pacman -S bitwarden-cli bitwarden-bin
-```
-
-To change keyboard binding from `1Password` to `Bitwarden` in
+Change keyboard binding from `1Password` to `Bitwarden` in
 `~/.config/hypr/bindings.conf`:
 ```properties
-# old:
-#bindd = SUPER SHIFT, SLASH, Passwords, exec, uwsm-app -- 1password
-# new:
+# from:
+bindd = SUPER SHIFT, SLASH, Passwords, exec, uwsm-app -- 1password
+# to:
 bindd = SUPER SHIFT, SLASH, Passwords, exec, uwsm-app -- bitwarden-desktop
-# for the one from AUR, use 'bitwarden' instead of 'bitwarden-desktop'
 ```
 
-TODO is there any reason to install Bitwarden via `Omarchy | Install | Service | Bitwarden` and not as a normal package?
-
 TODO there does not seem any way to configure the font 
+
+TODO
+- .gnupg
+- google cloud - gsutils
+- devpod
+- chirp
+- oscar
+- asciidoctor
+- jekyll

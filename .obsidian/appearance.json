@@ -1,5 +1,7 @@
 {
   "accentColor": "",
   "baseFontSize": 24,
-  "baseFontSizeAction": true
+  "baseFontSizeAction": true,
+  "cssTheme": "Omarchy",
+  "nativeMenus": false
 }
