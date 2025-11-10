@@ -3,40 +3,78 @@ title: Omarchy
 ---
 * TOC
 {:toc}
-## Set Up
+
+## Links
+
+- [Omarchy](https://omarchy.org/)
+- [Omarchy Manual](https://learn.omacom.io/2/the-omarchy-manual)
+- [Hyprland](https://wiki.hypr.land/)
+- [Arch](https://wiki.archlinux.org/title/Main_page)
+- [Omacom](https://learn.omacom.io/3/omacom)
+
+A critique: [A Word on Omarchy](https://xn--gckvb8fzb.com/a-word-on-omarchy/?s=03).
+## Network
+By default, Omarchy uses DNS servers provided by DHCP; if not:
 `Omarchy | Setup | DNS`: use DHCP
 
-In `/etc/systemd/network/20-ethernet.network` and `/etc/systemd/network/20-wlan.network` add:
+To use search domain provided by DHCP,
+in `/etc/systemd/network/20-ethernet.network` and `/etc/systemd/network/20-wlan.network` add:
 ```
 [Network]
 UseDomains=yes
 ```
 
-`Omarchy | Update | Firmware`
-
-`Omarchy | Install | Service | Bitwarden`
-
-To be able to log into Google account and synchronize bookmarks etc., run:
-`Omarchy | Install | Service | Chromium Account`
-
-## Install
+## Packages
 ```shell
+# fwupd
+$ sudo pacman -S fwupd
+# Java
 $ mise use java 21
+# DirEnv
 $ sudo pacman -S direnv
+# Midnight Commander
 $ sudo pacman -S mc
-$ sudo pacman -S solaar
+# YADM
+$ sudo pacman -S yadm
+# Yubikey
+$ sudo pacman -S yubikey-personalization-gui yubikey-manager libfido2
+## GPG Frontend
+#$ yay -S gpgfrontend
+# ZSA Keyboards
+$ sudo pacman -S libusb webkit2gtk-4.1 gtk3
+# RClone
 $ sudo pacman -S rclone
-$ sudo pacman -S syncthing
+# Calibre ebooks manager
 $ sudo pacman -S calibre
-$ sudo yay -S zotero
+# Logitech mice
+$ sudo pacman -S solaar
+# SyncThing
+$ sudo pacman -S syncthing
+# Google Cloud CLI
+$ yay -S google-cloud-cli
+# Zotero
+$ yay -S zotero
+# OScar
+$ yay -S oscar
+# Chirp
+$ yay -S chirp-next
+# Pulumi/Besom
 $ sudo pacman -S pulumi
 $ pulumi plugin install language scala 0.5.0 --server github://api.github.com/VirtusLab/besom
+# Bitwarden
+$ sudo pacman -S bitwarden bitwarden-cli
+# Remove 1Password
 $ sudo pacman -R 1password-cli 1password-beta
 ```
 
+## Firmware
+```shell
+$ fwupdmgr refresh
+$ sudo fwupdmgr update
+```
 ## DirEnv
 To [hook direnv into the shell](https://direnv.net/docs/hook.html),
-add the following line at the end of the `~/.bashrc` file:
+add the following line at the *end* of the `~/.bashrc` file:
 ```shell
 eval "$(direnv hook bash)"
 ```
@@ -54,16 +92,14 @@ and set:
 ```toml
 format = "[$directory$git_branch$git_status]($style)$direnv$character"
 ```
-## Yubikey
-Install Yubikey utilities:
-```shell
-$ sudo pacman -S yubikey-personalization-gui yubikey-manager
-```
-Install dependencies required by `ssh-add` to work with Yubikey:
-```shell
-$ sudo pacman -S libfido2
-```
 
+## Chromium
+
+To be able to log into Google account and synchronize bookmarks etc., run:
+`Omarchy | Install | Service | Chromium Account`
+
+TODO what theme should I use to be able to change font size?
+## Yubikey
 Enable SSH agent:
 ```shell
 $ systemctl enable --now --user ssh-agent.service
@@ -75,13 +111,10 @@ export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 ```
 Restart the system.
 
-To add Yubikey credentials to SSH:
 ```shell
+# To add Yubikey credentials to SSH:
 $ ssh-add -K
-```
-
-To list credentials added to the agent:
-```shell
+# To list credentials added to the agent:
 $ ssh-add -L
 ```
 
@@ -120,11 +153,6 @@ export PATH="$PATH:/home/dub/.local/share/Keymapp"
 ```
 Log out and back in for the `PATH` to change :)
 
-Install required dependencies:
-```shell
-sudo pacman -S libusb webkit2gtk-4.1 gtk3
-```
-
 Create `/etc/udev/rules.d/50-zsa.rules` with:
 ```
 # Rules for Oryx web flashing and live training
@@ -146,18 +174,18 @@ $ sudo udevadm trigger
 ```
 Log out and back in for the group to apply :)
 
-TODO add desktop entry and/or key binding...
+TODO add desktop entry and/or key binding for keymapp...
 ## Fonts
 
-Terminal: font is configured in  `~/.config/alacritty/alacritty.toml`:
+Terminal font is configured in  `~/.config/alacritty/alacritty.toml`:
 ```toml
 [font]
 normal = { family = "JetBrainsMono Nerd Font" }
-size = 20
+size = 18
 ```
 There is a TUI for changing the terminal font, but not for changing font size.
 
-Top bar (`Waybar`): font is configured in `~/.config/waybar/style.css`:
+Top bar (`Waybar`) font is configured in `~/.config/waybar/style.css`:
 ```css
 * {
   font-family: 'JetBrainsMono Nerd Font';
@@ -266,7 +294,7 @@ In `~/.config/hypr/hyprland.conf`, add:
 source = ~/.config/hypr/jetbrains.conf
 ```
 
-Note: since Omarchy itself ships some windows rules in `~.local/share/omarchy/default/hypr/apps/jetbrains.conf`, it is not clear which (if any) of the above rules are actually needed...
+Note: since Omarchy itself ships some windows rules in `~.local/share/omarchy/default/hypr/apps/jetbrains.conf`, it is not clear which (if any) of the above rules are actually needed, nor if the Omarchy-supplied rules need to be disabled...
 ## Bitwarden
 
 Change keyboard binding from `1Password` to `Bitwarden` in
@@ -279,12 +307,3 @@ bindd = SUPER SHIFT, SLASH, Passwords, exec, uwsm-app -- bitwarden-desktop
 ```
 
 TODO there does not seem any way to configure the font 
-
-TODO
-- .gnupg
-- google cloud - gsutils
-- devpod
-- chirp
-- oscar
-- asciidoctor
-- jekyll
