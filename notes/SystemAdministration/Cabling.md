@@ -17,7 +17,9 @@ StarTech.com  23"-41" D  24" W
 [15U](https://www.amazon.com/gp/product/B084PB7GL8/) $314 at Amazon; B&H does not carry StarTech.
 ## Patch Panel
 With insertable keystones, not like the one I have.
-16 ports, so that keystones have some space; if I need more, I'll just get another one.
+Got one with 16 ports, so that keystones have some space; if I need more, I'll just get another one.
+
+Want to get a 24-port one with cable bracket/ties; I can just plug the unused holes...
 
 Neat patch cover?
 ## RJ45

@@ -48,6 +48,37 @@ In `/etc/fstab` on ProxMox, add:
 /dev/pve/store /mnt/store ext4 0 1
 ```
 
+## RAID File Store
+I added a bunch of hard disks to my ProxMox box and created a BTRFS RAID; this is where I want to store my photographs and other media.
+
+I perused:
+- [Arch Btrfs documentation](https://wiki.archlinux.org/title/Btrfs)
+- [ProxMox BTRFS documentation](https://pve.proxmox.com/wiki/BTRFS)
+- [Create Btrfs Storage Pool on Proxmox Manually](https://blog.fernvenue.com/archives/create-btrfs-storage-pool-on-proxmox-manually/)
+
+If at some point I decide to add my RAID as srorage to ProxMox:
+- [Storage](https://pve.proxmox.com/wiki/Storage)
+- [Storage: Directory](https://pve.proxmox.com/wiki/Storage:_Directory)
+- [Storage: BTRFS](https://pve.proxmox.com/wiki/Storage:_BTRFS)
+
+ProxMox shell commands for the record:
+```shell
+## get rid of the stale madm RAID membership metadata
+# wipefs -af /dev/sdc
+# wipefs -af /dev/sdd
+## reboot for ProxMox to re-read disks metadata
+## make the RAID filesystem
+# mkfs.btrfs -draid1 -mraid1 /dev/sdc /dev/sdd -L "Big Data"
+## get UUID etc.
+# btrfs filesystem show /dev/sdc # or /sdd
+## create mountpoint
+# mkdir /mnt/data
+## in /etc/fstab, add:
+UUID=<UUID> /mnt/data btrfs defaults 0 1
+# systemctl daemon-reload
+## mount
+# mount /mnt/data
+```
 ## PhotoPrism
 Did not have much luck with this one, but...
 
@@ -87,4 +118,4 @@ In ProxMox shell, run the [community script](https://community-scripts.github.io
 $ bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/jellyfin.sh)"
 ```
 
-[[TODO]] upgrade to 9.x
+[[TODO]] upgrade ProxMox to 9.x

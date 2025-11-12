@@ -42,10 +42,16 @@ $ sudo pacman -S yubikey-personalization-gui yubikey-manager libfido2
 #$ yay -S gpgfrontend
 # ZSA Keyboards
 $ sudo pacman -S libusb webkit2gtk-4.1 gtk3
-# RClone
+# rclone
 $ sudo pacman -S rclone
+# rsync
+$ sudo pacman -S rsync
 # Calibre ebooks manager
 $ sudo pacman -S calibre
+# asciidoctor
+$ sudo pacman -S asciidoctor asciidoctor-pdfoc
+# asciidoctor-multipage
+$ gem install --user-install asciidoctor-multipage
 # Logitech mice
 $ sudo pacman -S solaar
 # SyncThing
@@ -117,13 +123,6 @@ $ ssh-add -K
 # To list credentials added to the agent:
 $ ssh-add -L
 ```
-
-## Obsidian
-Enable community plugins.
-
-For Obsidian to follow theme changes, its theme needs to be manually set to `Omarchy`; this theme becomes available in an Obsidian vault only after Omarchy theme was changed at least once after Obsidian vault was opened.
-
-TODO there is no way to increase the font size of the user interface that I can see
 ## Monitors
 Omarchy [manual](https://learn.omacom.io/2/the-omarchy-manual/86/monitors) mentions a TUI utility for setting up monitors - [Hyprmon](https://github.com/erans/hyprmon/) - but I found it easy enough to configure monitors by editing `~/.config/hypr/monitors.conf` directly.
 
@@ -177,13 +176,22 @@ Log out and back in for the group to apply :)
 TODO add desktop entry and/or key binding for keymapp...
 ## Fonts
 
-Terminal font is configured in  `~/.config/alacritty/alacritty.toml`:
+There is a TUI for changing the terminal font, but not for changing font size.
+
+Terminal font for `Ghosttty` is configured in `~/.config/ghosttty/config`:
+```
+# Font
+font-family = "JetBrainsMono Nerd Font"
+font-style = Regular
+font-size = 18
+```
+
+Terminal font for  `Alacritty` is configured in  `~/.config/alacritty/alacritty.toml`:
 ```toml
 [font]
 normal = { family = "JetBrainsMono Nerd Font" }
 size = 18
 ```
-There is a TUI for changing the terminal font, but not for changing font size.
 
 Top bar (`Waybar`) font is configured in `~/.config/waybar/style.css`:
 ```css
@@ -192,6 +200,14 @@ Top bar (`Waybar`) font is configured in `~/.config/waybar/style.css`:
   font-size: 20px;
 }
 ```
+
+## Obsidian
+Enable community plugins.
+
+For Obsidian to follow theme changes, its theme needs to be manually set to `Omarchy`; this theme becomes available in an Obsidian vault only after Omarchy theme was changed at least once after Obsidian vault was opened.
+
+To increase font size of both the user interface that the editor, I set `Settings | Appearance | Advanced | Zoom level` to 150%a and `Settings | Appearance | Font size` to 16.
+
 ## Keyboard Layouts
 [Omarchy Manual](https://learn.omacom.io/2/the-omarchy-manual/78/keyboard-mouse-trackpad) explains that keyboard layout can be added in `~/.config/hypr/input.conf`:
 

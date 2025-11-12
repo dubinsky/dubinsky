@@ -120,6 +120,8 @@
   _[2906](https://github.com/GoogleContainerTools/jib/pull/2906)_.
 - [http4s](https://github.com/http4s/http4s):
   [3565](https://github.com/http4s/http4s/issues/3565).
+- [Omarchy](https://omarchy.org/):
+  [3368(d)](https://github.com/basecamp/omarchy/discussions/3368).
 - [Besom](https://virtuslab.github.io/besom/):
   [295](https://github.com/VirtusLab/besom/issues/295),
   [303](https://github.com/VirtusLab/besom/issues/303),
