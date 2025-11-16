@@ -21,3 +21,5 @@ I might store secrets in my `dotfiles` repository: Cloudflare API tokens, Google
 
 `yadm` supports `transcrypt`  and `git-crypt` directly.
 
+There is a way to add README to the `yadm` repository without polluting the home directory: https://github.com/yadm-dev/yadm/issues/93
+

@@ -57,30 +57,29 @@ the money are no longer that valuable.
 On the other hand, health-related expenditures are likely to increase with age,
 so maximising total life-time benefits helps offset them.
 
-Table below shows break-even age depending on:
+Table below shows, depending on:
 - the age you claim Social Security benefits end
-- annual growth of your investments.
+- annual growth of your investments
 
-It also shows, for each age benefits are claimed,
-what is the percentage of the total amount
-of benefits received at age 95 of the amount received when claiming
-the benefits late, at age 70.
+what is:
+- the age you break even and
+- total amount of benefits at 95 compared to that if claimed at 70
 
 [//]: # (breakeven table)
 
 | age claimed: | 62 | 63 | 64 | 65 | 66 | 67 | 68 | 69 | 70 |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| portion of the benefits when claiming at 67: | 70% | 75% | 80% | 87% | 93% | 100% | 108% | 116% | 124% |
-| total at 95 compared to claiming at 70:<br>growth | 75% | 77% | 80% | 84% | 87% | 90% | 94% | 97% | 100% |
-| 0% | 62 | 77 | 78 | 78 | 78 | 79 | 80 | 80 | 81 |
-| 1% | 62 | 79 | 80 | 79 | 80 | 80 | 81 | 81 | 82 |
-| 2% | 62 | 80 | 81 | 81 | 81 | 82 | 82 | 82 | 83 |
-| 3% | 62 | 82 | 83 | 82 | 82 | 83 | 83 | 84 | 85 |
-| 4% | 62 | 84 | 86 | 84 | 85 | 85 | 86 | 86 | 87 |
-| 5% | 62 | 88 | 90 | 88 | 88 | 89 | 89 | 89 | 90 |
-| 6% | 62 | 95 | 99 | 93 | 93 | 94 | 94 | 94 | 96 |
-| 7% | 62 | x | x | 108 | 106 | 109 | 106 | 107 | 110 |
-| 8% | 62 | x | x | x | x | x | x | x | x |
+| portion of the benefits when claiming at 67:<br>growth | 70% | 75% | 80% | 87% | 93% | 100% | 108% | 116% | 124% |
+| 0% | 62<br>75% | 77<br>77% | 78<br>80% | 78<br>84% | 78<br>87% | 79<br>90% | 80<br>94% | 80<br>97% | 81<br>100% |
+| 1% | 62<br>78% | 79<br>80% | 80<br>83% | 79<br>86% | 80<br>89% | 80<br>92% | 81<br>95% | 81<br>98% | 82<br>100% |
+| 2% | 62<br>81% | 80<br>84% | 81<br>85% | 81<br>89% | 81<br>91% | 82<br>93% | 82<br>96% | 82<br>98% | 83<br>100% |
+| 3% | 62<br>85% | 82<br>87% | 83<br>88% | 82<br>91% | 82<br>93% | 83<br>95% | 83<br>97% | 84<br>99% | 85<br>100% |
+| 4% | 62<br>90% | 84<br>91% | 86<br>92% | 84<br>94% | 85<br>96% | 85<br>97% | 86<br>98% | 86<br>100% | 87<br>100% |
+| 5% | 62<br>95% | 88<br>95% | 90<br>96% | 88<br>97% | 88<br>98% | 89<br>99% | 89<br>100% | 89<br>100% | 90<br>100% |
+| 6% | 62<br>100% | 95<br>100% | 99<br>100% | 93<br>101% | 93<br>101% | 94<br>101% | 94<br>101% | 94<br>101% | 96<br>100% |
+| 7% | 62<br>106% | x<br>105% | x<br>104% | 108<br>104% | 106<br>104% | 109<br>103% | 106<br>103% | 107<br>102% | 110<br>100% |
+| 8% | 62<br>113% | x<br>111% | x<br>109% | x<br>108% | x<br>107% | x<br>105% | x<br>104% | x<br>102% | x<br>100% |
+| 9% | 62<br>120% | x<br>117% | x<br>114% | x<br>112% | x<br>110% | x<br>108% | x<br>106% | x<br>103% | x<br>100% |
 
 [//]: # (breakeven table)
 
@@ -92,10 +91,12 @@ If you do not claim your Social Security benefits at 62,
 you will be _at least_ 77 by the time you break even - assuming
 market does not grow at all; _at least_ 82 with 3% market growth;
 _at least_ 93 with 6% growth; with 8% growth you will _never_ catch up.
-Historically, average annual market return is around 10%.
+Historically, average annual market return is around 10%
+(not accounting for inflation).
 
 Total benefits received at age 95 do increase as a result of postponing the benefits: the amount when claiming early, at age 62, is 75% of
-the amount when claiming late, at 70.
+the amount when claiming late, at 70 - assuming no growth on investments;
+with annual investments growth of 7%, total benefits are greater when claimed earlier.
 
 The answer to our question "when does it make sense to postpone claiming
 Social Security benefits and live off of your investment savings instead"

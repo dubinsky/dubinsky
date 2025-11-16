@@ -3,21 +3,14 @@ package org.podval.finance
 import org.podval.text.{Files, Table}
 import java.io.File
 
-final class SocialSecurity(
-  ageClaimed: Int,
-  pia: Int = 1
-):
+final class SocialSecurity(ageClaimed: Int):
   require(SocialSecurity.early <= ageClaimed && ageClaimed <= SocialSecurity.late)
 
-  override def toString: String = s"$ageClaimed: $$$benefit (${Util.toInt(portion*100)}%)"
+  override def toString: String = s"$ageClaimed: ${Util.toInt(portion*100)}%"
 
-  def benefit: Int = Util.toInt(pia * portion)
+  private def portion: Double = 1.0 + SocialSecurity.adjustment(ageClaimed)
 
-  def portion: Double = 1.0 + SocialSecurity.adjustment(ageClaimed)
-
-  def totalBenefit(age: Int, growth: Double) = Util.toInt(pia * totalPortion(age, growth))
-
-  def totalPortion(age: Int, growth: Double): Double = Util.compound(growth, age - ageClaimed, portion)
+  private def totalPortion(age: Int, growth: Double): Double = Util.compound(growth/100.0, age - ageClaimed, portion)
 
 // https://www.congress.gov/crs-product/IF11747
 // Adjustments for Claiming Age
@@ -47,32 +40,32 @@ object SocialSecurity:
     val afterAdjustment = Math.max(yearsEarly - firstYears, 0) * after
     firstAdjustment + afterAdjustment
 
-
-  def tabulate(pia: Int): Unit = early.to(late).map(SocialSecurity(_, pia)).foreach(println)
-
   def main(args: Array[String]): Unit =
     val file = File("./notes/Social Security.md")
     Files.write(file, Files.spliceMarkdown(Files.read(file), "breakeven table", breakEvenTable.markdown))
+
+  private val old: Int = 95
 
   private def breakEvenTable: Table[Int] =
     final class GrowthColumn extends Table.Column[Int]:
       override def title: Any = "age claimed:"
       override def header(n: Int): Any = n match
-        case 0 => "portion of the benefits when claiming at 67:"
-        case 1 => "total at 95 compared to claiming at 70:<br>growth"
+        case 0 => "portion of the benefits when claiming at 67:<br>growth"
       override def value(growth: Int): Any = s"$growth%"
 
     final class AgeColumn(ageClaimed: Int) extends Table.Column[Int]:
       override def title: Any = ageClaimed
       override def header(n: Int): Any = n match
         case 0 => s"${Util.toRate(SocialSecurity(ageClaimed).portion, 1.0)}%"
-        case 1 => s"${Util.toRate(SocialSecurity(ageClaimed).totalPortion(95, 0), SocialSecurity(late).totalPortion(95, 0))}%"
-      override def value(growth: Int): Any = breakEven(early, ageClaimed, growth/100.0).getOrElse("x")
+      override def value(growth: Int): Any =
+        val v: String = breakEven(early, ageClaimed, growth).getOrElse("x").toString
+        val z: String = total(old, ageClaimed, growth)
+        s"$v<br>$z"
 
     Table(
-      nHeaders = 2,
+      nHeaders = 1,
       GrowthColumn() +: early.to(late).map(AgeColumn(_)),
-      0.to(8)
+      0.to(9)
     )
 
   private def breakEven(ageClaimed1: Int, ageClaimed2: Int, growth: Double): Option[Int] =
@@ -82,3 +75,9 @@ object SocialSecurity:
       def totalPortion2 = SocialSecurity(ageClaimed2).totalPortion(age, growth)
       totalPortion1 == totalPortion2 || totalPortion1 / totalPortion2 <= 1.0
     )
+
+  private def total(
+    age: Int,
+    ageClaimed: Int,
+    growth: Double
+  ) = s"${Util.toRate(SocialSecurity(ageClaimed).totalPortion(age, growth), SocialSecurity(late).totalPortion(age, growth))}%"
