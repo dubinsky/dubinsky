@@ -1,8 +1,7 @@
 ---
 title: Investing
 ---
-
-Books:
+## Books
 - [A Random Walk Down Wall Street: The Best Investment Guide That Money Can Buy Thirteenth Edition by Burton G. Malkiel](https://www.amazon.com/Random-Walk-Down-Wall-Street-dp-1324051132/dp/1324051132/ref=dp_ob_title_bk)
 - [The Little Book of Common Sense Investing: The Only Way to Guarantee Your Fair Share of Stock Market Returns by John C. Bogle](https://www.amazon.com/Little-Book-Common-Sense-Investing/dp/1119404509)
 - [The Simple Path to Wealth: Your Road Map to Financial Independence and a Rich, Free Life by JL Collins](https://www.amazon.com/dp/B0DQJMVM59)
@@ -10,8 +9,7 @@ Books:
 - [The Bogleheads' Guide to the Three-Fund Portfolio: How a Simple Portfolio of Three Total Market Index Funds Outperforms Most Investors with Less Risk by Taylor Larimore, John C. Bogle](https://www.amazon.com/Bogleheads-Guide-Three-Fund-Portfolio-Outperforms/dp/1394330952)
 - [The Bogleheads' Guide to Retirement Planning by Taylor Larimore, Mel Lindauer, Richard A. Ferri, Laura F. Dogu, John C. Bogle](https://www.amazon.com/Bogleheads-Guide-Retirement-Planning/dp/0470919019)
 - [All About Asset Allocation, Second Edition by Richard A. Ferri](https://www.amazon.com/dp/0071700781)
-
-Websites and posts:
+## Websites and posts
 - [Investopedia](https://www.investopedia.com/)
 - [Bogleheads](https://www.bogleheads.org/)
 - [Three fund portfolio](https://www.bogleheads.org/blog/2014/07/31/taylor-larimore-three-fund-portfolio/)
@@ -23,15 +21,15 @@ Websites and posts:
 - [Fidelity Planning and Guidance Center](https://digital.fidelity.com/ftgw/pna/customer/planning/goals/retirement/planning/)
 - [Low cost, total market index funds](https://smithplanet.com/stuff/BogleheadFunds.svg)
 
-# Friendly Advice
+## Friendly Advice
 I need to avoid “tax efficient” funds, since what they are trying to avoid does not apply to me.
 
 [QQQI](https://neosfunds.com/qqqi/) is not a good idea, not because it uses call options, and not because of tax repercussions which do not apply to me, and not because of its 0.86% fee, but because it is too concentrated and thus not “safe”.
 
-# Cash and Bonds
+## Cash and Bonds
 When stocks go down, income has to come from something else, to avoid selling the stocks low.
 
-# Diversification
+## Diversification
 
 I need examples of high-quality funds in each category…
 
@@ -101,7 +99,7 @@ I can buy Vanguard *ETF*s at Fidelity with no additional fees, but for mutual fu
 | *tax-exempt*     |          |            |                                                                                                                                     |         |                |
 |                  | Vanguard | VMSXX      | 11                                                                                                                                  | 0.15%   |                |
 |                  | Fidelity | FTEXX      | 35                                                                                                                                  | 0.16%   |                |
-### Dividends
+## Dividends
 Vanguard VYM 0.06%
 Vanguard VDAIX 0.08%
 Vanguard VDIGX 0.26%

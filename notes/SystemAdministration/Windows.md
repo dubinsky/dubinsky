@@ -1,3 +1,6 @@
+---
+title: Windows
+---
 Sometimes running some Windows application is unavoidable; example: [Vellue O2Ring](https://getwellue.com/products/o2ring-wearable-pulse-oximete) 's [O2 Insight ​Pro](https://elasticbeanstalk-us-west-2-697648770036.s3.us-west-2.amazonaws.com/exe/O2+Insight+Pro+Setup+v1.8.14+-+signed.exe).
 
 I do not want to double-boot Windows side-by-side with my Linus install, so I need a Virtual Machine running Windows.
