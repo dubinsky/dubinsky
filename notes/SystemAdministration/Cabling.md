@@ -2,6 +2,10 @@
 title: Cabling
 ---
 Fall 2025
+
+* TOC
+{:toc}
+
 ## Cables
 CAT6 seems to be sufficient for my needs: 10G up to 55 metres; I even have some left from the previous fishing ;)
 ## Rack

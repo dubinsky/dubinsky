@@ -1,6 +1,9 @@
 ---
 title: Domains
 ---
+* TOC
+{:toc}
+
 ## Square Space
 
 For a while, I registered my domains with Google Domains and used Google Domains DNS.
