@@ -213,6 +213,8 @@
   [1](https://github.com/wikibonsai/jekyll-wikirefs/issues/1),
   [2](https://github.com/wikibonsai/jekyll-wikirefs/issues/2),
   [3](https://github.com/wikibonsai/jekyll-wikirefs/issues/3).
+- [toml-scala](https://github.com/indoorvivants/toml-scala):
+  [10](https://github.com/indoorvivants/toml-scala/issues/10).
 
 ## Proofreading ##
 

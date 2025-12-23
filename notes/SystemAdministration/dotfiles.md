@@ -105,6 +105,12 @@ in `Help | Edit custom VM options` add
 -Dawt.toolkit.name=WLToolkit
 ```
 (see  JetBrains [support ticket](https://youtrack.jetbrains.com/articles/SUPPORT-A-1166/Linux-how-to-turn-on-off-native-Wayland-mode))
+
+- to increase font size of both the user interface that the editor, set:
+  * `Settings | Editor | Font | Size` to 22
+  * `Settings | Appearance & Behavior | Appearance | Use custom font`  and `Size` to 22
+  *  `Setting | Tools | Terminal | Font Settings | Size` to 22
+
 ### Obsidian
 - open the vault in `Podval/dub.podval.org`
 - change Omarchy theme (this makes Omarchy theme available in Obsidian)

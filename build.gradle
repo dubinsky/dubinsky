@@ -1,5 +1,5 @@
 plugins {
-  id 'com.github.ben-manes.versions' version '0.52.0'
+  id 'com.github.ben-manes.versions' version '0.53.0'
   id 'scala'
   id 'application'
 }
@@ -10,7 +10,7 @@ application.mainClass = 'org.podval.finance.Main'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
-scala.scalaVersion = '3.7.2'
+scala.scalaVersion = '3.7.4'
 
 // There is no Java in the project :)
 project.gradle.startParameter.excludedTaskNames.add('compileJava')
