@@ -180,10 +180,13 @@
 - [SASS Gradle plugin](https://github.com/EtienneMiret/sass-gradle-plugin):
   [28](https://github.com/EtienneMiret/sass-gradle-plugin/issues/28).
 - [IntelliJ IDEA Scala Plugin](https://github.com/JetBrains/intellij-scala):
-  [24127](https://youtrack.jetbrains.com/issue/SCL-24127/Scala-Test-Inconsistencies);
-  [24128](https://youtrack.jetbrains.com/issue/SCL-24128/Support-shared-sources-for-Gradle-not-just-sbt).
+  [SCL-24127](https://youtrack.jetbrains.com/issue/SCL-24127/Scala-Test-Inconsistencies);
+  [SCL-24128](https://youtrack.jetbrains.com/issue/SCL-24128/Support-shared-sources-for-Gradle-not-just-sbt).
 - [JetBrains Gateway](https://www.jetbrains.com/remote-development/gateway/):
-  [732](https://youtrack.jetbrains.com/issue/GTW-732).
+  [GTW-732](https://youtrack.jetbrains.com/issue/GTW-732).
+- [IntelliJ IDEA](https://www.jetbrains.com/idea/):
+  [IJPL-63403](https://youtrack.jetbrains.com/issue/IJPL-63403/SSH-default-port-missing-with-OpenSSH-config);
+  [IDEA-383958](https://youtrack.jetbrains.com/projects/IDEA/issues/IDEA-383958/SSH-integration-does-not-query-the-SSH-agent-for-SSH-keys-stored-on-hardware-tokens-e.g.-YubiKey).
 - [GitHub Commit Action](https://github.com/github-actions-x/commit):
   [2](https://github.com/github-actions-x/commit/issues/2),
   [16](https://github.com/github-actions-x/commit/issues/16).

@@ -12,11 +12,13 @@ date: 2024-07-04
 ---
 DevPod: the best way to run development workstations in the cloud (and outside of it), a way to set it up and some ideas on how to make it even better.
 
+*Update December 2025*: I still think something like DevPod is a great idea, but I an starting to have doubts about DevPod's implementation: one of the things I loved about DevPod was the immediate attention from the DevPod developers to the issues I raised and suggestions I made. Unfortunately, a year and a half later none of those issues are fixed :(
+
 * TOC
 {:toc}
 ## Introduction
  
-Some time in 2021, I looked into developing programs in the cloud instead of my local machine. In the end, I stayed with my local machine, since cloud-based setup comparable in power to my desktop is too expensive, and affordable alternatives too slow - decision that I may reconsider if the prices go down and performance goes up ;)
+Some time in 2021, I looked into developing software in the cloud instead of my local machine. In the end, I stayed with my local machine, since cloud-based setup comparable in power to my desktop is too expensive, and affordable alternatives too slow - decision that I may reconsider if the prices go down and performance goes up ;)
 
 Even though I normally do not need access to my development environment from anywhere other than my desk, there is something appealing about the cloud-based development environment - if using is is _convenient_; and here is another (real?) reason I did not switch to cloud-based development in 2021: it is very involved to set it up - and to use...
 
@@ -25,7 +27,7 @@ I perused various recipes that floated around at the time (for instance: [How Iâ
 Spinning up transient, fully configured cloud development environments _manually_ is just too clunky!
 
 I _did_ look into approaches that automate away the complexity, like:
-- [GitHub Codespaces](https://github.com/features/codespaces), which does not seem to support my IDE of choice, [IntelliJ Idea]() natively;
+- [GitHub Codespaces](https://github.com/features/codespaces), which does not seem to support my IDE of choice - [IntelliJ Idea](https://www.jetbrains.com/idea/) -natively;
 - [Google Cloud Workstations](https://cloud.google.com/workstations?hl=en), which, with the complexity of running a Kubernetes cluster, seems geared towards enterprises rather than individual developers;
 - [GitPod](https://www.gitpod.io/)...
 and stayed on my desktop ;)
@@ -36,6 +38,84 @@ DevPod is:
 - Open Source: No vendor lock-in. 100% free and open source built by developers for developers.
 - Client Only: No server side setup needed. Download the desktop app or the CLI to get started.
 - Unopinionated: Repeatable dev environment for any infra, any IDE, and any programming language.
+
+## Devcontainer
+
+To be usable in a DevPod workspace, code repository must contain `.devcontainer/devcontainer.json` file;
+for JVM projects, the minimum is:
+
+```json
+{
+  "image": "mcr.microsoft.com/devcontainers/java:21"
+}
+```
+
+If additional [features]( https://containers.dev/features) are needed:
+```json
+"features": {
+  "ghcr.io/devcontainers/features/java:1": {},
+  "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+}
+```
+
+To expose - say - Jekyll web  server running in the container to a local browser:
+```json
+"forwardPorts": [4000]
+```
+
+## Workspace
+
+Even though my SSH key is on a Yubikey token, since `devpod` sets up SSH agent forwarding, it works for `git push` in the workspace! Straight SSH from the workspace works only with explicitly supplied user name, since the `USER` in the workspace is `vscode`; I guess GitHub ignores the username and just looks at the key ;)
+
+(SSH key can be specified to the `devpod up` command using a hidden `ssh-key` option - but I do not see any reason to...)
+## IDE: IntelliJ
+
+Until this [issue](https://github.com/loft-sh/devpod/issues/1153) is resolved, the way I install plugins in IntelliJ is by running the following script with the GIT repository URL as parameter:
+```shell
+PLUGINS="org.intellij.scala"  
+  
+# create workspace but do not start the IDE;  
+devpod up $REPOSITORY_URL --ide intellij --open-ide=false 
+  
+# install plugins - works, but devpod prints:
+#   Error tunneling to container:
+#   wait: remote command exited without exit status or exit signal
+REPOSITORY_URL=$1
+REPO=`echo $REPOSITORY_URL | awk -F/ '{print $NF}'`
+WORKSPACE=`basename $REPO .git`
+COMMAND="/home/vscode/.cache/JetBrains/RemoteDev/dist/intellij/bin/remote-dev-server.sh"
+devpod ssh $WORKSPACE --command "$COMMAND installPlugins /workspaces/$WORKSPACE $PLUGINS"
+```
+
+**TODO does not work!**
+
+## Context
+
+TODO
+Precedence:
+- explicitly supplied command-line option;
+- environment variable;
+- option set permanently;
+- option default - if one exists, in which case it needs to be specified both in the documentation and in the command-line tool's help
+- ask the user
+
+TODO
+- motivation!
+- traditional approach: application-scoped environment variables have the highest precedence and override corresponding "permanent" settings - see `GIT_`, `GCLOUD_*`, `GOOGLE_*`, Docker, etc.
+- `devpod context`: no documentation, no UI
+- everything scoped by
+- I use [DirEnv](https://direnv.net/) `.envrc` files to set the environment variables.
+- quote such a file
+- supplying the context on each command is tedious and error-prone; using `devpod context use` is global; better approach would be `devpod` looking at `DEVPOD_CONTEXT` environment variable...
+- `devpod-context-create`, `devpod-context-use`
+
+TODO https://containers.dev/implementors/spec/#merge-logic
+
+## SSH Setup
+
+One scenario for using DevPod is to run the containers on Docker via SSH - e.g., in your home lab. This scenario does not involve any cloud providers, but DevPod approach is still simpler than the alternatives like using JetBrains Remote Gateway.
+
+Also, with this approach I can use my SSH key stored in a YubiKey hardware token whereas JetBrains Gateway does not support it (see bug https://youtrack.jetbrains.com/projects/IDEA/issues/IDEA-383958/SSH-integration-does-not-query-the-SSH-agent-for-SSH-keys-stored-on-hardware-tokens-e.g.-YubiKey).
 
 ## Google Cloud Platform Setup
 
@@ -62,7 +142,7 @@ If access to GCP services from _within_ the virtual machines is needed, create a
 
 If this is not needed, `iam.serviceAccountUser` role does not need to be granted to the `devpod` service account ;)
 
-## Authentication
+## Google Cloud Platform Authentication
 Application Default Credentials (ADC)
 https://cloud.google.com/docs/authentication/application-default-credentials
 
@@ -85,29 +165,6 @@ If started from the command line in a shell where `GOOGLE_APPLICATION_CREDENTIAL
 
 TODO file an issue
 When a non-ssh GIT URL is used, but there is no GIT token in the environment, error message from the container does not make this clear...
-## Context
-
-TODO
-Precedence:
-- explicitly supplied command-line option;
-- environment variable;
-- option set permanently;
-- option default - if one exists, in which case it needs to be specified both in the documentation and in the command-line tool's help
-- ask the user
-
-TODO
-- motivation!
-- traditional approach: application-scoped environment variables have the highest precedence and override corresponding "permanent" settings - see `GIT_`, `GCLOUD_*`, `GOOGLE_*`, Docker, etc.
-- `devpod context`: no documentation, no UI
-- everything scoped by
-- I use [DirEnv](https://direnv.net/) `.envrc` files to set the environment variables.
-- quote such a file
-- supplying the context on each command is tedious and error-prone; using `devpod context use` is global; better approach would be `devpod` looking at `DEVPOD_CONTEXT` environment variable...
-- `devpod-context-create`, `devpod-context-use`
-
-TODO https://containers.dev/implementors/spec/#merge-logic
-TODO devpod breaks when VPN is active...
-
 ## Provider: GCloud
 
 It [turns out](https://github.com/loft-sh/devpod-provider-gcloud/issues/23) that setting environment variables does not work as a way to override provider options; this is by (in my opinion - unfortunate :)) design. The easiest way to set the options is to supply them when adding the provider:
@@ -135,91 +192,24 @@ $ devpod provider update gcloud
 
 TODO document this in the [provider code repository](https://github.com/loft-sh/devpod-provider-gcloud/pull/25) (and then - everywhere :)).
 
-## Devcontainer
+## Google Cloud Setup with DevPod
 
-Code repository of the workspace should contain `.devcontainer/devcontainer.json` file;
-for JVM projects, the minimum is:
-```json
-{
-  "image": "mcr.microsoft.com/devcontainers/java:1-21"
-}
-```
-
-If additional [features]( https://containers.dev/features) are needed:
-```json
-"features": {
-  "ghcr.io/devcontainers/features/java:1": {},
-  "ghcr.io/devcontainers/features/docker-in-docker:2": {}
-}
-```
-
-To expose - say - Jekyll web  server running in the container to a local browser:
-```json
-"forwardPorts": [4000]
-```
-
-I am not sure that Java feature is needed when Java image is used, but with non-Java image (e.g., Jekyll), IntelliJ starts but displays an error:
-> Unable to find JDK and set project SDK on current Docker image. Please change Docker image definition to proceed with project setup.
-
-So it seems Java should be present in the container regardless ;)
-
-IntelliJ has a [Devcontainer plugin](https://www.jetbrains.com/help/idea/connect-to-devcontainer.html). JetBrains also seems to be actively working on defining customizations specific to its IDEs.
-
-TODO "works" in #1 - will Idea eventually self-apply its customizations directly from  `devcontainer.json`?
-
-## IDE: IntelliJ
-
-Until this [issue](https://github.com/loft-sh/devpod/issues/1153) is resolved, the way I install plugins in IntelliJ is by running the following script with the GIT repository URL as parameter:
 ```shell
-PLUGIN_SCALA="org.intellij.scala"  
-PLUGIN_DRACULA_THEME="com.vermouthx.idea"  
-PLUGINS="$PLUGIN_SCALA $PLUGIN_DRACULA_THEME"  
-  
-REPOSITORY_URL=$1  
-  
-# create workspace but do not start the IDE;  
-# use SSH to check out the repository  
-devpod up $REPOSITORY_URL --ide intellij --open-ide=false 
-  
-# install plugins - works, but devpod prints:
-#   Error tunneling to container:
-#   wait: remote command exited without exit status or exit signal
-# see https://www.jetbrains.com/help/idea/work-inside-remote-project.html#plugins
-REPO=`echo $REPOSITORY_URL | awk -F/ '{print $NF}'`
-WORKSPACE=`basename $REPO .git`
-COMMAND="/home/vscode/.cache/JetBrains/RemoteDev/dist/intellij/bin/remote-dev-server.sh"
-devpod ssh $WORKSPACE --command "$COMMAND installPlugins /workspaces/$WORKSPACE $PLUGINS"
+$ gcloud auth login <EMAIL>
+$ gcloud auth application-default login
+
+# set up GCloud project, services and roles (once)
+$ gcloud projects create <PROJECT ID>
+$ gcloud services enable compute --project <PROJECT ID>
+$ gcloud projects add-iam-policy-binding <PROJECT ID> --member=user:<EMAIL> --role=roles/compute.instanceAdmin.v1
+$ gcloud projects add-iam-policy-binding <PROJECT ID> --member=user:<EMAIL> --role=roles/serviceusage.serviceUsageConsumer
+
+# set up GCloud DevPod provider (once)
+$ devpod provider add gcloud -o PROJECT=<PROJECT ID> -o ZONE=<ZONE>
+
+# spin up a workspace
+$ devpod up <GIT REPOSITORY URL>
 ```
-
-**TODO does not work!**
-
-TODO document this in the [code repository](https://github.com/loft-sh/devpod).
-
-TODO does DevPod set IntelliJ options correctly or do I need to override the memory limits? `devpod up ... --ide-option`? Idea command line options; `devops` facility to transfer IDE configuration files and run commands... dot-files?
-
-TODO Ideally, there should be a way to add personal stuff to the `devcontainer.json`!
-
-## Workspace
-
-To start the IDE and connect to it:
-```shell
-$ devpod up <workspace>
-```
-
-To recreate workspace to reflect all changes to its configuration:
-```shell
-$ devpod up <workspace> --recreate
-```
-TODO Does it update the IDE?
-
-Secrets and other environment variables can be made available within the workspace by putting them into a `key=value` file(s) and running:
-```shell
-$ devpod up <workspace> --workspace-env-file ... 
-```
-
-Even though my SSH key is on a Yubikey token, since `devpod` sets up SSH agent forwarding, it works for `git push` in the workspace! Straight SSH from the workspace works only with explicitly supplied user name, since the `USER` in the workspace is `vscode`; I guess GitHub ignores the username and just looks at the key ;)
-
-(SSH key can be specified to the `devpod up` command using a hidden `ssh-key` option - but I do not see any reason to...)
 
 ## Machine
 
@@ -234,13 +224,9 @@ where:
 - `<project>` is the PROJECT that was used when the machine was created;
 - `<zone>` is the ZONE that was used when the machine was created.
 
-## SSH
+## Appendix: Google Cloud Setup without DevPod
 
-
-## Appendix
-
-### The Manual Way
-#### Set Up Virtual Machine
+### Set Up Virtual Machine
 ```shell
 # Project
 $ gcloud auth login <admin>@<domain>.org
@@ -333,7 +319,7 @@ $ sudo lsblk
 $ sudo resize2fs /dev/sdb
 ```
 
-#### Set Up JetBrains Gateway
+### Set Up JetBrains Gateway
 ```shell
 # install Dracula theme on the gateway client
 
@@ -346,25 +332,6 @@ $ .../remote-dev-server.sh installPlugins ~/Projects/run org.intellij.scala
 
 # server-to-client workflow:
 $ .../remote-dev-server.sh run <path/to/project> --ssh-link-host <host>
-```
-
-### The DevPod Way
-
-```shell
-$ gcloud auth login <EMAIL>
-$ gcloud auth application-default login
-
-# set up GCloud project, services and roles (once)
-$ gcloud projects create <PROJECT ID>
-$ gcloud services enable compute --project <PROJECT ID>
-$ gcloud projects add-iam-policy-binding <PROJECT ID> --member=user:<EMAIL> --role=roles/compute.instanceAdmin.v1
-$ gcloud projects add-iam-policy-binding <PROJECT ID> --member=user:<EMAIL> --role=roles/serviceusage.serviceUsageConsumer
-
-# set up GCloud DevPod provider (once)
-$ devpod provider add gcloud -o PROJECT=<PROJECT ID> -o ZONE=<ZONE>
-
-# spin up a workspace
-$ devpod up <GIT REPOSITORY URL>
 ```
 
 ### Speed and Price

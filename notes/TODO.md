@@ -1,17 +1,13 @@
 ---
 title: TODO
 ---
-Register Nina for MA EMT
+Register Nina for MA EMT: find and upload Nina's CPR certificate.
+
+Fix humidifier.
 
 Koritz: stone; Abarbanel
 
-Hanukka Menorah: LEDs and Quadro
-
 Letters: Dental, Heloc
-
-IntelliJ SSH:
-- switching to "agent" wipes the port out
-- yubikey does not work
 
 Google Archive Storage Backup (kopia?)
 
