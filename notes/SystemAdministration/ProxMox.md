@@ -33,6 +33,9 @@ In ProxMox shell, run the [community script](https://community-scripts.github.io
 $ bash -c "$(wget -qLO - https://github.com/community-scripts/ProxmoxVE/raw/main/vm/docker-vm.sh)"
 ```
 
+To make arrow keys etc. work when connected to the container over SSH and such,
+inside the container make the symbolic link from `/bin/sh` to `/bin/bash`.
+
 ## File Store
 
 In ProxMox shell:

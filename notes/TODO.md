@@ -1,8 +1,6 @@
 ---
 title: TODO
 ---
-Register Nina for MA EMT: find and upload Nina's CPR certificate.
-
 Fix humidifier.
 
 Koritz: stone; Abarbanel

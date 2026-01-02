@@ -137,6 +137,12 @@
   [23](https://github.com/loft-sh/devpod-provider-gcloud/issues/23),
   _[24](https://github.com/loft-sh/devpod-provider-gcloud/pull/24)_,
   _[25](https://github.com/loft-sh/devpod-provider-gcloud/pull/25)_.
+- [DevPod Community](https://github.com/skevetter/devpod):
+  _[161](https://github.com/skevetter/devpod/pull/161)_,
+  _[163](https://github.com/skevetter/devpod/pull/163)_,
+  _[195](https://github.com/skevetter/devpod/pull/195)_,
+  [196](https://github.com/skevetter/devpod/issues/196),
+  [221](https://github.com/skevetter/devpod/issues/221).
 - [ScalaCheck](https://scalacheck.org):
   [1105](https://github.com/typelevel/scalacheck/issues/1105),
   _[1107](https://github.com/typelevel/scalacheck/pull/1107)_,
@@ -186,7 +192,8 @@
   [GTW-732](https://youtrack.jetbrains.com/issue/GTW-732).
 - [IntelliJ IDEA](https://www.jetbrains.com/idea/):
   [IJPL-63403](https://youtrack.jetbrains.com/issue/IJPL-63403/SSH-default-port-missing-with-OpenSSH-config);
-  [IDEA-383958](https://youtrack.jetbrains.com/projects/IDEA/issues/IDEA-383958/SSH-integration-does-not-query-the-SSH-agent-for-SSH-keys-stored-on-hardware-tokens-e.g.-YubiKey).
+  [IDEA-383958](https://youtrack.jetbrains.com/projects/IDEA/issues/IDEA-383958/SSH-integration-does-not-query-the-SSH-agent-for-SSH-keys-stored-on-hardware-tokens-e.g.-YubiKey);
+  [IJPL-226400](https://youtrack.jetbrains.com/projects/GTW/issues/IJPL-226400/Remote-Gateway-desktop-file-is-broken-Gateway-does-not-start).
 - [GitHub Commit Action](https://github.com/github-actions-x/commit):
   [2](https://github.com/github-actions-x/commit/issues/2),
   [16](https://github.com/github-actions-x/commit/issues/16).

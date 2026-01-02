@@ -10,9 +10,15 @@ tags:
   - life-in-the-cloud
 date: 2024-07-04
 ---
+Updated in December 2025.
+
 DevPod: the best way to run development workstations in the cloud (and outside of it), a way to set it up and some ideas on how to make it even better.
 
 *Update December 2025*: I still think something like DevPod is a great idea, but I an starting to have doubts about DevPod's implementation: one of the things I loved about DevPod was the immediate attention from the DevPod developers to the issues I raised and suggestions I made. Unfortunately, a year and a half later none of those issues are fixed :(
+
+Plot thickens: even though official DevPod developers claim that they are not abandoning the open source DevPod project, it does seem to be [abandoned](https://github.com/loft-sh/devpod/issues/1915); [skevetter](https://github.com/skevetter) [stepped up](https://github.com/loft-sh/devpod/issues/1946),
+[forked](https://github.com/skevetter/devpod) the project, shipped some updates and invited collaboration.
+
 
 * TOC
 {:toc}
@@ -63,6 +69,8 @@ To expose - say - Jekyll web  server running in the container to a local browser
 "forwardPorts": [4000]
 ```
 
+TODO https://containers.dev/implementors/spec/#merge-logic
+
 ## Workspace
 
 Even though my SSH key is on a Yubikey token, since `devpod` sets up SSH agent forwarding, it works for `git push` in the workspace! Straight SSH from the workspace works only with explicitly supplied user name, since the `USER` in the workspace is `vscode`; I guess GitHub ignores the username and just looks at the key ;)
@@ -88,28 +96,6 @@ devpod ssh $WORKSPACE --command "$COMMAND installPlugins /workspaces/$WORKSPACE 
 ```
 
 **TODO does not work!**
-
-## Context
-
-TODO
-Precedence:
-- explicitly supplied command-line option;
-- environment variable;
-- option set permanently;
-- option default - if one exists, in which case it needs to be specified both in the documentation and in the command-line tool's help
-- ask the user
-
-TODO
-- motivation!
-- traditional approach: application-scoped environment variables have the highest precedence and override corresponding "permanent" settings - see `GIT_`, `GCLOUD_*`, `GOOGLE_*`, Docker, etc.
-- `devpod context`: no documentation, no UI
-- everything scoped by
-- I use [DirEnv](https://direnv.net/) `.envrc` files to set the environment variables.
-- quote such a file
-- supplying the context on each command is tedious and error-prone; using `devpod context use` is global; better approach would be `devpod` looking at `DEVPOD_CONTEXT` environment variable...
-- `devpod-context-create`, `devpod-context-use`
-
-TODO https://containers.dev/implementors/spec/#merge-logic
 
 ## SSH Setup
 
@@ -160,6 +146,14 @@ gcloud auth application-default login --impersonate-service-account SERVICE_ACCT
 
 Set `GOOGLE_APPLICATION_CREDENTIALS` environment variable to the path to the key to the service account for running `devpod` on your machine (alternatively, `GCLOUD_JSON_AUTH` environment variable can be set to the JSON key itself?).
 
+TODO when impersonating a service account:
+> The user does not have access to service account 'devpod@podval-devpod.iam.gserviceaccount.com'. User: 'dub@podval.org'. Ask a project owner to grant you the iam.serviceAccountUser role on the service account.
+
+TODO
+> run provider command name:command command:${GCLOUD_PROVIDER} command
+> 
+   executing agent command agent error: /var/lib/toolbox/devpod: /lib64/libc.so.6: version `GLIBC_2.38' not found (required by /var/lib/toolbox/devpod)\n/var/lib/toolbox/devpod: /lib64/libc.so.6: version `GLIBC_2.34' not found (required by /var/lib/toolbox/devpod)\n exit status 1
+
 TODO file an issue
 If started from the command line in a shell where `GOOGLE_APPLICATION_CREDENTIALS` environment variable is set correctly, DevPod GUI works for the `gcloud` provider - but not the workspaces created with it ;)
 
@@ -184,6 +178,8 @@ To reuse the same virtual machine for all workspaces:
 ```shell
 $ devpod provider use gcloud --single-machine
 ```
+
+TODO where can I see that --single-machine is set?
 
 To update the provider:
 ```shell
