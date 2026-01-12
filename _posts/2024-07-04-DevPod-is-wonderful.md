@@ -10,7 +10,7 @@ tags:
   - life-in-the-cloud
 date: 2024-07-04
 ---
-Updated in December 2025.
+Updated in January 2026.
 
 DevPod: the best way to run development workstations in the cloud (and outside of it), a way to set it up and some ideas on how to make it even better.
 
@@ -24,9 +24,11 @@ Plot thickens: even though official DevPod developers claim that they are not ab
 {:toc}
 ## Introduction
  
-Some time in 2021, I looked into developing software in the cloud instead of my local machine. In the end, I stayed with my local machine, since cloud-based setup comparable in power to my desktop is too expensive, and affordable alternatives too slow - decision that I may reconsider if the prices go down and performance goes up ;)
+Some time in 2021, I looked into developing software in the cloud instead of on my local machine. In the end, I stayed with my local machine, since cloud-based setup comparable in power to my desktop is too expensive, and affordable alternatives too slow - decision that I may reconsider if the prices go down and performance goes up ;)
 
-Even though I normally do not need access to my development environment from anywhere other than my desk, there is something appealing about the cloud-based development environment - if using is is _convenient_; and here is another (real?) reason I did not switch to cloud-based development in 2021: it is very involved to set it up - and to use...
+Even though I normally do not need access to my development environment from anywhere other than my desk, there is something appealing about the cloud-based development environment - if using is is _convenient_.
+
+The main reason I did not switch to cloud-based development in 2021: it is not convenient; it is very involved to set it up - and to use...
 
 I perused various recipes that floated around at the time (for instance: [How I’ve slashed the cost of my DEV environments by 90%](https://itnext.io/how-ive-slashed-the-cost-of-my-dev-environments-by-90-9c1082ad1baf)) and came up with my own approach. My notes are in the [Appendix: The Manual Way](#the-manual-way); witness the number of GUI actions to perform, commands to run and unanswered questions mentioned ;)
 
@@ -142,17 +144,10 @@ $ gcloud iam service-accounts keys create \
 ```
 
 TODO
-gcloud auth application-default login --impersonate-service-account SERVICE_ACCT_EMAIL
-
 Set `GOOGLE_APPLICATION_CREDENTIALS` environment variable to the path to the key to the service account for running `devpod` on your machine (alternatively, `GCLOUD_JSON_AUTH` environment variable can be set to the JSON key itself?).
 
 TODO when impersonating a service account:
 > The user does not have access to service account 'devpod@podval-devpod.iam.gserviceaccount.com'. User: 'dub@podval.org'. Ask a project owner to grant you the iam.serviceAccountUser role on the service account.
-
-TODO
-> run provider command name:command command:${GCLOUD_PROVIDER} command
-> 
-   executing agent command agent error: /var/lib/toolbox/devpod: /lib64/libc.so.6: version `GLIBC_2.38' not found (required by /var/lib/toolbox/devpod)\n/var/lib/toolbox/devpod: /lib64/libc.so.6: version `GLIBC_2.34' not found (required by /var/lib/toolbox/devpod)\n exit status 1
 
 TODO file an issue
 If started from the command line in a shell where `GOOGLE_APPLICATION_CREDENTIALS` environment variable is set correctly, DevPod GUI works for the `gcloud` provider - but not the workspaces created with it ;)
@@ -346,3 +341,36 @@ e2-highcpu-16  16    16                          $289
 ```
 
 TODO re-test with `e2` and `c4` machines...
+
+
+
+TODO mention the effort to package the community fork.
+
+TODO make context options inherit from the environment just like the provider and ide optios?
+
+TODO does DevPod set IntelliJ options correctly or do I need to override the memory limits? `devpod up ... --ide-option`? Idea command line options; `devops` facility to transfer IDE configuration files and run commands... dot-files?
+
+TODO Ideally, there should be a way to add personal stuff to the `devcontainer.json`!
+
+TODO Floating modal Gateway window blocks input:
+```
+class: jetbrains-gateway
+title: Gateway to /workspaces/cloud-run@cloud-run.devpod
+xwayland: 1
+pinned: 0
+floating: 1
+fullscreen: 0
+tags: jb*
+```
+
+
+On Omarchy, to install DevPod CLI:
+```
+$ yay -S --needed --noconfirm devpod-community-bin
+```
+
+Install JetBrains Gateway using JetBrains Toolbox.
+
+[Toolbox CLI](https://www.jetbrains.com/help/toolbox-app/toolbox-app-cli.html#obtain_cli) is not installed by default, and it is not clear if it can be used to script the installation of the Gateway even if it was.
+
+Desktop file for the Remote Gateway are broken; spurious quotes around the `Exec` command in  `~/.local/share/applications/jetbrains-gateway.desktop` must be removed manually - otherwise, although a scheme handler for `jetbrains-gateway` is registered (which can be verified with `$ xdg-mime query default x-scheme-handler/jetbrains-gateway`), Gateway can not be started from the command line nor from tools like DevPod that use `xdg-open` to start it: `$ xdg-open jetbrains-gateway://connect` opens web browser instead (see [bug report](https://youtrack.jetbrains.com/projects/GTW/issues/IJPL-226400/Remote-Gateway-desktop-file-is-broken-Gateway-does-not-start))!

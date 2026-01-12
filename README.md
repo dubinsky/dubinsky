@@ -142,7 +142,14 @@
   _[163](https://github.com/skevetter/devpod/pull/163)_,
   _[195](https://github.com/skevetter/devpod/pull/195)_,
   [196](https://github.com/skevetter/devpod/issues/196),
-  [221](https://github.com/skevetter/devpod/issues/221).
+  [221](https://github.com/skevetter/devpod/issues/221),
+  [224](https://github.com/skevetter/devpod/issues/224),
+  _[229](https://github.com/skevetter/devpod/pull/229)_,
+  _[251](https://github.com/skevetter/devpod/pull/251)_,
+  _[252](https://github.com/skevetter/devpod/pull/252)_,
+  _[253](https://github.com/skevetter/devpod/pull/253)_,
+  _[256](https://github.com/skevetter/devpod/pull/256)_,
+  _[257](https://github.com/skevetter/devpod/pull/257)_.
 - [ScalaCheck](https://scalacheck.org):
   [1105](https://github.com/typelevel/scalacheck/issues/1105),
   _[1107](https://github.com/typelevel/scalacheck/pull/1107)_,
