@@ -219,6 +219,24 @@ Added a [SONOFF Sprinkler Timer Zigbee 3.0](https://www.amazon.com/dp/B0D5B8S8N8
 ## Security
 I want to replace my door bell with a video one and install some cameras; I am thinking [Reolink](https://reolink.com/us/product/reolink-video-doorbell-wifi/), which [integrates](https://www.home-assistant.io/integrations/reolink/) with Home Assistant - although it seems that some additional [trickery](https://github.com/AlexxIT/WebRTC) is needed for audio... Also, the head-to-toe version (white, not black) does not seem to be available...
 
+## Floor Plans
+
+Make floor plans with:
+- SweetHouse3D
+- RoomSketcher
+- FereeCAD
+
+Integrate with Home Assistant with:
+- https://github.com/ExperienceLovelace/ha-floorplan
+- https://github.com/johnnyo21/floorplan_3d
+- https://github.com/shmuelzon/home-assistant-floor-plan
+
+## Timed Fan Off
+ - https://gist.github.com/Blackshome/9f9785d7aa0ba7978fa6515a2d73d192
+
+## Panel
+- https://community.home-assistant.io/t/esp32-p4-4-wi-fi-6-touch-panel-with-built-in-voice-the-next-gen-wall-panel/895470/40
+- https://github.com/alaltitov/Waveshare-ESP32-P4-86-Panel-ETH-2RO/tree/dev
 ## TODO
 
 [https://www.home-assistant.io/integrations/zwave_js/#how-do-i-switch-between-the-official-z-wave-js-add-on-and-the-z-wave-js-ui-add-on](https://www.home-assistant.io/integrations/zwave_js/#how-do-i-switch-between-the-official-z-wave-js-add-on-and-the-z-wave-js-ui-add-on)
