@@ -35,7 +35,7 @@ I perused various recipes that floated around at the time (for instance: [How Iâ
 Spinning up transient, fully configured cloud development environments _manually_ is just too clunky!
 
 I _did_ look into approaches that automate away the complexity, like:
-- [GitHub Codespaces](https://github.com/features/codespaces), which does not seem to support my IDE of choice - [IntelliJ Idea](https://www.jetbrains.com/idea/) -natively;
+- [GitHub Codespaces](https://github.com/features/codespaces), which did not seem to support my IDE of choice - [IntelliJ Idea](https://www.jetbrains.com/idea/) -natively;
 - [Google Cloud Workstations](https://cloud.google.com/workstations?hl=en), which, with the complexity of running a Kubernetes cluster, seems geared towards enterprises rather than individual developers;
 - [GitPod](https://www.gitpod.io/)...
 and stayed on my desktop ;)
@@ -73,37 +73,15 @@ To expose - say - Jekyll web  server running in the container to a local browser
 
 TODO https://containers.dev/implementors/spec/#merge-logic
 
-## Workspace
-
-Even though my SSH key is on a Yubikey token, since `devpod` sets up SSH agent forwarding, it works for `git push` in the workspace! Straight SSH from the workspace works only with explicitly supplied user name, since the `USER` in the workspace is `vscode`; I guess GitHub ignores the username and just looks at the key ;)
-
-(SSH key can be specified to the `devpod up` command using a hidden `ssh-key` option - but I do not see any reason to...)
-## IDE: IntelliJ
-
-Until this [issue](https://github.com/loft-sh/devpod/issues/1153) is resolved, the way I install plugins in IntelliJ is by running the following script with the GIT repository URL as parameter:
-```shell
-PLUGINS="org.intellij.scala"  
-  
-# create workspace but do not start the IDE;  
-devpod up $REPOSITORY_URL --ide intellij --open-ide=false 
-  
-# install plugins - works, but devpod prints:
-#   Error tunneling to container:
-#   wait: remote command exited without exit status or exit signal
-REPOSITORY_URL=$1
-REPO=`echo $REPOSITORY_URL | awk -F/ '{print $NF}'`
-WORKSPACE=`basename $REPO .git`
-COMMAND="/home/vscode/.cache/JetBrains/RemoteDev/dist/intellij/bin/remote-dev-server.sh"
-devpod ssh $WORKSPACE --command "$COMMAND installPlugins /workspaces/$WORKSPACE $PLUGINS"
-```
-
-**TODO does not work!**
-
 ## SSH Setup
 
 One scenario for using DevPod is to run the containers on Docker via SSH - e.g., in your home lab. This scenario does not involve any cloud providers, but DevPod approach is still simpler than the alternatives like using JetBrains Remote Gateway.
 
-Also, with this approach I can use my SSH key stored in a YubiKey hardware token whereas JetBrains Gateway does not support it (see bug https://youtrack.jetbrains.com/projects/IDEA/issues/IDEA-383958/SSH-integration-does-not-query-the-SSH-agent-for-SSH-keys-stored-on-hardware-tokens-e.g.-YubiKey).
+Also, with this approach I can use my SSH key stored in a YubiKey hardware token whereas JetBrains Gateway does not support it (see bug [IDEA-383958](https://youtrack.jetbrains.com/projects/IDEA/issues/IDEA-383958/SSH-integration-does-not-query-the-SSH-agent-for-SSH-keys-stored-on-hardware-tokens-e.g.-YubiKey)).
+
+Even though my SSH key is on a Yubikey token, since `devpod` sets up SSH agent forwarding, it works for `git push` in the workspace! Straight SSH from the workspace works only with explicitly supplied user name, since the `USER` in the workspace is `vscode`; I guess GitHub ignores the username and just looks at the key ;)
+
+(SSH key can be specified to the `devpod up` command using a hidden `ssh-key` option - but I do not see any reason to...)
 
 ## Google Cloud Platform Setup
 
@@ -260,7 +238,7 @@ $ sudo journalctl -u google-startup-scripts.service
 # re-run:
 $ sudo google_metadata_script_runner startup
 
-# Create VM instance (in ~/box) until I switch to --metadata start-script-url=...
+# Create VM instance (in ~/box) - or switch to --metadata start-script-url=...
 $ gcloud compute instances create box \
  --network-tier=STANDARD \
  --address=$BOX_IP \
@@ -341,8 +319,6 @@ e2-highcpu-16  16    16                          $289
 ```
 
 TODO re-test with `e2` and `c4` machines...
-
-
 
 TODO mention the effort to package the community fork.
 

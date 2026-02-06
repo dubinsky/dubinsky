@@ -162,8 +162,8 @@
   _[918](https://github.com/scalameta/munit/pull/918)_,
   _[968](https://github.com/scalameta/munit/pull/968)_.
 - [specs2](https://etorreborre.github.io/specs2/):
-  _[1327](https://github.com/etorreborre/specs2/pull/1327)_;
-  [1352](https://github.com/etorreborre/specs2/issues/1352);
+  _[1327](https://github.com/etorreborre/specs2/pull/1327)_,
+  [1352](https://github.com/etorreborre/specs2/issues/1352),
   [1353](https://github.com/etorreborre/specs2/issues/1353).
 - [ScalaTest Gradle plugin](https://github.com/maiflai):
   [92](https://github.com/maiflai/gradle-scalatest/issues/92),
@@ -193,13 +193,13 @@
 - [SASS Gradle plugin](https://github.com/EtienneMiret/sass-gradle-plugin):
   [28](https://github.com/EtienneMiret/sass-gradle-plugin/issues/28).
 - [IntelliJ IDEA Scala Plugin](https://github.com/JetBrains/intellij-scala):
-  [SCL-24127](https://youtrack.jetbrains.com/issue/SCL-24127/Scala-Test-Inconsistencies);
+  [SCL-24127](https://youtrack.jetbrains.com/issue/SCL-24127/Scala-Test-Inconsistencies),
   [SCL-24128](https://youtrack.jetbrains.com/issue/SCL-24128/Support-shared-sources-for-Gradle-not-just-sbt).
 - [JetBrains Gateway](https://www.jetbrains.com/remote-development/gateway/):
   [GTW-732](https://youtrack.jetbrains.com/issue/GTW-732).
 - [IntelliJ IDEA](https://www.jetbrains.com/idea/):
-  [IJPL-63403](https://youtrack.jetbrains.com/issue/IJPL-63403/SSH-default-port-missing-with-OpenSSH-config);
-  [IDEA-383958](https://youtrack.jetbrains.com/projects/IDEA/issues/IDEA-383958/SSH-integration-does-not-query-the-SSH-agent-for-SSH-keys-stored-on-hardware-tokens-e.g.-YubiKey);
+  [IJPL-63403](https://youtrack.jetbrains.com/issue/IJPL-63403/SSH-default-port-missing-with-OpenSSH-config),
+  [IDEA-383958](https://youtrack.jetbrains.com/projects/IDEA/issues/IDEA-383958/SSH-integration-does-not-query-the-SSH-agent-for-SSH-keys-stored-on-hardware-tokens-e.g.-YubiKey),
   [IJPL-226400](https://youtrack.jetbrains.com/projects/GTW/issues/IJPL-226400/Remote-Gateway-desktop-file-is-broken-Gateway-does-not-start).
 - [GitHub Commit Action](https://github.com/github-actions-x/commit):
   [2](https://github.com/github-actions-x/commit/issues/2),

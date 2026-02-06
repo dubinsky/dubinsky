@@ -7,8 +7,6 @@ Shelves: 36"x72" - Ikea or HomeDepot?
  - https://www.amazon.com/dp/B0F24BDRDV
  - https://www.amazon.com/dp/B0F24BDRDV
 
-$15 to Pomansky
-
 Estate Planning: Revocable trust, pout-over wills, medical proxies, power of attorney...
 - https://attorneys.superlawyers.com/trusts/massachusetts/boston/
 
