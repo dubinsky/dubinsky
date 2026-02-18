@@ -51,6 +51,10 @@ In `/etc/fstab` on ProxMox, add:
 /dev/pve/store /mnt/store ext4 0 1
 ```
 
+To [mount](https://pve.proxmox.com/wiki/Linux_Container#_bind_mount_points) a directory from the host in a container, in the ProxMox shell:
+```shell
+$ pct set <container id> -mp0 /path/on/host,mp=/path/in/container
+```
 ## RAID File Store
 I added a bunch of hard disks to my ProxMox box and created a BTRFS RAID; this is where I want to store my photographs and other media.
 
@@ -121,4 +125,12 @@ In ProxMox shell, run the [community script](https://community-scripts.github.io
 $ bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/jellyfin.sh)"
 ```
 
-[[TODO]] upgrade ProxMox to 9.x
+## Booklore
+
+In ProxMox shell, run the [community script](https://community-scripts.github.io/ProxmoxVE/scripts?id=booklore):
+```shell
+$ bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/booklore.sh)"
+```
+
+[[TODO]] 
+- upgrade ProxMox to 9.x

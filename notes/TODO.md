@@ -3,6 +3,12 @@ title: TODO
 ---
 Fix humidifier.
 
+Peisach and Shinyavsky.
+
+Sonya and Roth.
+
+The guy from Sema's birthday.
+
 Shelves: 36"x72" - Ikea or HomeDepot?
  - https://www.amazon.com/dp/B0F24BDRDV
  - https://www.amazon.com/dp/B0F24BDRDV
@@ -17,6 +23,10 @@ Letters: Dental, Heloc
 Google Archive Storage Backup (kopia?)
 
 Naked domains for alter-rebbe.org etc.
+
+Clean up Chumash Questions front page.
+
+Write to Alex Karp :)
 
 Buy Withing Body Scan 2 Scales when available
 
