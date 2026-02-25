@@ -132,5 +132,7 @@ In ProxMox shell, run the [community script](https://community-scripts.github.io
 $ bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/booklore.sh)"
 ```
 
-[[TODO]] 
-- upgrade ProxMox to 9.x
+Mount the file store in the Booklore container:
+```shell
+# pct set <container id> -mp0 /mnt/store/Books,mp=/mnt/store/Books
+```

@@ -52,7 +52,7 @@ object IncomeTax:
   private final class BracketWithNext(val bracket: Bracket, val next: Bracket)
 
   // https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2025
-  private val brackets: List[Bracket] = List(
+  private def brackets2025: List[Bracket] = List(
     Bracket(10,      0,      0),
     Bracket(12,  11925,  23850),
     Bracket(22,  48475,  96950),
@@ -62,6 +62,20 @@ object IncomeTax:
     Bracket(37, 626350, 751600), // Note: the only one where jointly != 2*single
     Bracket(0, Int.MaxValue, Int.MaxValue)
   )
+
+  // https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill
+  private def brackets2026: List[Bracket] = List(
+    Bracket(10, 0, 0),
+    Bracket(12, 12400, 24800),
+    Bracket(22, 50400, 100800),
+    Bracket(24, 105700, 211400),
+    Bracket(32, 201775, 403550),
+    Bracket(35, 256225, 512450),
+    Bracket(37, 640600, 768700), // Note: the only one where jointly != 2*single
+    Bracket(0, Int.MaxValue, Int.MaxValue)
+  )
+
+  private val brackets: List[Bracket] = brackets2026
 
   private val bracketsWithNext: List[BracketWithNext] = brackets
     .zip(brackets.tail)
