@@ -136,3 +136,18 @@ Mount the file store in the Booklore container:
 ```shell
 # pct set <container id> -mp0 /mnt/store/Books,mp=/mnt/store/Books
 ```
+
+## Calibre Web
+In ProxMox shell, run the [community script](https://community-scripts.github.io/ProxmoxVE/scripts?id=calibre-web):
+```shell
+$ bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/calibre-web.sh)"
+```
+
+Mount the file store in the Booklore container:
+```shell
+# pct set <container id> -mp0 /mnt/store/Books,mp=/mnt/store/Books
+```
+
+Initial admin credentials: admin/admin123
+
+"DB not writable" - and that is as it should be...
