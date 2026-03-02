@@ -151,6 +151,9 @@ Archived:
   _[256](https://github.com/skevetter/devpod/pull/256)_,
   _[257](https://github.com/skevetter/devpod/pull/257)_,
   _[528](https://github.com/skevetter/devpod/pull/528)_.
+- [DevPod Community GCloud Provider](https://github.com/skevetter/devpod-provider-gcloud):
+  _[2](https://github.com/skevetter/devpod-provider-gcloud/pull/2)_,
+  _[27](https://github.com/skevetter/devpod-provider-gcloud/pull/27)_.
 - [ScalaCheck](https://scalacheck.org):
   [1105](https://github.com/typelevel/scalacheck/issues/1105),
   _[1107](https://github.com/typelevel/scalacheck/pull/1107)_,
