@@ -1,7 +1,6 @@
 [![](https://img.shields.io/badge/Notes-dub.podval.org-informational?style=for-the-badge)](https://dub.podval.org)
-[![](https://img.shields.io/badge/Bio-LinkedIn-informational?style=for-the-badge)](https://www.linkedin.com/in/leoniddubinsky/)
 [![](https://img.shields.io/badge/Social-X/Twitter-informational?logo=X&logoColor=blue&style=for-the-badge)](https://twitter.com/leoniddubinsky)
-
+[![](https://img.shields.io/badge/Bio-LinkedIn-informational?style=for-the-badge)](https://www.linkedin.com/in/leoniddubinsky/)
 
 [![](https://img.shields.io/badge/Code-Scala-critical?logo=Scala&logoColor=red)](https://www.scala-lang.org/)
 [![](https://img.shields.io/badge/Framework-ZIO-important?logo=zio&logoColor=red)](https://www.scala-lang.org/)
@@ -16,7 +15,8 @@
 
 ## Open Source Work ##
 
-- [Gradle plugin for multi-backend Scala](https://github.com/dubinsky/scalajs-gradle)
+- [multi-backend Scala Gradle plugin](https://github.com/dubinsky/scalajs-gradle)
+- [parsing XML with ZIO and pretty-printing it with Paiges](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/xml)
 - [TEI](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/tei)
   [site generation](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/site) and
   [publishing of document collections](https://github.com/opentorah/opentorah/tree/master/collector)
@@ -24,12 +24,12 @@
 - [learning schedules](https://github.com/opentorah/opentorah/tree/master/texts/src/main/scala/org/opentorah/schedule) for
   [various Jewish texts](https://github.com/opentorah/opentorah/tree/master/texts/src/main/scala/org/opentorah/texts)
 - [Google Cloud Run Gradle plugin](https://github.com/dubinsky/cloud-run)
+- [photo archive management](https://github.com/dubinsky/gphoto-sync)
+
+Archived:
 - [Raspberry Pi GPIO in Scala](https://github.com/dubinsky/podval-iot)
 - [photo metadata extraction](https://github.com/dubinsky/podval-imageio) and
   [archive synchronization](https://github.com/dubinsky/podval-photo-sync)
-- [parsing XML with ZIO and pretty-printing it with Paiges](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/xml)
-- [DocBook processing](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/docbook)
-  and [DocBook Gradle plugin](https://github.com/opentorah/opentorah/tree/master/docbook)
 - [where is this code running?](https://github.com/dubinsky/podval-run)
 
 ## Small Open Source Contributions ##
