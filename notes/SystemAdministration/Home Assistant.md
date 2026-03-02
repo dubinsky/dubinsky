@@ -102,7 +102,8 @@ For the various USB dongles (Z-Wave, Zigbee, RTL) to be visible to the Home Assi
 #### ProxMox
 Just as running Home Assistant in a virtual machine is more convenient than managing its components manually, it is more convenient to run virtual machines using [[ProxMox]] than setting them up manually:
 - ProxMox takes care of the network setup that exposes the virtual machines to the local network using a [bridge](https://pve.proxmox.com/wiki/Network_Configuration#_default_configuration_using_a_bridge)
-- there are [community scripts](https://community-scripts.github.io/ProxmoxVE/) that automate setting up virtual machines, including one for the [Home Assistant](https://community-scripts.github.io/ProxmoxVE/scripts?id=haos-vm)
+- there are [community scripts](https://community-scripts.github.io/ProxmoxVE/) that automate setting up virtual machines,
+  including one for the [Home Assistant](https://community-scripts.github.io/ProxmoxVE/scripts?id=haos-vm).
 - ProxMox exposes a web-based management UI, so there is no need to run `virt-manager` UI over SSH
 
 ## Add-Ons and Integrations

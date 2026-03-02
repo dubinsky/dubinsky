@@ -11,21 +11,6 @@ There is a lot of extremely helpful scripts for installing various things on Pro
 # bash -c "$(wget -qLO - https://github.com/community-scripts/ProxmoxVE/raw/main/misc/post-pve-install.sh)"
 ```
 
-## UniFi
-
-In ProxMox shell, run the [community script](https://community-scripts.github.io/ProxmoxVE/scripts?id=unifi):
-```shell
-# bash -c "$(wget -qLO - https://github.com/community-scripts/ProxmoxVE/raw/main/ct/unifi.sh)"
-```
-## Home Assistant
-
-In ProxMox shell, run the [community script](https://community-scripts.github.io/ProxmoxVE/scripts?id=haos-vm):
-```shell
-# bash -c "$(wget -qLO - https://github.com/community-scripts/ProxmoxVE/raw/main/vm/haos-vm.sh)"
-```
-
-See also a nice [guide](https://www.derekseaman.com/2023/10/home-assistant-proxmox-ve-8-0-quick-start-guide-2.html).
-
 ## Running Docker Containers
 
 In ProxMox shell, run the [community script](https://community-scripts.github.io/ProxmoxVE/scripts?id=docker-vm):
@@ -86,68 +71,3 @@ UUID=<UUID> /mnt/data btrfs defaults 0 1
 ## mount
 # mount /mnt/data
 ```
-## PhotoPrism
-Did not have much luck with this one, but...
-
-In ProxMox shell, run the [community script](https://community-scripts.github.io/ProxmoxVE/scripts?id=photoprism):
-```
-$ bash -c "$(wget -qLO - https://github.com/community-scripts/ProxmoxVE/raw/main/ct/photoprism.sh)"
-```
-Mount directory with the original photos in the PhotoPrism container:
-```shell
-# pct set <container id> -mp0 /mnt/store/Pictures/originals,mp=/opt/photoprism/photos/originals
-```
-
-Log in: admin/changeme
-
-Library | Index
-  All originals
-  Complete Rescan
-  START
-
-## Emby
-Did not have much luck with this one, but...
-
-In ProxMox shell, run the [community script](https://community-scripts.github.io/ProxmoxVE/scripts?id=emby):
-```shell
-$ bash -c "$(wget -qLO - https://github.com/community-scripts/ProxmoxVE/raw/main/ct/emby.sh)"
-```
-
-Mount the file store in the Emby container:
-```shell
-# pct set <container id> -mp0 /mnt/store,mp=/mnt/store
-```
-
-## Jellyfin
-
-In ProxMox shell, run the [community script](https://community-scripts.github.io/ProxmoxVE/scripts?id=jellyfin):
-```shell
-$ bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/jellyfin.sh)"
-```
-
-## Booklore
-
-In ProxMox shell, run the [community script](https://community-scripts.github.io/ProxmoxVE/scripts?id=booklore):
-```shell
-$ bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/booklore.sh)"
-```
-
-Mount the file store in the Booklore container:
-```shell
-# pct set <container id> -mp0 /mnt/store/Books,mp=/mnt/store/Books
-```
-
-## Calibre Web
-In ProxMox shell, run the [community script](https://community-scripts.github.io/ProxmoxVE/scripts?id=calibre-web):
-```shell
-$ bash -c "$(curl -fsSL https://raw.githubusercontent.com/community-scripts/ProxmoxVE/main/ct/calibre-web.sh)"
-```
-
-Mount the file store in the Booklore container:
-```shell
-# pct set <container id> -mp0 /mnt/store/Books,mp=/mnt/store/Books
-```
-
-Initial admin credentials: admin/admin123
-
-"DB not writable" - and that is as it should be...

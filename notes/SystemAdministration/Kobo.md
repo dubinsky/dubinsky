@@ -53,11 +53,7 @@ So, to retain the ability to search *and* browse books by author one can not use
 With Calibre being the way to deliver the books to the device, attractiveness of web apps for me drops precipitously: I can not switch to the library management via web app, so nice features like better metadata retrievers, magic shelves and such are of no use.
 
 ## Conclusion
-Somewhat surprisingly, in 2026, even though e-readers are common for many years now, and even though numerous open-source projects in this area are available, you do not have much flexibility in your choice of the "reading stack":
-
-If you want to be able to search book metadata on your device *at all*:
+Somewhat surprisingly, in 2026, even though e-readers are common for many years now, and even though numerous open-source projects in this area are available, you do not have much flexibility in your choice of the "reading stack": if you use a Kobo device and want to be able to search book metadata on your device using a *non-Latin script*:
+- you *must* use KOReader to read your books.
 - you *must* use Calibre to put your books on your device;
 - web apps for managing your library are of not much value.
-
-If you want to be able to search book metadata on your device using a *non-Latin script*:
-- you *must* use KOReader to read your books.
