@@ -4,14 +4,14 @@
 
 [![](https://img.shields.io/badge/Code-Scala-critical?logo=Scala&logoColor=red)](https://www.scala-lang.org/)
 [![](https://img.shields.io/badge/Framework-ZIO-important?logo=zio&logoColor=red)](https://www.scala-lang.org/)
-[![](https://img.shields.io/badge/Build-Gradle-important?logo=Gradle)](https://gradle.org/)
-[![](https://img.shields.io/badge/IDE-Intellij-important?logo=intellij-idea)](https://www.jetbrains.com/idea/)
+[![](https://img.shields.io/badge/Build-Gradle-important?logo=Gradle&logoColor=blue)](https://gradle.org/)
+[![](https://img.shields.io/badge/IDE-Intellij-important?logo=intellij-idea&logoColor=blue)](https://www.jetbrains.com/idea/)
 [![](https://img.shields.io/badge/Code-Scala.js-important?logo=Scala&logoColor=red)](https://www.scala-js.org/)
 
 [![](https://img.shields.io/badge/Deploy-Docker-informational?logo=Docker)](https://www.docker.com/)
 [![](https://img.shields.io/badge/Cloud-GCP-informational?logo=google-cloud)](https://cloud.google.com/)
 [![](https://img.shields.io/badge/OS-Linux-informational?logo=linux)](https://www.linux.org/)
-[![](https://img.shields.io/badge/OS-Red_Hat-informational?logo=red-hat&logoColor=red)](https://getfedora.org/)
+[![](https://img.shields.io/badge/OS-Omarchy-informational?logo=omarchy)](https://getfedora.org/)
 
 ## Open Source Work ##
 
@@ -150,7 +150,8 @@ Archived:
   _[253](https://github.com/skevetter/devpod/pull/253)_,
   _[256](https://github.com/skevetter/devpod/pull/256)_,
   _[257](https://github.com/skevetter/devpod/pull/257)_,
-  _[528](https://github.com/skevetter/devpod/pull/528)_.
+  _[528](https://github.com/skevetter/devpod/pull/528)_,
+  [570](https://github.com/skevetter/devpod/issues/570).
 - [DevPod Community GCloud Provider](https://github.com/skevetter/devpod-provider-gcloud):
   _[2](https://github.com/skevetter/devpod-provider-gcloud/pull/2)_,
   _[27](https://github.com/skevetter/devpod-provider-gcloud/pull/27)_.
@@ -241,5 +242,5 @@ Archived:
 ## Proofreading ##
 
 Some of the corrections I suggested were accepted by the author of the (excellent!) book
-["Program = Proof"](https://www.lix.polytechnique.fr/Labo/Samuel.Mimram/teaching/INF551/course.pdf)
-by Samuel Mimram.
+["Program = Proof"](https://www.lix.polytechnique.fr/Labo/Samuel.Mimram/teaching/INF551/course.pdf),
+Samuel Mimram.
