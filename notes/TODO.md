@@ -3,13 +3,9 @@ title: TODO
 ---
 Fix humidifier.
 
-Peisach and Shinyavsky.
-
 Sonya and Roth.
 
-The guy from Sema's birthday.
-
-Shelves: 36"x72" - Ikea or HomeDepot?
+Bookcases: 36"x72" - Ikea or HomeDepot?
  - https://www.amazon.com/dp/B0F24BDRDV
  - https://www.amazon.com/dp/B0F24BDRDV
 

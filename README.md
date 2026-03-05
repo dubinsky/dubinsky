@@ -164,7 +164,8 @@ Archived:
   _[253](https://github.com/scalatest/scalatest-website/pull/253)_.
 - [MUnit](https://scalameta.org/munit/):
   _[918](https://github.com/scalameta/munit/pull/918)_,
-  _[968](https://github.com/scalameta/munit/pull/968)_.
+  _[968](https://github.com/scalameta/munit/pull/968)_,
+  [1075](https://github.com/scalameta/munit/issues/1075).
 - [specs2](https://etorreborre.github.io/specs2/):
   _[1327](https://github.com/etorreborre/specs2/pull/1327)_,
   [1352](https://github.com/etorreborre/specs2/issues/1352),
