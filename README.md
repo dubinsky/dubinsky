@@ -40,8 +40,8 @@ Archived:
 - [Scala.js](https://www.scala-js.org/):
   _[5132](https://github.com/scala-js/scala-js/pull/5132)_,
   _[5134](https://github.com/scala-js/scala-js/pull/5134)_,
-  [5199](https://github.com/scala-js/scala-js/issues/5199).
-- [Scala.js Website](https://www.scala-js.org):
+  [5199](https://github.com/scala-js/scala-js/issues/5199);
+  [Scala.js Website](https://www.scala-js.org):
   _[658](https://github.com/scala-js/scala-js-website/pull/658)_.
 - [Scala Native](https://scala-native.org/):
   _[4320](https://github.com/scala-native/scala-native/pull/4320)_,
@@ -80,18 +80,6 @@ Archived:
   [694](https://github.com/scala/scala-xml/discussions/694),
   [764](https://github.com/scala/scala-xml/discussions/764),
   [765](https://github.com/scala/scala-xml/discussions/765).
-- [Gradle](https://github.com/gradle/gradle):
-  [9885](https://github.com/gradle/gradle/issues/9855),
-  [15491](https://github.com/gradle/gradle/issues/15491#issuecomment-1003832976),
-  [16527](https://github.com/gradle/gradle/issues/16527),
-  _[18003](https://github.com/gradle/gradle/pull/18003)_,
-  [18001](https://github.com/gradle/gradle/pull/18001#issuecomment-899107656),
-  [18559](https://github.com/gradle/gradle/issues/18559),
-  [18248](https://github.com/gradle/gradle/pull/18248#issuecomment-946284352),
-  [18732](https://github.com/gradle/gradle/issues/18732),
-  _[24088](https://github.com/gradle/gradle/pull/24088)_,
-  _[32656](https://github.com/gradle/gradle/pull/32656)_,
-  [32666](https://github.com/gradle/gradle/issues/32666).
 - [ZIO](https://zio.dev/):
   _[9219](https://github.com/zio/zio/pull/9219)_,
   [9629](https://github.com/zio/zio/issues/9629),
@@ -120,6 +108,37 @@ Archived:
   _[2906](https://github.com/GoogleContainerTools/jib/pull/2906)_.
 - [http4s](https://github.com/http4s/http4s):
   [3565](https://github.com/http4s/http4s/issues/3565).
+- [Tapir](https://tapir.softwaremill.com/en/latest/):
+  _[2543](https://github.com/softwaremill/tapir/pull/2543)_.
+- [Gradle](https://github.com/gradle/gradle):
+  [9885](https://github.com/gradle/gradle/issues/9855),
+  [15491](https://github.com/gradle/gradle/issues/15491#issuecomment-1003832976),
+  [16527](https://github.com/gradle/gradle/issues/16527),
+  _[18003](https://github.com/gradle/gradle/pull/18003)_,
+  [18001](https://github.com/gradle/gradle/pull/18001#issuecomment-899107656),
+  [18559](https://github.com/gradle/gradle/issues/18559),
+  [18248](https://github.com/gradle/gradle/pull/18248#issuecomment-946284352),
+  [18732](https://github.com/gradle/gradle/issues/18732),
+  _[24088](https://github.com/gradle/gradle/pull/24088)_,
+  _[32656](https://github.com/gradle/gradle/pull/32656)_,
+  [32666](https://github.com/gradle/gradle/issues/32666).
+- [Asciidoctor Gradle plugin](https://github.com/asciidoctor/asciidoctor-gradle-plugin):
+  [658](https://github.com/asciidoctor/asciidoctor-gradle-plugin/issues/658#issuecomment-1637346784),
+  [709](https://github.com/asciidoctor/asciidoctor-gradle-plugin/issues/709#issuecomment-2146117002),
+  [726](https://github.com/asciidoctor/asciidoctor-gradle-plugin/pull/726#issuecomment-2146131724).
+- [Bintray Gradle Plugin](https://github.com/bintray):
+  [329](https://github.com/bintray/gradle-bintray-plugin/issues/329).
+- [SASS Gradle plugin](https://github.com/EtienneMiret/sass-gradle-plugin):
+  [28](https://github.com/EtienneMiret/sass-gradle-plugin/issues/28).
+- [IntelliJ IDEA Scala Plugin](https://github.com/JetBrains/intellij-scala):
+  [SCL-24127](https://youtrack.jetbrains.com/issue/SCL-24127/Scala-Test-Inconsistencies),
+  [SCL-24128](https://youtrack.jetbrains.com/issue/SCL-24128/Support-shared-sources-for-Gradle-not-just-sbt).
+- [JetBrains Gateway](https://www.jetbrains.com/remote-development/gateway/):
+  [GTW-732](https://youtrack.jetbrains.com/issue/GTW-732).
+- [IntelliJ IDEA](https://www.jetbrains.com/idea/):
+  [IJPL-63403](https://youtrack.jetbrains.com/issue/IJPL-63403/SSH-default-port-missing-with-OpenSSH-config),
+  [IDEA-383958](https://youtrack.jetbrains.com/projects/IDEA/issues/IDEA-383958/SSH-integration-does-not-query-the-SSH-agent-for-SSH-keys-stored-on-hardware-tokens-e.g.-YubiKey),
+  [IJPL-226400](https://youtrack.jetbrains.com/projects/GTW/issues/IJPL-226400/Remote-Gateway-desktop-file-is-broken-Gateway-does-not-start).
 - [Omarchy](https://omarchy.org/):
   [3368](https://github.com/basecamp/omarchy/discussions/3368).
 - [Besom](https://virtuslab.github.io/besom/):
@@ -160,8 +179,8 @@ Archived:
   _[1107](https://github.com/typelevel/scalacheck/pull/1107)_,
   _[1117](https://github.com/typelevel/scalacheck/pull/1117)_.
 - [ScalaTest](https://www.scalatest.org/):
-  [2357](https://github.com/scalatest/scalatest/issues/2357).
-- [ScalaTest website](https://www.scalatest.org):
+  [2357](https://github.com/scalatest/scalatest/issues/2357);
+  [ScalaTest website](https://www.scalatest.org):
   _[253](https://github.com/scalatest/scalatest-website/pull/253)_.
 - [MUnit](https://scalameta.org/munit/):
   _[918](https://github.com/scalameta/munit/pull/918)_,
@@ -190,23 +209,6 @@ Archived:
   _[300](https://github.com/hedgehogqa/scala-hedgehog/pull/300)_.
 - [scalaprops](https://github.com/scalaprops/scalaprops):
   [530](https://github.com/scalaprops/scalaprops/issues/530).
-- [Asciidoctor Gradle plugin](https://github.com/asciidoctor/asciidoctor-gradle-plugin):
-  [658](https://github.com/asciidoctor/asciidoctor-gradle-plugin/issues/658#issuecomment-1637346784),
-  [709](https://github.com/asciidoctor/asciidoctor-gradle-plugin/issues/709#issuecomment-2146117002),
-  [726](https://github.com/asciidoctor/asciidoctor-gradle-plugin/pull/726#issuecomment-2146131724).
-- [Bintray Gradle Plugin](https://github.com/bintray):
-  [329](https://github.com/bintray/gradle-bintray-plugin/issues/329).
-- [SASS Gradle plugin](https://github.com/EtienneMiret/sass-gradle-plugin):
-  [28](https://github.com/EtienneMiret/sass-gradle-plugin/issues/28).
-- [IntelliJ IDEA Scala Plugin](https://github.com/JetBrains/intellij-scala):
-  [SCL-24127](https://youtrack.jetbrains.com/issue/SCL-24127/Scala-Test-Inconsistencies),
-  [SCL-24128](https://youtrack.jetbrains.com/issue/SCL-24128/Support-shared-sources-for-Gradle-not-just-sbt).
-- [JetBrains Gateway](https://www.jetbrains.com/remote-development/gateway/):
-  [GTW-732](https://youtrack.jetbrains.com/issue/GTW-732).
-- [IntelliJ IDEA](https://www.jetbrains.com/idea/):
-  [IJPL-63403](https://youtrack.jetbrains.com/issue/IJPL-63403/SSH-default-port-missing-with-OpenSSH-config),
-  [IDEA-383958](https://youtrack.jetbrains.com/projects/IDEA/issues/IDEA-383958/SSH-integration-does-not-query-the-SSH-agent-for-SSH-keys-stored-on-hardware-tokens-e.g.-YubiKey),
-  [IJPL-226400](https://youtrack.jetbrains.com/projects/GTW/issues/IJPL-226400/Remote-Gateway-desktop-file-is-broken-Gateway-does-not-start).
 - [GitHub Commit Action](https://github.com/github-actions-x/commit):
   [2](https://github.com/github-actions-x/commit/issues/2),
   [16](https://github.com/github-actions-x/commit/issues/16).
@@ -220,8 +222,6 @@ Archived:
   _[22](https://github.com/owo-lang/intellij-dtlc/pull/22)_.
 - [Home Assistant](https://github.com/home-assistant):
   [126447](https://github.com/home-assistant/core/issues/126447).
-- [Tapir](https://tapir.softwaremill.com/en/latest/):
-  _[2543](https://github.com/softwaremill/tapir/pull/2543)_.
 - [JEuclid](https://github.com/rototor/jeuclid):
  _[5](https://github.com/rototor/jeuclid/pull/5)_.
 - [CETEIcean](https://github.com/TEIC/CETEIcean):
