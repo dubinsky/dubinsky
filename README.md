@@ -151,7 +151,6 @@ Archived:
   _[256](https://github.com/skevetter/devpod/pull/256)_,
   _[257](https://github.com/skevetter/devpod/pull/257)_,
   _[528](https://github.com/skevetter/devpod/pull/528)_,
-  [570](https://github.com/skevetter/devpod/issues/570),
   [571](https://github.com/skevetter/devpod/issues/571).
 - [DevPod Community GCloud Provider](https://github.com/skevetter/devpod-provider-gcloud):
   _[2](https://github.com/skevetter/devpod-provider-gcloud/pull/2)_,
