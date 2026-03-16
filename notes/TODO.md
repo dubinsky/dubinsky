@@ -1,7 +1,11 @@
 ---
 title: TODO
 ---
-Fix humidifier.
+- Return CPAP
+- call gastroenterologist health associates at NW: 617-969-1227
+- get a health insurance broker
+- Nina's card: AirB&B, Instacard, Wallet, Bitwarden, Chrome, Uber
+- Fix humidifier.
 
 Sonya and Roth.
 

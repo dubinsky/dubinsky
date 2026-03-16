@@ -10,7 +10,6 @@ There is a lot of extremely helpful scripts for installing various things on Pro
 ```shell
 # bash -c "$(wget -qLO - https://github.com/community-scripts/ProxmoxVE/raw/main/misc/post-pve-install.sh)"
 ```
-
 ## Running Docker Containers
 
 In ProxMox shell, run the [community script](https://community-scripts.github.io/ProxmoxVE/scripts?id=docker-vm):
@@ -28,12 +27,15 @@ In ProxMox shell:
 # lvcreate -V1T -T pve/data -n store
 # mkfs.ext4 /dev/mapper/pve-store
 # mkdir /mnt/store
-# mount /dev/pve/store /mnt/store # does not persist
 ```
 
 In `/etc/fstab` on ProxMox, add:
-```
+```fstab
 /dev/pve/store /mnt/store ext4 0 1
+```
+And then mount:
+```shell
+# mount /mnt/store
 ```
 
 To [mount](https://pve.proxmox.com/wiki/Linux_Container#_bind_mount_points) a directory from the host in a container, in the ProxMox shell:
@@ -48,7 +50,7 @@ I perused:
 - [ProxMox BTRFS documentation](https://pve.proxmox.com/wiki/BTRFS)
 - [Create Btrfs Storage Pool on Proxmox Manually](https://blog.fernvenue.com/archives/create-btrfs-storage-pool-on-proxmox-manually/)
 
-If at some point I decide to add my RAID as srorage to ProxMox:
+If at some point I decide to add my RAID as storage to ProxMox:
 - [Storage](https://pve.proxmox.com/wiki/Storage)
 - [Storage: Directory](https://pve.proxmox.com/wiki/Storage:_Directory)
 - [Storage: BTRFS](https://pve.proxmox.com/wiki/Storage:_BTRFS)

@@ -173,12 +173,14 @@ Archived:
   [571](https://github.com/skevetter/devpod/issues/571),
   _[602](https://github.com/skevetter/devpod/pull/602)_,
   _[605](https://github.com/skevetter/devpod/pull/605)_,
-  [606](https://github.com/skevetter/devpod/issues/606).
+  [606](https://github.com/skevetter/devpod/issues/606),
+  _[615](https://github.com/skevetter/devpod/pull/615)_.
 - [DevPod Community GCloud Provider](https://github.com/skevetter/devpod-provider-gcloud):
   _[2](https://github.com/skevetter/devpod-provider-gcloud/pull/2)_,
   _[27](https://github.com/skevetter/devpod-provider-gcloud/pull/27)_,
   _[34](https://github.com/skevetter/devpod-provider-gcloud/pull/34)_,
-  _[35](https://github.com/skevetter/devpod-provider-gcloud/pull/35)_.
+  _[35](https://github.com/skevetter/devpod-provider-gcloud/pull/35)_,
+  _[44](https://github.com/skevetter/devpod-provider-gcloud/pull/44)_.
 - [DevPod Community AWS Provider](https://github.com/skevetter/devpod-provider-aws):
   _[82](https://github.com/skevetter/devpod-provider-aws/pull/82)_.
 - [ScalaCheck](https://scalacheck.org):
