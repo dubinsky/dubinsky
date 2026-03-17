@@ -2,7 +2,7 @@
 title: Scala
 ---
 - [Magic Tricks with Functional Effects by John A. De Goes - YouTube](https://www.youtube.com/watch?v=xpz4rf1RS8c&ab_channel=BeeScala)
-- [ ] [[TODO]] [[learn]] Optics
+- [ ] [[TODO]] learn Optics
   - https://github.com/julien-truffaut/Monocle
   - https://kubuszok.com/2018/adt-through-the-looking-glass/
   - current state of affairs? 
@@ -21,7 +21,5 @@ title: Scala
   - [Explicit Term Inference with Scala 3](https://www.scala-lang.org/2020/11/06/explicit-term-inference-in-scala-3.html)
   - [Notes on Category Theory in Scala 3](https://typista.org/categories-in-dotty/)
   - [Monad is just...](https://blog.rockthejvm.com/monads-are-monoids-in-the-category-of-endofunctors/)
-- [ ] [[TODO]] [[learn]] Scala.js
-  - https://www.scalawilliam.com/importance-scalajs/
-- [ ] [[TODO]] [[learn]] Magnolia
-- [ ] [[TODO]] [[learn]] Laminar
+- [ ] [[TODO]] learn Magnolia
+- [ ] [[TODO]] learn Laminar

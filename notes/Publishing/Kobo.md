@@ -81,3 +81,72 @@ The *real* deal-breaker with OPDS is two-fold:
 So, to retain the ability to search *and* browse books by author one can not use OPDS and must use Calibre to put the books on the device. Of course, this also removes the one-book-at-a-time restriction ;)
 
 With Calibre being the way to deliver the books to the device, attractiveness of web apps for me drops precipitously: I can not switch to the library management via web app, so nice features like better metadata retrievers, magic shelves and such are of no use.
+
+## Syncthing
+
+https://guissmo.com/blog/how-to-install-syncthing-on-a-kobo/
+
+Connect Kobo to and put public SSH key into KOBO/run/media/dub/KOBOeReader/.adds/koreader/settings/SSH/authorized_keys
+
+On Kobo, run KOReader
+- Cog | Network | check "Wi-Fi Connection"
+- Cog | Network | SSH Server:
+	- check "Login without password"
+	- check "SSH server"
+	- note the IP address: *address*
+
+Prepare certificates:TODO this is probably not needed; verify
+- ssh root@*address* -p 2222
+	- mkdir /etc/ssl
+	- mkdir /etc/ssl/certs
+- scp -P /etc/ssl/certs/ca-certificates.crt root@IP address:/etc/ssl/certs/
+
+Install syncthing:
+- download the [syncthing](https://syncthing.net/downloads/) for Linux ARM (32‑bit) and unpack it
+- scp -P 2222 syncthing root@IP address:/mnt/onboard/.adds/
+- ssh root@*address* -p 2222
+	- ip link set lo up (for some reason, it was not up)
+	- run syncthing
+- scp -P 2222 config.xml root@*address*:/.local/state/syncthing/config.xml
+- change gui/address to from 127.0.0.1:8384 to 0.0.0.0:8384
+- ssh root@*address* -p 2222
+	- run syncthing
+
+Configure the sync:
+- browse to http://address:8384 - syncthing UI
+	- set user/password (dub/whatwhen)
+	- set the default folder to /mn/onboard/SyncThing
+	- add device to sync from
+	- auto-accept the folders
+- start syncthing; in its UI:
+	- add kobo device
+	- share folders
+
+On Kobo:
+`/mnt/onboard/.adds/scripts/syncthing-start`:
+```shell
+#!/bin/sh
+/mnt/onboard/.adds/syncthing serve &
+```
+`/mnt/onboard/.adds/scripts/syncthing-stop`:
+```shell
+#!/bin/sh
+/usr/bin/pkill syncthing
+```
+`/mnt/onboard/.adds/nm/syncthing`:
+```
+menu_item :main    :Start Syncthing    :cmd_spawn         :quiet :exec /mnt/onboard/.adds/scripts/syncthing-start
+  chain_always                         :nickel_setting    :enable :force_wifi
+  chain_always                         :nickel_wifi       :enable
+  chain_always                         :nickel_wifi       :autoconnect_silent
+  chain_success                        :cmd_spawn         :quiet :exec /mnt/onboard/.adds/scripts/syncthing-start
+menu_item :main    :Stop Syncthing     :cmd_spawn         :quiet :exec /mnt/onboard/.adds/scripts/syncthing-stop
+  chain_always                         :nickel_setting    :disable :force_wifi
+  chain_always                         :nickel_wifi       :disable
+```
+
+Authors of PDF files are displayed badly on Kobo!!
+
+Authors of EPUBs are also not great when not processed by Calibre - can I make it write the metadata into the file itself? Otherwise, syncthing is unusable for epubs...
+
+There seems to be no good way to set author names with titles so that they display correctly both on Kobo (FN LN) and in Calibre (where I use LN FN)...

@@ -96,6 +96,9 @@ Archived:
 - [ZIO Schema](https://github.com/zio/zio-schema):
   [667](https://github.com/zio/zio-schema/issues/667),
   [668](https://github.com/zio/zio-schema/issues/668).
+- [ZIO Blocks](https://github.com/zio/zio-blocks):
+  _[1262 (markdown)](https://github.com/zio/zio-blocks/pull/1262)_,
+  _[1263 (markdown)](https://github.com/zio/zio-blocks/pull/1263)_.
 - [XMLResolver](https://github.com/ndw/xmlresolver):
   _[28](https://github.com/ndw/xmlresolver/pull/28)_,
   [44](https://github.com/xmlresolver/xmlresolver/issues/44),
@@ -174,7 +177,9 @@ Archived:
   _[602](https://github.com/skevetter/devpod/pull/602)_,
   _[605](https://github.com/skevetter/devpod/pull/605)_,
   [606](https://github.com/skevetter/devpod/issues/606),
-  _[615](https://github.com/skevetter/devpod/pull/615)_.
+  _[615](https://github.com/skevetter/devpod/pull/615)_,
+  [623](https://github.com/skevetter/devpod/issues/623),
+  [624](https://github.com/skevetter/devpod/issues/624).
 - [DevPod Community GCloud Provider](https://github.com/skevetter/devpod-provider-gcloud):
   _[2](https://github.com/skevetter/devpod-provider-gcloud/pull/2)_,
   _[27](https://github.com/skevetter/devpod-provider-gcloud/pull/27)_,

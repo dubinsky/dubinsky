@@ -5,4 +5,7 @@ disabled rules:
 tags:
   - sysadmin
 ---
-[Desktop](Desktop/index)
+
+Google Archive Storage Backup (kopia?)
+
+Naked domains for alter-rebbe.org etc.

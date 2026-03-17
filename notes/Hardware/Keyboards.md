@@ -21,7 +21,7 @@ https://github.com/zsa/wally/wiki/Live-training-on-Linux
   - ERGO Flasher: [Keymapp](https://www.zsa.io/flash/)
   - [How to Clip, Lube, and Band-aid Mod Your Stabilizers - YouTube](https://www.youtube.com/watch?v=cD5Zj-ZgMLA)
   - https://www.youtube.com/watch?v=wEcqU1RioHk&feature=youtu.be&ab_channel=GeekLevelAsianTech
-  - [ ] [[TODO]] [[learn]] touch-typing 
+  - [ ] [[TODO]] learn touch-typing 
   - [Nyquist](https://trello.com/b/lQHFmTS3/keebio-status)
   - [MechCables](https://mechcables.com/)    [King Cables](https://www.kingcables.org/products/custom-trrs-cable-1)    [CustomCable](https://www.etsy.com/shop/CustomCableCo?ref=search_shop_redirect)
   - [Kinesis](https://kinesis-ergo.com/keyboards/advantage360/#buy-now)

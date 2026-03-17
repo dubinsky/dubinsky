@@ -1,7 +1,7 @@
 ---
 title: Logic
 ---
-[[learn]]
+[[TODO]] learn:
 
 - [Open Logic Project – Open Source, Customizable, Advanced Logic Text](https://openlogicproject.org/)
 - [Impredicativity](https://en.wikipedia.org/wiki/Impredicativity)
