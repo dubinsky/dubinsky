@@ -22,7 +22,7 @@ title: Types
   - [What is an explicit bijection? - Bauer](http://videolectures.net/FPSAC2019_bauer_explicit_bijection/)
 - [The visitor pattern is essentially the same thing as Church encoding](https://www.haskellforall.com/2021/01/the-visitor-pattern-is-essentially-same.html)
 - Type Theory
-  - [I don't like judgemental equality - Martin Escardo](![](https://twitter.com/EscardoMartin/status/1608577126546157568))
-  - [Proof by contradiction - Martin Escardo](![](https://twitter.com/EscardoMartin/status/1587183814085935106))
+  - [I don't like judgemental equality - Martin Escardo](https://twitter.com/EscardoMartin/status/1608577126546157568)
+  - [Proof by contradiction - Martin Escardo](https://twitter.com/EscardoMartin/status/1587183814085935106)
   - [ON THE MEANINGS OF THE LOGICAL CONSTANTS AND THE JUSTIFICATIONS OF THE LOGICAL LAWS - Per Martin Löf](https://ncatlab.org/nlab/files/MartinLofOnTheMeaning96.pdf)
   - [How did 'judgement' come to be a term of logic? - Per Martin Löf](https://www.youtube.com/watch?v=FGUzgcLXNuk)

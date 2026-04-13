@@ -41,7 +41,7 @@ object SocialSecurity:
     firstAdjustment + afterAdjustment
 
   def main(args: Array[String]): Unit =
-    val file = File("./notes/Social Security.md")
+    val file = File("./notes/Money/Social Security.md")
     Files.write(file, Files.spliceMarkdown(Files.read(file), "breakeven table", breakEvenTable.markdown))
 
   private val old: Int = 95

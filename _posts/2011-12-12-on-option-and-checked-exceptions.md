@@ -37,20 +37,20 @@ implicit conversion to one of the two settings?)
 Then, Dick mentioned that checked exceptions are looked upon with disfavor by the community. Personally, I am not
 completely convinced that checked exceptions are so evil, but I feel the pain that they bring in some settings.
 The question I had at this point in Dick's presentation was a question of consistency: if it is a good idea to force the
-programmer to deal with special situations explicitly in case of the Option/null, why <u>isn't</u> it a good idea in
+programmer to deal with special situations explicitly in case of the Option/null, why _isn't_ it a good idea in
 case of checked/unchecked exceptions? Checked exceptions are analogous to Option, unchecked - to null, so if you prefer
 Option to null, you can not - at the first glance - favor unchecked exceptions over checked ones! Yet "the community",
 Dick, and - in part - I do! Are we being inconsistent?!
 
 This is when Bill had the insight:
 
-Since the <u>idea</u> of an exception is to divert control from the code where special situation occurred to the code
+Since the _idea_ of an exception is to divert control from the code where special situation occurred to the code
 where something can reasonably be done about it, - in other words, shield the programmer from the need to deal with  an
 exception that he can not handle - it stands to reason that the programmer should be shielded from the need to
-<u>know</u> about the <u>possibility</u> of the exception also! Thus, exceptions should <u>always</u> be unchecked!
+_know_ about the _possibility_ of the exception also! Thus, exceptions should _always_ be unchecked!
 
-In other words, forcing the programmer to <u>be explicit</u> about the handling of special situations does make sense if
-it is the programmer's responsibility to <u>deal</u> with them - thus, Option is a better alternative to nulls - but not
+In other words, forcing the programmer to be _explicit_ about the handling of special situations does make sense if
+it is the programmer's responsibility to _deal_ with them - thus, Option is a better alternative to nulls - but not
 where it is not. So, preferring unchecked exceptions to the checked ones is not just a logically consistent position -
 it is the only one!
 
@@ -63,15 +63,15 @@ exceptions" :))
 Dick went on to suggest that exceptions should be abandoned altogether, and replaced by Either: either a value, or a
 reason for the failure to produce one. This approach is trivially consistent with the idea of forcing the explicit
 handling of the special situations (as exemplified by Option), but I do not think that it is a viable alternative to
-exceptions: often, you <u>do</u> want to jump over a bunch of layers of code and deliver the exception to a handler
+exceptions: often, you _do_ want to jump over a bunch of layers of code and deliver the exception to a handler
 directly.
 
 On the other hand, Either does seems to be conceptually equivalent - and arguably syntactically better - alternative to
-<u>checked</u> exception! If you do not want to jump over code, but want to propagate the failure reason and force the
+_checked_ exception! If you do not want to jump over code, but want to propagate the failure reason and force the
 programmer to deal with it explicitly - Either seems to be cleaner than checked exceptions (which we do not have in
 Scala anyway :)).
 
-(Either <u>is</u> (I think) used in Haskell l to represent exceptions, but jumping over stack frame is not really an
+(Either _is_ (I think) used in Haskell l to represent exceptions, but jumping over stack frame is not really an
 option in a purely functional setting :) Also, the pain of explicit propagation of the Either values is alleviated by
 monads and syntax sugar, if memory serves.)
 

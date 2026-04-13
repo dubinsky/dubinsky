@@ -2,7 +2,7 @@
 title: Bloop
 tags: [scala, gradle]
 ---
-- [plug](![](https://twitter.com/hmemcpy/status/1320661670683959296))
+- [plug](https://twitter.com/hmemcpy/status/1320661670683959296)
 - [install](https://scalacenter.github.io/bloop/setup#universal)
 - [add to Gradle project](https://scalacenter.github.io/bloop/docs/build-tools/gradle)
 - [integrate with IntelliJ](https://scalacenter.github.io/bloop/docs/ides/intellij)

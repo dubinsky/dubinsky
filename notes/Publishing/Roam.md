@@ -22,10 +22,10 @@ History:
 - [ ] add DNS URL redirect for roam.dub.podval.org  
 - [PDF Highliting!](https://cwhitesullivan.lt.acemlna.com/Prod/link-tracker?redirectUrl=aHR0cHMlM0ElMkYlMkZ3d3cueW91dHViZS5jb20lMkZ3YXRjaCUzRnYlM0QteVZxUXFVRUhLSSUyNmFiX2NoYW5uZWwlM0RDQ0M=&a=66602312&account=cwhitesullivan%2Eactivehosted%2Ecom&email=6kuVu95DEBySs6GDBSi84A%3D%3D&s=04fb52eac0167cace592d38d91f22817&i=219A1123A17A2496)
 - Tutorials
-  - 100 Tips: [video](https://t.co/nwUYoeZUsA?amp=1); [thread](![](https://twitter.com/MarcKoenig_/status/1361457957431615488)). [overview](https://youtu.be/28yMr1NHseY)
+  - 100 Tips: [video](https://t.co/nwUYoeZUsA?amp=1); [thread](https://twitter.com/MarcKoenig_/status/1361457957431615488). [overview](https://youtu.be/28yMr1NHseY)
   - [Video tutorial by anonym.s](https://www.youtube.com/channel/UCS2Dh3N7QpuZP6LLhUMkMqQ)
     - [ ] watch again 
-  - [Back to the basics](![](https://twitter.com/roamhacker/status/1317084875409756160)) by @RoamHacker
+  - [Back to the basics](https://twitter.com/roamhacker/status/1317084875409756160) by @RoamHacker
   - [Zettelkasten in Roam](https://www.roambrain.com/implementing-zettelkasten-in-roam/)
 - [Change Log](https://roamresearch.com/#/app/help/page/dxTi-iUs2)
 

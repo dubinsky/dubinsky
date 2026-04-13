@@ -1,3 +1,5 @@
+targetDirectoryName: "__site"
+
 title: "Проджеки и мысли"
 author: "Leonid Dubinsky"
 email: dub@podval.org
@@ -26,13 +28,14 @@ plugins:
   - jekyll-wikirefs
 
 exclude:
-  - CNAME
-  - Gemfile
-  - Gemfile.lock
-  - .idea
-  - .obsidian
-  - vendor
+  - build.gradle
   - bundle
+#  - CNAME
+  - gradle
+  - gradlew
+  - gradlew.bat
+  - settings.gradle
+  - src
 
 # see https://github.com/jekyll/minima/issues/709
 sass:
