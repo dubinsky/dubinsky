@@ -1,6 +1,10 @@
 ---
 title: Torah Questions
 ---
+## Chumash
+
+### Bereishis
+
 - 18:1 Why is "he saw" repeated?
 - Angels do multiple things in the Lot/Sodom story.
 - Lot convinced the angels not to destroy Zohar - but they are not supposed to have freedom of choice?
@@ -9,7 +13,6 @@ title: Torah Questions
 - Rashi 19:24 - "rain down food" - also rain first, like with the brimstone on Sodom?
 - 20:8 why did Avimelech tell everybody before returning Sarah?
 - 21:17 In what sense was Ishmael a tzadik when he already went off the way in all three ways?
-- Тания 19 мархешвана: "как смотрящий на солнце через чистое стекло" - seriously?!
 - 23:20 does not add anything to 23:17.
 - 24:10 duplicate "and he went".
 - 27:3 Ицхок велел Эсаву наточить нож, чтобы еда была не падалью. Как помогает заточка лука?
@@ -18,14 +21,27 @@ title: Torah Questions
 - 43:15 Why the money that was returned to them is not mentioned here - unlike in 43:12?
 - 44:20 Ранше Раши упоминал претензии Иосифа к ратьям - "вы ищете брата", а тут - "если сказать, что он жив, заставит привести".
 - 45:3 братья переживают, что продали Иосифа, а в 45:4 он им доказывает, что он Иосиф, демонстрируя обещание?
-- Исход
+
+### Exodus
 - 4:11 Откуда вино, что немой/глухой/слепой - из этой истории, а не абстрактно?
 - 4:14 по Раши, Моисей знал, что не войдёт в землю?!
-- Таня, глава 18: как уровень души может зависеть от поступков?
-- Исход 12:22 Почему не выходить из дому? Ведь обещано уже, что среди воеев жертв не будет ("лохем")?
+- 12:22 Почему не выходить из дому? Ведь обещано уже, что среди воеев жертв не будет ("лохем")?
 - 21:35 Why does ashi need to explain that the ox belongs to the man, not fired the nan, when this becomes obvious before the sentence ends?
-- Исход 36:24-15 Зачем колчество шкурок - 12 - повторяется дважды?
+- 36:24-15 Зачем колчество шкурок - 12 - повторяется дважды?
+### Leviticus
+- 20:5 It seems that Molech form of worship is punished even when addressed to a different idol; why is it not listed as a universal form of idol worship together with wine-pouring and the rest?
+
+### Deuteronomy
+- 1:37. Моисей говорит, что причина его нахождения в святую землю - разведчики. Раши молчит.
+
+## Tanya
+- 19 мархешвана: "как смотрящий на солнце через чистое стекло" - seriously?!
+- глава 18: как уровень души может зависеть от поступков?
+- Глава 20: К чему дискурс про то, где букв нет и где они уже есть?
+- Первое письмо, в конце: "(в отличии от праздников) Суббота - вся Б-гу... Поэтому а Субботы и праздники...'
+- Письмо 15, стр. 242. "Воды а дереве - минимум". 1) В чем проблема если не минимум? 2) И ведь не минимум...
+
+## Rambam
 - Рамбам, введение: почему цеочка традиции повторяется в анти хронологическом направлении - что мы из нее учим? И почему в повторе - в отличии от прямого излоегия - иногда отчества упоминаются при втором вхождении, а иногда не упоминаются при первом?
 - Рамбам, Основы, 6:4: с чем спорит Райвад, если у Рамбама так и написано?
 - Рамбам, Идолопоклонсто 3:3: зачем отдельно сказано насчёт поклонов если все учится из резки?
-- Liviticus 20:5 It seems that Molech form of worship is punished even when addressed to a different idol; why is it not listed as a universal form of idol worship together with wine-pouring and the rest?

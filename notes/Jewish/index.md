@@ -17,6 +17,8 @@ TODO buy books:
 - Beis Habhira (Meiri)
 - 3rd volume of the Memoirs
 - Avrom Mayor's biography "Father to so many Hasidim"
+- Jewish fold-out timelines
+- Buy Gorkin's Siddur
 
 TODO publish:
 - [ ] on learning Judaism

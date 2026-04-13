@@ -212,7 +212,7 @@ Visible:
 - UI tries to call "dpkg"!
 - When JetBrains Gateway is started from the UI, SSH connection dialog pops up - but not from the CLI...
 - Where can I see that --single-machine was set (`devpod provider use gcloud --single-machine`)? It should be an option, not a flag, and on the context, not provider!
-- for the provider name in add, delete, rename, options, set_options, update, use look at `--provider
+- for the provider name in add, delete, rename, options, set_options, update, look at `--provider
 - for provider add `--name` option, look at `--provider`; deprecate `--name`
 - for provider add, use name as source
 
