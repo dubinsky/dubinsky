@@ -4,6 +4,8 @@ title: lambda-calculus
 math: true
 ---
 
+[[TODO]] Jekyll renders some of the LaTeX thingies incorrectly, with the dollar sign visible
+
 ## Untyped lambda-calculus ##
 
 Assuming infinite (countable) set Variable of variables (x, y, ...),
@@ -21,35 +23,35 @@ Variable x in λx.t is _bound_; variable than is not bound is _free_;
 term with no free variables is _closed_.
 
 _χ-reduction_ is the least binary relation on terms
-such that when t →<sub>χ</sub> t' then also:
-- λx.t →<sub>χ</sub> λx.t' (ξ-reduction);
-- tu →<sub>χ</sub> t'u (congruence);
-- ut →<sub>χ</sub> ut' (congruence)
+such that when $t →_χ t'$ then also:
+- $λx.t →_χ λx.t'$ (ξ-reduction);
+- $tu →_χ t'u$ (congruence);
+- $ut →_χ ut'$ (congruence)
 
 and:
-- α-reduction: λx.t →<sub>α</sub> λy.t', where t' is t with all free occurrences of x
+- α-reduction: $λx.t →_α λy.t'$, where t' is t with all free occurrences of x
 renamed to y;
-- β-reduction: (λx.t)u →<sub>β</sub> t', where t' is t with all free occurrences of x
+- β-reduction: $(λx.t)u →_β t'$, where t' is t with all free occurrences of x
 replaced by u (_substitution_, t[u/x]);
-- η-reduction (extensionality): λx.t →<sub>η</sub> t.
+- η-reduction (extensionality): $λx.t →_η t$.
 
-if t →<sub>χ</sub> u, t is a χ-redex; _χ-expansion_ is a relation opposite to →<sub>χ</sub>;
-↠<sub>χ</sub> (multi-step reduction; reduction path) is the reflexive and transitive
-closure of →<sub>χ</sub>; ＝<sub>χ</sub> (χ-equivalence, χ-convertability) is the symmetric closure
-of ↠<sub>χ</sub>.
+if $t →_χ u$, t is a χ-redex; _χ-expansion_ is a relation opposite to $→_χ$;
+$↠_χ$ (multistep reduction; reduction path) is the reflexive and transitive
+closure of $→_χ$; $＝_χ$ (χ-equivalence, χ-convertability) is the symmetric closure
+of $↠_χ$.
 
 Term that can not be reduced is in _normal form_ (a _value_). Term t is _weekly
-normalizing_ if there exist a normal form u such that t ↠<sub>β</sub> u. Term is
+normalizing_ if there exist a normal form u such that $t ↠_β u$. Term is
 _strongly normalizing_ when every sequence of reductions will eventually produce a
 normal form. Not all terms a strongly normalizing (for example, Ω = (λx.xx)(λx.xx)
 reduces to itself), but (_confluence_, _Church-Rosser property_):
-if t ↠<sub>β</sub> u<sub>1</sub> and t ↠<sub>β</sub> u<sub>2</sub>,
-there exists such v that: u<sub>1</sub> ↠<sub>β</sub> v and u<sub>2</sub> ↠<sub>β</sub> v.
+if $t ↠_β u_1$ and $t ↠_β u_2$,
+there exists such v that: $u_1 ↠_β v$ and $u_2 ↠_β v$.
 
 When substituting a term for a bound variable, care needs to be taken not to
 accidentally "capture" a variable that is free in that term. This is a great pain
 for the implementers (who can't just say that terms are equivalence classes
-by ＝<sub>α</sub>), and various tricks were developed to ease it (de-Brujin
+by $＝_α$), and various tricks were developed to ease it (de-Brujin
 indices, Barendregt convention); we will say no more about it, and just assume
 that before substitution all variables that need to be distinct are given fresh names :)
 
@@ -58,16 +60,16 @@ that before substitution all variables that need to be distinct are given fresh 
 We can (and eventually will) _extend_ the calculus by adding new term forms together
 with the corresponding reduction rules. For example, for products,
 we can add three forms of terms -
-〈t<sub>1</sub>, t<sub>2</sub>〉, π<sub>1</sub> and π<sub>2</sub> and two
-β-reduction rules - π<sub>i</sub>〈t<sub>1</sub>, t<sub>2</sub>〉→<sub>β</sub> t<sub>i</sub>.
+$〈t_1, t_2〉$, $π_1$ and $π_2$ and two
+β-reduction rules - $π_i〈t_1, t_2〉→_β t_i$.
 
 It is also possible to just _encode_ common types and data structures in the untyped lambda calculus:
 - identity: I = λx.x
 - booleans: T = λxy.x; F = λxy.y
-- if-then-else: if = λbxy.bxy (if T t u ↠<sub>β</sub> t; if F t u ↠<sub>β</sub> u)
+- if-then-else: if = λbxy.bxy (if $T t u ↠_β t$; if $F t u ↠_β u$)
 - logical operations: and = λxy.xyF; or = λxy.xTy; nor = λx.xFT;
-- product and projections: pair = λxyb. if b x y; π<sub>1</sub> = λp.pT; π<sub>2</sub> = λp.pF
-(π<sub>i</sub>(pair t<sub>1</sub> t<sub>2</sub>) ↠<sub>β</sub> t<sub>i</sub>)
+- product and projections: pair = λxyb. if b x y; $π_1 = λp.pT$; $π_2 = λp.pF$
+($π_i (pair t_1 t_2) ↠_β t_i$)
 - Church numerals: **n** = λfx.f(f(...(fx))) where f is applied n times; **0** = λnfx.x
 - succ = λnfx.f(nfx)
 - add = λmnfx.m succ n; mul = λmnfx.m (add n) 0; exp = λmn.n (mul m) 1
@@ -78,7 +80,7 @@ It is also possible to just _encode_ common types and data structures in the unt
 
 ### Fixed points ###
 
-u is a _fixed point_ of term u if t u ↠<sub>β</sub> u; in lambda-calculus,
+u is a _fixed point_ of term u if $t u ↠_β u$; in lambda-calculus,
 **every** term has a fixed point, **and** there is a term Y (_fixed point combinator_)
 such that Yt is a fixed point of t! For example:
 - _Curry fixed point combinator_: Y = λf.(λx.f(xx))(λx.f(xx))

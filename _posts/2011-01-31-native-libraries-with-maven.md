@@ -56,7 +56,7 @@ Unpack the libraries from the dependencies, e.g.:
     </executions>            
 </plugin>
 ```
-The chosen phase has to be early enough to make the libraries available during "execute", "test" and "package" activities.<br />
+The chosen phase has to be early enough to make the libraries available during "execute", "test" and "package" activities.
 
 ### Set up unit tests ###
 

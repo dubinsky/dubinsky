@@ -43,7 +43,8 @@ blogger_orig_url: https://blog.dub.podval.org/2011/03/blog-post.html
 перьевыми ручками, мне важно, чтобы бумага с ними "дружила": была гладкой; не промокала насквозь; не приводила к
 растеканию линии вширь и т.д.
 
-<img height="150" src="http://ecx.images-amazon.com/images/I/31sTvnGhwIL._SL500_SS100_.jpg"/>
+![](http://ecx.images-amazon.com/images/I/31sTvnGhwIL._SL500_SS100_.jpg)
+
 [Rhodia Pad](http://www.exaclair.com/brands_rhodia.shtml)
 
 Из готовых тетрадок мне больше всего нравится бумага
@@ -54,7 +55,8 @@ blogger_orig_url: https://blog.dub.podval.org/2011/03/blog-post.html
 протекают насквозь, и вторая сторона становится непригодной для письма. Бумага это бывает, впрочем, разных цветов
 и - что для протекания более важно - весов, но пока всё, что я видел, работает с перьевыми ручками.
 
-<img src="https://us.moleskine.com/ccstore/v1/images/?source=/file/v1540515749100104048/products/gtin_9788883701658_01_1500x1500.jpg&height=300&width=300"/>
+![](https://us.moleskine.com/ccstore/v1/images/?source=/file/v1540515749100104048/products/gtin_9788883701658_01_1500x1500.jpg&height=300&width=300)
+
 [Moleskine](http://www.moleskinerie.com/)
 
 А вот в [Moleskine](http://en.wikipedia.org/wiki/Moleskine) бумага - не ахти, мягко говоря. А с тех пор, как они стали

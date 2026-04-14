@@ -27,8 +27,8 @@ blogger_orig_url: https://blog.dub.podval.org/2014/05/blog-post_27.html
 Вот тут написано, что отклонение от севера - 20 градусов:
 http://www.timeanddate.com/worldclock/distanceresult.html?p1=234&amp;p2=110
 
-> Практически я молюсь туда, куда вся община<br />
-> молится, то есть прямо на восток.<br />
+> Практически я молюсь туда, куда вся община
+> молится, то есть прямо на восток.
 
 Хача:
 Я знаю (догадываюсь) как община решала. Первые евреи в Сиэтл ехали через Калифорнию на телеге.
@@ -67,7 +67,7 @@ http://www.timeanddate.com/worldclock/distanceresult.html?p1=234&amp;p2=110
  it will get us to within +/- 20 or 30 degrees of facing Jerusalem,
  with or without Magnetic Declination compensation. So the most
  inexpensive of magnetic compasses will suffice since we move
- by that much and we're bound to face Jerusalem at some point.<br />
+ by that much and we're bound to face Jerusalem at some point.
 
 Не знаю, какой magnetic declination у Сиэтла, но 70 градусов - это не
 двадцать...
@@ -80,7 +80,7 @@ http://www.timeanddate.com/worldclock/distanceresult.html?p1=234&amp;p2=110
 например, пока речь идёт о Европе и т.п., но разные результаты в Америке.
 Моего понимания "мешулаш кадури" и Шулхан Аруха Алтер Ребе (симан 94)
 не хватает,
-чтобы уверенно сказать, считает ли он по большому кругу.<br />
+чтобы уверенно сказать, считает ли он по большому кругу.
 
 Хача:
 Во первых я померил куда у нас идут улицы в Сиэтле и оказалось, что они идут на 55 градусов а не 90, так что практически

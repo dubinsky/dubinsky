@@ -50,7 +50,7 @@ object SocialSecurity:
     final class GrowthColumn extends Table.Column[Int]:
       override def title: Any = "age claimed:"
       override def header(n: Int): Any = n match
-        case 0 => "portion of the benefits when claiming at 67:<br>growth"
+        case 0 => "portion of the benefits when claiming at 67:<br/>growth"
       override def value(growth: Int): Any = s"$growth%"
 
     final class AgeColumn(ageClaimed: Int) extends Table.Column[Int]:
@@ -60,7 +60,7 @@ object SocialSecurity:
       override def value(growth: Int): Any =
         val v: String = breakEven(early, ageClaimed, growth).getOrElse("x").toString
         val z: String = total(old, ageClaimed, growth)
-        s"$v<br>$z"
+        s"$v<br/>$z"
 
     Table(
       nHeaders = 1,
