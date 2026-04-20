@@ -30,7 +30,7 @@ the nested JARs! There is a enhancement [request](http://bugs.sun.com/view_bug.d
 years ago, and eventually this may start working as expected, but not yet.
 
 It turned out that I did not have to write my own classloader. P. Simon Tuffs already created  a wonderful solution:
-One-JAR™[http://one-jar.sourceforge.net/] classloader.
+[One-JAR™](http://one-jar.sourceforge.net/) classloader.
 
 I want to use java.util.ServiceLoader in my project, for dynamic discovery of service providers. I was worried about it
 not working with the One-Jar approach. Everything works just fine!

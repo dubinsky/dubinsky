@@ -73,3 +73,6 @@ UUID=<UUID> /mnt/data btrfs defaults 0 1
 ## mount
 # mount /mnt/data
 ```
+ ## Dynamic DNS
+
+I use `cloudflare-ddns` LXC.

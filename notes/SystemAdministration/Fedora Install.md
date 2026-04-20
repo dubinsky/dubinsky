@@ -128,7 +128,7 @@ GDevelop
 virsh net-autostart --network default --disable
 ```
 
-(see https://docs.openstack.org/mitaka/networking-guide/misc-libvirt.html)]
+(see https://docs.openstack.org/mitaka/networking-guide/misc-libvirt.html)
   
 ## Manually Install
 

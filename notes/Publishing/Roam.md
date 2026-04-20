@@ -68,7 +68,7 @@ History:
   - *italics*: `Ctrl-i` or `*italics*`
   - ==highlight==: `Ctrl-h` or `==highlight==`
   - ~~strikethrough~~: `~~strikethrough~~`
-  - ### heading: `Ctrl-Alt-1,2,3,0`
+  - ###-heading: `Ctrl-Alt-1,2,3,0`
   - attribute: `attribute::`
   - latex: $$E = mc^2$$ - `$$E = mc^2$$`
   - code: `if (2*2==4)`; also code blocks in different languages

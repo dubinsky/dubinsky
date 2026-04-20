@@ -1,0 +1,34 @@
+title: "Проджеки и мысли"
+description: Projects and thoughts
+timezone: "America/New_York"
+
+author:
+  name: "Leonid Dubinsky"
+  email: dub@podval.org
+
+target:
+  directory: "__site"
+  url: "http://dub.podval.org"
+
+header-pages:
+  - tags.html
+  - notes/index.md
+  # TODO re-create!  - days/index.md
+
+exclude:
+  - build.gradle
+  - bundle
+#  - CNAME
+  - gradle
+  - gradlew
+  - gradlew.bat
+  - settings.gradle
+  - src
+
+analytics:
+  google: UA-18415116-1
+
+social:
+  github:  dubinsky
+  twitter: leoniddubinsky
+  linkedin: leoniddubinsky

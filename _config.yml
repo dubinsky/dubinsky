@@ -1,5 +1,3 @@
-targetDirectoryName: "__site"
-
 title: "Проджеки и мысли"
 author: "Leonid Dubinsky"
 email: dub@podval.org
@@ -55,7 +53,7 @@ defaults:
 header_pages:
   - tags.html
   - notes/index.md
-  - days/index.md
+# TODO re-create!  - days/index.md
 
 # wikirefs plugin defaults
 wikilinks:

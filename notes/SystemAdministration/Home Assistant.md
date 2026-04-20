@@ -118,7 +118,7 @@ With Home Assistant installed in a virtual machine, adding add-ons is trivial. I
 - [Z-Wave JS](https://github.com/home-assistant/addons/tree/master/zwave_js)
 - [Jewish Calendar](https://www.home-assistant.io/integrations/jewish_calendar/)
 
-I also added [https://www.hacs.xyz/](HACS - Home Assistant Community Store).
+I also added [HACS - Home Assistant Community Store](https://www.hacs.xyz/).
 
 Integrations I use:
 - ESPHome

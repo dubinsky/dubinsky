@@ -2,7 +2,8 @@
 title: Jekyll
 ---
 
-I did some re-organazing of my notes March 2026, and started getting:
+I did some re-organizing of my notes March 2026, and started getting:
+
 ```text
 /usr/lib/ruby/gems/3.4.0/gems/jekyll-wikirefs-0.0.16/lib/jekyll-wikirefs/util/wikiref.rb:224:in
  'Jekyll::WikiRefs::WikiLinkInline#context_fm_data': undefined method 'url' for nil (NoMethodError)
