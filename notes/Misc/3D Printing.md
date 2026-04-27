@@ -1,8 +1,6 @@
 ---
 title: 3D Printing
 ---
-
-
 [Prusa Research](https://www.prusa3d.com/)
 
 US branch of Prusa Research: [Printed Solid](https://www.printedsolid.com/)
@@ -12,4 +10,6 @@ US branch of Prusa Research: [Printed Solid](https://www.printedsolid.com/)
 [Printables](https://www.printables.com/)
 
 [Thingiverse](https://www.thingiverse.com/)
+
+[[TODO]] buy https://www.prusa3d.com/en/product/indx-conversion-kit/
 

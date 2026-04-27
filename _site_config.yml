@@ -1,10 +1,8 @@
 title: "Проджеки и мысли"
 description: Projects and thoughts
+author: "Leonid Dubinsky"
+email: dub@podval.org
 timezone: "America/New_York"
-
-author:
-  name: "Leonid Dubinsky"
-  email: dub@podval.org
 
 target:
   directory: "__site"
