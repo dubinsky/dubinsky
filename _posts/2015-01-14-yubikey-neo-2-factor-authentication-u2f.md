@@ -52,8 +52,8 @@ in some other way.
 
 Not all features are enabled initially; to turn the Yubikey into “OTP/U2F/CCID composite device” issue command (from the
  “ykpers” package that you already installed):
-```
-  $ ykpersonalize -m6
+```shell
+$ ykpersonalize -m6
 ``` 
 (Adding 80 to the mode activates an “eject flag” that I do not think I need.)
 
@@ -121,75 +121,75 @@ and Yubico [documentation](https://developers.yubico.com/yubico-piv-tool/).
 
 We need the smart-card demon installed and running (as far as I can tell, it doesn't interfere with the GPG
 functionality any more):
-```
-  # dnf install pcsc-lite opensc yubico-piv-tool
-  # systemctl enable pcscd; systemctl start pcscd
-  $ opensc-tool -l
+```shell
+# dnf install pcsc-lite opensc yubico-piv-tool
+# systemctl enable pcscd; systemctl start pcscd
+$ opensc-tool -l
 ```
 Change PIN and PUK:
-```
-  $ yubico-piv-tool -a change-pin   # from default 123456
-  $ yubico-piv-yool -a change-puk   # from default 12345678
+```shell
+$ yubico-piv-tool -a change-pin   # from default 123456
+$ yubico-piv-yool -a change-puk   # from default 12345678
 ```
 Default Management Key is: `010203040506070801020304050607080102030405060708`
 
 (It is possible to generate the private key directly on the Yubikey:
-```
-  $ yubico-piv-tool -s 9a -a generate -o key.pub.pem
+```shell
+$ yubico-piv-tool -s 9a -a generate -o key.pub.pem
 ```
 but I prefer to do it on the outside, so that I can put the same private key onto multiple tokens, stash it somewhere
 etc.)
 
 Generate the keypair in the current directory:
-```
-  $ ssh-keygen -f key
+```shell
+$ ssh-keygen -f key
 ```
 Export the public key in PEM format (known to ssh-keygen as PKCS8, not PEM :)):
-```
-  $ ssh-keygen -f key -e -m PKCS8 > key.pub.pem
+```shell
+$ ssh-keygen -f key -e -m PKCS8 > key.pub.pem
 ```
 Import the key:
-```
-  $ yubico-piv-tool -s 9a -a import-key -i key
+```shell
+$ yubico-piv-tool -s 9a -a import-key -i key
 ```
 Certify the key (for one year):
-```
-  $ yubico-piv-tool -s 9a -a verify-pin -a selfsign-certificate -S '/CN=login@domain SSH key' -i key.pub.pem -o cert.pem
+```shell
+$ yubico-piv-tool -s 9a -a verify-pin -a selfsign-certificate -S '/CN=login@domain SSH key' -i key.pub.pem -o cert.pem
 ```
 If you get `error: Failed to begin pcsc transaction, rc=80100003` see Temporary Detour below :)
 
 Import the certificate:
-```
-  $ yubico-piv-tool -s 9a -a import-certificate -i cert.pem
+```shell
+$ yubico-piv-tool -s 9a -a import-certificate -i cert.pem
 ```
 Check status:
-```
-  $ yubico-piv-tool -a status
+```shell
+$ yubico-piv-tool -a status
 ```
 Export public key from the token in OpenSSH format:
-```
-  $ ssh-keygen -D /usr/lib64/opensc-pkcs11.so -e
+```shell
+$ ssh-keygen -D /usr/lib64/opensc-pkcs11.so -e
 ```
 To use the key from the token, add to  `~/.ssh/config` (for specific hosts or globally):
 ```
-  PKCS11Provider /usr/lib64/opensc-pkcs11.so
+PKCS11Provider /usr/lib64/opensc-pkcs11.so
 ```
 This way, SSH agent is running, but identity isn't added to it - and so it can't be reused on machines SSHed into; to
 add Yubikey SSH identity to SSH agent:
-```
-  $ ssh-add -s /usr/lib64/opensc-pkcs11.so
+```shell
+$ ssh-add -s /usr/lib64/opensc-pkcs11.so
 ```
 See it:
-```
-  $ ssh-add -L
+```shell
+$ ssh-add -L
 ```   
 
 Running gpg-agent (needed for the GPG approach below) may cause problems.
 
 When Yubikey is removed and re-inserted, ssh-agent needs to be killed and the key re-added for some reason. I use this
 alias in `~./bashrc:`
-```
-  alias yk='pkill ssh-agent; pkill gpg-agent; ssh-add -s /usr/lib64/opensc-pkcs11.so'
+```shell
+alias yk='pkill ssh-agent; pkill gpg-agent; ssh-add -s /usr/lib64/opensc-pkcs11.so'
 ```
 **QUESTIONS:**
 - Is there a way to avoid this?
@@ -220,12 +220,12 @@ Make sure file `~/.gnupg/scdaemon.conf` exists and contains a line `allow-admin`
 ### Ensure GPG agent starts ###
 
 Put into `.bashrc`:
-```
-  if [ ! -f /tmp/gpg-agent.env ]; then
-      killall gpg-agent;
-      eval $(gpg-agent --daemon --enable-ssh-support > /tmp/gpg-agent.env);
-  fi
-  . /tmp/gpg-agent.env
+```shell
+if [ ! -f /tmp/gpg-agent.env ]; then
+    killall gpg-agent;
+    eval $(gpg-agent --daemon --enable-ssh-support > /tmp/gpg-agent.env);
+fi
+. /tmp/gpg-agent.env
 ```
 
 ### Generate Key and Subkeys ###
@@ -234,18 +234,18 @@ When generating the key, I did not add a photo to it, nor did I publish it to th
 GPG would know how to do all that :)
 
 To generate the key:
-```
-  $ gpg2 --gen-key
+```shell
+$ gpg2 --gen-key
 ```
 I picked “RSA and RSA (default)”, 4096 bits long key, key does not expire.
   
 To create a backup of the generated key XXXXXX:
-```
-  $ gpg2 --armor --export XXXXXX > XXXXXX-master.txt
+```shell
+$ gpg2 --armor --export XXXXXX > XXXXXX-master.txt
 ```  
 To generate subkeys:
-```
-  $ gpg2 --expert --key-edit XXXXXX
+```shell
+$ gpg2 --expert --key-edit XXXXXX
 ```
 In gpg2, I issued command “adkey”, chose “RSA (set your own capabilities)” and 2048 bits long key (Neo can't store keys
 longer than that).
@@ -254,10 +254,10 @@ Although only authentication key is needed for the SSH logins, I generated subke
 and authentication.
   
 To create backups:
-```
-  $ gpg2 --armor --export XXXXXX > XXXXXX-master-with-subkeys.txt
-  $ gpg2 --armor --export-secret-keys XXXXXX > XXXXXX-secret-keys.txt
-  $ gpg2 --armor --export-secret-subkeys XXXXXX > XXXXXX-secret-subkeys.txt
+```shell
+$ gpg2 --armor --export XXXXXX > XXXXXX-master-with-subkeys.txt
+$ gpg2 --armor --export-secret-keys XXXXXX > XXXXXX-secret-keys.txt
+$ gpg2 --armor --export-secret-subkeys XXXXXX > XXXXXX-secret-subkeys.txt
 ```
 I am sure that not all the backups are needed, but so far did not learn enough about the subject to figure out which are
 not ;)
@@ -265,15 +265,15 @@ not ;)
 ### Set Up Yubikey GPG SmartCard ###
   
 To set up the GPG SmartCard on the Neo, I did:
-```
-  $ gpg2 --card-edit
+```shell
+$ gpg2 --card-edit
 ```    
 Enable admin commands with “admin”; use “passwd” to change the Admin PIN from default 12345678 and PIN from default
 123456; use “name”, “lang”, “sex” and “login” to set the card’s parameters.
 
 ### Move Keys onto the Card ###
-```  
-  $ gpg2 --expert --key-edit XXXXXX
+```shell
+$ gpg2 --expert --key-edit XXXXXX
 ```
   
 Switch to secret keys with the “toggle” command.
@@ -290,8 +290,8 @@ logging into :)
 
 I never had to do this before, but on fc28 in order for the ssh key to work, I have to do (see
 [https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=835394](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=835394)):
-```
-  $ gpg-connect-agent updatestartuptty /bye
+```shell
+$ gpg-connect-agent updatestartuptty /bye
 ```
 If the public key is published somewhere, GPG applet on the token can be configured with the URL so that it can fetch
 the key. On a machine where GPG doesn't know about my the key, I used "fetch" in gpg2 --card-edit.
@@ -305,11 +305,11 @@ I preserved previous instructions here just in case :)
 
 Previously, I had to manually install the following udev rule:
 ```
-  ACTION=="add|change"
-  SUBSYSTEM=="usb",
-  ATTRS{idVendor}=="1050",
-  ATTRS{idProduct}=="0010|0110|0111|0113|0114|0115|0116|0120|0401|0402|0403|0405|0406|0407|0410",
-  TAG+="uaccess"
+ACTION=="add|change"
+SUBSYSTEM=="usb",
+ATTRS{idVendor}=="1050",
+ATTRS{idProduct}=="0010|0110|0111|0113|0114|0115|0116|0120|0401|0402|0403|0405|0406|0407|0410",
+TAG+="uaccess"
 ```
 Above rule works for Fedora, but not for Debian-based Raspbian running on my Raspberry Pi. There, instead of TAG, I use
 `MODE:="0666"`. It is ugly, and only works with "final" assignment (:=), but it works...
@@ -334,7 +334,7 @@ On Gnome desktop (Fedora, not Raspberry Pi) gnome-keyring-daemon used to interfe
 disabled before smart-card applet on the Neo could be used:
 
 ```shell
-  $ if [​[ $(gconftool-2 --get /apps/gnome-keyring/daemon-components/ssh) != "false" ]]; then
-        gconftool-2 --type bool --set /apps/gnome-keyring/daemon-components/ssh false
-    fi
+$ if [​[ $(gconftool-2 --get /apps/gnome-keyring/daemon-components/ssh) != "false" ]]; then
+      gconftool-2 --type bool --set /apps/gnome-keyring/daemon-components/ssh false
+  fi
 ```

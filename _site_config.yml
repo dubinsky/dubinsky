@@ -1,12 +1,9 @@
 title: "Проджеки и мысли"
 description: Projects and thoughts
+url: "http://dub.podval.org"
 author: "Leonid Dubinsky"
 email: dub@podval.org
 timezone: "America/New_York"
-
-target:
-  directory: "__site"
-  url: "http://dub.podval.org"
 
 header-pages:
   - tags.html

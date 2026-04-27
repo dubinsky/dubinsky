@@ -24,10 +24,28 @@ jobs:
   # Build job
   build:
     runs-on: ubuntu-latest
+    env:
+      PUBLISHER_ROOT: '__site_publisher'
     steps:
-      - name: Checkout
+      - name: Check Out
         uses: actions/checkout@v6
 # TODO current sample of the Jekyll workflow does not have this step...
+
+      - name: Check Out Site Publisher
+        uses: actions/checkout@v6
+        with:
+          repository: 'dubinsky/site-publisher'
+          path: ${{ env.PUBLISHER_ROOT }}
+      - uses: actions/setup-java@v5
+        with:
+          distribution: 'oracle'
+          java-version: '21'
+      - name: Generate Site
+        #working-directory: ${{ env.GITHUB_WORKSPACE }}/${{ env.PUBLISHER_ROOT }}
+        run: |
+          cd $PUBLISHER_ROOT
+          ./gradlew run --args="$GITHUB_WORKSPACE"
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -42,6 +60,7 @@ jobs:
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:
           JEKYLL_ENV: production
+
       - name: Upload artifact
         # Automatically uploads an artifact from the './_site' directory by default
         uses: actions/upload-pages-artifact@v3
