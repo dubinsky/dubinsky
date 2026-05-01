@@ -187,7 +187,7 @@ $ ssh-add -L
 Running gpg-agent (needed for the GPG approach below) may cause problems.
 
 When Yubikey is removed and re-inserted, ssh-agent needs to be killed and the key re-added for some reason. I use this
-alias in `~./bashrc:`
+alias in `~./bashrc`:
 ```shell
 alias yk='pkill ssh-agent; pkill gpg-agent; ssh-add -s /usr/lib64/opensc-pkcs11.so'
 ```

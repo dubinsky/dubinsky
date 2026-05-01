@@ -24,28 +24,32 @@ jobs:
   # Build job
   build:
     runs-on: ubuntu-latest
-    env:
-      PUBLISHER_ROOT: '__site_publisher'
     steps:
       - name: Check Out
         uses: actions/checkout@v6
-# TODO current sample of the Jekyll workflow does not have this step...
+
+      # Site Publisher Steps
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'oracle'
+          java-version: '21'
+
+      - name: Set Site Publisher Root
+        run: echo "SITE_PUBLISHER_ROOT=${{ runner.temp }}/site-publisher" >> $GITHUB_ENV
 
       - name: Check Out Site Publisher
         uses: actions/checkout@v6
         with:
           repository: 'dubinsky/site-publisher'
-          path: ${{ env.PUBLISHER_ROOT }}
-      - uses: actions/setup-java@v5
-        with:
-          distribution: 'oracle'
-          java-version: '21'
-      - name: Generate Site
-        #working-directory: ${{ env.GITHUB_WORKSPACE }}/${{ env.PUBLISHER_ROOT }}
-        run: |
-          cd $PUBLISHER_ROOT
-          ./gradlew run --args="$GITHUB_WORKSPACE"
+          path: ${{ env.SITE_PUBLISHER_ROOT }}
 
+      - name: Generate Site using Site Publisher
+        run: ./gradlew run --args="$GITHUB_WORKSPACE"
+        working-directory: ${{ env.SITE_PUBLISHER_ROOT }}
+
+      # TODO current sample of the Jekyll workflow does not have this step...
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
