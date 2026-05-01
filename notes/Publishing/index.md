@@ -3,7 +3,6 @@ title: Publishing
 disabled rules:
   - yaml-title
 ---
-
 TODO publish:
 - beautify the blog:
     - [ ] style the code like on TypeLevel

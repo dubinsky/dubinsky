@@ -7,7 +7,7 @@ timezone: "America/New_York"
 
 header-pages:
   - tags.html
-  - notes/index.md
+  - notes/index
   # TODO re-create!  - days/index.md
 
 exclude:
