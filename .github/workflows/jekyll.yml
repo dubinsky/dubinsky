@@ -24,19 +24,20 @@ jobs:
   # Build job
   build:
     runs-on: ubuntu-latest
-    env:
-      SITE_PUBLISHER_ROOT: '.site_publisher'
     steps:
       - name: Check Out
         uses: actions/checkout@v6
 
       # Site Publisher Steps
 
-      - name: Set up Java 21
+      - name: Set up Java 21 used by the Site Publisher
         uses: actions/setup-java@v5
         with:
           distribution: 'oracle'
           java-version: '21'
+
+      - name: Set SITE_PUBLISHER_ROOT environment variable
+        run: echo "SITE_PUBLISHER_ROOT=.site_publisher" >> $GITHUB_ENV
 
       - name: Check Out Site Publisher
         uses: actions/checkout@v6
@@ -49,25 +50,24 @@ jobs:
           cd $SITE_PUBLISHER_ROOT
           ./gradlew run --args="$GITHUB_WORKSPACE"
 
-      # TODO current sample of the Jekyll workflow does not have this step...
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.3' # Not needed with a .ruby-version file
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-          cache-version: 0 # Increment this number if you need to re-download cached gems
-      - name: Setup Pages
-        id: pages
-        uses: actions/configure-pages@v5
-      - name: Build with Jekyll
-        # Outputs to the './_site' directory by default
-        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
-        env:
-          JEKYLL_ENV: production
+#      # TODO current sample of the Jekyll workflow does not have this step...
+#      - name: Setup Ruby
+#        uses: ruby/setup-ruby@v1
+#        with:
+#          ruby-version: '3.3' # Not needed with a .ruby-version file
+#          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+#          cache-version: 0 # Increment this number if you need to re-download cached gems
+#      - name: Setup Pages
+#        id: pages
+#        uses: actions/configure-pages@v5
+#      - name: Build with Jekyll
+#        # Outputs to the './_site' directory by default
+#        run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
+#        env:
+#          JEKYLL_ENV: production
 
-      - name: Upload artifact
-        # Automatically uploads an artifact from the './_site' directory by default
-        uses: actions/upload-pages-artifact@v3
+      - name: Upload GitHub Pages from './_site' as an Artifact
+        uses: actions/upload-pages-artifact@v5
 
   # Deployment job
   deploy:
