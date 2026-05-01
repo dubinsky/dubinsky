@@ -1,5 +1,6 @@
 ---
 title: Ham Radio
+tags: [electronics]
 ---
 - Exams
   - Study: https://hamstudy.org/tech2022

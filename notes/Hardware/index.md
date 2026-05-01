@@ -3,4 +3,4 @@ title: Hardware
 disabled rules:
   - yaml-title
 ---
-TODO Buy Lenovo Sapphire Tablet
+[[TODO]] Buy Lenovo Sapphire Tablet
