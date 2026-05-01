@@ -4,7 +4,7 @@ disabled rules:
 - yaml-title
 ---
 
-Buy Springfield Emissary AOS .45 - listed in MA on 11/21/2025
+[[TODO]] Buy Springfield Emissary AOS .45 - listed in MA on 11/21/2025
 - PX9230LAOS 5" $1,392 ($1,237.95)
 - PX9228LAOS 4.25" $1,392 ($1,237.95)
 
@@ -14,4 +14,4 @@ Pioneer Valley Arms of 173 Shaker Road in East Longmeadow, MA lists the gun as [
 
 https://massarmament.com/hand-guns/ - !!!
 
-Look into 5.7x28mm pistols.
+[[TODO]] Look into 5.7x28mm pistols.
