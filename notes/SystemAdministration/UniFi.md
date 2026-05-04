@@ -58,7 +58,7 @@ Addresses on the 192.168.1.* network (*.lan.podval.org).
 TODO HOW DO I ASSIGN STATIC ADDRESSES TO UniFi DEVICES?
 
 | Address | Name                     |
-| ------- | ------------------------ |
+|---------|--------------------------|
 | 1       | USG-3P (gateway)         |
 | 2       | dub                      |
 | 4       | OBi202                   |

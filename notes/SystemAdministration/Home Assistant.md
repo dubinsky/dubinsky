@@ -206,7 +206,7 @@ Only the protocol my devices use is enabled; limiting protocols processed to pre
 
 - configure the file into the add-on
 - start the add-on
-- add [rtl_433 MQTT Auto Discovery (next)]()https://github.com/pbkhrv/rtl_433-hass-addons/tree/main/rtl_433_mqtt_autodiscovery-next add-on
+- add [rtl_433 MQTT Auto Discovery (next)](https://github.com/pbkhrv/rtl_433-hass-addons/tree/main/rtl_433_mqtt_autodiscovery-next) add-on
 - configure it: host homeassistant, user mqtt, password mqtt
 - start the add-on
 - add [MQTT Explorer](https://github.com/GollumDom/addon-repository/tree/master/mqtt-explorer) add-on

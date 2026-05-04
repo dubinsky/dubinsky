@@ -21,12 +21,12 @@ tags: [electronics]
   - [Baofeng](https://www.baofengradio.com/)
   - [Elecraft K4](https://elecraft.com/products/k4-transceiver)
   - [Icom](https://www.icomamerica.com/lineup/result/?type=1&class=4&genre=2)
-  - [FlexEradio]()
+  - [FlexEradio](https://???)
   - [lab599](https://lab599.com/)
 - Software
   - [CHIRP](https://chirp.danplanet.com/projects/chirp/wiki/Home)  [on Linux](https://chirp.danplanet.com/projects/chirp/wiki/ChirpOnLinux)
 - Information
-  - [eham.net]()
+  - [eham.net](https://eham.net)
   - [radioreference.com](https://www.radioreference.com/)
   - [Repeater Book](https://www.repeaterbook.com/index.php/en-us/)
 - Store

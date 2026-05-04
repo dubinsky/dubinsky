@@ -6,9 +6,9 @@ email: dub@podval.org
 timezone: "America/New_York"
 
 header-pages:
-  - tags.html
-  - notes/index
-  # TODO re-create!  - days/index.md
+  - /tags.html
+  - /notes/index
+  - /posts
 
 exclude:
   - build.gradle
