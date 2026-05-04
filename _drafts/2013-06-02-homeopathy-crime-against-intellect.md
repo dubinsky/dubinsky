@@ -1,5 +1,4 @@
 ---
-layout: post
 title: 'Гомеопатия: преступление протие разума'
 date: '2013-06-02T18:56:00.000-04:00'
 author: Leonid Dubinsky

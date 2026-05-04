@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Best Scala Books
 date: '2014-05-26T12:39:00.000-04:00'
 author: Leonid Dubinsky

@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Best Java Books
 date: '2014-05-26T12:32:00.000-04:00'
 author: Leonid Dubinsky

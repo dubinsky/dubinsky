@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Consuming Zenfolio Web Service in Java with Maven
 date: '2009-08-30T23:11:00.020-04:00'
 author: dub

@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Еврейский Закон о альтернативной медицине
 date: '2011-11-06T19:27:00.000-05:00'
 author: Leonid Dubinsky

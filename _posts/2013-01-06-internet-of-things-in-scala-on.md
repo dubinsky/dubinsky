@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Internet of Things in Scala on Raspberry Pi
 date: '2013-01-06T19:46:00.001-05:00'
 author: Leonid Dubinsky

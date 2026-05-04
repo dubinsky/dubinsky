@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Свадьба в реформистской синагоге
 date: '2011-11-06T22:57:00.002-05:00'
 author: Leonid Dubinsky

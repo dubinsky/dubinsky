@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Java Daemon
 date: '2011-03-17T12:15:00.006-04:00'
 author: Leonid Dubinsky

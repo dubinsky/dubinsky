@@ -1,5 +1,4 @@
 ---
-layout: post
 title: 'Publishing Papers on the Web: v2'
 author: Leonid Dubinsky
 tags: [docbook, oxygen, mathjax]

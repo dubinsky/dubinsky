@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Кидуш и Марс
 date: '2019-10-28T11:41:00.000-04:00'
 author: Leonid Dubinsky

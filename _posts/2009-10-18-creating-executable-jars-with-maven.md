@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Creating executable JARs with Maven
 date: '2009-10-18T15:50:00.027-04:00'
 author: dub

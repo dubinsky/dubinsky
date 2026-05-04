@@ -1,5 +1,4 @@
 ---
-layout: post
 title: XML and Scala
 date: '2011-03-24T11:48:00.021-04:00'
 author: Leonid Dubinsky

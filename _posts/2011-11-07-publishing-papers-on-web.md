@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Publishing Papers on the Web
 date: '2011-11-07T10:39:00.000-05:00'
 author: Leonid Dubinsky

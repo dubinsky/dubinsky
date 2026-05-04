@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Геоцентризм
 date: '2014-05-25T22:32:00.000-04:00'
 author: Leonid Dubinsky

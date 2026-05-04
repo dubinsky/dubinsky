@@ -1,5 +1,4 @@
 ---
-layout: post
 title: 'Sanctification of the Sun'
 author: Leonid Dubinsky
 tags: []

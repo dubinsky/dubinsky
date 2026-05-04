@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Judaism and Intellect
 date: '2013-06-04T17:22:00.000-04:00'
 author: Leonid Dubinsky

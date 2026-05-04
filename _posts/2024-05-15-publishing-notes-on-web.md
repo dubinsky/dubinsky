@@ -1,5 +1,4 @@
 ---
-layout: post
 title: 'Publishing Notes on the Web'
 author: Leonid Dubinsky
 tags: [obsidian, roam]

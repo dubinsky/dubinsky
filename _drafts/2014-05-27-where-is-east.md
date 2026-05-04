@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Где восток?
 date: '2014-05-27T12:36:00.000-04:00'
 author: Leonid Dubinsky

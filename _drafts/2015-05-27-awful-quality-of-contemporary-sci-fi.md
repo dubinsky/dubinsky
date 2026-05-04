@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Awful quality of contemporary Sci-Fi
 date: '2015-05-27T14:20:00.002-04:00'
 author: Leonid Dubinsky

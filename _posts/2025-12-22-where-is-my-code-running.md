@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Where is my code running?
 author: Leonid Dubinsky
 tags:

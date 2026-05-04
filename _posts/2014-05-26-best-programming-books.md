@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Best Programming Books
 date: '2014-05-26T12:41:00.003-04:00'
 author: Leonid Dubinsky

@@ -1,5 +1,4 @@
 ---
-layout: post
 title: 'Publishing TEI on the Web'
 author: Leonid Dubinsky
 tags: [tei]

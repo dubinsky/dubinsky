@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Java and PAM
 date: '2011-02-15T12:22:00.003-05:00'
 author: Leonid Dubinsky

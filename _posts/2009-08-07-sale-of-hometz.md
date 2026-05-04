@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Продажа хомца
 date: '2009-08-07T14:30:00.005-04:00'
 author: dub

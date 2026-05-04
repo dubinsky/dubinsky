@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Head in the Tallis
 date: '2014-05-30T14:16:00.000-04:00'
 author: Leonid Dubinsky

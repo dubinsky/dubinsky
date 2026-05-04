@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Maven in-project repository
 date: '2010-01-28T14:24:00.004-05:00'
 author: dub

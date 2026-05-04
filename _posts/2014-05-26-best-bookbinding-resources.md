@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Best Bookbinding Resources
 date: '2014-05-26T13:04:00.002-04:00'
 author: Leonid Dubinsky

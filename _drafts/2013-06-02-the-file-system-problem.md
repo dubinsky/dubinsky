@@ -1,5 +1,4 @@
 ---
-layout: post
 title: The File System Problem
 date: '2013-06-02T18:43:00.000-04:00'
 author: Leonid Dubinsky

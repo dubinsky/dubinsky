@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Water Drops
 date: '2010-02-23T11:47:00.001-05:00'
 author: dub

@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Linux on Lenovo ThinkPad p50
 date: '2016-02-07T17:21:00.000-05:00'
 author: Leonid Dubinsky

@@ -1,5 +1,4 @@
 ---
-layout: post
 title: On Option and checked exceptions
 date: '2011-12-12T11:27:00.002-05:00'
 author: Leonid Dubinsky

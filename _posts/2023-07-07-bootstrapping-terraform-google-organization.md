@@ -1,5 +1,4 @@
 ---
-layout: post
 title: 'Bootstrapping Terraform or Pulumi for Google Organization'
 author: Leonid Dubinsky
 tags: [pulumi, terraform, gcp]

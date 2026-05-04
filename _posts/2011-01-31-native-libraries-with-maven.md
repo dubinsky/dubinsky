@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Native Libraries with Maven
 date: '2011-01-31T14:34:00.002-05:00'
 author: Leonid Dubinsky

@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Jersey and Scala
 date: '2010-08-02T14:47:00.008-04:00'
 author: dub

@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Photo Sharing Service Requirements
 date: '2009-08-06T13:41:00.004-04:00'
 author: Leonid Dubinsky

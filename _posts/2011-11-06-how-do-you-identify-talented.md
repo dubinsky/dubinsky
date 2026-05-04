@@ -1,5 +1,4 @@
 ---
-layout: post
 title: How do you identify talented programmers?
 date: '2011-11-06T09:49:00.002-05:00'
 author: Leonid Dubinsky

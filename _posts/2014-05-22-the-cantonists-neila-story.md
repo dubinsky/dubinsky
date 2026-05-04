@@ -1,5 +1,4 @@
 ---
-layout: post
 title: The Cantonists' Neila Story
 date: '2014-05-22T17:28:00.000-04:00'
 author: Leonid Dubinsky

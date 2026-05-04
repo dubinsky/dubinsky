@@ -1,5 +1,4 @@
 ---
-layout: page
 title: lambda-calculus
 math: true
 ---

@@ -1,5 +1,4 @@
 ---
-layout: post
 title: 'Bintray Gradle plugin'
 author: Leonid Dubinsky
 tags: [bintray, gradle]

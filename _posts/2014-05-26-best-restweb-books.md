@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Best REST/Web Books
 date: '2014-05-26T12:37:00.001-04:00'
 author: Leonid Dubinsky

@@ -1,5 +1,4 @@
 ---
-layout: post
 title: City bicycle
 date: '2011-09-22T14:17:00.001-04:00'
 author: Leonid Dubinsky

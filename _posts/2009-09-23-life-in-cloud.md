@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Life in the Cloud
 date: '2009-09-23T08:30:00.003-04:00'
 author: dub
