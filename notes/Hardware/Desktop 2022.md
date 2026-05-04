@@ -1,6 +1,3 @@
----
-title: Desktop 2022
----
 Requirements
   - Intel Alder Lake, socket LGA1700
   - DDR5

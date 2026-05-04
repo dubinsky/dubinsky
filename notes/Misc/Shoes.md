@@ -1,6 +1,3 @@
----
-title: Shoes
----
 ## Cobbler
 Greg at [Colonial Shoe Repair](https://colonialshoerepair.com/) is allegedly a good cobbler.
 

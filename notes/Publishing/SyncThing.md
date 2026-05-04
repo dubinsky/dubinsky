@@ -1,5 +1,4 @@
 ---
-title: SyncThing
 tags:
   - sysadmin
 ---

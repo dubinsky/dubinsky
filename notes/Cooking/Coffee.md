@@ -1,6 +1,3 @@
----
-title: Coffee
----
 - Roasting
   - Equipment
     - [Gene Caffe](https://genecafeusa.com/collections/roasters)

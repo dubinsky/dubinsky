@@ -1,6 +1,3 @@
----
-title: bibliography
----
 [SU06] "Lectures on the Curry-Howard Isomorphism" (Sorensen, Urzyczyn)
 
 [Sel08] "Lecture notes on the lambda calculus", Selinger, 2008.

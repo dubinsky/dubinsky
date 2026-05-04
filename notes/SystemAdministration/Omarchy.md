@@ -1,6 +1,3 @@
----
-title: Omarchy
----
 My notes on dotfiles in general and tweaks specific to [[Omarchy]] are in [[dotfiles]].
 
 * TOC

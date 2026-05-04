@@ -1,6 +1,3 @@
----
-title: HoTT
----
 - Introductions:
   - Rijke: book: [[@Rijk2022]]
   - Escardo: book: [Introduction to Univalent Foundations of Mathematics with Agda](https://www.cs.bham.ac.uk/~mhe/HoTT-UF-in-Agda-Lecture-Notes/)

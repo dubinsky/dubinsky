@@ -1,6 +1,3 @@
----
-title: OAuth
----
 - [OAuth 2.0](https://www.rfc-editor.org/rfc/rfc6749)
 - [OAuth 2.0 Bearer Token](https://www.rfc-editor.org/rfc/rfc6750)
 - [Json Web Token](https://datatracker.ietf.org/doc/html/rfc7519)

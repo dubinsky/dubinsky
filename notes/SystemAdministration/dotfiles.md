@@ -1,6 +1,3 @@
----
-title: dotfiles
----
 Notes on dotfiles in general and tweaks specific to [[Omarchy]];
 my dotfiles repository is: [https://github.com/dubinsky/dotfiles](https://github.com/dubinsky/dotfiles).
 

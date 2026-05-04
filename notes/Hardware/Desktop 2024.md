@@ -1,6 +1,3 @@
----
-title: Desktop 2024
----
 https://pcpartpicker.com/
 https://caseend.com/
 https://www.quietpcusa.com/

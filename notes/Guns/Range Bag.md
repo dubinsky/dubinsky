@@ -1,7 +1,6 @@
 ---
 tags:
   - guns
-title: Range Bag
 ---
 Tried backpack with 2-gun plastic case in it and a 4-5 guns plastic case with accessories in a separate bag; decided that the way to go is small range bag with two guns in rugs in lockable side pockets, and if more is needed - in lockable pouches in the main compartment. Headphones, glasses, cartridges, loader etc. should fit there too.
 

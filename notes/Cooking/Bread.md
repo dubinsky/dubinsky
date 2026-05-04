@@ -1,5 +1,4 @@
 ---
-title: Bread
 tags: [recipe]
 ---
 Adjust the sourdough procedure for Anova:

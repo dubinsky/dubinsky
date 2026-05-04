@@ -1,5 +1,4 @@
 ---
-title: Bloop
 tags: [scala, gradle]
 ---
 - [plug](https://twitter.com/hmemcpy/status/1320661670683959296)

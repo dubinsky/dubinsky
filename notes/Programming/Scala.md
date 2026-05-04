@@ -1,6 +1,3 @@
----
-title: Scala
----
 - [Magic Tricks with Functional Effects by John A. De Goes - YouTube](https://www.youtube.com/watch?v=xpz4rf1RS8c&ab_channel=BeeScala)
 - [ ] [[TODO]] learn Optics
   - https://github.com/julien-truffaut/Monocle

@@ -1,6 +1,3 @@
----
-title: Tiny PC 2021
----
 - After much thought, I decided that I want Lenovo ThinkCentre Tiny Gen 2 instead of a NUC 11. It is similar to HP and Dell 1L PCs, but I'll stick with Lenovo I think. I want:
   - maybe i7-11700 (without the T) processor
   - maybe even i9

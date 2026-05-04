@@ -1,6 +1,3 @@
----
-title: Pens
----
 - Sample vials [mini-FAQ](https://www.penaddict.com/blog/2021/10/29/sample-vials-a-mini-faq)
 - [The Best Notebooks for Fountain Pens, 2019 Review - JetPens](https://www.jetpens.com/blog/the-best-notebooks-for-fountain-pens/pt/32)
 - [ ] [[TODO]] publish the paper post

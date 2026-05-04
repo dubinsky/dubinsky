@@ -1,6 +1,3 @@
----
-title: Torah Questions
----
 ## Chumash
 
 ### Bereishis

@@ -1,6 +1,3 @@
----
-title: Domains
----
 * TOC
 {:toc}
 

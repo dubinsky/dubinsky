@@ -1,8 +1,3 @@
----
-title: Jewish
-disabled rules:
-  - yaml-title
----
 Links:
 -  [Rebbe Drive](https://www.rebbedrive.com/)
 - [ ] TODO browse Rebbe Photos http://thelivingarchive.org/photos/85224?offset=0 9 Tishrei 5772

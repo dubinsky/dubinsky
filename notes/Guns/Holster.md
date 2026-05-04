@@ -1,6 +1,3 @@
----
-title: Holster
----
 https://www.reddit.com/r/CCW/comments/nnxblv/new_ccw_what_ive_learned_so_far
 ## Holsters
 - [PHLster Enigma](https://www.phlsterholsters.com/phlster-enigma/); [accessories](https://www.levodesigns.com/product/mule-tape-leg-leash-2/); [more accessories](https://regoconcepts.com/products/enigmod-leg-leash); [holster shells](https://www.jmcustomkydex.com/p/Q-ES-Enigma-Shell_Holster.html). - bough 10/26/2023 for Sig P365 XL

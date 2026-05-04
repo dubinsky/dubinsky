@@ -1,5 +1,4 @@
 ---
-title: Theories of the World
 tags: [jewish calendar]
 ---
 - "Theories of the world", Michael J. Crowe, second revised edition, 2001.

@@ -1,5 +1,4 @@
 ---
-title: Exact Sciences in Antiquity
 tags: [jewish calendar]
 ---
 - O. Neugebauer, second edition, 1957.

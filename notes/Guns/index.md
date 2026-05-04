@@ -1,9 +1,3 @@
----
-title: Guns
-disabled rules:
-- yaml-title
----
-
 [[TODO]] Buy Springfield Emissary AOS .45 - listed in MA on 11/21/2025
 - PX9230LAOS 5" $1,392 ($1,237.95)
 - PX9228LAOS 4.25" $1,392 ($1,237.95)

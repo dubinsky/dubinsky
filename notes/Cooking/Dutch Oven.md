@@ -1,6 +1,3 @@
----
-title: Dutch Oven
----
 - Le Creuset
   - Sizes
     - 3.5 Qt: [Amazon](https://www.amazon.com/Creuset-Signature-Enameled-Cast-Iron-French/dp/B0076NOFSC?ref_=ast_sto_dp) flame: $290; Le Creuset: $305

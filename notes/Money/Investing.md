@@ -1,6 +1,3 @@
----
-title: Investing
----
 ## Books
 - [A Random Walk Down Wall Street: The Best Investment Guide That Money Can Buy Thirteenth Edition by Burton G. Malkiel](https://www.amazon.com/Random-Walk-Down-Wall-Street-dp-1324051132/dp/1324051132/ref=dp_ob_title_bk)
 - [The Little Book of Common Sense Investing: The Only Way to Guarantee Your Fair Share of Stock Market Returns by John C. Bogle](https://www.amazon.com/Little-Book-Common-Sense-Investing/dp/1119404509)

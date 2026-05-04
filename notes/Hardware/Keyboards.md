@@ -1,5 +1,4 @@
 ---
-title: Keyboards
 tags:
   - sysadmin
 ---

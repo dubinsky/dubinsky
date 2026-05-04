@@ -1,6 +1,3 @@
----
-title: Framework Laptop 13
----
 In October 2025, I decided to try [Framework Laptop 13](https://frame.work/laptop13).
 
 CPU - Intel:

@@ -1,5 +1,4 @@
 ---
-title: DevPod
 tags:
   - devpod
   - gcp

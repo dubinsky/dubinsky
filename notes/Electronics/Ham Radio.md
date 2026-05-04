@@ -1,5 +1,4 @@
 ---
-title: Ham Radio
 tags: [electronics]
 ---
 - Exams

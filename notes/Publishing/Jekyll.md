@@ -1,7 +1,3 @@
----
-title: Jekyll
----
-
 I did some re-organizing of my notes March 2026, and started getting:
 
 ```text

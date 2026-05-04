@@ -1,6 +1,3 @@
----
-title: Entertainment
----
 - Movies
   - Pirate Radio
   - Roman deGuerre

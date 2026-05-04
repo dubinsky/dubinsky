@@ -1,5 +1,4 @@
 ---
-title: Fedora Install
 tags:
   - computer
   - sysadmin

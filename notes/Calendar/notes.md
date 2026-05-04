@@ -1,6 +1,3 @@
----
-title: notes
----
 - Sicho 17 Bo
 - [Birkat Hachama - Wikipedia](https://en.wikipedia.org/wiki/Birkat_Hachama)
 - [Al-Battani - Wikipedia](https://en.wikipedia.org/wiki/Al-Battani)

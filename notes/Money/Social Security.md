@@ -1,7 +1,3 @@
----
-title: Social Security
----
-
 Social Security benefits depend on the age you claim them:
 if you claim at 62, benefits are permanently reduced to 70% of the amount
 you would have gotten if you claim at full retirement age of 67,

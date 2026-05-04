@@ -1,6 +1,3 @@
----
-title: 3D Printing
----
 [Prusa Research](https://www.prusa3d.com/)
 
 US branch of Prusa Research: [Printed Solid](https://www.printedsolid.com/)

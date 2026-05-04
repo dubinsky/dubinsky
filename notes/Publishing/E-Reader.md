@@ -1,6 +1,3 @@
----
-title: E-Reader
----
 - BW: colour damages brightness and contrast
 - front light: original Remarkable did not work for me
 - 300 ppi; unfortunately, eInk does not make lighted BW Carta 1300 screens...

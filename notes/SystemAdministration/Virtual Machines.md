@@ -1,5 +1,4 @@
 ---
-title: Virtual Machines
 tags:
   - sysadmin
 ---

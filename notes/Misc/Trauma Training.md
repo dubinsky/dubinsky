@@ -1,6 +1,3 @@
----
-title: Trauma Training
----
 ## TECC
 
 According to "Prepping for Life" by Grant Cunningham (2017), Red Cross is not place; Tactical Emergency Casualty Care (TECC) course is the thing.

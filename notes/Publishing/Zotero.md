@@ -1,6 +1,3 @@
----
-title: Zotero
----
 Installed
 - [Zotero Standalone and Zotero Connector](https://www.zotero.org/download/); [instructions](https://www.zotero.org/support/installation). 
 - Added ~/Books/Zotero to the rsynch.sh

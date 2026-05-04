@@ -1,6 +1,3 @@
----
-title: Information
----
 [FA-10: MA gun registration](https://mircs.chs.state.ma.us/fa10/action/home?app_context=home&app_action=presentTrans)
 
 [MA Laws](https://handgunlaw.us/states/massachusetts.pdf)

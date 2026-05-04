@@ -1,6 +1,3 @@
----
-title: Cabling
----
 Fall 2025
 
 * TOC

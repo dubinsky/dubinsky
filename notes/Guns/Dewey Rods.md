@@ -1,5 +1,4 @@
 ---
-title: Dewey Rods
 tags: [guns]
 ---
 2021-07-16:

@@ -1,6 +1,3 @@
----
-title: Agda
----
 - Install
   - `$ sudo dnf install Agda`
   - VSCode extensions: [agda-mode](https://github.com/banacorn/agda-mode-vscode) and Generic Input Method

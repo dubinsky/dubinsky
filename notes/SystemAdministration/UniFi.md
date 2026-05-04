@@ -1,5 +1,4 @@
 ---
-title: UniFi
 tags:
   - computer
   - sysadmin

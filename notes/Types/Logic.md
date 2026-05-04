@@ -1,6 +1,3 @@
----
-title: Logic
----
 [[TODO]] learn:
 
 - [Open Logic Project – Open Source, Customizable, Advanced Logic Text](https://openlogicproject.org/)

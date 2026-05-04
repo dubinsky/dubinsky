@@ -1,5 +1,4 @@
 ---
-title: YubiKey
 tags:
   - computer
   - sysadmin

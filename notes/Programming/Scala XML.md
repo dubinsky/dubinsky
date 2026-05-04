@@ -1,5 +1,4 @@
 ---
-title: Scala XML
 tags: [scala]
 ---
 - get XML declaration as a processing instruction

@@ -1,5 +1,4 @@
 ---
-title: ProxMox
 tags:
   - sysadmin
 ---

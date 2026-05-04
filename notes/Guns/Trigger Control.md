@@ -1,6 +1,3 @@
----
-title: Trigger Control
----
 Tips from some of the books I like from Grant Cunningham:
 - Defensive Pistol Fundamentals, 2014
 - Defensive Revolver Fundamentals, 2nd Edition, 2022

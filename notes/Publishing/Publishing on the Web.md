@@ -1,6 +1,3 @@
----
-title: Publishing on the Web
----
 - Input formats that matter:
   - [[DocBook]]
   - [[TEI]]

@@ -1,6 +1,3 @@
----
-title: Chair
----
 - [Nightingale](https://nightingalechairs.com/) [CXO 6200D](https://www.amazon.com/dp/B00E6FHBBG/?coliid=I3V7PA6ARDAVQ&colid=3A1AHFIZS9EFC&psc=1&ref_=lv_ov_lig_dp_it)  not good for shorties?
   - or NLC 2020D-A? or IC2? unlikely...
   - [local rep](https://nightingalechairs.com/rep-locator)

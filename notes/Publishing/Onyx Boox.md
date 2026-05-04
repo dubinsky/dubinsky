@@ -1,5 +1,4 @@
 ---
-title: Onyx Boox
 tags:
   - sysadmin
 ---

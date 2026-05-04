@@ -1,5 +1,4 @@
 ---
-title: Early Astronomy
 tags: [jewish calendar]
 ---
 - Hugh Thurston, 1994.

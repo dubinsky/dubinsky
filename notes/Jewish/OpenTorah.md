@@ -1,5 +1,5 @@
 ---
-title: OpenTorah
+title: Open Torah
 tags: [jewish]
 ---
 - [x] [[DONE]] create Twitter account

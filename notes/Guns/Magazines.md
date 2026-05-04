@@ -1,6 +1,3 @@
----
-title: Magazines
----
 Magazines: https://themagshack.com/
 
 Magazine Racks:

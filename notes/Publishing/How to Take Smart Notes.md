@@ -1,6 +1,3 @@
----
-title: How to Take Smart Notes
----
 Front Matter
 - One Simple Technique to Boost Writing, Learning and Thinking - for Students, Academics and Nonfiction Book Writers.
 - Sőnke Ahrens

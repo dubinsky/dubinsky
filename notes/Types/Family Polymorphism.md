@@ -1,5 +1,4 @@
 ---
-title: Family Polymorphism
 date: "2020-10-22"
 tags: [scala]
 ---

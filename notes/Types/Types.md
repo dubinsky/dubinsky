@@ -1,6 +1,3 @@
----
-title: Types
----
 - Agda
   - [Introduction to Univalent Foundations of Mathematics with Agda](https://www.cs.bham.ac.uk/~mhe/HoTT-UF-in-Agda-Lecture-Notes/HoTT-UF-Agda.html#mlttinagda)
   - [Programming Language Foundations in Agda](https://plfa.github.io/)

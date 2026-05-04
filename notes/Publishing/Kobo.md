@@ -1,5 +1,4 @@
 ---
-title: Kobo
 tags:
   - sysadmin
   - ebooks

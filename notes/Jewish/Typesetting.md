@@ -1,6 +1,3 @@
----
-title: Typesetting
----
 [[OpenTorah]]
 
 - Hebrew

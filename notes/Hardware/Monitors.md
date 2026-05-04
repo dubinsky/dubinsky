@@ -1,5 +1,4 @@
 ---
-title: Monitors
 tags:
   - sysadmin
   - computer

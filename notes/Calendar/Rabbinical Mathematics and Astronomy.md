@@ -1,5 +1,4 @@
 ---
-title: Rabbinical Mathematics and Astronomy
 tags: [jewish calendar]
 ---
 - W.M. Feldman, 1931.
