@@ -1,6 +1,5 @@
 ---
 title: 'Bootstrapping Terraform or Pulumi for Google Organization'
-author: Leonid Dubinsky
 tags: [pulumi, terraform, gcp]
 date: '2023-07-07'
 ---

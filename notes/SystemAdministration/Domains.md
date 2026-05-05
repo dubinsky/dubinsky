@@ -1,3 +1,6 @@
+---
+tags: [sysadmin]
+---
 * TOC
 {:toc}
 

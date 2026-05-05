@@ -1,6 +1,5 @@
 ---
-tags:
-  - sysadmin
+tags: [sysadmin]
 ---
 add/rename btrfs subvolumes:
 ```shell

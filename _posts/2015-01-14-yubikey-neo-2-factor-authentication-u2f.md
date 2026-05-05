@@ -1,7 +1,6 @@
 ---
 title: "Yubikey: 2-factor authentication (U2F, OATH and OTP) and SSH"
 date: 2015-01-14T20:15:00.000-05:00
-author: Leonid Dubinsky
 tags:
   - authentication
   - linux

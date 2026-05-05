@@ -1,6 +1,5 @@
 ---
 title: Bintray is dead - long live Maven Central!
-author: Leonid Dubinsky
 tags:
   - bintray
   - gradle

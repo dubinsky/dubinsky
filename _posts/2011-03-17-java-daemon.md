@@ -1,7 +1,6 @@
 ---
 title: Java Daemon
 date: '2011-03-17T12:15:00.006-04:00'
-author: Leonid Dubinsky
 tags: [java]
 modified_time: '2011-06-03T10:35:44.928-04:00'
 blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-3839280446042927778

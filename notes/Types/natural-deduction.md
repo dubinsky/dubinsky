@@ -1,7 +1,6 @@
 ---
 title: natural-deduction
 date: '2019-04-24T18:40:00.000-04:00'
-author: Leonid Dubinsky
 tags: []
 math: true
 ---

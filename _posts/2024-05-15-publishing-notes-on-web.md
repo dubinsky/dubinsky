@@ -1,6 +1,5 @@
 ---
 title: 'Publishing Notes on the Web'
-author: Leonid Dubinsky
 tags: [obsidian, roam]
 date: '2024-05-15'
 ---

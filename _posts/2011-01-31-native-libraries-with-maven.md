@@ -1,7 +1,6 @@
 ---
 title: Native Libraries with Maven
 date: '2011-01-31T14:34:00.002-05:00'
-author: Leonid Dubinsky
 tags: [maven]
 modified_time: '2013-04-25T14:59:36.599-04:00'
 blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-122451127561287518

@@ -1,7 +1,6 @@
 ---
 title: К вопросу о перьевых ручках
 date: '2009-09-29T02:17:00.042-04:00'
-author: dub
 tags: [pens]
 modified_time: '2014-05-25T22:37:57.659-04:00'
 thumbnail: http://1.bp.blogspot.com/-dKgE4NJP4Hk/Trf2xgILt2I/AAAAAAAAHcQ/G8OvkSNPvVY/s72-c/IMG_20111107_100542.jpg

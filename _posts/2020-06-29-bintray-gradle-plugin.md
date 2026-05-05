@@ -1,6 +1,5 @@
 ---
 title: 'Bintray Gradle plugin'
-author: Leonid Dubinsky
 tags: [bintray, gradle]
 date: '2020-06-29'
 ---

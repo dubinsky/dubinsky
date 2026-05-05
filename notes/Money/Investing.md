@@ -101,3 +101,8 @@ Vanguard VYM 0.06%
 Vanguard VDAIX 0.08%
 Vanguard VDIGX 0.26%
 Vanguard VEIRX 0.19%
+
+## HELOC
+Why *wouldn't* I pay it off using my taxable savings?
+There is an opportunity cost, but it is not great: I pay around 6% per year in interest, the market has to grow more than that plus inflation, which is possible but far from guaranteed.
+There is an income tax cost, but it is zero: if pay-off amounts do not push me into the higher tax bracket, I end up paying the same amount in taxes, just later.

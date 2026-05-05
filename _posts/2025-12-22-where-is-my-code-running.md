@@ -1,6 +1,5 @@
 ---
 title: Where is my code running?
-author: Leonid Dubinsky
 tags:
   - gradle
 date: 2025-12-22

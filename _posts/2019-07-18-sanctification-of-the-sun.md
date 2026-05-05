@@ -1,6 +1,5 @@
 ---
 title: 'Sanctification of the Sun'
-author: Leonid Dubinsky
 tags: []
 date: '2019-07-18'
 ---

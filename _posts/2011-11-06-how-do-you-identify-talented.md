@@ -1,7 +1,6 @@
 ---
 title: How do you identify talented programmers?
 date: '2011-11-06T09:49:00.002-05:00'
-author: Leonid Dubinsky
 tags: [programming]
 modified_time: '2012-07-11T16:12:46.115-04:00'
 blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-2605277549670825821

@@ -1,7 +1,6 @@
 ---
 title: Best REST/Web Books
 date: '2014-05-26T12:37:00.001-04:00'
-author: Leonid Dubinsky
 tags: [best, web services]
 modified_time: '2014-05-26T12:37:16.105-04:00'
 blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-6516691450047106433

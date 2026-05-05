@@ -1,7 +1,6 @@
 ---
 title: Water Drops
 date: '2010-02-23T11:47:00.001-05:00'
-author: dub
 tags: [photo]
 modified_time: '2012-01-02T09:28:00.409-05:00'
 thumbnail: http://3.bp.blogspot.com/-RNHG_1HPYcY/TrFjCU0egJI/AAAAAAAACks/CAcwCp8s-QM/s72-c/HeinzDrop.jpg

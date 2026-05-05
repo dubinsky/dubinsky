@@ -1,6 +1,5 @@
 ---
 title: 'Publishing Papers on the Web: v2'
-author: Leonid Dubinsky
 tags: [docbook, oxygen, mathjax]
 date: '2019-05-06T11:40:00.000-04:00'
 modified_time: '2019-07-14T23:30:00.000-05:00'

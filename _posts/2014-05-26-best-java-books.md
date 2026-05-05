@@ -1,7 +1,6 @@
 ---
 title: Best Java Books
 date: '2014-05-26T12:32:00.000-04:00'
-author: Leonid Dubinsky
 tags: [best, java, programming]
 modified_time: '2014-05-26T12:32:27.410-04:00'
 blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-8346330101889980177
