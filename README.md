@@ -99,7 +99,8 @@ Archived:
 - [ZIO Blocks](https://github.com/zio/zio-blocks):
   _[1262 (markdown)](https://github.com/zio/zio-blocks/pull/1262)_,
   _[1263 (markdown)](https://github.com/zio/zio-blocks/pull/1263)_,
-  [1327 (yaml)](https://github.com/zio/zio-blocks/issues/1327).
+  [1327 (yaml)](https://github.com/zio/zio-blocks/issues/1327),
+  [1377 (markdown)](https://github.com/zio/zio-blocks/issues/1377).
 - [XMLResolver](https://github.com/ndw/xmlresolver):
   _[28](https://github.com/ndw/xmlresolver/pull/28)_,
   [44](https://github.com/xmlresolver/xmlresolver/issues/44),

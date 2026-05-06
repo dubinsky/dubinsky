@@ -4,11 +4,17 @@ url: "http://dub.podval.org"
 author: "Leonid Dubinsky"
 email: dub@podval.org
 timezone: "America/New_York"
+google-analytics: UA-18415116-1
 
 header-pages:
-  - /tags.html
   - /notes/index
   - /posts
+  - /tags.html
+
+social:
+  github:  dubinsky
+  twitter: leoniddubinsky
+  linkedin: leoniddubinsky
 
 exclude:
   - build.gradle
@@ -19,11 +25,3 @@ exclude:
   - gradlew.bat
   - settings.gradle
   - src
-
-analytics:
-  google: UA-18415116-1
-
-social:
-  github:  dubinsky
-  twitter: leoniddubinsky
-  linkedin: leoniddubinsky

@@ -11,6 +11,10 @@ https://github.com/zsa/wally/wiki/Live-training-on-Linux
 ```
 # groupadd plugdev; usermod -aG plugdev $USER
 ```
+### Zapp
+
+https://github.com/zsa/zapp
+
 
 - Keyboards
   - [QMK Firmware](https://docs.qmk.fm/)
