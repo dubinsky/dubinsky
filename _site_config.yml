@@ -6,11 +6,6 @@ email: dub@podval.org
 timezone: "America/New_York"
 google-analytics: UA-18415116-1
 
-header-pages:
-  - /notes/index
-  - /posts
-  - /tags.html
-
 social:
   github:  dubinsky
   twitter: leoniddubinsky
