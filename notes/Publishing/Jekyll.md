@@ -1,3 +1,307 @@
+In 2024, I migrated my notes from [[Roam]] to [[Obsidian]] and merged my Obsidian vault with my personal website/blog repository. I had to adjust my Jekyll setup (using Jekyll plugins, layouts and includes and Liquid code snippets)  to accommodate the notes in addition to blog posts and to publish everything the way I want it - or, as close to it as I figured out how ;)
+
+In 2026, my Jekyll setup broke down, which motivated me to write my own [[Site Publisher]]. I no longer use Jekyll on my personal website; my previous setup is described here for historical purposes ;)
+## File Names and Titles
+
+Unlike Obsidian, which uses document's file name as its title, many Jekyll plugins and code snippets that I need to make Jekyll do what I want require the pages they process to have titles; my notes, as imported from [[Roam]], do not, so I need to do something about it.
+
+### Jekyll Collections
+
+One possibility is to make `notes` and `days` into [Jekyll Collections](https://jekyllrb.com/docs/collections/), where the member documents have their title, if it is not set explicitly, automatically populated based on the file name - but:
+- Jekyll collection directories have their names start with `_`, so the notes will have to reside in the directory `_notes` both in the GitHub repository and on the published website;
+-  sub-directories of Jekyll collections get ignored, but I want the ability to have sub-directories in my notes;
+- when Jekyll populates the title of the document from its file name, it capitalizes the first letter of each dash-separated segment, and I am not sure that this is what I want.
+
+### Liquid Code
+
+Another possibility is to adjust the code that requires titles to use filename instead (when the title is not set explicitly) - but:
+- this works for Liquid and Ruby code snippets, but not for Jekyll plugins - and I probably need those;
+- without the title being set explicitly, my notes as they are rendered by Jekyll do not have titles - and I want the titles!
+
+### Linter Obsidian Plugin
+
+So, I need to make sure that my notes always have titles, just like the blog posts. Obviously, adding the title manually to every little note created by just referencing it from another note is tedious and error-prone; I need to automate setting the title for the notes.
+
+[Linter](https://github.com/platers/obsidian-linter) Obsidian plugin can set the title property in each note to its file name; in Obsidian Settings | Community plugins | Linter | Settings:
+- General | Lint on save: enabled
+- YAML | YAML Title | Insert the title of the file into the YAML frontmatter: enabled
+
+Sometimes I need the title to be different from the file name, for instance, for the manually created `index.md` files that I want to add to Jekyll's list`header_pages` in the `_config.yml`; in such cases, appropriate Linter rule can be disabled by adding a property to the file's YAML frontmatter:
+```yaml
+---
+disabled rules: [yaml-title]
+---
+```
+## MathJax
+
+I freshened up my Jekyll MathJax setup by upgrading to MathJax 3; I followed the [instructions](https://www.bodunhu.com/blog/posts/add-mathjax-support-to-jekyll-and-hugo/) of [Bodun Hu](https://www.bodunhu.com/) - a rare find that addresses MathJax 3, as opposed to the more wide-spread instructions for MathJax 2 integration.
+
+To enable MathJax on a page, add `math: true`  to its front matter:
+```yaml
+---  
+...  
+math: true  
+---
+...
+```
+
+In `_includes/head.html`:
+{% raw %}
+```liquid
+<head>
+  ...
+  {%- if page.math == true -%}  
+    {% include mathjax.html -%}  
+  {%- endif -%}
+</head>
+```
+{% endraw %}
+
+In `_includes/mathjax.html`:
+```html
+<script>  
+  MathJax = {  
+    tex: {inlineMath: [ ['$', '$'], ['\\(', '\\)'] ]},  
+    svg: {fontCache: 'global'}  
+  };  
+</script>  
+<script  
+  type="text/javascript" id="MathJax-script" async  
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"  
+>  
+</script>
+```
+
+## Directory Listing
+
+With the notes published on my website, I want a list of them to be published too - otherwise, nobody can find the individual notes. I [found](https://talk.jekyllrb.com/t/directory-listing-plugin-help/5513/4) a [solution](https://github.com/MichaelCurrin/fractal/blob/master/_includes/structure/page-list.html); thank you, [Michael Currin]( https://github.com/MichaelCurrin)!
+
+I did not make sub-folders appear in the lists automatically yet, not just files, so I add them manually, as content of the index files.
+
+- [ ] [[TODO]] add sub-folders to the folder listing automatically;
+- [ ] [[TODO]] generate the index files themselves automatically.
+- [ ] [[TODO]] paginate the page list.
+
+In `_layouts/page.html`:
+{% raw %}
+```liquid
+<div class="post-content">
+  {{ content }}
+  {% if page.name == 'index.md' %}  
+    {% include page-list.html %}  
+  {% endif %}  
+</div>
+```
+{% endraw %}
+
+In `_includes/page-list.html`:
+{% raw %}
+```liquid
+<ul class="page-list">  
+  {% assign pages = site.pages | sort_natural: 'title' %}  
+  {%- for item in pages %}  
+  {%- if item.dir == page.dir and item.path != page.path %}  
+  <li>
+    <a href="{{ item.url | relative_url }}">
+      <span>{{ item.title }}</span>
+    </a>
+  </li>  
+  {% endif -%}  
+  {% endfor -%}  
+</ul>
+```
+{% endraw %}
+
+In `_sass/custom.scss`:
+{% raw %}
+```css
+.page-list {  
+  font-size: 18px;  
+  
+  & i {  
+    font-size: 14px;  
+    // Based on blockquote.  
+    color: #828282;  
+  }  
+}
+```
+{% endraw %}
+
+## Wiki Links
+
+Unlike [[Obsidian]], Jekyll does not understand wiki-links. There is a Jekyll plugin for that: [Jekyll Wikirefs](https://github.com/wikibonsai/jekyll-wikirefs), but its 0.0.14 release did not work with current Jekyll; I [asked for an update](https://github.com/wikibonsai/jekyll-wikirefs/issues/1) - and release 0.0.15 [relaxed the dependency requirements](https://github.com/wikibonsai/jekyll-wikirefs/releases/tag/v0.0.15)! Thank you, [manunamz](https://github.com/manunamz)!
+
+In the interim, I used (after tweaking it a bit) a piece of Liquid code that does what needs to be done with *basic* wiki-links: [brackettest](https://github.com/jhvanderschee/brackettest) (listed on the plugin's website :)).
+
+Plugin does not respect the boundaries of the code blocks (but  [brackettest](https://github.com/jhvanderschee/brackettest) does), so to stop it from processing wiki-links inside such blocks (for instance, in this post :)), I insert a zero-width space between the two opening brackets: `[​[`. This is sub-optimal, since the invisible zero-width space ends up in the rendered code, which, as a result, can not be re-used by copying it: it is not what it looks like (in addition, the use of ZWSP throws off the code colorizer and requires an editor that shows invisible characters).
+
+Another way - back-slash-escaping the opening bracket (`\[`) does not work within the code block. I [asked](https://github.com/wikibonsai/jekyll-wikirefs/issues/3) for the plugin to not process links within the code blocks, but this seems to be unfeasible in the "legacy system" Jekyll; awaiting [manunamz](https://github.com/manunamz)'s suggestion for a non-legacy system.
+
+Plugin down-cases page titles; I [asked](https://github.com/wikibonsai/jekyll-wikirefs/issues/2) for this down-casing to be configurable.
+
+Plugin gathers and puts into the front-matter of each page list of back-links to it. To show a list of back-links on a page, in `_layouts/default.html` add (note the use of the `concat` filter to make sure that links from both pages and posts are resolved):
+{% raw %}
+```liquid
+<main ...>  
+  <div class="wrapper">  
+    {{ content }}  
+  
+    <div class="backlinks">  
+    {% if page.backlinks != blank %}
+    <hr/>  
+    <h4>Backlinks</h4>  
+    {% for backlink in page.backlinks %}  
+    {% assign linked_doc = site.pages | concat: site.posts | where: "url", backlink.url | first %}  
+    • <a class="backlink" href="{{ linked_doc.url }}">{{ linked_doc.title }}</a>  
+    {% endfor %}  
+    {% endif %}  
+    </div>  
+  </div></main>
+```
+{% endraw %}
+
+Links can be styled in `_sass/custom.scss`:
+```css
+.wiki-link::before {  content: "[[";  }  
+.wiki-link::after {  content: "]]";  }  
+.invalid-wiki-link {  background: red;  }  
+  
+.backlink {  font-style: italic; }
+```
+
+- [ ] [[TODO]] look into showing the graph with https://github.com/wikibonsai/jekyll-graph
+- [ ] [[TODO]] look deeper into [wikibonsai](https://github.com/wikibonsai/wikibonsai?tab=readme-ov-file)
+
+## Pages by Tag
+
+Now that I have my blog and my notes in the same repository and in the same Obsidian vault, I can cross-link blog posts and notes; both can have tags in their YAML frontmatter,
+and any overall list of tags, tag cloud or whatever I end up publishing on the site needs to include both posts and notes.
+
+There are many code snippets floating around that add listing of tags and documents tagged with them to a site generated by [[Jekyll]], for example: ["an easy way to support tags in a jekyll blog"](https://stackoverflow.com/questions/1408824/an-easy-way-to-support-tags-in-a-jekyll-blog/21002505#21002505), ["listing jekyll posts by tag"](https://www.jokecamp.com/blog/listing-jekyll-posts-by-tag/), ["https://www.maggie98choy.com/Add Tags in Jekyll/"](https://www.maggie98choy.com/Add-Tags-in-Jekyll/),  [jekyll-tagging](https://github.com/pattex/jekyll-tagging) [[Jekyll]] plugin.
+
+All of the samples I saw use `site.tags`, which maps tags to lists of posts that have the tags, but only *posts* are included, not *pages*. To gather tags and associated files across the posts and pages, I copied a [chunk of Jekyll code](https://github.com/jekyll/jekyll/blob/60a9cd73569552b858e807cbd3c0e23455023cbc/lib/jekyll/site.rb#L255), tweaked it to include all posts and pages, tweaked the sorting, packaged it as a Liquid filter and put it into `_plugins/all-tags.rb`:
+```ruby
+module Jekyll  
+  module AllTagsFilter  
+    def all_tags(site)  
+      @all_tags ||= begin  
+       hash = Hash.new { |h, key| h[key] = [] }  
+       (site.documents + site.pages).each do |p|  
+         p.data["tags"]&.each { |t| hash[t] << p }  
+       end  
+       hash.each_value { |pages| pages.sort_by! { |page| page.data["title"].downcase } }  
+       hash.sort_by { |word| word[0].downcase }
+     end  
+    end  endend  
+  
+Liquid::Template.register_filter(Jekyll::AllTagsFilter)
+```
+
+List of tags and pages for each is generated using the `all_tags` filter in the file `tags.html` (which I list under `header_pages` in `_config.yml`):
+
+{% raw %}
+```liquid
+---  
+layout: page  
+title: "Tags"  
+disabled rules: [yaml-title]  
+description: "Pages by tags"  
+permalink: /tags/  
+---  
+  
+<div id="tags">  
+  {% assign tags = site | all_tags %}  
+  <h2>All tags</h2>  
+  <p>
+    {% for tag in tags %}  
+    <a class="page-tag" href="{{ site.baseurl }}/tags/#{{ tag[0] | slugify }}">{{ tag[0] }}</a>  
+    {% endfor %}  
+  </p>  
+  <h2>Pages by tags</h2>  
+  {% for tag in tags %}  
+  <div id="{{ tag[0] | slugify }}">  
+    <h3>{{ tag[0] }}</h3>  
+    {% for post in tag[1] %}  
+    <ul>  
+      <p>
+        <a class="post-link" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>  
+      </p>
+    </ul>
+    {% endfor %}  
+  </div>  
+  {% endfor %}  
+</div>
+```
+{% endraw %}
+
+- [ ] [[TODO]] Look into tag pages aliased to tags (with the help of the [Tag Wrangler](https://github.com/pjeby/tag-wrangler) Obsidian plugin?) to bring tags like `#computer` closer to classifier pages like `[​[buy]]` and `[​[learn]]` (while in [[Roam]] they were equivalent) - or!, just link the tag header in the by-tag list to a page with the same name if it exists :) (possibly ignoring case).
+
+## Page Tags
+
+Tags for posts and for pages like notes are listed on the page, linking back to the appropriate place by-tag list.
+
+In `_includes/tags.html`:
+{% raw %}
+```liquid
+{% if page.tags %} |  
+{% for tag in page.tags %}  
+<a class="post-tag" href="{{ site.baseurl }}/tags/#{{ tag | slugify }}">{{ tag }}</a>  
+{% endfor %}  
+{% endif %}
+```
+{% endraw %}
+
+In `_layouts/post.html`, between the date and the author:
+{% raw %}
+```liquid
+{%- include tags.html -%}
+```
+{% endraw %}
+
+And in `_layouts/page.html`, after the title:
+{% raw %}
+```liquid
+<p class="post-meta">  
+{%- include tags.html -%}  
+</p>
+```
+{% endraw %}
+
+Tags are styled in `_sass/custom.scss`:
+```css
+.page-tag {  
+  display: inline-block;  
+  background: $grey-color-light;  
+  padding: 0 .5rem;  
+  margin-right: .5rem;  
+  border-radius: 4px;  
+  color: $text-color;  
+  font-size: 90%;  
+  &:before {  
+    content: "\f02b";  
+    font-family: FontAwesome;  
+    padding-right: .5em;  
+  }  
+  &:hover {  
+    text-decoration: none;  
+    background: $grey-color;  
+    color: $background-color;  
+  }  
+}
+```
+
+To use the fancy tag character, make fancy font available in `_includes/head.html`:
+```html
+<head>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+</head>
+```
+
+- [ ] [[TODO]] update the font - or get rid of it if possible
+
+
+## The End
+
 I did some re-organizing of my notes March 2026, and started getting:
 
 ```text
@@ -13,6 +317,6 @@ from /usr/lib/ruby/gems/3.4.0/gems/jekyll-wikirefs-0.0.16/lib/jekyll-wikirefs/pl
 from /usr/lib/ruby/gems/3.4.0/gems/jekyll-wikirefs-0.0.16/lib/jekyll-wikirefs/plugins/generator.rb:25:in 'Jekyll::WikiRefs::Generator#generate'
 ```
 
-Turned out, use of `[[TODO]]` in any of the `notes/XXX/index.md` files causes this...
+I had to look for the cause by deleting bunch of my notes until I found which one causes the problem. Turned out, use of `[[TODO]]` in any of the `notes/XXX/index.md` files causes this...
 
-I should just write my own site generator ;)
+Although this is not an intolerable restriction, it pushed me over the edge: I wrote my own [[Site Publisher]] and switched to it ;)
