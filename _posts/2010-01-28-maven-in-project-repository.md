@@ -168,7 +168,7 @@ anonymous commenter!)
 > The folder structure for groupId=x.y.z and artifactId=artefact will be x/y/z/artifact/version (the artifact folder was
 > missing from the post.
 >
-> Also, if the lib directory is at the same level with the pom.xml then the url will be file://${project.basedir}/lib
+> Also, if the lib directory is at the same level with the pom.xml then the url will be `file://${project.basedir}/lib`
 >
 > Btw, after spending about 5 minutes to manually create the correct folder structure and produce the sha1 checksums, I
 > found a nice "trick".
