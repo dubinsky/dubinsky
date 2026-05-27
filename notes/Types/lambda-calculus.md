@@ -3,8 +3,6 @@ title: lambda-calculus
 math: true
 ---
 
-[[TODO]] Jekyll renders some of the LaTeX thingies incorrectly, with the dollar sign visible
-
 ## Untyped lambda-calculus ##
 
 Assuming infinite (countable) set Variable of variables (x, y, ...),
