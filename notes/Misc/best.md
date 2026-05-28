@@ -1,0 +1,166 @@
+---
+title: Best
+date: '2014-05-25T21:51:00.004-04:00'
+tags: [best]
+post: true
+modified_time: '2014-05-25T22:22:04.585-04:00'
+blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-260907988749665313
+blogger_orig_url: https://blog.dub.podval.org/2014/05/best.html
+---
+
+## Information ##
+For many fields, there are "canonical" places on the Internet, where enthusiasts (and specialists) in this field gather,
+and where one should go for information.
+
+Often, there are "canonical" places to buy  stuff. Sometimes, there is a product that is clearly best in its category.
+Here is my list of such things :)
+
+## Where to buy ##
+
+- Books (and everything else ;)): [Amazon](http://www.amazon.com/)
+- Shoes: [Zappos](http://www.zappos.com/)
+- Tires: [TireRack](http://www.tirerack.com/)
+
+## Computers ##
+- Buy computer components: [Newegg](http://www.newegg.com/)
+- Optical disc burning: [Club CD Freaks](http://club.cdfreaks.com/)
+- Buy optical disc blanks: [Supermedia](http://www.supermediastore.com/)
+- Real keyboards information: [GeekHack](http://geekhack.org/),
+  [Reddit](http://www.reddit.com/r/MechanicalKeyboards/wiki/recommendedsellers),
+  [keyboardlover](http://www.keyboardlover.com/popularkeyboards.php)
+- Buy real keyboards: [Elitekeyboards](http://elitekeyboards.com/), [wasdkeyboards](http://www.wasdkeyboards.com/),
+  [Unicomp](http://pckeyboards.stores.yahoo.net/customizer.html)
+- Broadband Internet connections information: [Broadband Reports](http://www.broadbandreports.com/forums/all)
+
+## Gadgets ##
+- Cell phones information: [Howard Forums](http://www.howardforums.com/)
+- Electronic bookreader information: [MobileRead](http://www.mobileread.com/)
+- Photo Cameras information: [Digital Photography Review](http://www.dpreview.com/)
+- In-ear headphones: [Jlab Audio](http://www.jlabaudio.com/)
+  [J3M](http://www.jlabaudio.com/jbuds-j3m-micro-atomic-in-ear-earphones-with-mic-p-90.html) with
+  [Comply Foam](https://www.complyfoam.com/) tips. (For fanatics: Audeo [Perfect Fit](https://www.complyfoam.com/))
+- Watches: women's - Timex [T20441](http://www.amazon.com/gp/product/B00006J6U8), men's - Casio
+  [MQ24-7B](http://www.amazon.com/gp/product/B000GAYQU4)
+- Bicycle information: [Sheldon Brown](http://sheldonbrown.com/articles.html); [BikeForums](http://www.bikeforums.net/)
+- Glasses, over prescription, smoke for day/yellow for night: Global Vision [Outfitter](http://www.amazon.com/dp/B000NOKNKA)
+
+## Flashlights and batteries ##
+- Flashlights/batteries information: [CandlePower](http://www.candlepowerforums.com/vb/).
+- Buy flashlights/batteries: [BatteryJunction](http://www.batteryjunction.com/), [4 Sevens](http://www.4sevens.com/).
+- Battery charger: [Maha](http://www.mahaenergy.com/store/listCategoriesandProducts.asp?idcategory=11):
+  C9000 - 4 slots, more features; C801D/C800S - 8 slots; C808M - 8 slots, C and D.
+- Rechargeable batteries: Eneloop “1500”; Imedion.
+- Buy batteries and chargers: [ThomasDistributing](http://www.thomasdistributing.com/).
+- Battery caddy: [Storacell](http://www.amazon.com/Storacell-Powerpax-Battery-Caddy-Yellow/dp/B004YG7JXW).
+- Home USB charger: [Motorolla](http://www.amazon.com/gp/product/B007ZN5LE0/).
+- Car USB charger: [Scosche](http://www.amazon.com/gp/product/B0077PM3KG).
+- USB cables: [FRiEQ Cloth Jacketed](http://www.amazon.com/gp/product/B00FAADBHO/).
+
+## Tools ##
+
+- Belt key loop: [My Key Pal](http://www.amazon.com/Heavy-Duty-Security-Belt-Key-ID-Badge-Chain/dp/B00128ZJ7I/).
+- Multi-tool: Leatherman Wave, Charge, Surge.
+- Drill: [Bosch PS30-2A 12-Volt Max 3/8-Inch Drill Driver](http://www.amazon.com/gp/product/B001E281E0/).
+- Portable Workbench: [Black & Decker Workmate 425](http://www.amazon.com/gp/product/B0000224R9).
+- Digital Calipers: [Mitutoyo](http://www.adafruit.com/products/294).
+- Snips: [Fiskars 5792](http://www.amazon.com/Fiskars-5792-Shop-Hardware-Multipurpose/dp/B006V8777O/).
+- Scissors made not in China: [Gingher](http://www.amazon.com/gp/product/B000I60XVC).
+- Lubricating Oil: [Liquid Bearings](http://www.amazon.com/gp/product/B00CD814RA).
+- Carabiner: Nite Ize [S-Biner](http://www.amazon.com/gp/product/B000WUIGYA).
+
+## Kitchen Knives ##
+
+- [Paring Knife](http://www.amazon.com/gp/product/B0000Y7KG8/) by Shun
+- [Tomato Knife](http://www.cutleryandmore.com/victorinox/tomato-knife-fork-tip-p16337) by Victorinox
+- [Mag-Blok](http://benchcrafted.com/magbloks.htm) magnetic holder from BenchCrafted
+- ["An Edge in the Kitchen: The Ultimate Guide to Kitchen Knives"](http://www.amazon.com/Edge-Kitchen-Ultimate-Guide-Knives/dp/0061188484) by Chad Ward
+- Knife sharpening system: [EdgePro](http://www.edgeproinc.com/sharpeningtips.html); additional stones (grits
+  [comparison](http://jendeindustries.wordpress.com/2010/01/10/which-edge-pro-stones-stock-chosera-or-shapton/)):
+  [JendeIndustries.com](http://www.jendeindustries.com/mm5/merchant.mvc?Screen=SHAP&amp;Store_Code=JENDE);
+  [ChefKnivesToGo.com](http://chefknivestogo.ecomm-search.com/search?query=edgepro).
+- Honing “Steel”: Idahone Ceramic [Rod](http://www.chefknivestogo.com/sharpeningrod.html); HandAmerican Borosilicate
+  [Rod](http://www.chefknivestogo.com/boghorod12.html).
+
+## Kitchenware ##
+- [Unicorn Pepper Mill](http://www.unicornmills.com/)
+- [DLX-2000 Bread Dough Mixer](http://www.pleasanthillgrain.com/magic_mill_dlx_mixer.aspx)
+- ["Bread Science"](http://www.thefreshloaf.com/bookreviews/breadscience) by Emily Buehler
+- ["What Einstein told his Cook"](http://www.amazon.com/What-Einstein-Told-His-Cook/dp/0393329429/) by Robert L. Wolke
+- Nice local (Newton) kitchenware store: [China Fair](http://chinafairinc.com/)
+- Looks like good kitchenware store (around Boston): [Kitchen Outfitters](http://www.kitchen-outfitters.com/)
+- Apple peeler: [Starfrit](http://www.amazon.com/gp/product/B000X9EQ7Q/)
+- Immersion Blender: Breville Control Grip [BSB510XL](http://www.amazon.com/gp/product/B004RF7QJW)
+
+## Food and Drink ##
+- Half-sour pickles recipe (no water!): [Малосольные огурчики](http://www.greenmama.ua/nid/1001507/)
+- Kosher pickled Ginger: [Mitoku Sushi Ginger](http://www.simply-natural.biz/Mit-Sushi-Ginger.php)
+- Sauces: [“Тёщина горчица”](http://www.zakuson.ca/productDetails.php?id=3&amp;cat=1&amp;catname=Hot%20mustard)
+  (mustard), [Adjika](http://www.zakuson.ca/productDetails.php?id=10&amp;cat=1&amp;catname=Adjika%20Souce),
+  [Tkemali](http://www.zakuson.ca/productDetails.php?id=9&amp;cat=1&amp;catname=Plum%20Tomato%20Sauce) (Plum/Tomato)
+- Mineral water: S. Pellegrino
+- Salmon slices: Trader Joe’s Atlantic Harvest
+- Tomatoes: campari; cheaper at Costco
+- Sweet wine: Bartenura Moscato
+- Bourbon: [Elija Craig](http://en.wikipedia.org/wiki/Elijah_Craig_(bourbon));
+  [Bulleit](http://en.wikipedia.org/wiki/Bulleit_Bourbon)
+- Low-carb diet information: [Carb-Sanity](http://carbsanity.blogspot.com/)
+
+## Family Games and Toys ##
+- [Quoridor](http://www.amazon.com/gp/product/B00001NTXN)
+  [Quarto!](http://www.amazon.com/gp/product/B00001NTXP)
+  [Gobblet!](http://www.amazon.com/Blue-Orange-4102587-Gobblet/dp/B00006L50P)
+  [Rush Hour](http://www.amazon.com/Think-Fun-5000-ThinkFun-Rush/dp/B00000DMER)
+  [River Crossing](http://www.amazon.com/Think-Fun-7020-River-Crossing/dp/B00008QJ1D)
+  [Set](http://www.amazon.com/SET-Enterprises-4098363-Game/dp/B00000IV34)
+  [Abalone](http://www.amazon.com/Foxmind-ABALONE/dp/B003O9J41A/)
+- Hula Hoops: [Acu Hoop](http://www.sports-hoop.com/product_sportshoop/SubCategory.aspx?CategoryID=1&amp;SubCategoryID=79)
+- [Buckyballs](http://www.getbuckyballs.com/) (no longer available)
+- [Plasma Ball](http://www.scientificsonline.com/nebula-plasma-ball.html)
+
+## Furniture ##
+- [Shtender](http://www.greenfieldjudaica.com/floor-shtender---height-adjustable-STB.html)
+- [LED Night Reading Light](http://www.theledlight.com/night-reader.html)
+- [Table Legs](http://www.closet-masters.net/MetalTableLegs3Dia28tall.aspx)
+- Folding mattress
+- Hammock: [Pawleys Island Trellis](http://www.amazon.com/gp/product/B00099E51M)
+
+## Bags ##
+- With padding (for laptop): [Brenthaven Duo 15 2030](http://www.amazon.com/Brenthaven-Shoulder-Case-Notebooks-12-15/dp/B000BYB4P0/)
+- Sleeve: Tucano [Work Out PC](http://www.amazon.com/Tucano-WORK-OUT-PC-Laptop/dp/B004U718KU)
+- Supercompact (for chromebook): Samsonite
+  [938915](http://www.overstock.com/Luggage-Bags/Samsonite-Top-zip-Micro-Ripstop-12.1-inch-Laptop-Case/5728235/product.html)
+  (not on Samsonite website; they did not reply to my questions)
+- Compact (messenger): Nomadic Wise Walker [WR-08](http://www.jetpens.com/Nomadic-WR-08-Wise-Walker-A4-Shoulder-Bags/ct/1159)
+- Portfolio to fit 3-4 notebooks 5x8, folder ½”, pens etc.,
+  width 14"-14.5" height 11.25"-11.75" depth  4.5"-6" - still looking :)
+
+## Containers ##
+- [Filing Box](http://www.containerstore.com/shop?productId=10006265)
+- [Shoe Box](http://www.containerstore.com/shop/storage/storageBoxes/plastic?productId=10001753)
+- [Accessory Box](http://www.containerstore.com/shop/storage/storageBoxes/plastic?productId=10003253)
+- [Amac Boxes](http://www.containerstore.com/shop/storage/storageBoxes/plastic?productId=10003497)
+- Memory Cards Case: [Pelican 0910](http://www.amazon.com/Pelican-0910-015-110-Secure-Digital-Memory/dp/B001MT8J4W)
+- Phone cases: [Seidio Convert](http://www.seidioonline.com/); [OtterBox Defender](http://www.otterbox.com/)
+- Pen case: ArtBin [Prism](http://www.amazon.com/gp/product/B000X25Z96)
+
+## Office ##
+- Buy pens and notebooks: [JetPens](http://www.jetpens.com/); [Goulet Pens](http://www.gouletpens.com/)
+- Buy paper and labels: [Shoplet](http://shoplet.com/)
+- Buy binders: [Staples.com](http://staples.com/)
+- Fountain pens:
+  [Platinum Preppy](http://www.jetpens.com/search?q=preppy);
+  [Lamy Vista](http://www.jetpens.com/Lamy-Vista-Fountain-Pens/ct/1186),
+  [Safari](http://www.jetpens.com/Lamy-Safari-Fountain-Pens/ct/1185) or
+  [Al-Star](http://www.jetpens.com/Lamy-AL-Star-Fountain-Pens/ct/1184);
+  Parker [51](http://www.parker51.com/)
+- Gel pens: Pilot [Hi-Tec-C](http://www.jetpens.com/Pilot-Hi-Tec-C-Gel-Ink-Pen-0.4-mm-Basic-Colors-Black/pd/82) 0.4mm or
+  Hi-Tec-C [Cavalier](http://www.jetpens.com/Pilot-Hi-Tec-C-Cavalier-Executive-Gel-Ink-Pen-0.4-mm-Silver-Body-Black-Ink/pd/629)
+- Markers: Sakura Pigma Micron: 01 (0.25mm) [black](http://www.jetpens.com/Sakura-Pigma-Micron-005-Marker-Pen-0.2-mm-Black/pd/2042)
+  and 05 (0.45mm) [color](http://www.jetpens.com/Sakura-Pigma-Micron-05-Pens-0.45-mm/ct/479)
+- Page Markers: Post-it ½”
+  [flags](http://www.post-it.com/wps/portal/3M/en_US/Post_It/Global/Products/Catalog/?PC_7_RJH9U523000P60II85TCFL1863000000_nid=DKDGB6PRLXgsQF4PQ1K69MglF0B9Q95J0Sbl)
+  and [markers](http://www.post-it.com/wps/portal/3M/en_US/Post_It/Global/Products/Catalog/?PC_7_RJH9U523000P60II85TCFL1863000000_nid=K7JQK8PCH5gsQF4PQ1K69MglLJML16SQP3bl);
+  Avery Write-On [Tabs](http://www.avery.com/avery/en_us/Products/Dividers/Tabs-and-Flags/Write_On-Tabs_16141.htm) (16143)
+- Labelling Tape: [Post-It](http://www.3m.com/us/office/postit/labels/products_label_rolls.html)
+- Dry-Erase Board: [UNVSL](http://www.amazon.com/UNVSL-Dry-Erase-Melamine-Satin-Finished-Aluminum/dp/B000J0CARW)
+- Labeler: Brother [PT2730VP](http://www.amazon.com/gp/product/B004648W7E)
