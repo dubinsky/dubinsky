@@ -1,4 +1,3 @@
 ---
-header-page:
-  include: true
+header-page: true
 ---

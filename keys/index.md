@@ -1,6 +1,5 @@
 ---
 title: Keys
-icon:
-  name: key
-  style: solid
+icon: key
+icon-style: solid
 ---

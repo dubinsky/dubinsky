@@ -1,6 +1,5 @@
 ---
 title: 'Sanctification of the Sun'
-tags: []
 post: true
 date: '2019-07-18'
 ---

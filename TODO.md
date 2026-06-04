@@ -1,6 +1,5 @@
 ---
-icon:
-  name: list
-  style: solid
+icon: list
+icon-style: solid
 ---
 

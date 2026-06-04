@@ -1,5 +1,4 @@
 ---
-icon:
-  name: check
-  style: solid
+icon: check
+icon-style: solid
 ---
