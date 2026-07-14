@@ -186,6 +186,8 @@ including all the things that I wanted since the beginning:
 - environment variables for flags and options: [195](https://github.com/skevetter/devpod/pull/195), [251](https://github.com/skevetter/devpod/pull/251), [252](https://github.com/skevetter/devpod/pull/252), [256](https://github.com/skevetter/devpod/pull/256), [257](https://github.com/skevetter/devpod/pull/), [615](https://github.com/skevetter/devpod/pull/615), [gcloud/2](https://github.com/skevetter/devpod-provider-gcloud/pull/2), [gcloud/44](https://github.com/skevetter/devpod-provider-gcloud/pull/44).
 - [document](https://github.com/skevetter/devpod-provider-gcloud/pull/44) `gcloud` provider properly.
 
+As of July 1st, 2026 DevPod is [Desy](https://devsy.sh/docs/what-is-devsy/)
+
 ## Speed and Price
 Here are rough estimates of speed and price when working with one of my projects (OpenTorah) as calculated around 2024:
 
@@ -253,4 +255,4 @@ Install JetBrains Gateway using JetBrains Toolbox.
 
 Desktop file for the Remote Gateway are broken; spurious quotes around the `Exec` command in  `~/.local/share/applications/jetbrains-gateway.desktop` must be removed manually - otherwise, although a scheme handler for `jetbrains-gateway` is registered (which can be verified with `$ xdg-mime query default x-scheme-handler/jetbrains-gateway`), Gateway can not be started from the command line nor from tools like DevPod that use `xdg-open` to start it: `$ xdg-open jetbrains-gateway://connect` opens web browser instead (see [bug report](https://youtrack.jetbrains.com/projects/GTW/issues/IJPL-226400/Remote-Gateway-desktop-file-is-broken-Gateway-does-not-start))!
 
-It looks like Omarchy upgrade - or some Arch thingy it triggers - keep adding quotes to the  desktop files that have UUIDs in their names and no MIME association in them - quotes that the same OS can not handle to open... 3
+It looks like Omarchy upgrade - or some Arch thingy it triggers - keep adding quotes to the  desktop files that have UUIDs in their names and no MIME association in them - quotes that the same OS can not handle to open...

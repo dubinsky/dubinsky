@@ -18,7 +18,7 @@ There is still no official Gradle support, but I found a great unofficial Gradle
 ## Introduction ##
 
 Yesterday JFrog [announced](https://jfrog.com/blog/into-the-sunset-bintray-jcenter-gocenter-and-chartcenter/) that [Bintray/JCenter](https://bintray.com/beta/#/bintray/jcenter?tab=packages) will go away in three months. Although they do provide free [JFrog Platform Cloud](https://jfrog.com/pricing/#sass) subscriptions for Open Source developers, and I got [one](https://dub.jfrog.io/), I do not see how I can use it to distribute my artifacts.
-Besides, as I [wrote before](http://dub.podval.org/2020/06/29/bintray-gradle-plugin.html), Bintray seems to be abandonware...
+Besides, as I [[bintray-gradle-plugin|wrote before]], Bintray seems to be abandonware...
 
 I am not ready to switch to the non-traditional [JitPack](https://jitpack.io/) (yet?), so [Maven Central](https://central.sonatype.org/) seems to be the way to go.
 

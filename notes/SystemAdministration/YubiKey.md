@@ -10,6 +10,9 @@ modified_time: 2018-11-11T03:44:06.602-05:00
 blogger_id: tag:blogger.com,1999:blog-8681083740214020499.post-3229372978474069876
 blogger_orig_url: https://blog.dub.podval.org/2015/01/yubikey-neo-2-factor-authentication-u2f.html
 ---
+[[TODO]] let obsolete be obsolete: simplify
+
+
 * TOC
 {:toc}
 

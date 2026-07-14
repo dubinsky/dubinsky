@@ -9,7 +9,7 @@ modified_time: '2019-07-14T23:30:00.000-05:00'
 {:toc}
 ## DocBook ##
 
-Some things changed since I [last wrote on this subject](http://dub.podval.org/2011/11/07/publishing-papers-on-web.html):
+Some things changed since I [[publishing-papers-on-web|last wrote on this subject]]:
 - it is easy to publish static websites or blogs (like this one) on GutHub [Pages](https://pages.github.com/);
 - syntactic highlighting using [Markdown](https://daringfireball.net/projects/markdown/) is trivial compared to what had
   to be done using - for example - Blogger;

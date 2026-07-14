@@ -131,13 +131,14 @@ virsh net-autostart --network default --disable
   
 ## Manually Install
 
-[[Docker]]
-[[Obsidian]]
-[[Zotero]]
-[[Keyboards]] Utilities
-Solaar autostart
-devpod
-pulumi
+- [[Docker]]
+- [[Obsidian]]
+- [[Zotero]]
+- [[Keyboards]] Utilities
+- Solaar autostart
+- devpod
+- pulumi
+
 ### Printers
 - https://wiki.debian.org/CUPSDriverlessPrinting
 - Brother drivers (using their tool) for MFC-J5930DW: http://support.brother.com/g/b/downloadend.aspx?c=us&lang=en&prod=mfcj5930dw_us_eu&os=127&dlid=dlf006893_000&flang=4&type3=625

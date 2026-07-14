@@ -6,6 +6,9 @@ tags:
 {:toc}
 
 I heard about [Home Assistant](https://www.home-assistant.io/) home automation project before: open source, integrates with [everything](https://www.home-assistant.io/integrations/)... But it wasn't until I replaced my HVAC system recently that I decided to see what it can do. And it is great!
+
+Some informational sites:
+- https://www.homeautomationguy.io/
 ## Installation
 
 Home Assistant documentation describes a number of ways to [install](https://www.home-assistant.io/installation/) it.
@@ -219,6 +222,12 @@ Added a [SONOFF Sprinkler Timer Zigbee 3.0](https://www.amazon.com/dp/B0D5B8S8N8
 ## Security
 I want to replace my door bell with a video one and install some cameras; I am thinking [Reolink](https://reolink.com/us/product/reolink-video-doorbell-wifi/), which [integrates](https://www.home-assistant.io/integrations/reolink/) with Home Assistant - although it seems that some additional [trickery](https://github.com/AlexxIT/WebRTC) is needed for audio... Also, the head-to-toe version (white, not black) does not seem to be available...
 
+Bought and installed in June 2026.
+
+https://github.com/NS086/HomeAssistantBlueprints
+
+https://community.home-assistant.io/t/reolink-how-do-i-create-a-home-assistant-notification-with-a-link-that-opens-the-reolink-camera-app/517971
+
 ## Floor Plans
 
 Make floor plans with:
@@ -238,6 +247,8 @@ Integrate with Home Assistant with:
 - https://community.home-assistant.io/t/esp32-p4-4-wi-fi-6-touch-panel-with-built-in-voice-the-next-gen-wall-panel/895470/40
 - https://github.com/alaltitov/Waveshare-ESP32-P4-86-Panel-ETH-2RO/tree/dev
 ## TODO
+
+use simplified automation UI released in June 2026
 
 [https://www.home-assistant.io/integrations/zwave_js/#how-do-i-switch-between-the-official-z-wave-js-add-on-and-the-z-wave-js-ui-add-on](https://www.home-assistant.io/integrations/zwave_js/#how-do-i-switch-between-the-official-z-wave-js-add-on-and-the-z-wave-js-ui-add-on)
 

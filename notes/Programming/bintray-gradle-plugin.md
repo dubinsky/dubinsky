@@ -188,7 +188,7 @@ ext.configureLibrary = {
   final String projectName = project.name
   final String projectDescription = project.description
   final String projectGroup = project.group
-  // I like my artifac names to be prefixed:
+  // I like my artifact names to be prefixed:
   final String projectArtifact = "<ARTIFACT-PREFIX>-$projectName"
   final String projectVersion = project.version
   final String gitHubRepository = "<GitHub USER or ORGANIZATION>/<GitHub REPOSITORY>"
