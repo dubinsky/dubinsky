@@ -86,7 +86,7 @@ And mount:
 # systemctl daemon-reload
 # mount /mnt/data
 ```
-### Mount
+## Mount
 
 To [mount](https://pve.proxmox.com/wiki/Linux_Container#_bind_mount_points) a directory from the host in an LXC container:
 - in the ProxMox shell:

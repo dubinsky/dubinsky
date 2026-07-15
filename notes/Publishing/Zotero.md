@@ -12,3 +12,5 @@ Installed
 - [Zotero+Boox](https://www.youtube.com/watch?v=bLoxIm1Oms0)
 - [[SyncThing]]
 - https://stormgrass.com/my-workflow/
+
+Bought Zotero Sync
