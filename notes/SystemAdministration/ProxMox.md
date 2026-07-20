@@ -23,7 +23,7 @@ $ bash -c "$(wget -qLO - https://github.com/community-scripts/ProxmoxVE/raw/main
 
 I use this VM to run [[DevPod]] workspaces locally - and to run `docker compose` stacks like [[Frigate]].
 
-TODO in July 2026 suddenly this VM started hanging up on start!
+TODO in July 2026 suddenly this VM started hanging up on start! - possibly because of the virtfs?
 
 ## Terminal
 

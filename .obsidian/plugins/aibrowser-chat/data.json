@@ -2,16 +2,22 @@
   "webAppUrl": "https://grok.com/",
   "openOnStartup": true,
   "maxContextLength": 50000,
-  "contextItems": [],
-  "enableChatGPT": true,
-  "enableClaude": true,
-  "enableDeepSeek": true,
-  "enablePerplexity": true,
-  "enableGemini": true,
+  "contextItems": [
+    {
+      "path": "notes/Misc/Shed.md",
+      "type": "file",
+      "displayName": "Shed"
+    }
+  ],
+  "enableChatGPT": false,
+  "enableClaude": false,
+  "enableDeepSeek": false,
+  "enablePerplexity": false,
+  "enableGemini": false,
   "enableGrok": true,
-  "enableCopilot": true,
-  "enableManus": true,
-  "enableKimi": true,
+  "enableCopilot": false,
+  "enableManus": false,
+  "enableKimi": false,
   "autoRefreshMinutes": 60,
   "autoClearContext": false,
   "contextPrefix": "",
@@ -37,8 +43,8 @@
   "autoContextOnOpen": false,
   "stripFrontmatter": false,
   "saveNoteFolder": "AI Notes",
-  "useDateSubfolder": false,
+  "useDateSubfolder": true,
   "formatAIResponse": true,
   "customServices": [],
-  "splitPanelUrl": "https://claude.ai/"
+  "splitPanelUrl": "https://grok.com/"
 }
