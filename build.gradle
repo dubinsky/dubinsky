@@ -8,7 +8,7 @@ description = 'Financial Calculations'
 
 application.mainClass = 'org.podval.finance.Main'
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
 
 scala.scalaVersion = '3.8.4'
 
