@@ -1,5 +1,5 @@
 plugins {
-  id 'com.github.ben-manes.versions' version '0.53.0'
+  id 'io.github.ben-manes.versions' version '0.61.0'
   id 'scala'
   id 'application'
 }
@@ -10,7 +10,7 @@ application.mainClass = 'org.podval.finance.Main'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
-scala.scalaVersion = '3.7.4'
+scala.scalaVersion = '3.8.4'
 
 // There is no Java in the project :)
 project.gradle.startParameter.excludedTaskNames.add('compileJava')
@@ -23,5 +23,17 @@ tasks.withType(ScalaCompile).configureEach {
       '-language:strictEquality',
       '-source:future'
     ]
+  }
+}
+
+def isNonStable = { String version ->
+  boolean stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { it -> version.toUpperCase().contains(it) }
+  String regex = /^[0-9,.v-]+(-r)?$/
+  return !stableKeyword && !(version ==~ regex)
+}
+
+tasks.named("dependencyUpdates").configure {
+  rejectVersionIf {
+    isNonStable(it.candidate.version)
   }
 }
