@@ -46,7 +46,6 @@ math: true
 ```
 
 In `_includes/head.html`:
-{% raw %}
 ```liquid
 <head>
   ...
@@ -55,7 +54,6 @@ In `_includes/head.html`:
   {%- endif -%}
 </head>
 ```
-{% endraw %}
 
 In `_includes/mathjax.html`:
 ```html
@@ -83,7 +81,6 @@ I did not make sub-folders appear in the lists automatically yet, not just files
 - [ ] [[TODO]] paginate the page list.
 
 In `_layouts/page.html`:
-{% raw %}
 ```liquid
 <div class="post-content">
   {{ content }}
@@ -92,10 +89,8 @@ In `_layouts/page.html`:
   {% endif %}  
 </div>
 ```
-{% endraw %}
 
 In `_includes/page-list.html`:
-{% raw %}
 ```liquid
 <ul class="page-list">  
   {% assign pages = site.pages | sort_natural: 'title' %}  
@@ -110,10 +105,8 @@ In `_includes/page-list.html`:
   {% endfor -%}  
 </ul>
 ```
-{% endraw %}
 
 In `_sass/custom.scss`:
-{% raw %}
 ```css
 .page-list {  
   font-size: 18px;  
@@ -125,7 +118,6 @@ In `_sass/custom.scss`:
   }  
 }
 ```
-{% endraw %}
 
 ## Wiki Links
 
@@ -140,7 +132,7 @@ Another way - back-slash-escaping the opening bracket (`\[`) does not work withi
 Plugin down-cases page titles; I [asked](https://github.com/wikibonsai/jekyll-wikirefs/issues/2) for this down-casing to be configurable.
 
 Plugin gathers and puts into the front-matter of each page list of back-links to it. To show a list of back-links on a page, in `_layouts/default.html` add (note the use of the `concat` filter to make sure that links from both pages and posts are resolved):
-{% raw %}
+
 ```liquid
 <main ...>  
   <div class="wrapper">  
@@ -156,9 +148,9 @@ Plugin gathers and puts into the front-matter of each page list of back-links to
     {% endfor %}  
     {% endif %}  
     </div>  
-  </div></main>
+  </div>
+</main>
 ```
-{% endraw %}
 
 Links can be styled in `_sass/custom.scss`:
 ```css
@@ -169,8 +161,8 @@ Links can be styled in `_sass/custom.scss`:
 .backlink {  font-style: italic; }
 ```
 
-- [ ] [[TODO]] look into showing the graph with https://github.com/wikibonsai/jekyll-graph
-- [ ] [[TODO]] look deeper into [wikibonsai](https://github.com/wikibonsai/wikibonsai?tab=readme-ov-file)
+- look into showing the graph with https://github.com/wikibonsai/jekyll-graph
+- look deeper into [wikibonsai](https://github.com/wikibonsai/wikibonsai?tab=readme-ov-file)
 
 ## Pages by Tag
 
@@ -199,7 +191,6 @@ Liquid::Template.register_filter(Jekyll::AllTagsFilter)
 
 List of tags and pages for each is generated using the `all_tags` filter in the file `tags.html` (which I list under `header_pages` in `_config.yml`):
 
-{% raw %}
 ```liquid
 ---  
 layout: page  
@@ -232,7 +223,6 @@ permalink: /tags/
   {% endfor %}  
 </div>
 ```
-{% endraw %}
 
 - [ ] [[TODO]] Look into tag pages aliased to tags (with the help of the [Tag Wrangler](https://github.com/pjeby/tag-wrangler) Obsidian plugin?) to bring tags like `#computer` closer to classifier pages like `[​[buy]]` and `[​[learn]]` (while in [[Roam]] they were equivalent) - or!, just link the tag header in the by-tag list to a page with the same name if it exists :) (possibly ignoring case).
 
@@ -241,7 +231,6 @@ permalink: /tags/
 Tags for posts and for pages like notes are listed on the page, linking back to the appropriate place by-tag list.
 
 In `_includes/tags.html`:
-{% raw %}
 ```liquid
 {% if page.tags %} |  
 {% for tag in page.tags %}  
@@ -249,23 +238,18 @@ In `_includes/tags.html`:
 {% endfor %}  
 {% endif %}
 ```
-{% endraw %}
 
 In `_layouts/post.html`, between the date and the author:
-{% raw %}
 ```liquid
 {%- include tags.html -%}
 ```
-{% endraw %}
 
 And in `_layouts/page.html`, after the title:
-{% raw %}
 ```liquid
 <p class="post-meta">  
 {%- include tags.html -%}  
 </p>
 ```
-{% endraw %}
 
 Tags are styled in `_sass/custom.scss`:
 ```css
