@@ -4,6 +4,7 @@ url: "http://dub.podval.org"
 author: "Leonid Dubinsky"
 email: dub@podval.org
 timezone: "America/New_York"
+favicon: favicon.jpeg
 google-analytics: UA-18415116-1
 
 social:
