@@ -240,12 +240,13 @@ Integrate with Home Assistant with:
 - https://github.com/johnnyo21/floorplan_3d
 - https://github.com/shmuelzon/home-assistant-floor-plan
 
-## Timed Fan Off
- - https://gist.github.com/Blackshome/9f9785d7aa0ba7978fa6515a2d73d192
-
 ## Panel
 - https://community.home-assistant.io/t/esp32-p4-4-wi-fi-6-touch-panel-with-built-in-voice-the-next-gen-wall-panel/895470/40
 - https://github.com/alaltitov/Waveshare-ESP32-P4-86-Panel-ETH-2RO/tree/dev
+
+## Grok
+
+I added my SSH public key to Home Assistant's Terminal/SSH add-on ("app"). Grok can use it once I SSH there first ;)
 ## TODO
 
 use simplified automation UI released in June 2026

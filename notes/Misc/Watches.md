@@ -35,6 +35,7 @@ And here are the straps:
 - https://www.amazon.com/Archer-Watch-Straps-Nylon-Choice/dp/B07V8LM5G4/
 - https://www.amazon.com/Benchmark-Straps-Ballistic-Watchband-Removal/dp/B01FEY1EOC
 - https://www.amazon.com/ANNEFIT-One-Piece-Waterproof-Military-Straps/dp/B0BF9SVVQF - ordered on June 28, 2026
+- https://www.amazon.com/dp/B0H7HF2M3Z - ordered on July 26, 2026
 
 And, to attach FitBit Air to the band, there are printables:
 - https://www.printables.com/model/1747694-fitbit-air-adapter-for-bicep-straps-or-nato-bands [etsy](https://www.etsy.com/listing/4521125718/fitbit-air-adapter-for-bicep-straps-or)
