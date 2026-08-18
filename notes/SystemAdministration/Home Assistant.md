@@ -191,29 +191,29 @@ I have a little LCD device with three additional sensors that send data to the s
 
 Receiver/decoder can be run stand-alone, but does not have to when used in Home Assistant:
 - add the RTL-SDR USB dongle to the virtual machine running Home Assistant
-- `Home Assistant | Settings | People | Add Person` mqtt with password mqtt
-- add [Mosquitto Broker](https://github.com/home-assistant/addons/blob/master/mosquitto/DOCS.md) add-on
+- add [Mosquitto Broker](https://github.com/home-assistant/addons/blob/master/mosquitto/DOCS.md) add-on (HA creates a broker user for add-ons; do not add a Person named `mqtt`)
 - start the add-on
 - add MQTT integration with the [Mosquitto broker](https://www.home-assistant.io/integrations/mqtt/)
 - add [rtl_433_next](https://github.com/pbkhrv/rtl_433-hass-addons/tree/main/rtl_433-next) add-on
 
-Using File Editor (Configurator) add-on, create `/config/rtl_433/config` file with:
+`/config/rtl_433/next.conf.template` (broker user/pass come from the add-on's MQTT service, not this file):
 ```
-output      mqtt://homeassistant:1883,user=mqtt,pass=mqtt
+output      mqtt://${host}:${port},user=${username},pass=${password},retain=${retain}
 protocol    20
 convert     si
+verbose 4
 ```
 
-Only the protocol my devices use is enabled; limiting protocols processed to prevent appearance of tire pressure sensor devices from cars passing by ;)
+Only protocol 20 (Ambient Weather F007TH). Auto Discovery is stopped so neighbor sensors are not re-created; start it only if a real sensor gets a new ID after a battery change.
 
-- configure the file into the add-on
-- start the add-on
+- start the add-on (it picks up the template and the Supervisor MQTT service)
 - add [rtl_433 MQTT Auto Discovery (next)](https://github.com/pbkhrv/rtl_433-hass-addons/tree/main/rtl_433_mqtt_autodiscovery-next) add-on
-- configure it: host homeassistant, user mqtt, password mqtt
-- start the add-on
+- configure it: host homeassistant, user mqtt, password mqtt - ?
+- start the add-on when adding a new 433 MHz sensor
 - add [MQTT Explorer](https://github.com/GollumDom/addon-repository/tree/master/mqtt-explorer) add-on
 - configure the connection to homeassistant:1883,user=mqtt,pass=mqtt
-- start the add-on
+- start the add-on when debugging topics
+
 
 ## Garden
 
@@ -249,9 +249,21 @@ Integrate with Home Assistant with:
 I added my SSH public key to Home Assistant's Terminal/SSH add-on ("app"). Grok can use it once I SSH there first ;)
 ## TODO
 
-use simplified automation UI released in June 2026
+**Smoke / CO + garden leak notify.** Sensors exist, nothing notifies. Attic Zooz ZEN55: `binary_sensor.attic_fire_sensor_smoke_detected`, `binary_sensor.attic_fire_sensor_carbon_monoxide_detected`. Garden SONOFF valve: `binary_sensor.sonoff_swv_water_leak`. Send `notify.phones` (Pixel 10 + both Pixel 8s), high priority. Do not trigger on the fire sensor `idle` binary sensor.
+
+**Advanced Camera Card via HACS** (today it is just files in `/config/www/advanced-camera-card/`). Then drop the leftover `frontend.extra_module_url` in `configuration.yaml`; `lovelace_resources` is what actually loads the card.
+
+**Official Z-Wave JS → Z-Wave JS UI** for network graph / heal / per-node debug. Do not run both add-ons. [Switch doc](https://www.home-assistant.io/integrations/zwave_js/#how-do-i-switch-between-the-official-z-wave-js-add-on-and-the-z-wave-js-ui-add-on).
 
 [https://www.home-assistant.io/integrations/zwave_js/#how-do-i-switch-between-the-official-z-wave-js-add-on-and-the-z-wave-js-ui-add-on](https://www.home-assistant.io/integrations/zwave_js/#how-do-i-switch-between-the-official-z-wave-js-add-on-and-the-z-wave-js-ui-add-on)
+
+**Watchman + battery status.** [Watchman](https://github.com/dummylabs/thewatchman) for a weekly unavailable-entity report. Separate low-battery notify to `notify.phones` for real cells: SNZB-02Ds, garden valve, T6, F007TH boiler/garage/deck only — not phone batteries.
+
+**Floor plan** dashboard. Draw in Sweet Home 3D / RoomSketcher / FreeCAD; see Floor Plans above.
+
+Local HTTPS so doorbell Talk works on the LAN without Nabu Casa.
+
+use simplified automation UI released in June 2026
 
 https://www.home-assistant.io/dashboards/sections/#creating-a-sections-view
 
@@ -262,7 +274,5 @@ https://samakroyd.com/2024/09/25/home-assistant-weve-done-smart-home-what-about-
 https://itead.cc/product/sonoff-zigbee-human-presence-sensor/
 
 [https://1projectaweek.com/blog/2023/8/7/rtl433-home-assistant-and-cheap-flood-sensors-oh-my](https://1projectaweek.com/blog/2023/8/7/rtl433-home-assistant-and-cheap-flood-sensors-oh-my)
-
-https://github.com/dummylabs/thewatchman
 
 Maintenance dashboard!

@@ -6,9 +6,9 @@ Based on a few logical connectives used in Talmud.
 
 - case law for Talmud is *facts*;
 - more generally, theories of a period are *facts* for the next period;
-- Jewish law is the development of *theories* that explain (and unify) the facts;
-- our theries have predictive power and do not contradict facts - just like (real) physical theories;
-- our phacts are *real*, just like the physical facts;
+- Jewish law is the development of *theories* that explain (and unify) facts;
+- our theries do not contradict facts and have predictive power - just like physical theories;
+- our facts are *real*, just like the physical facts;
 - unlike the physical facts, ours are not *empirical*: we can not get new ones;
 - facts given us are minimal: there are no repetitions, just enough to reconstruct the theories;
 - disagreements *between* the sages; *consistency* for each sage;
@@ -32,7 +32,7 @@ When two theries are offered that explain the same law(s), Talmud asks: "What is
 
 Our theories - unlike many so-called "legal theories" - must have *predictive power*, i.e. they must produce the laws for situations *other* than the ones they explain.
 
-Our theories satisfy requirements (*falsifiability* and *predictive power*) more stringent not only than those satisfied by many so-called "legal theories", but even those satisfied by some so-called "physics theories", e.g. string "theory".
+Our theories satisfy requirements (*falsifiability* and *predictive power*) more stringent than many so-called "legal theories", and even than some so-called "physics theories", e.g. string "theory".
 
 ### Facts
 
@@ -58,20 +58,22 @@ Talmud often addresses (seeming) contradictions between different statements of 
 
 At the same time, Talmud is full of disagreements between the sages. And although Talmud tries to minimize disagreement: "Their disagreement is narrower. (Ad Kan lo kMipligi)"; "This can be explained for all opinions. (Ibait Eima leKulo Almo)." - very often disagreements can not be removed.
 
-Our law is consistent only on the sagbe-by-sage basis! That is not a bug but a feature: different points of view expressed in Talmud are equally valid -"Those *and* those are the words of the living G-d. (Elu vElu Divrei Elokim Haim)".
+Our law is consistent only on the sage-by-sage basis! That is not a bug but a feature: different points of view expressed in Talmud are equally valid -"Those *and* those are the words of the living G-d. (Elu vElu Divrei Elokim Haim)".
 
 More than that: it is by analyzing the contradictions between the sages that we make precise our understanding of their opinions - because they chose *where* to disagree to maximize knowledge we can derive from their disagreements. 
 
 Talmud simultaneously develops many consistent theories - one for every sage. It is physics of *multiple worlds*.
 
+(Combining opinions of different sages on different cases can easily end up completely invalid: there is no world physics of which corresponds to that combination.)
+
 The world of each sage is not just *consistent* (does not contain contradictions, negativelly cohesive); it is *unified* (positively cohesive): all the opinions of the sage can be derived from one unified theory.
 
 Talmud often marks cases when opinions held by a sage on different subjects have a deeper connection: "He follows his way. (leShitoto)"; later phases of the development continued the quest for deeper unification (Hakiros, Rogachover, the Rebbe)
 
-This is similar to physics, but there is a nuance: there, there is *hope* (shared by most - but not all hysicists) that such a unified theory exists; we *know* that such theory exists - and it is not a theory, it is G-dly reality ;)
+This is similar to physics, but there is a nuance: there, most - but not all! - physicists *hope* that such a unified theory exists; we *know* that it does - and it is not a theory, it is G-dly reality ;)
 
 ### Great Unification
 
-We missing some facts. We are also missing some understanding: Tamud left certain problems undecided ("(Teku)"). We *definitily* are not yet at the level of the great unification, where we could trace every opinion of every sage back to some fundamental idea, and where it becomes obvious that the revealed (the law) and concealed (the "mysticism") are one. 
+We are missing some facts. We are also missing some understanding: Tamud left certain problems undecided ("(Teku)"). We *definitily* are not yet at the level of the great unification, where we could trace every opinion of every sage back to some fundamental idea, and where it becomes obvious that the revealed (the law) and concealed (the "mysticism") are one. 
 
 All of this will come to pass with the coming of our righteouos Mashiach - speedily, in our days, omein!
