@@ -168,6 +168,8 @@ I am in awe: one person developed and continues to improve a solution that compl
 
 Professionally done labor of love - way to go!!
 
+Firmware is ESPHome **2024.8.3** (re-OTAd 2026-08-19 only to move Wi‑Fi to `podval-2g`; still `.240`). **Do not update** to current `esphome-ratgdo` unless something is actually broken. Latest builds need ESPHome 2026.4+ and an API encryption key this board does not have — HA would drop until the key is added. ESP8266 OTA is tight; some 2026.1/2026.2 updates broke the handshake. If we ever flash again: pin a release, compile with a noise key, OTA from `http://192.168.1.240`, have a USB cable ready.
+
 ## Z-Wave
 From the list of Z-Wave controllers Home Assistant supports](https://www.home-assistant.io/docs/z-wave/controllers/), I picked "Zooz 800 Series Z-Wave Long Range S2 USB Stick ZST39 LR" ($37 on Amazon).
 
@@ -248,6 +250,8 @@ Integrate with Home Assistant with:
 
 I added my SSH public key to Home Assistant's Terminal/SSH add-on ("app"). Grok can use it once I SSH there first ;)
 ## TODO
+
+**Move refrigerator to `podval-2g`, then make `podval-u` 5 GHz only.** Samsung fridge is 2.4-only; turning 2.4 off on `podval-u` knocked it offline. 2.4 is back on `podval-u` so it is online again (`.113`). SmartThings has no Wi‑Fi settings for this device. AP mode (hold Fridge until `AP`) tried 2026-08-19 and failed — next attempt: power the fridge off, then AP, phone on `podval-2g`, Reclaim if already registered. **ratgdo `.240` is already on `podval-2g`.**
 
 **Smoke / CO + garden leak notify.** Sensors exist, nothing notifies. Attic Zooz ZEN55: `binary_sensor.attic_fire_sensor_smoke_detected`, `binary_sensor.attic_fire_sensor_carbon_monoxide_detected`. Garden SONOFF valve: `binary_sensor.sonoff_swv_water_leak`. Send `notify.phones` (Pixel 10 + both Pixel 8s), high priority. Do not trigger on the fire sensor `idle` binary sensor.
 

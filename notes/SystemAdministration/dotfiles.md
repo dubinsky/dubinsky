@@ -116,6 +116,7 @@ in `Help | Edit custom VM options` add
 - to increase font size of both the user interface that the editor, set:
   * `Settings | Appearance | Advanced | Zoom level` to 150% and
   * `Settings | Appearance | Font size` to 16
+- **CLI / `user-flags.conf`:** Omarchy ships `~/.config/obsidian/user-flags.conf` with `-disable-gpu` (single dash). Arch's `/usr/bin/obsidian` appends those flags after `app.asar`, and Obsidian CLI (1.12+) treats single-dash tokens as commands (`Command "-disable-gpu" not found`) while stripping unknown `--switches`. Keep `--disable-gpu` (double dash). After `omarchy update`, or after `omarchy refresh config obsidian/user-flags.conf`, check that the file was not restored from `/usr/share/omarchy/config/obsidian/user-flags.conf`.
 
 ### Zotero
 - install [ZotMoove](https://github.com/wileyyugioh/zotmoov) plugin
