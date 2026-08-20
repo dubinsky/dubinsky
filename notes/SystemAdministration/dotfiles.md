@@ -56,6 +56,12 @@ $ yadm bootstrap
 I use a [script](https://github.com/dubinsky/dotfiles/tree/master/.config/yadm/bootstrap) copied from the `yadm` manual
 which runs all the executables in `.config/yadm/bootstrap.d/`.
 
+AUR packages that `bootstrap.d` installs:
+- `zotero-bin` — official Zotero Linux tarball. Do not use AUR `zotero`; it compiles from git/npm.
+- `devpod-community-bin`, `google-cloud-cli`, `oscar`, `jetbrains-toolbox`, `chirp-next`, `sdrpp-git`, `sdrsharp`
+
+FreeCAD is official `freecad` plus `python-shapely`. IfcOpenShell is not installed.
+
 ## Readme
 
 There are [ways](https://github.com/yadm-dev/yadm/issues/93) to add README
@@ -119,6 +125,7 @@ in `Help | Edit custom VM options` add
 - **CLI / `user-flags.conf`:** Omarchy ships `~/.config/obsidian/user-flags.conf` with `-disable-gpu` (single dash). Arch's `/usr/bin/obsidian` appends those flags after `app.asar`, and Obsidian CLI (1.12+) treats single-dash tokens as commands (`Command "-disable-gpu" not found`) while stripping unknown `--switches`. Keep `--disable-gpu` (double dash). After `omarchy update`, or after `omarchy refresh config obsidian/user-flags.conf`, check that the file was not restored from `/usr/share/omarchy/config/obsidian/user-flags.conf`.
 
 ### Zotero
+- bootstrap installs AUR [`zotero-bin`](https://aur.archlinux.org/packages/zotero-bin) (official binaries), not source `zotero`
 - install [ZotMoove](https://github.com/wileyyugioh/zotmoov) plugin
 - install [Better BibTex](https://retorque.re/zotero-better-bibtex/) plugin
 

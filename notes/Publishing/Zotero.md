@@ -1,5 +1,5 @@
 Installed
-- [Zotero Standalone and Zotero Connector](https://www.zotero.org/download/); [instructions](https://www.zotero.org/support/installation). 
+- [Zotero Standalone and Zotero Connector](https://www.zotero.org/download/); [instructions](https://www.zotero.org/support/installation). On Omarchy, AUR [`zotero-bin`](https://aur.archlinux.org/packages/zotero-bin) (official Linux tarball; do not use source AUR `zotero`). 
 - Added ~/Books/Zotero to the rsynch.sh
 - Installed [Better BibTex](https://retorque.re/zotero-better-bibtex/) Zotero plugin
 - Installed [zotero-mdnotes plugin](https://github.com/argenos/zotero-mdnotes)
