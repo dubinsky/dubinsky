@@ -23,6 +23,8 @@ $ bash -c "$(wget -qLO - https://github.com/community-scripts/ProxmoxVE/raw/main
 
 I use this VM to run [[DevPod]] workspaces locally - and to run `docker compose` stacks like [[Frigate]].
 
+Passing the host iGPU into that VM for Frigate VAAPI is planned (not done): see [[Frigate]] § iGPU passthrough. It needs a PVE reboot. Do not start it until I ask.
+
 TODO in July 2026 suddenly this VM started hanging up on start! - possibly because of the virtfs?
 
 ## Terminal
