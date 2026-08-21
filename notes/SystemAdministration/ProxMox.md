@@ -73,7 +73,7 @@ And then mount:
 # mount /mnt/store
 ```
 
-`/mnt/store` is a 1T ext4 thin LV (`pve/store`) **on the same thin pool as the VMs**. Media copy; **~85% full**. Filling it can make the pool read-only and stall guests. Later: prune it, or move media to `/mnt/data`.
+That LV sat **on the same thin pool as the VMs**. Filling it could make the pool read-only and stall guests. Media (Audio, Books, Music, OpenTorah, Pictures, Videos) moved to `/mnt/data`. On 2026-08-21 the empty filesystem was unmounted, the fstab line dropped, and `pve/store` removed (`lvremove`). Thin pool `pve/data` dropped from **~50%** to **~3%**. There is no `/mnt/store` anymore. Do not recreate it.
 
 ## RAID File Store
 I added a bunch of hard disks to my ProxMox box and created a BTRFS RAID; this is where I want to store my photographs and other media.
@@ -115,7 +115,7 @@ And mount:
 # mount /mnt/data
 ```
 
-`/mnt/data` is Btrfs RAID1 label `Big Data` on `/dev/sdc`+`/dev/sdd` (2×4T WD Red). Photo/media + [[Frigate]] NFS source. **~24% used**.
+`/mnt/data` is Btrfs RAID1 label `Big Data` on `/dev/sdc`+`/dev/sdd` (2×4T WD Red). Photo/media (including Calibre under `Books/`) + [[Frigate]] NFS source. **~25% used**. `Pictures/originals` uses the gphoto-sync layout `YYYY/MM/DD` (renamed from `YYYY/YYYY-MM/YYYY-MM-DD` on 2026-08-21).
 
 `sda`/`sdb` (2×2T WD): leftover `md127` superblocks from the old `/mnt/data`. Array is **stopped**; `/etc/mdadm/mdadm.conf` has `ARRAY <ignore> UUID=dbc353c9:9eddf842:f209850f:8c30d5ea` and `AUTO -all`. Do not start it. Superblocks not wiped.
 
