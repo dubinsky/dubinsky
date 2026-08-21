@@ -96,6 +96,7 @@ UniFi hardware (2026-08-20):
 | 102 | US 8 60W |
 | 110 | Reolink doorbell (Front) |
 | 113 | refrigerator (`podval-u`) |
+| 117 | Entryway speaker (Nest Mini, `podval-u`) |
 | 161 | UAP-nanoHD |
 | 176 | Viessmann-2224 (`podval-2g`) |
 | 184 | unifi-os-server |

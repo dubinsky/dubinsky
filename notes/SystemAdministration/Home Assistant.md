@@ -286,6 +286,7 @@ Prefer the entity the UI/voice uses. Example: `fan.master_bathroom_fan` is `swit
 - Boiler: `sensor.e3_vitodens_100_na_0521_*`
 - Doorbell button/chime (Reolink): `binary_sensor.front_door_visitor`, `number.reolink_chime_*`. Video/person ([[Frigate]]): `camera.doorbell`, `binary_sensor.doorbell_person_occupancy`. Disable `camera.front_door_fluent`.
 - Phones: `device_tracker.pixel_10`, `notify.phones` (group). Singles: `notify.mobile_app_pixel_10` / `notify.pixel_10` (and Pixel 8 / Pixel 8 Remote).
+- Speakers / Cast: **Entryway speaker** `media_player.entryway_speaker` (Nest Mini, Google Home name *Entryway speaker*, `.117` on `podval-u`, area Entranceway). Google Cast hub is already configured (zeroconf + known host `.117`). Also on Cast: Family Room TV (`media_player.family_room_tv_3`; androidtv_remote is `media_player.family_room_tv`). Master Bedroom Nest Audio `media_player.bedroom_speaker` is currently unavailable. The Mini is a Google Assistant device — Cast gives HA a `media_player` (TTS / play media), not a Home Assistant voice satellite.
 
 ~700 enabled entities, ~2600 registered. Many lights still have generic ids (`light.dimmer`, `light.light`). Use the registry `original_name` / `name` to disambiguate.
 
