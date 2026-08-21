@@ -113,7 +113,7 @@ With Home Assistant installed in a virtual machine, adding add-ons is trivial. I
 - [File Editor](https://github.com/home-assistant/addons/tree/master/configurator)
 - [Home Assistant Google Drive Backup](https://github.com/sabeechen/hassio-google-drive-backup)
 - [Mosquitto broker](https://github.com/home-assistant/addons/tree/master/mosquitto)
-- [MQTT Explorer](http://192.168.1.245:8123/hassio)
+- [MQTT Explorer](https://github.com/GollumDom/addon-repository/tree/master/mqtt-explorer)
 - [rtl_433 (next)](https://github.com/pbkhrv/rtl_433-hass-addons/tree/main/rtl_433-next)
 - [rtl_433 MQTT Auto Discovery (next)](https://github.com/pbkhrv/rtl_433-hass-addons/tree/main/rtl_433_mqtt_autodiscovery-next)
 - [Terminal & SSH](https://github.com/home-assistant/addons/tree/master/ssh)
@@ -249,9 +249,51 @@ Integrate with Home Assistant with:
 ## Grok
 
 I added my SSH public key to Home Assistant's Terminal/SSH add-on ("app"). Grok can use it once I SSH there first ;)
+
+## Current setup (2026-08)
+
+Core **2026.8.2** on qemux86-64 (HAOS 18.2, [[ProxMox]] VM 100). Hostnames: `homeassistant.local`, `homeassistant.lan.podval.org` (`192.168.1.209`). **Not** 192.168.1.245 (that's the UniFi switch). Core HTTP is `:8123` with `ssl: false`. Doorbell talk/mic needs a secure context; today that means Nabu Casa. `/config` is a symlink to `/homeassistant`.
+
+`configuration.yaml` is stock: `default_config` plus includes for automations/scripts/scenes, plus a YAML notify action group `notify.phones` (Pixel 10 / Pixel 8 / Pixel 8 Remote). No `packages/`, no `/config/esphome/`. Scripts file is empty. Logic is YAML automations. Node-RED is installed but stopped (`boot: manual`, empty flow) — check it is still empty before adding YAML that might duplicate a future flow.
+
+Add-ons **started**: Z-Wave JS, Terminal & SSH 10.3.0, Mosquitto, Google Drive Backup, rtl_433 (next). **Stopped, boot manual**: File editor, MQTT Explorer, Node-RED, rtl_433 MQTT Auto Discovery. Custom: HACS + Frigate integration 5.15.4. Advanced Camera Card is unpacked under `/config/www/advanced-camera-card/` v7.27.4 (not HACS); `lovelace_resources` is what actually loads it.
+
+Keepers for the F007TH sensors: boiler `2-234`, garage `1-55`, deck `3-219`.
+
+### Automations (do not clobber)
+
+YAML is a list of maps (`id`, `alias`, modern `triggers:` / `actions:` keys, `mode:`). Timers that should reset when the device is turned on again use `mode: restart` — that is per-automation, not per entity, so do not combine the bathroom fans into one automation.
+
+- **Shabbos/Yom Tov** — tag `tag.shabbos_yom_tov` (`3ef26f62-ef32-4d27-b819-1abf66dfa0ee`) **and** automation `shabbos_yom_tov_scene_before_sunset` (`sensor.jewish_calendar_sunset_shkia` − 40 min, only if `upcoming_candle_lighting` is still ahead and within 2½ h) both `scene.turn_on` **`scene.shabbos_scene`**. That scene: master bedroom Shabbos lights + `switch.refrigerator_sabbath_mode` **on**. No fridge tag (`tag.refrigerator_shabbos_mode` was removed). Do not use `scene.master_bedroom_shabbos_scene`.
+- Scenes YAML also has `scene.night` and `scene.day` (Day currently matches Night). Living Room is `light.s2_dimmer` (not `light.light_2`). Master bedroom on/off light is `light.master_bedroom_light` (not hidden `switch.background_light`).
+- Doorbell Notification → Reolink `binary_sensor.front_door_visitor` (button) or Frigate **`binary_sensor.stoop_person_occupancy`** (person whose feet are in the `stoop` zone) → **`notify.phones`**. `binary_sensor.doorbell_person_occupancy` is still anyone in frame — do not use it for notify. On **button**, `frigate.create_event` (`visitor`, 30s). **Talk** `/lovelace-doorbell/talk`. Keep Reolink for the chime. See [[Frigate]].
+- **Bathroom fan auto-off** (one automation per fan, `mode: restart`, 15 min):
+  - `fan.master_bathroom_fan`
+  - `fan.bathroom_fan` (UI name Bathroom Fan; helper over `switch.1st_floor_bathroom_fan`)
+  - `fan.guest_bathroom_fan`
+  - `fan.attic_bathroom_fan` (helper over `switch.attic_bathroom_fan_2`)
+  - **Not** `light.attic_bathroom_fan_light` / `switch.attic_bathroom_fan` (that's the attic fan *light*)
+
+Those fan devices also have disabled Z-Wave `number.*_auto_turn_off_timer` config params. Prefer the YAML automations unless I want the on-device timer.
+
+Prefer the entity the UI/voice uses. Example: `fan.master_bathroom_fan` is `switch_as_x` over `switch.master_bathroom_fan` — automate the **fan**.
+
+### Stable entities (re-check the registry)
+
+- Garage: `cover.ratgdov25i_0bd4e4_door` (ratgdo v2.5i, `.240` on `podval-2g`)
+- Garden: `valve.back_garden_water`, `switch.sonoff_swv`
+- Climate: `climate.t6_pro_z_wave_programmable_thermostat`
+- Boiler: `sensor.e3_vitodens_100_na_0521_*`
+- Doorbell button/chime (Reolink): `binary_sensor.front_door_visitor`, `number.reolink_chime_*`. Video/person ([[Frigate]]): `camera.doorbell`, `binary_sensor.doorbell_person_occupancy`. Disable `camera.front_door_fluent`.
+- Phones: `device_tracker.pixel_10`, `notify.phones` (group). Singles: `notify.mobile_app_pixel_10` / `notify.pixel_10` (and Pixel 8 / Pixel 8 Remote).
+
+~700 enabled entities, ~2600 registered. Many lights still have generic ids (`light.dimmer`, `light.light`). Use the registry `original_name` / `name` to disambiguate.
+
+`person.mqtt` is leftover from Mosquitto onboarding — delete in **Settings → People**. After that, the HA login user `mqtt` can go too; rtl_433 no longer uses it.
+
 ## TODO
 
-**Move refrigerator to `podval-2g`, then make `podval-u` 5 GHz only.** Samsung fridge is 2.4-only; turning 2.4 off on `podval-u` knocked it offline. 2.4 is back on `podval-u` so it is online again (`.113`). SmartThings has no Wi‑Fi settings for this device. AP mode (hold Fridge until `AP`) tried 2026-08-19 and failed — next attempt: power the fridge off, then AP, phone on `podval-2g`, Reclaim if already registered. **ratgdo `.240` is already on `podval-2g`.**
+**Move refrigerator to `podval-2g`, then make `podval-u` 5 GHz only.** See [[UniFi]] § Later. **ratgdo `.240` is already on `podval-2g`.**
 
 **Smoke / CO + garden leak notify.** Sensors exist, nothing notifies. Attic Zooz ZEN55: `binary_sensor.attic_fire_sensor_smoke_detected`, `binary_sensor.attic_fire_sensor_carbon_monoxide_detected`. Garden SONOFF valve: `binary_sensor.sonoff_swv_water_leak`. Send `notify.phones` (Pixel 10 + both Pixel 8s), high priority. Do not trigger on the fire sensor `idle` binary sensor.
 
@@ -261,7 +303,7 @@ I added my SSH public key to Home Assistant's Terminal/SSH add-on ("app"). Grok 
 
 [https://www.home-assistant.io/integrations/zwave_js/#how-do-i-switch-between-the-official-z-wave-js-add-on-and-the-z-wave-js-ui-add-on](https://www.home-assistant.io/integrations/zwave_js/#how-do-i-switch-between-the-official-z-wave-js-add-on-and-the-z-wave-js-ui-add-on)
 
-**Watchman + battery status.** [Watchman](https://github.com/dummylabs/thewatchman) for a weekly unavailable-entity report. Separate low-battery notify to `notify.phones` for real cells: SNZB-02Ds, garden valve, T6, F007TH boiler/garage/deck only — not phone batteries.
+**Watchman + battery status.** [Watchman](https://github.com/dummylabs/thewatchman) for a weekly unavailable-entity report. Separate low-battery notify to `notify.phones` for real cells: eight SNZB-02D `sensor.sonoff_snzb_02d_battery*`, garden `sensor.sonoff_swv_battery`, T6 `sensor.t6_pro_z_wave_programmable_thermostat_battery_level` / `binary_sensor.t6_pro_z_wave_programmable_thermostat_low_battery_level`, F007TH keepers only (`sensor.ambientweather_234_battery`, `sensor.ambientweather_f007th_1_55_battery`, `sensor.ambientweather_f007th_3_219_battery`). Skip phone battery entities.
 
 **Floor plan** dashboard. Draw in Sweet Home 3D / RoomSketcher / FreeCAD; see Floor Plans above.
 

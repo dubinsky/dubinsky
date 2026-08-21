@@ -12,6 +12,7 @@ blogger_orig_url: https://blog.dub.podval.org/2015/01/yubikey-neo-2-factor-authe
 ---
 [[TODO]] let obsolete be obsolete: simplify
 
+Current daily driver is a YubiKey 5C (serial 18600387). OpenPGP key `049DC4EF6FB97468` lives on that card (`uif` decrypt=on) and is the recipient for [[dotfiles]] `yadm encrypt`. FIDO2 SSH is `~/.ssh/id_ed25519_sk.pub`.
 
 * TOC
 {:toc}
@@ -118,7 +119,9 @@ machine that I ssh into and then open further ssh connection from! All it takes 
 
 ## FIDO2 and SSH
 
-The simplest way to use Yubikey for SSH is via FIDO2. It is simpler than using [[#Yubikey as a PIV Smart Card]] or [[#Yubikey as a GPG Smart Card]]:
+The simplest way to use Yubikey for SSH is via FIDO2. It is simpler than using [[#Yubikey as a PIV Smart Card]] or [[#Yubikey as a GPG Smart Card]].
+
+That is what I actually use now: `Host *` in `~/.ssh/config` points at `~/.ssh/id_ed25519_sk.pub`, so GitHub and the house SSH aliases (`ha`, `pve`, `docker`, `unifi`) all use this resident key.
 
 TODO set FIDO2 pin first
 

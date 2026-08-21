@@ -31,6 +31,20 @@ I am going to go with `yadm` for now :)
 `yadm` arranges for the home directory to be the work tree of the dotfiles repository
 stored in `.local/share/yadm/repo.git`.
 
+| What | Where |
+|---|---|
+| Git directory | `~/.local/share/yadm/repo.git` |
+| Work tree | `$HOME` (`/home/dub`) |
+| Remote `origin` | `git@github.com:dubinsky/dotfiles.git` |
+| Branch | `master` |
+| Bootstrap | `~/.config/yadm/bootstrap` (runs `bootstrap.d/*`) |
+
+There is **no** `~/.git`. `$HOME` is not a Git repository.
+
+Only a small explicit set is tracked (~60–70 files: shell, Hypr/Omarchy, yadm bootstrap, a few `.grok/skills`, rclone helpers) — not the whole home directory.
+
+`status.showUntrackedFiles = no`, so `yadm status` hides untracked files; `yadm ls-files` shows what is actually in the repo.
+
 ## Installation
 
 To install `yadm` on `Omarchy`:
@@ -72,17 +86,36 @@ My README is the note you are reading ;)
 
 ## Secrets
 
-If I decide to store secrets in my `dotfiles` repository
-(Cloudflare API tokens, Google Cloud Platform keys etc.),
-`yadm` provides [its own way](https://yadm.io/docs/encryption)
-of doing that, but there are approaches that are not `yadm`-specific:
+Traveling secrets (HA/UniFi API tokens, and the like) go through
+[`yadm encrypt`](https://yadm.io/docs/encryption), not plaintext in the repo.
+
+| What | Where |
+|---|---|
+| Patterns | `~/.config/yadm/encrypt` |
+| Ciphertext | `~/.local/share/yadm/archive` (tracked) |
+| Recipient | [[YubiKey]] OpenPGP `049DC4EF6FB97468` (`yadm.gpg-recipient`) |
+| Public key | `~/.config/yadm/yubikey-openpgp.asc` |
+
+Private material is **only** on the 5C (serial 18600387). Decrypt needs the card, User PIN, and a touch (`uif` decrypt=on). Encrypt uses the public key (no tap).
+
+After changing a secret:
+
+```shell
+$ yadm encrypt && yadm add ~/.local/share/yadm/archive && yadm commit
+```
+
+On a new machine: import the `.asc` (bootstrap does this), then `yadm decrypt`. Do not `yadm add` the matched plaintext files.
+
+`.zotero/**/prefs.js` is in the repo exclude — API keys leaked there once.
+
+Other approaches I considered and did not use:
 
 - [git-crypt](https://github.com/AGWA/git-crypt)
 - [transcrypt](https://github.com/elasticdog/transcrypt)
 - [git-secret](https://github.com/sobolevn/git-secret)
 - [SOPS](https://github.com/getsops/sops)
 
-`yadm` supports `transcrypt`  and `git-crypt` directly.
+`yadm` supports `transcrypt` and `git-crypt` directly.
 
 ## Clone
 

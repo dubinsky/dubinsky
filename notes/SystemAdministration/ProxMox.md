@@ -2,6 +2,30 @@
 tags:
   - sysadmin
 ---
+Standalone node `proxmox` (`proxmox.lan.podval.org`, `192.168.1.40`). PVE **9.2.10** (kernel **7.0.14-12-pve**; keep previous **7.0.14-5**). Hardware: i9-12900K (24 threads), 64G RAM, boot NVMe `KINGSTON SKC3000D2048G`. Bridge `vmbr0` on `enp3s0`, `192.168.1.40/24`, gw `192.168.1.1`. Host iGPU is Intel AlderLake-S GT1, `/dev/dri/renderD128` on the **hypervisor** (not passed to the docker VM) — see [[Frigate]] § iGPU passthrough.
+
+PVE storage: `local` (dir `/var/lib/vz`, ISO/backup) and `local-lvm` (thin pool `pve/data` on the NVMe).
+
+## Guests
+
+| ID | Type | Name | LAN IPv4 | Role |
+|---|---|---|---|---|
+| 100 | VM | haos | 192.168.1.209 | [[Home Assistant]] OS. `ssh ha`. 4G RAM, 2 cores, 32G disk |
+| 101 | VM | docker | 192.168.1.187 | [[Docker]] / [[DevPod]] / [[Frigate]]. `ssh docker`. 32G RAM, 16 cores (`cpu: host`), 100G disk |
+| 103 | LXC | cloudflare-ddns | 192.168.1.235 | Dynamic DNS (`k39.podval.org`). 3G disk |
+| 104 | LXC | cloudflared | 192.168.1.236 | Cloudflare Tunnel |
+| 105 | LXC | unifi-os-server | 192.168.1.184 | [[UniFi]] OS (controller). **Not** the switch at 192.168.1.245 |
+
+All guests: `onboot: 1`, `vmbr0`, community-script tags. LXC 103/104 unprivileged + nesting. No snapshots when last inventoried.
+
+HAOS USB passthrough (do not steal these off VM 100):
+
+- `0bda:2832` Realtek RTL2832U (rtl_433)
+- `303a:831a` Nabu Casa ZBT-2 (Zigbee)
+- `303a:4001` Nabu Casa ZWA-2 (Z-Wave)
+
+Docker VM hostname `docker`. **Does not use virtiofs** (no `virtiofs` / `fsN` in `101.conf`). **Do not attach it** — it hangs UEFI boot. Frigate is NFS from `/mnt/data/apps/frigate` to `192.168.1.187` only; guest mounts `/frigate`.
+
 ## Community Scripts
 
 There is a lot of extremely helpful scripts for installing various things on ProxMox: https://community-scripts.github.io/ProxmoxVE/scripts.
@@ -11,7 +35,7 @@ There is a lot of extremely helpful scripts for installing various things on Pro
 ```
 ## Dynamic DNS
 
-I use `cloudflare-ddns` LXC.
+I use `cloudflare-ddns` LXC (103). Binary `/usr/local/bin/cloudflare-ddns` + `/etc/cloudflare-ddns.env` (mode 600). Do **not** restore `go run …@latest` — that filled the 3G disk.
 ## Running Docker Containers
 
 As recommended, I use a [[Virtual Machines]] to run [[Docker]] containers.
@@ -48,6 +72,8 @@ And then mount:
 ```shell
 # mount /mnt/store
 ```
+
+`/mnt/store` is a 1T ext4 thin LV (`pve/store`) **on the same thin pool as the VMs**. Media copy; **~85% full**. Filling it can make the pool read-only and stall guests. Later: prune it, or move media to `/mnt/data`.
 
 ## RAID File Store
 I added a bunch of hard disks to my ProxMox box and created a BTRFS RAID; this is where I want to store my photographs and other media.
@@ -88,6 +114,13 @@ And mount:
 # systemctl daemon-reload
 # mount /mnt/data
 ```
+
+`/mnt/data` is Btrfs RAID1 label `Big Data` on `/dev/sdc`+`/dev/sdd` (2×4T WD Red). Photo/media + [[Frigate]] NFS source. **~22% used**.
+
+`sda`/`sdb` (2×2T WD): leftover `md127` superblocks from the old `/mnt/data`. Array is **stopped**; `/etc/mdadm/mdadm.conf` has `ARRAY <ignore> UUID=dbc353c9:9eddf842:f209850f:8c30d5ea` and `AUTO -all`. Do not start it. Superblocks not wiped.
+
+`sde` (500G) old backup disk; not mounted. No vzdump/PBS jobs; `/var/lib/vz/dump` is empty. Later: scheduled `vzdump` of 100/101/105 (and the small LXC if wanted) onto `sde` or PBS — not onto `local-lvm` next to the guests.
+
 ## Mount
 
 To [mount](https://pve.proxmox.com/wiki/Linux_Container#_bind_mount_points) a directory from the host in an LXC container:
