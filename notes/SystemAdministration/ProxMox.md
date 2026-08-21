@@ -14,7 +14,7 @@ PVE storage: `local` (dir `/var/lib/vz`, ISO/backup) and `local-lvm` (thin pool 
 | 101 | VM | docker | 192.168.1.187 | [[Docker]] / [[DevPod]] / [[Frigate]]. `ssh docker`. 32G RAM, 16 cores (`cpu: host`), 100G disk |
 | 103 | LXC | cloudflare-ddns | 192.168.1.235 | Dynamic DNS (`k39.podval.org`). 3G disk |
 | 104 | LXC | cloudflared | 192.168.1.236 | Cloudflare Tunnel |
-| 105 | LXC | unifi-os-server | 192.168.1.184 | [[UniFi]] OS (controller). **Not** the switch at 192.168.1.245 |
+| 105 | LXC | unifi-os-server | 192.168.1.184 | [[UniFi]] OS (controller). **Not** the switch at 192.168.1.101 |
 
 All guests: `onboot: 1`, `vmbr0`, community-script tags. LXC 103/104 unprivileged + nesting. No snapshots when last inventoried.
 
@@ -115,7 +115,7 @@ And mount:
 # mount /mnt/data
 ```
 
-`/mnt/data` is Btrfs RAID1 label `Big Data` on `/dev/sdc`+`/dev/sdd` (2×4T WD Red). Photo/media + [[Frigate]] NFS source. **~22% used**.
+`/mnt/data` is Btrfs RAID1 label `Big Data` on `/dev/sdc`+`/dev/sdd` (2×4T WD Red). Photo/media + [[Frigate]] NFS source. **~24% used**.
 
 `sda`/`sdb` (2×2T WD): leftover `md127` superblocks from the old `/mnt/data`. Array is **stopped**; `/etc/mdadm/mdadm.conf` has `ARRAY <ignore> UUID=dbc353c9:9eddf842:f209850f:8c30d5ea` and `AUTO -all`. Do not start it. Superblocks not wiped.
 

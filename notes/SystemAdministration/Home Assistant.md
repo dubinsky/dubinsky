@@ -252,11 +252,11 @@ I added my SSH public key to Home Assistant's Terminal/SSH add-on ("app"). Grok 
 
 ## Current setup (2026-08)
 
-Core **2026.8.2** on qemux86-64 (HAOS 18.2, [[ProxMox]] VM 100). Hostnames: `homeassistant.local`, `homeassistant.lan.podval.org` (`192.168.1.209`). **Not** 192.168.1.245 (that's the UniFi switch). Core HTTP is `:8123` with `ssl: false`. Doorbell talk/mic needs a secure context; today that means Nabu Casa. `/config` is a symlink to `/homeassistant`.
+Core **2026.8.2** on qemux86-64 (HAOS 18.2, [[ProxMox]] VM 100). Hostnames: `homeassistant.local`, `homeassistant.lan.podval.org` (`192.168.1.209`). **Not** 192.168.1.101 (that's the UniFi switch). Core HTTP is `:8123` with `ssl: false`. Doorbell talk/mic needs a secure context; today that means Nabu Casa. `/config` is a symlink to `/homeassistant`.
 
 `configuration.yaml` is stock: `default_config` plus includes for automations/scripts/scenes, plus a YAML notify action group `notify.phones` (Pixel 10 / Pixel 8 / Pixel 8 Remote). No `packages/`, no `/config/esphome/`. Scripts file is empty. Logic is YAML automations. Node-RED is installed but stopped (`boot: manual`, empty flow) — check it is still empty before adding YAML that might duplicate a future flow.
 
-Add-ons **started**: Z-Wave JS, Terminal & SSH 10.3.0, Mosquitto, Google Drive Backup, rtl_433 (next). **Stopped, boot manual**: File editor, MQTT Explorer, Node-RED, rtl_433 MQTT Auto Discovery. Custom: HACS + Frigate integration 5.15.4. Advanced Camera Card is unpacked under `/config/www/advanced-camera-card/` v7.27.4 (not HACS); `lovelace_resources` is what actually loads it.
+Add-ons **started**: Z-Wave JS, Terminal & SSH 10.4.0, Mosquitto, Google Drive Backup, rtl_433 (next). **Boot manual**: Node-RED and rtl_433 MQTT Auto Discovery are stopped; File editor and MQTT Explorer are in `error`. Custom: HACS + Frigate integration 5.15.4. Advanced Camera Card is unpacked under `/config/www/advanced-camera-card/` v7.27.4 (not HACS); `lovelace_resources` is what actually loads it.
 
 Keepers for the F007TH sensors: boiler `2-234`, garage `1-55`, deck `3-219`.
 
