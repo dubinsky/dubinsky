@@ -167,6 +167,8 @@ I am not going to fight this since:
 - GitHub rejects `no-touch-required` keys,
 - it is more secure
 - even when the key is generated with no-touch-required AND is prefixed in the authorized_keys file with no-touch-required, rclone still requires touch (per thread ;))...
+- rclone's built-in SFTP (Go SSH) cannot sign `sk-ssh-ed25519` via ssh-agent (`agent: failed to sign challenge`). The `gatekeeper` remote uses OpenSSH: `ssh = ssh -o BatchMode=yes dub@gatekeeper`. That also lets ControlMaster cover the extra SSH connections `--checksum` opens.
+- rclone Go SSH prefers ECDSA over Ed25519. If `~/.ssh/known_hosts` only has Ed25519 for `gatekeeper` / `192.168.1.40`, the built-in client reports `knownhosts: key mismatch` even though OpenSSH is fine. Keep all three host key types for those names.
 - [ ] [[TODO]] Message about the touch wait is not being shown - link to the bug
 - Note about backup keys
 
