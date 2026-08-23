@@ -2,7 +2,7 @@
 tags:
   - sysadmin
 ---
-Standalone node `proxmox` (`proxmox.lan.podval.org`, `192.168.1.40`). PVE **9.2.10** (kernel **7.0.14-12-pve**; keep previous **7.0.14-5**). Hardware: i9-12900K (24 threads), 64G RAM, boot NVMe `KINGSTON SKC3000D2048G`. Bridge `vmbr0` on `enp3s0`, `192.168.1.40/24`, gw `192.168.1.1`. Host iGPU is Intel AlderLake-S GT1, `/dev/dri/renderD128` on the **hypervisor** (not passed to the docker VM) — see [[Frigate]] § iGPU passthrough.
+Standalone node `proxmox` (`proxmox.lan.podval.org`, `192.168.1.40`). PVE **9.2.11** (kernel **7.0.14-12-pve**; keep previous **7.0.14-5**). Hardware: i9-12900K (24 threads), 64G RAM, boot NVMe `KINGSTON SKC3000D2048G`. Bridge `vmbr0` on `enp3s0`, `192.168.1.40/24`, gw `192.168.1.1`. Host iGPU is Intel AlderLake-S GT1, `/dev/dri/renderD128` on the **hypervisor** (not passed to the docker VM) — see [[Frigate]] § iGPU passthrough.
 
 PVE storage: `local` (dir `/var/lib/vz`, ISO/backup) and `local-lvm` (thin pool `pve/data` on the NVMe).
 

@@ -12,7 +12,7 @@ I used to run UniFi in [[Docker]] using various images:
 
 I now run it in a LXC container in [[ProxMox]] :) Guest **105** (`unifi-os-server`, Debian 13) at `192.168.1.184` (`unifi-os-server.lan.podval.org`). UI: https://192.168.1.184:11443 (**not** :8443). **192.168.1.101** is the USW-Pro-24-PoE, not the controller.
 
-As of 2026-08: UniFi OS Server **5.1.21**, Network **10.5.67**. Host units `uosserver.service` / `uosserver-updater.service` (user `uosserver`). Data on the LXC: `/var/lib/uosserver/`. App data in the container: `/usr/lib/unifi/data/`. Inform/STUN published via pasta: `8080`, `3478/udp`, `11443→443`, plus 8444/8880–8882/5671/6789/9543.
+As of 2026-08-23: UniFi OS Server **5.1.37**, Network **10.5.67**. Host units `uosserver.service` / `uosserver-updater.service` (user `uosserver`). Data on the LXC: `/var/lib/uosserver/`. App data in the container: `/usr/lib/unifi/data/`. Inform/STUN published via pasta: `8080`, `3478/udp`, `11443→443`, plus 8444/8880–8882/5671/6789/9543.
 
 ## Setup
 
