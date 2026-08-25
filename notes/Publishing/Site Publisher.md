@@ -127,10 +127,11 @@ Code lives in `site-publisher`. Dialect conversion sits next to `XxxMarkup`; sha
 Per document:
 
 1. Dialect `Markup` (`md` / `adoc` / `html` / `tei`) plus `FrontMatter` → `Xml.Element`
-2. Dialect converters emit shared IR
-3. `PageContent.apply` prepares once: sections/ids, internal-link marks, wiki embed, footnote harvest
-4. `PageContent.markupContent` resolves per chunk: select XML, append referenced footnotes, resolve citations, resolve links and tooltips, inject TOC
-5. Minima-inspired HTML → write (`textContent` or copy assets)
+2. Dialect converters emit shared IR (leftover soup on `XxxMarkup`: `quoteblock`, `[!tip]`, TEI `cit`, …)
+3. HTML-shaped leftovers → IR in `HtmlIr.normalize` (`Aside`, `Quote`, `Strike`, `Figure`, `PdfEmbed`, `Video`). `HtmlMarkup.process` is title + nest sections + that pass; Markdown and AsciiDoc finish there. TEI does not: leftovers are still TEI names.
+4. `PageContent.apply` prepares once: sections/ids, internal-link marks, wiki embed (images, audio, video, PDF), footnote harvest
+5. `PageContent.markupContent` resolves per chunk: select XML, append referenced footnotes, resolve citations, resolve links and tooltips, inject TOC
+6. Minima-inspired HTML → write (`textContent` or copy assets)
 
 `.xml` files are disambiguated by root element (`TEI`, …).
 
@@ -199,6 +200,56 @@ IR is GFM-shaped, not FlexMark or Asciidoctor soup:
 
 `TaskList` is IR only (classes, `checkbox` / `asItem` / `asList`). Markdown leftovers (FlexMark `li.task-list-item`, checkbox, `&nbsp;`) convert in `MarkdownMarkup`. AsciiDoc leftovers (`ul.checklist`; default html5 `✓`/`❏`, `%interactive` `<input>`, `icons=font` Font Awesome) convert in `AsciiDocMarkup.cleanup`. Mixed lists: only task items get `task-list-item`; the parent gets `task-list` if it has any. CSS in `layout.css` styles only these classes. HTML that is already IR is left alone.
 
+### Callouts
+
+IR: `span.callout` with `data-value` and the number as text, in the verbatim block; `ol.callout-list` of `li` annotations. Not harvested like footnotes (the list is already next to the listing). CSS styles only these classes; markers are `user-select: none` so copy-paste from a listing omits them.
+
+AsciiDoc leftovers (`b.conum`, `i.conum` + guard `<b>(1)</b>`, `div.colist` wrapping `ol` or a table when `icons` is set) convert in `AsciiDocMarkup.cleanup`. HTML that is already IR is left alone.
+
+Not feasible as Markdown (or TEI) syntax. A fenced block is opaque — CommonMark does not parse inlines inside it — so `<1>` or `<.>` is just source text: it stays in copy-paste, fights the highlighter, and is not bound to a following list. An ordered list after the fence is just a list. What Markdown and Obsidian call a “callout” is an admonition (`> [!NOTE]`), a different feature. Quarto’s code annotations (`# <1>` in a fence plus an ordered list) copy AsciiDoc but are Quarto-only; FlexMark and Obsidian do not understand them. Line numbers (Pandoc `.numberLines`) and line highlighting (Docusaurus / VitePress `{1,3-5}`) number or highlight lines; they do not attach explanations. TEI has no listing-callout convention either.
+
+### Admonitions
+
+IR: `div.admonition` with `data-type` (lowercase) and `div.admonition-title`; Obsidian `+`/`-` fold is `details`/`summary` (`open` when `+`). CSS styles only these classes (accent from `data-type`). Not harvested. HTML that is already IR is left alone.
+
+AsciiDoc leftovers (`div.admonitionblock` table, `td.icon` / `td.content`, optional content `div.title`) convert in `AsciiDocMarkup.cleanup`. Markdown: FlexMark blockquote whose first `<p>` starts with `[!type]` (Obsidian core callouts; no plugin) converts in `MarkdownMarkup.convert`. Type is kept as written (Obsidian `important` is not collapsed to `tip`).
+
+### Asides
+
+IR: `<aside class="aside">`, optional `div.aside-title`. No `data-type`. CSS styles only these classes. HTML that is already IR is left alone.
+
+AsciiDoc leftovers (`div.sidebarblock`; `div.content` already unwrapped as spurious; optional `div.title`) convert in `AsciiDocMarkup.cleanup`. Bare HTML `<aside>` (Markdown HTML blocks and `.html` pages) gets `class="aside"` in `HtmlIr.normalize`. No Markdown/Obsidian/TEI source syntax.
+
+### Quotes
+
+IR: `<blockquote class="quote">`, optional `div.quote-title` and `footer.quote-attribution` (`cite` kept as-is). CSS styles only these classes (the decorative opening mark stays on `blockquote`). Not harvested. HTML that is already IR is left alone.
+
+AsciiDoc leftovers (`div.quoteblock`; optional `div.title`; inner `blockquote`; optional `div.attribution`) convert in `AsciiDocMarkup.cleanup` — `quoteblock` is not unwrapped as a spurious wrapper, or title and attribution would become siblings of the quote. Markdown CommonMark `>` and bare HTML `<blockquote>` get `class="quote"` in `HtmlIr.normalize` (after Obsidian `[!type]` has already become an admonition). A Markdown em-dash line is not treated as attribution.
+
+TEI leftovers (`quote`; `cit` grouping `quote`/`q` with `bibl`/`biblStruct`/`ref`) convert in `TeiMarkup.process` second pass so IR `class` is not prefixed. Inner `bibl` on a `quote` becomes attribution. Bare `q` stays HTML `q`. `@who`/`@source` are not turned into attribution text. Standalone `bibl` is not a quote.
+
+### Strikethrough
+
+IR is HTML `<del>` (user-agent line-through; no extra class). FlexMark `~~` emits it once `StrikethroughExtension` is on. AsciiDoc leftover `span`/`mark.line-through` and HTML `<s>` become `<del>` in `HtmlIr.normalize`. TEI `<del>` is already the element. Not harvested.
+
+### Figures
+
+IR: `<figure class="figure">`, optional `figcaption.figure-caption`. Not harvested. HTML that is already IR is left alone. Inline images stay `<img>`.
+
+AsciiDoc leftovers (`div.imageblock`; `div.content` already unwrapped; optional `div.title` after the image) convert in `AsciiDocMarkup.cleanup`. Markdown/HTML: a `<p>` whose only child is `<img>` (or a lone linked `<img>`) becomes a figure in `HtmlIr.normalize`; `title` on the image is the caption and is removed from the `<img>`. TEI: `<graphic url>` becomes `<img src>` in the first pass; `<figure>` with `<head>`/`<figDesc>` converts in the second pass so IR `class` is not prefixed. Wiki `![[image]]` embeds stay `<img>` (resolved after convert).
+
+### PDF embeds
+
+IR: `div.pdf-embed` wrapping `<object type="application/pdf" data="…">` (inner fallback `<a>`) and a sibling `p.pdf-embed-link`. Not a figure. Not harvested. Print CSS hides the `object` so Chromium `pdf: true` does not snapshot the inner viewer; the sibling link remains.
+
+Bare HTML `<object type="application/pdf">` is wrapped in `HtmlIr.normalize`. Wiki `![[file.pdf]]` becomes this IR in `WikiLink.embed` (after convert; fragment `page=` / `height=`). `#page=N` is put on `data` and `href`. Height is `--pdf-embed-height` on the wrapper (digits → `px`). No PDF.js. No `<iframe>` / `<embed>`.
+
+### Video
+
+IR: local file is `<video class="video" controls>` with an inner fallback `<a>`; YouTube/Vimeo is `<iframe class="video-embed">` (`src` kept). Not harvested. Print CSS hides both.
+
+AsciiDoc leftovers (`div.videoblock`; optional `div.title`; inner `video` or player `iframe`) convert in `AsciiDocMarkup.cleanup`. A title becomes Figure IR around the player. Bare HTML `<video>` gets `class` / `controls` / fallback link in `HtmlIr.normalize`; a YouTube/Vimeo iframe gets `class="video-embed"` (other iframes are left alone). Wiki `![[file.mp4]]` (`webm` / `ogv` / `m4v`) becomes the local IR in `WikiLink.embed`. No JS player.
+
 ### Glossary
 
 Harvested from markup-neutral HTML: `class="glossary"` on the list, `class="glossary-item"` with an `id` on each term. Links to those ids get definition tooltips (`span.glossary-ref` / `span.glossary-tip`), same `Tip` as footnotes. Print and `html.glossary-expand` inline the definition in parentheses.
@@ -207,18 +258,54 @@ Term id is the `id` on `<dt>` if present, otherwise the term text with spaces tu
 
 ### Bibliography
 
-Dialect syntax → `Citation` IR (`span.citation` / `span.citation-item` with `data-key`, optional `data-locator`, `data-mode`; `div.bibliography` placeholder). Then a **per-document** BibTeX file plus citeproc-java (CSL). No site-level bibliography file or style; both `bibliography` and `csl` are required on the document’s front matter. Locale is page `lang`, else site `lang`, else `en-US`.
+Two kinds, usable together on one page. Ids do not collide: citeproc entries are `#bibl-{key}`; native entries keep the authored id.
 
-Cited-only list. Unknown keys → `span.unresolved-citation` and a page error (not reported on chunks). Resolved in-text cites become `a.citation` linking to `#bibl-{key}` on the matching `csl-entry` (first key if several).
+**External.** Dialect syntax → `Citation` IR (`span.citation` / `span.citation-item` with `data-key`, optional `data-locator`, `data-mode`; empty `div.bibliography` placeholder). Then a **per-document** BibTeX file plus citeproc-java (CSL). No site-level bibliography file or style; both `bibliography` and `csl` are required on the document’s front matter. Locale is page `lang`, else site `lang`, else `en-US`. `.bib` files are ignored at scan (`*.bib` in `Ignore.internal`) so they are not published; citeproc still reads them from the source tree. Un-ignore in `_site_ignore` to copy one to the site. Cited-only list: `Bibliography.resolve` fills an empty placeholder, or appends if there is none; it does not replace a native list. Unknown keys → `span.unresolved-citation` and a page error (not reported on chunks). Resolved in-text cites become `a.citation` linking to `#bibl-{key}` on the matching `csl-entry` (first key if several).
 
 AsciiDoc: Java extensions (`cite`, `citenp`, `bibliography::[]`); no Ruby gem. The inline-macro regexp allows an empty target so `cite:[key]` matches; positional attributes are all joined (not just `1`).
 
 Markdown: Pandoc citation syntax scanned after FlexMark; no extra extension.
 
+TEI: `ref`/`ptr` `@cRef` (optional `@n` locator) → the same `Citation` stubs. Empty `div type="bibliography"` is the placeholder. A bare `@target` that is a bib key and is *not* a native `listBibl` id is also a stub.
+
+**Internal.** Authored list harvested like glossary (`BibliographyItem`, `class="bibliography-item"` with `id`). Links to those ids get `a.citation` and a `citation-tip` of the entry. Glossary tip wins if the same id is also a glossary term.
+
+AsciiDoc: `[bibliography]` (`div.ulist.bibliography`) converts before the `ulist` wrapper is unwrapped, so the class is not lost. `[[[id]]]` empty anchors are hoisted onto `li.bibliography-item`; `<<id>>` is an ordinary xref.
+
+TEI: in-document `listBibl` / `bibl` / `biblStruct` (not in `teiHeader`) become `class="bibliography"` / `bibliography-item` with `xml:id` copied to `id`. `ref`/`ptr` `@target="#id"` stay internal links. Empty pointers get `@n` or the id as text. A bare `@target` that matches a `listBibl` id is rewritten to `#id`. `cit` with a `quote` stays Quote IR; `cit` that is only a pointer is not a blockquote. Authored `listBibl` is kept (not cited-only, not auto-appended).
+
 ### PDF
 
 Markup-independent. TODO details.
 
-### Still wanted (markup-independent)
+## TODO
 
-Admonitions, asides, callouts. TEI: footnotes clinging to preceding elements, facsimiles, raw TEI. Categories as wiki links; auto category/tag pages. Paging long lists. CLI package, watch, publish to a bucket.
+### Pages
+
+- chunked root: index.html; issues with: naming, parents, suppress listing (needed for TEI too), landing page choice
+- treat `<img>` as a link element also?
+- sort the pages in transclusion order, extract sections and blocks,  transclude, and style the transclusions;
+- Maybe configure FlexMark to not convert general transclusion Markdown links (if it does now)
+- add whatever is needed for the feed to the `<head>`
+- implement SEO - or is just the page title in the `<head>` all I need?
+- whatever the feed post summaries end up being, conditionally add same as post excerpt to the post list
+- handle categories; they can be wiki links?!
+- auto-create category pages
+- auto-create tag pages
+- implement paging of the long lists (e.g., list of posts)
+- TEI facsimiles
+- raw TEI
+
+### CLI
+- package the CLI
+- serve with filesystem watch
+- publish site into a bucket
+
+### Further Research
+
+- add publishing and updating a page to X once X API supports Articles
+- Look at https://stephango.com/vault
+- Look at https://squidfunk.github.io/mkdocs-material/
+- Look at https://github.com/KaTeX/KaTeX[KaTeX] as a MathJax alternative...
+- Think about serializing the full list of backlinks out of the memory
+
