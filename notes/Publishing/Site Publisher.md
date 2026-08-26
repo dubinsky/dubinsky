@@ -126,24 +126,24 @@ Code lives in `site-publisher`. Dialect conversion sits next to `XxxMarkup`; sha
 
 Per document:
 
-1. Dialect `Markup` (`md` / `adoc` / `html` / `tei`) plus `FrontMatter` → `Xml.Element`
-2. Dialect converters emit shared IR (leftover soup on `XxxMarkup`: `quoteblock`, `[!tip]`, TEI `cit`, …)
-3. HTML-shaped leftovers → IR in `HtmlIr.normalize` (`Aside`, `Quote`, `Strike`, `Figure`, `PdfEmbed`, `Video`). `HtmlMarkup.process` is title + nest sections + that pass; Markdown and AsciiDoc finish there. TEI does not: leftovers are still TEI names.
+1. Dialect `Markup` (`md` / `adoc` / `html` / `tei` / `docbook`) plus `FrontMatter` → `Xml.Element`
+2. Dialect converters emit shared IR (leftover soup on `XxxMarkup`: `quoteblock`, `[!tip]`, TEI `cit`, DocBook `sidebar`, …)
+3. HTML-shaped leftovers → IR in `HtmlIr.normalize` (`Aside`, `Quote`, `Strike`, `Figure`, `PdfEmbed`, `Video`). `HtmlMarkup.process` is title + nest sections + that pass; Markdown and AsciiDoc finish there. TEI and DocBook do not: leftovers are still native names until their converters run.
 4. `PageContent.apply` prepares once: sections/ids, internal-link marks, wiki embed (images, audio, video, PDF), footnote harvest
 5. `PageContent.markupContent` resolves per chunk: select XML, append referenced footnotes, resolve citations, resolve links and tooltips, inject TOC
 6. Minima-inspired HTML → write (`textContent` or copy assets)
 
-`.xml` files are disambiguated by root element (`TEI`, …).
+`.xml` files are disambiguated by root element (`TEI`, DocBook `article` / `book` / …).
 
 ### SEO
 
 `Seo.head` is the `{% seo %}` stand-in: derived `<head>` tags from site config and front matter, no extra keys. Document title is `Page | Site title` (home, or when they match, is just the site title). `og:title` / `twitter:title` stay the page title. Description and author fall back to the site. Canonical and `og:url` are `site.url` + path. `og:type` is `article` when the page has a date, else `website`. JSON-LD `@type` is `WebSite` (home), `BlogPosting` (dated/post), or `WebPage`; the article `itemtype` matches. Generator is this publisher (`https://github.com/dubinsky/site-publisher`), including Atom `<generator>`. No images, Facebook, or webmaster proofs.
 
+Page `description` is also the feed `<summary>` and the `/posts` list teaser (`p.post-excerpt`) when set. Not an auto-excerpt of the body; site `description` is not a fallback there.
+
 ### Markup
 
-Supported: [[Markdown]], [[AsciiDoc]], HTML, [[TEI]].
-
-Considered: [[DocBook]], ReStructured Text.
+Supported: [[Markdown]], [[AsciiDoc]], HTML, [[TEI]], [[DocBook]].
 
 Cross-markup transclusion means stylesheets (and MathJax etc.) are included even when a page’s source dialect would not need them — unless we later compute the set of markups actually used.
 
@@ -183,9 +183,17 @@ Not Jekyll’s `/page/:num/` index layout — that would move `/posts.html`.
 
 ### Sections and TOC
 
-Canonical IR: nested `div.section` with a heading (HTML `hN` nested after convert; TEI already nested, heading is `tei-head`). Permalinks and missing ids are added on that IR (`Section.normalize`). `xml:id` is copied to `id`. TOC walks through non-section wrappers; a heading need not be the first child (`pb`/`fw` before `head`).
+Canonical IR: nested `div.section` with a heading (HTML `hN` nested after convert; TEI already nested, heading is `tei-head`; DocBook `section` / `sectN` / nested `chapter` become `div`, heading is `db-title`). Permalinks and missing ids are added on that IR (`Section.normalize`). `xml:id` is copied to `id`. TOC walks through non-section wrappers; a heading need not be the first child (`pb`/`fw` before `head`).
+
+Document title (`process` second value, same as HTML `h1` / DocBook `db-title`): TEI `titleStmt/title` (`tei-title` after `Xml2Html`; `@type="main"` if several); `store` / `collection` child `title`. Not body `head`, not `bibl`/`cit` titles, not entity names. Stripped from the tree. Empty `titleStmt` (common in the archive) leaves `Page.title` to front matter then the file name.
 
 Kramdown `{:toc}` is a TOC placeholder in Markdown.
+
+### DocBook
+
+Same shape as TEI: `.xml` files, root-element disambiguation, `Xml2Html("db")` then dialect converters, no `HtmlIr.normalize`. Prefix `db` (`title` → `db-title`). Claimed roots: `article`, `book`, `chapter`, `appendix`, `part`, `set`, `preface`, `refentry`, `topic` — not `section`. Nested `section` / `sect1`–`sect5` / `simplesect` / `chapter` / `appendix` / `preface` rename to `div` then `Section.mark`; a claimed root is not renamed (so a `chapter` file stays `<chapter>`). Document title is the root or `info`/`articleinfo`/… `title`, stripped from the body (HTML `h1` analog). CALS `tgroup` is unwrapped; `row`/`entry` become `tr`/`td` (class `entry` kept). No DocBook XSLT and no `org.podval.docbook` package.
+
+IR converters run in a second pass so IR `class` is not prefixed to `db-class`: `footnote` / `footnoteref`, `glosslist` / `glossary`, `variablelist` (plain `dl`), `bibliography` / `citation` / `biblioref`, `programlisting` / `code` / `literal`, `co` / `calloutlist`, `note`/`tip`/`warning`/`caution`/`important`, `sidebar`, `blockquote`/`epigraph`, `emphasis` roles (`bold`, `strikethrough`), `figure` / `imagedata`, `videodata`. No task lists, wiki links, or PDF embeds. DocBook 4 (no namespace) and 5 (default `xmlns="http://docbook.org/ns/docbook"`) both match on local names. `link` is renamed to `a` without class `link` (that class is the section permalink).
 
 ### Footnotes
 
@@ -294,7 +302,6 @@ Markup-independent. TODO details.
 - treat `<img>` as a link element also?
 - sort the pages in transclusion order, extract sections and blocks,  transclude, and style the transclusions;
 - Maybe configure FlexMark to not convert general transclusion Markdown links (if it does now)
-- whatever the feed post summaries end up being, conditionally add same as post excerpt to the post list
 - handle categories; they can be wiki links?!
 - auto-create category pages
 - auto-create tag pages
