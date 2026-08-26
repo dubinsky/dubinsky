@@ -161,11 +161,15 @@ A file is markup if its extension is associated with a dialect (`.md`, `.adoc`, 
 
 Obsidian uses file names and ignores the front-matter title; a plugin would be needed for the reverse.
 
-Wiki links (`[[…]]`), internal link resolution, backlinks, aliases (TODO). Open questions about Obsidian wiki links: case sensitivity, file name vs title vs document title, ambiguous names, line wrapping, agglutination.
+Wiki links (`[[…]]`), internal link resolution, backlinks, aliases (TODO). Obsidian block ids (`^id` at the end of a paragraph, or a following line after a list/table/quote/code fence) become `id` plus `class="wiki-block"` on that element; `[[note#^id]]` resolves through `WikiBlocks`. Open questions about Obsidian wiki links: case sensitivity, file name vs title vs document title, ambiguous names, line wrapping, agglutination.
+
+Local media refs are not page links. `AssetRef` rewrites `img@src`, `video`/`audio`/`source@src`, and `object@data` to the published path (relative to the linking page, then exact `Pages` match). Wiki embeds (`![[file]]`) are marked, then a vault path (`folder/file`) is from site root and a bare name falls back to a unique `findByFileName`. Missing files: `PageError.MissingAsset` and class `unresolved-asset`. No title-walk, backlinks, or `internal-link`. YouTube/Vimeo iframes are skipped. `#page=` on PDF `data` is kept.
 
 ### Directories and posts
 
 Directory pages, navigation (up/prev/next), path navigation, missing index pages, header pages with FA icons from front matter.
+
+Site config `home` (absolute path, resolved with `Pages.find` after the tree including chunks exists) occupies `/index.html` with a Refresh `Alias` to that page (`target.path`, so a chunked TOC is not rewritten to `P.html`). A synthetic root `DirectoryPage` is dropped from `pages` (not written); an authored `index` plus `home` is `PageError.Duplicate`. Does not flatten the chunk tree onto `/`.
 
 Posts: `_posts/`, `_drafts/`, Obsidian daily-notes folder (from `.obsidian`). Auto-post vs permalink. Filename convention `YYYY-MM-DD-title`. `_posts` is emptied out of the directory listing (`Posts.isDirectoryEmptiedOut`).
 
@@ -173,7 +177,7 @@ Posts: `_posts/`, `_drafts/`, Obsidian daily-notes folder (from `.obsidian`). Au
 
 I used `asciidoctor-multipage` [extension](https://github.com/owenh000/asciidoctor-multipage) to split AsciiDoc into per-section HTML. It has long-known [issues](https://github.com/owenh000/asciidoctor-multipage/issues/46), (footnotes) and only works for AsciiDoc.
 
-The publisher chunks any supported markup. The term is `chunking` (DocBook XSLT), not `multi-page`.
+The publisher chunks any supported markup. The term is `chunking` (DocBook XSLT), not `multi-page`. The TOC/preamble chunk is `P/index.html` (`DirectoryPage.fileName`), not `P/P.html`; section chunks are siblings under `P/`. No synthetic `DirectoryPage` listing is created for that folder (`ChunkedMarkupPage.parent` is the unchunked document’s parent). `P.html` remains the full document. `Pages.find` matches an existing page path before title-walk, so `/P/index.html` is the TOC chunk and is not rewritten to `/P.html`; wiki `[[P]]` still lands on the unchunked file. Relative `*.html` and `./` / `../` hrefs are joined to the linking page’s directory (`Path.resolveFrom`). Site-header icon links (`MarkupPage.formatLinks`) switch between `P.html` and `P/index.html` when `chunk` is on, and to `P.pdf` when `pdf` is on; they sit with up/prev/next and are print-hidden with the rest of the site header.
 
 ### Paging
 
@@ -185,7 +189,7 @@ Not Jekyll’s `/page/:num/` index layout — that would move `/posts.html`.
 
 Canonical IR: nested `div.section` with a heading (HTML `hN` nested after convert; TEI already nested, heading is `tei-head`; DocBook `section` / `sectN` / nested `chapter` become `div`, heading is `db-title`). Permalinks and missing ids are added on that IR (`Section.normalize`). `xml:id` is copied to `id`. TOC walks through non-section wrappers; a heading need not be the first child (`pb`/`fw` before `head`).
 
-Document title (`process` second value, same as HTML `h1` / DocBook `db-title`): TEI `titleStmt/title` (`tei-title` after `Xml2Html`; `@type="main"` if several); `store` / `collection` child `title`. Not body `head`, not `bibl`/`cit` titles, not entity names. Stripped from the tree. Empty `titleStmt` (common in the archive) leaves `Page.title` to front matter then the file name.
+Document title (`process` second value, same as HTML `h1` / DocBook `db-title`): TEI `titleStmt/title` (`tei-title` after `Xml2Html`; `@type="main"` if several); `store` / `collection` child `title`. Not body `head`, not `bibl`/`cit` titles, not entity names. Stripped from the tree. Empty `titleStmt` (common in the archive) leaves `Page.title` to front matter then the file name. If both front-matter `title` and the document title are present and differ (trimmed), `PageError.AmbiguousTitle`; `Page.title` still prefers the document title.
 
 Kramdown `{:toc}` is a TOC placeholder in Markdown.
 
@@ -254,7 +258,7 @@ IR is HTML `<del>` (user-agent line-through; no extra class). FlexMark `~~` emit
 
 IR: `<figure class="figure">`, optional `figcaption.figure-caption`. Not harvested. HTML that is already IR is left alone. Inline images stay `<img>`.
 
-AsciiDoc leftovers (`div.imageblock`; `div.content` already unwrapped; optional `div.title` after the image) convert in `AsciiDocMarkup.cleanup`. Markdown/HTML: a `<p>` whose only child is `<img>` (or a lone linked `<img>`) becomes a figure in `HtmlIr.normalize`; `title` on the image is the caption and is removed from the `<img>`. TEI: `<graphic url>` becomes `<img src>` in the first pass; `<figure>` with `<head>`/`<figDesc>` converts in the second pass so IR `class` is not prefixed. Wiki `![[image]]` embeds stay `<img>` (resolved after convert).
+AsciiDoc leftovers (`div.imageblock`; `div.content` already unwrapped; optional `div.title` after the image) convert in `AsciiDocMarkup.cleanup`. Markdown/HTML: a `<p>` whose only child is `<img>` (or a lone linked `<img>`) becomes a figure in `HtmlIr.normalize`; `title` on the image is the caption and is removed from the `<img>`. TEI: `<graphic url>` becomes `<img src>` in the first pass; `<figure>` with `<head>`/`<figDesc>` converts in the second pass so IR `class` is not prefixed. Wiki `![[image]]` embeds stay `<img>` (resolved after convert); Obsidian `|WIDTH` or `|WIDTHxHEIGHT` become `width`/`height`. `AssetRef` rewrites local `src`/`data` after link resolution.
 
 ### PDF embeds
 
@@ -280,13 +284,13 @@ Two kinds, usable together on one page. Ids do not collide: citeproc entries are
 
 **External.** Dialect syntax → `Citation` IR (`span.citation` / `span.citation-item` with `data-key`, optional `data-locator`, `data-mode`; empty `div.bibliography` placeholder). Then a **per-document** BibTeX file plus citeproc-java (CSL). No site-level bibliography file or style; both `bibliography` and `csl` are required on the document’s front matter. Locale is page `lang`, else site `lang`, else `en-US`. `.bib` files are ignored at scan (`*.bib` in `Ignore.internal`) so they are not published; citeproc still reads them from the source tree. Un-ignore in `_site_ignore` to copy one to the site. Cited-only list: `Bibliography.resolve` fills an empty placeholder, or appends if there is none; it does not replace a native list. Unknown keys → `span.unresolved-citation` and a page error (not reported on chunks). Resolved in-text cites become `a.citation` linking to `#bibl-{key}` on the matching `csl-entry` (first key if several).
 
-AsciiDoc: Java extensions (`cite`, `citenp`, `bibliography::[]`); no Ruby gem. The inline-macro regexp allows an empty target so `cite:[key]` matches; positional attributes are all joined (not just `1`).
+AsciiDoc: Java extensions (`cite`, `citenp`, `bibliography::[]`); no Ruby gem. The inline-macro regexp allows an empty target so `cite:[key]` matches; `CiteMacro.parseTarget` joins positional attributes (not just `1`).
 
 Markdown: Pandoc citation syntax scanned after FlexMark; no extra extension.
 
 TEI: `ref`/`ptr` `@cRef` (optional `@n` locator) → the same `Citation` stubs. Empty `div type="bibliography"` is the placeholder. A bare `@target` that is a bib key and is *not* a native `listBibl` id is also a stub.
 
-**Internal.** Authored list harvested like glossary (`BibliographyItem`, `class="bibliography-item"` with `id`). Links to those ids get `a.citation` and a `citation-tip` of the entry. Glossary tip wins if the same id is also a glossary term.
+**Internal.** Authored list harvested like glossary (`BibliographyItem` IR: `class="bibliography-item"` with `id`; harvest/tips only). Dialects convert native lists (`TeiMarkup` `listBibl`/`bibl`, `DocBookMarkup` `bibliography`/`biblioentry`, AsciiDoc `[bibliography]` / `[[[id]]]` empty-anchor hoist). Links to those ids get `a.citation` and a `citation-tip` of the entry. Glossary tip wins if the same id is also a glossary term.
 
 AsciiDoc: `[bibliography]` (`div.ulist.bibliography`) converts before the `ulist` wrapper is unwrapped, so the class is not lost. `[[[id]]]` empty anchors are hoisted onto `li.bibliography-item`; `<<id>>` is an ordinary xref.
 
@@ -294,19 +298,17 @@ TEI: in-document `listBibl` / `bibl` / `biblStruct` (not in `teiHeader`) become 
 
 ### PDF
 
-Markup-independent. TODO details.
+Markup-independent. Front matter `pdf: true` adds a `PdfPage` at `P.pdf` (Chromium print of `P.html`, written last). Site-header format icons on the HTML (and chunks) link to it; the header is `display: none` in print.
 
 ## TODO
 
-- chunked root: index.html; issues with: naming, parents, suppress listing (needed for TEI too), landing page choice
-- treat `<img>` as a link element also?
+- TEI
+- TEI facsimiles
+- TEI raw
 - sort the pages in transclusion order, extract sections and blocks,  transclude, and style the transclusions;
-- Maybe configure FlexMark to not convert general transclusion Markdown links (if it does now)
 - handle categories; they can be wiki links?!
 - auto-create category pages
 - auto-create tag pages
-- TEI facsimiles
-- raw TEI
 - package the CLI
 - publish site into a bucket
 
