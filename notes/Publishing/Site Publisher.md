@@ -135,6 +135,10 @@ Per document:
 
 `.xml` files are disambiguated by root element (`TEI`, …).
 
+### SEO
+
+`Seo.head` is the `{% seo %}` stand-in: derived `<head>` tags from site config and front matter, no extra keys. Document title is `Page | Site title` (home, or when they match, is just the site title). `og:title` / `twitter:title` stay the page title. Description and author fall back to the site. Canonical and `og:url` are `site.url` + path. `og:type` is `article` when the page has a date, else `website`. JSON-LD `@type` is `WebSite` (home), `BlogPosting` (dated/post), or `WebPage`; the article `itemtype` matches. Generator is this publisher (`https://github.com/dubinsky/site-publisher`), including Atom `<generator>`. No images, Facebook, or webmaster proofs.
+
 ### Markup
 
 Supported: [[Markdown]], [[AsciiDoc]], HTML, [[TEI]].
@@ -171,6 +175,12 @@ I used `asciidoctor-multipage` [extension](https://github.com/owenh000/asciidoct
 
 The publisher chunks any supported markup. The term is `chunking` (DocBook XSLT), not `multi-page`.
 
+### Paging
+
+Same page-graph idea as chunking (extra pages, `path.add`, header prev/next), but only the synthetic `/posts` listing is paged, and the cut is **list items**, not sections. Site config `paginate-posts: N` in `_site_config.yml` (omitted or &lt; 1 is off). No front-matter `paginate`, no authored-list paging, no Liquid `paginator`. Extra batch pages are registered after the tree scan so `Posts.posts` is complete. `Posts.batchContent` slices `ul.post-list`; page 1 stays `/posts.html`; further batches are `/posts/2.html`, …. A `nav.pagination` sits under the list. `rel=prev/next` is the pager sequence.
+
+Not Jekyll’s `/page/:num/` index layout — that would move `/posts.html`.
+
 ### Sections and TOC
 
 Canonical IR: nested `div.section` with a heading (HTML `hN` nested after convert; TEI already nested, heading is `tei-head`). Permalinks and missing ids are added on that IR (`Section.normalize`). `xml:id` is copied to `id`. TOC walks through non-section wrappers; a heading need not be the first child (`pb`/`fw` before `head`).
@@ -179,7 +189,7 @@ Kramdown `{:toc}` is a TOC placeholder in Markdown.
 
 ### Footnotes
 
-IR: stub `span.footnote-link` with `footnoteCorrelationId`; body `span.footnote` with the same id. Harvest numbers in document-link order, strip bodies, append referenced bodies after chunk select, turn stubs into numbered `<a>`s.
+IR: stub `span.footnote-link` with `footnote-correlation-id`; body `span.footnote` with the same id. Harvest numbers in document-link order, strip bodies, append referenced bodies after chunk select, turn stubs into numbered `<a>`s.
 
 Tooltips: `Tip.attachTip` returns `span.footnote-ref` containing the `<a>` and `span.footnote-tip` as siblings. Recurse only into the tip (`attachTips = false`) so links in the note resolve without nested tips.
 
@@ -280,32 +290,23 @@ Markup-independent. TODO details.
 
 ## TODO
 
-### Pages
-
 - chunked root: index.html; issues with: naming, parents, suppress listing (needed for TEI too), landing page choice
 - treat `<img>` as a link element also?
 - sort the pages in transclusion order, extract sections and blocks,  transclude, and style the transclusions;
 - Maybe configure FlexMark to not convert general transclusion Markdown links (if it does now)
-- add whatever is needed for the feed to the `<head>`
-- implement SEO - or is just the page title in the `<head>` all I need?
 - whatever the feed post summaries end up being, conditionally add same as post excerpt to the post list
 - handle categories; they can be wiki links?!
 - auto-create category pages
 - auto-create tag pages
-- implement paging of the long lists (e.g., list of posts)
 - TEI facsimiles
 - raw TEI
-
-### CLI
 - package the CLI
-- serve with filesystem watch
 - publish site into a bucket
 
-### Further Research
+##   Further Research
 
 - add publishing and updating a page to X once X API supports Articles
 - Look at https://stephango.com/vault
 - Look at https://squidfunk.github.io/mkdocs-material/
 - Look at https://github.com/KaTeX/KaTeX[KaTeX] as a MathJax alternative...
-- Think about serializing the full list of backlinks out of the memory
 
