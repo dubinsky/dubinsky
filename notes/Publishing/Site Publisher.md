@@ -167,7 +167,7 @@ Local media refs are not page links. `AssetRef` rewrites `img@src`, `video`/`aud
 
 ### Directories and posts
 
-Directory pages, navigation (up/prev/next), path navigation, missing index pages, header pages with FA icons from front matter.
+Directory pages, navigation (up/prev/next), path navigation, missing index pages. Header links are `header-pages` in `_site_config.yml` (ordered source or site paths); FA icons stay on the page (`icon` in front matter).
 
 Site config `home` (absolute path, resolved with `Pages.find` after the tree including chunks exists) occupies `/index.html` with a Refresh `Alias` to that page (`target.path`, so a chunked TOC is not rewritten to `P.html`). A synthetic root `DirectoryPage` is dropped from `pages` (not written); an authored `index` plus `home` is `PageError.Duplicate`. Does not flatten the chunk tree onto `/`.
 

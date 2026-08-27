@@ -7,6 +7,10 @@ timezone: "America/New_York"
 favicon: favicon.jpeg
 google-analytics: UA-18415116-1
 paginate-posts: 10
+header-pages:
+  - notes/index.md
+  - posts
+  - tags
 
 social:
   github:  dubinsky
