@@ -156,6 +156,33 @@ It is possible that Jekyll's parser does the right thing,
 but ZIO Blocks XML parser parses the first root element and silently
 ignores the rest, which is _definitely_ not the right thing.
 
+## XML codec
+
+I tried to data-bind TEI (`TEI` / `teiHeader` / `Entity` / `store` / `entityLists`) with `Schema.derived` and `XmlFormat` (`zio-blocks-schema-xml` 0.0.51). The AST is fine; the deriver is a JSON-shaped record mapper, not a document binder. Workarounds live in [[Site Publisher]] (`org.podval.tei.Tei`, `RawXml`, `WithRawXml`). File these against [zio-blocks](https://github.com/zio/zio-blocks) when I get to it.
+
+### `@xmlAttribute` / `@xmlNamespace` are documentation-only
+
+Docs (`docs/reference/schema/built-in-codecs/xml.md`) show `@xmlAttribute()` and `@xmlNamespace(uri, prefix)`. Those are `StaticAnnotation`s in the XML module, **not** `Modifier`s.
+
+`Schema.derived` only copies annotations that are `Modifier.Term` / `Modifier.Reflect`. The XML deriver looks for `Modifier.config("xml.attribute", …)` and `xml.namespace.uri` / `xml.namespace.prefix`. So the documented annotations are silently ignored; `@Modifier.config("xml.attribute", "")` works.
+
+Ask: either make `@xmlAttribute` / `@xmlNamespace` subtypes of `Modifier` (and have `Schema.derived` pick them up), or change the docs to `@Modifier.config`.
+
+### Unwrapped sibling sequences
+
+TEI and friends repeat the **same child name** as siblings (`<language ident="ru"/>` next to `<language ident="he"/>`, several `<title>` / `<author>` / `<name>`, `xi:include`). The deriver:
+
+- looks up children in a `HashMap[localName → last element]`, so repeats collapse to one;
+- encodes `Seq[A]` as `<fieldName><item>…</item>…</fieldName>` and decodes a **wrapper** element’s children, not sibling repeats of the item’s name.
+
+Need an unwrapped-sequence mode (field name = item element name, all matching siblings). Without it, derived codecs cannot bind real TEI / Atom / store indexes.
+
+### Leaf records drop attributes
+
+In `XmlCodecDeriver.deriveRecord`, if a child has **no nested elements**, decode unwraps to a nameless `<value>` with only the text children — **attributes of that child are discarded**. So `<date when="1800"/>` and `<language ident="ru"/>` lose `@when` / `@ident`.
+
+Workaround in Site Publisher: inject a dummy child element so the deriver keeps the original element. The deriver should pass the element through when the field is a record (attributes + optional text), not only when it has element children.
+
 ## HTML
 
 - mention ZIO Blocks HTML optional attributes in its documentation.

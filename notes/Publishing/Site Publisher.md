@@ -175,6 +175,18 @@ Obsidian uses file names and ignores the front-matter title; a plugin would be n
 
 Wiki links (`[[…]]`), internal link resolution, backlinks. Front-matter `permalink` and `aliases` add Refresh `Alias` pages (`/short.html` → the real page). `Pages.find` also treats those paths as prefixes: after exact path match, longest alias prefix wins and the remainder is joined onto the real page’s directory (`/short/child` → `child` next to `/aliased/index.html`). That is the old collector `alias/@n` + `alias/@to` rule used in alter-rebbe TEI (`/lvia1868-3470/006`). Remainder under a non-directory alias is unresolved. Lookup does not recurse through `find` (the expanded path still starts with the alias prefix). `Path.fromHref` treats a last-dot suffix as an extension unless it is all digits, so ids like `255.2` stay one segment and `/dubnov/255.2` can prefix-resolve. Obsidian block ids (`^id` at the end of a paragraph, or a following line after a list/table/quote/code fence) become `id` plus `class="wiki-block"` on that element; `[[note#^id]]` resolves through `WikiBlocks`. Open questions about Obsidian wiki links: case sensitivity, file name vs title vs document title, ambiguous names, line wrapping, agglutination.
 
+### Collection aliases (static hosting)
+
+Plan for alter-rebbe.org on **GitHub Pages** with the domain on **Cloudflare** (proxied, orange cloud; SSL Full Strict after GitHub’s Enforce HTTPS is green). Collector `GET /rgada/003` is 200 at that URL.
+
+**Worker, not Transform Rules.** Free Transform Rules are 10; `site.xml` has 48 collection aliases (two patterns each: exact `/rgada` and `/rgada/*`). A Worker does slash-delimited prefix replace and appends `.html` (GitHub Pages will not serve `/…/003` as `003.html` without Jekyll pretty permalinks). Browser URL stays short (rewrite, not 301). Route the Worker only at alias prefixes (`www.alter-rebbe.org/rgada*`, …) so CSS/JS/images go straight to GitHub and do not count as Worker requests.
+
+Cloudflare does **not** auto longest-match. Slash-delimited patterns avoid `lvia1799-2` vs `lvia1799-2-2`. Same map drives find, link shortening, Worker, and local serve.
+
+**Pricing (Workers, 2026):** Free: 100k Worker requests/day, 10 ms CPU, $0. Paid: $5/month includes 10M requests then $0.30/million; no egress. Prefix-only routes should stay on Free for this archive; Paid is headroom if bots hit the short URLs hard. Confirm [Workers pricing](https://developers.cloudflare.com/workers/platform/pricing/).
+
+Optional `alias` on the TEI `store`/`collection` root (`<collection n="3140" alias="rgada">`), harvested into `StoreIndex`. Not site config and not front-matter `permalink` (that still writes a Refresh leaf). Duplicate `alias` values are `PageError.Duplicate`. `Page.publishedPath` is the public href; `serve()` rewrites inbound short URLs to the written file. Cloudflare Worker still to do.
+
 Local media refs are not page links. `AssetRef` rewrites `img@src`, `video`/`audio`/`source@src`, and `object@data` to the published path (relative to the linking page, then exact `Pages` match). Wiki embeds (`![[file]]`) are marked, then a vault path (`folder/file`) is from site root and a bare name falls back to a unique `findByFileName`. Missing files: `PageError.MissingAsset` and class `unresolved-asset`. No title-walk, backlinks, or `internal-link`. YouTube/Vimeo iframes are skipped. `#page=` on PDF `data` is kept.
 
 ### Entities
@@ -324,9 +336,11 @@ Markup-independent. Front matter `pdf: true` adds a `PdfPage` at `P.pdf` (Chromi
 
 ## TODO
 
-- TEI
+- Markup/Content split: do I need it? Store/Collection split.
+- Grouop backlinks by alias (like mentions in the old collector)?
 - TEI facsimiles
 - TEI raw
+- collection aliases: Cloudflare Worker (see Design)
 - sort the pages in transclusion order, extract sections and blocks,  transclude, and style the transclusions;
 - handle categories; they can be wiki links?!
 - auto-create category pages
