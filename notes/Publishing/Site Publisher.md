@@ -350,16 +350,16 @@ Markup-independent. Front matter `pdf: true` adds a `PdfPage` at `P.pdf` (Chromi
 
 ## TODO
 
-- Markup/Content split: do I need it? Store/Collection split.
 - Group backlinks by alias (like mentions in the old collector)?
-- TEI raw
+- clean up, modularize and modernize the CSS (and layout)
+- Markup/Content split: do I need it? Store/Collection split.
 - collection aliases: Cloudflare Worker (see Design)
 - sort the pages in transclusion order, extract sections and blocks,  transclude, and style the transclusions;
 - handle categories; they can be wiki links?!
 - auto-create category pages
 - auto-create tag pages
 - package the CLI
-- publish site into a bucket
+- decided not to bother with serving raw TEI with licenisng/source information stamped on them until someone asks
 
 ##   Further Research
 
