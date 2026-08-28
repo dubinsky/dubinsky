@@ -127,13 +127,25 @@ Code lives in `site-publisher`. Dialect conversion sits next to `XxxMarkup`; sha
 Per document:
 
 1. Dialect `Markup` (`md` / `adoc` / `html` / `tei` / `docbook`) plus `FrontMatter` → `Xml.Element`
-2. Dialect converters emit shared IR (leftover soup on `XxxMarkup`: `quoteblock`, `[!tip]`, TEI `cit`, DocBook `sidebar`, …)
-3. HTML-shaped leftovers → IR in `HtmlIr.normalize` (`Aside`, `Quote`, `Strike`, `Figure`, `PdfEmbed`, `Video`). `HtmlMarkup.process` is title + nest sections + that pass; Markdown and AsciiDoc finish there. TEI and DocBook do not: leftovers are still native names until their converters run.
-4. `PageContent.apply` prepares once: sections/ids, internal-link marks, wiki embed (images, audio, video, PDF), footnote harvest
-5. `PageContent.markupContent` resolves per chunk: select XML, append referenced footnotes, resolve citations, resolve links and tooltips, inject TOC
-6. Minima-inspired HTML → write (`textContent` or copy assets)
+2. `Content.parse` on the **raw** root (mutually exclusive; field on `PageContent` is `doc` because `Page.content` is already `PageContent`):
+   - `store` / `collection` → `StoreContent` (no dialect `process`)
+   - `entityLists` → `EntityListsContent` (no dialect `process`)
+   - `TEI` → `DocumentContent` (`DocumentHeader` + authored tree)
+   - `person` / `place` / `org` → `EntityContent` (kind, role, display name + authored tree)
+   - else → `MarkupContent` (md / adoc / html / docbook)
+3. Dialect converters emit shared IR (leftover soup on `XxxMarkup`: `quoteblock`, `[!tip]`, TEI `cit`, DocBook `sidebar`, …). Store and entity-lists skip this.
+4. HTML-shaped leftovers → IR in `HtmlIr.normalize` (`Aside`, `Quote`, `Strike`, `Figure`, `PdfEmbed`, `Video`). `HtmlMarkup.process` is title + nest sections + that pass; Markdown and AsciiDoc finish there. TEI and DocBook do not: leftovers are still native names until their converters run.
+5. Authored `PageContent.prepareAuthored`: sections/ids, internal-link marks, wiki embed (images, audio, video, PDF), footnote harvest
+6. `Content.markupBody`: store is `None` (directory listing); entity lists generated at render; authored selects XML, appends footnotes, resolves citations/links/tooltips, injects TOC
+7. Minima-inspired HTML → write (`textContent` or copy assets)
 
 `.xml` files are disambiguated by root element (`TEI`, DocBook `article` / `book` / …).
+
+### Page content kinds
+
+`PageHeader` composes the HTML header from ancestor stores plus pieces on `Content` (store chrome, `documentHeader` table). Collector chrome is a path property (this page is a store, or an ancestor is), not only this page’s type: markdown under a collection still gets `header.store-header`. `Site.load` walks `Content.xml` for backlinks; indexes use an empty root so generated listing hrefs are display-only.
+
+`StoreContent.bind` takes scanned pages, resolves `xi:include/@href`, sets directory children, and reports `NotInStore`. Empty includes keep filesystem listing. `EntityListsContent` buckets sibling `EntityContent` pages and creates synthetic `/names/{n}.html` list pages.
 
 ### SEO
 
@@ -161,13 +173,23 @@ A file is markup if its extension is associated with a dialect (`.md`, `.adoc`, 
 
 Obsidian uses file names and ignores the front-matter title; a plugin would be needed for the reverse.
 
-Wiki links (`[[…]]`), internal link resolution, backlinks, aliases (TODO). Obsidian block ids (`^id` at the end of a paragraph, or a following line after a list/table/quote/code fence) become `id` plus `class="wiki-block"` on that element; `[[note#^id]]` resolves through `WikiBlocks`. Open questions about Obsidian wiki links: case sensitivity, file name vs title vs document title, ambiguous names, line wrapping, agglutination.
+Wiki links (`[[…]]`), internal link resolution, backlinks. Front-matter `permalink` and `aliases` add Refresh `Alias` pages (`/short.html` → the real page). `Pages.find` also treats those paths as prefixes: after exact path match, longest alias prefix wins and the remainder is joined onto the real page’s directory (`/short/child` → `child` next to `/aliased/index.html`). That is the old collector `alias/@n` + `alias/@to` rule used in alter-rebbe TEI (`/lvia1868-3470/006`). Remainder under a non-directory alias is unresolved. Lookup does not recurse through `find` (the expanded path still starts with the alias prefix). `Path.fromHref` treats a last-dot suffix as an extension unless it is all digits, so ids like `255.2` stay one segment and `/dubnov/255.2` can prefix-resolve. Obsidian block ids (`^id` at the end of a paragraph, or a following line after a list/table/quote/code fence) become `id` plus `class="wiki-block"` on that element; `[[note#^id]]` resolves through `WikiBlocks`. Open questions about Obsidian wiki links: case sensitivity, file name vs title vs document title, ambiguous names, line wrapping, agglutination.
 
 Local media refs are not page links. `AssetRef` rewrites `img@src`, `video`/`audio`/`source@src`, and `object@data` to the published path (relative to the linking page, then exact `Pages` match). Wiki embeds (`![[file]]`) are marked, then a vault path (`folder/file`) is from site root and a bare name falls back to a unique `findByFileName`. Missing files: `PageError.MissingAsset` and class `unresolved-asset`. No title-walk, backlinks, or `internal-link`. YouTube/Vimeo iframes are skipped. `#page=` on PDF `data` is kept.
+
+### Entities
+
+TEI files whose root is `person`, `place`, or `org` are `EntityContent`; `Page.entityKind` / `entityRole` / `entityDisplayName` come from the parsed root (not a walk of the processed tree). They are authored TEI pages (no document title from the names). `persName` / `placeName` / `orgName` with a non-empty `@ref` become `a` with the original name as class (`LinkKind.Entity`). Resolution is `(kind, source file name without extension)` — not the wiki title walk, not a path. Duplicate ids of the same kind are `PageError.Duplicate` and do not resolve. Wiki `[[id]]` still title-walks to the file name. A bare `@ref` looks like a citeproc key, so `convertCite` skips those `a`s. `Page.listTitle` for an entity is the first name element (the `<h1>` stays the file name). Backlinks on the entity page are the usual internal-link harvest (`persName@ref` in documents); not collector-style per-collection mentions.
+
+`entityLists` beside a directory (`names.xml` next to `names/`) is `EntityListsContent`, same scan as `store` (`/names/index.html`). Each `listPerson` / `listPlace` / `listOrg` (`@n`, optional `@role`, child `title`) is a bucket: kind from the element, members are sibling entity files whose `entityKind` and root `@role` match (`None` matches `None`). Empty lists are dropped. Member lists are generated at render (`EntityLists.generate`) after `Site.load` harvests backlinks from the empty index `xml`, so index → entity `<a>`s are display-only. Subpages `/names/{n}.html` are synthetic. `DirectoryPage` does not dump `ul.page-list` of every file. A `listPerson` inside a normal `TEI` document is not filled.
 
 ### Directories and posts
 
 Directory pages, navigation (up/prev/next), path navigation, missing index pages. Header links are `header-pages` in `_site_config.yml` (ordered source or site paths); FA icons stay on the page (`icon` in front matter).
+
+TEI `store` / `collection` as `dir.xml` beside `dir/` is `StoreContent` (same as live [alter-rebbe.org collections](https://www.alter-rebbe.org/collections) / `/archive/books`). `xi:include/@href` is a page reference resolved with `Path.resolveFrom` from the store file; StAX does not expand XInclude. `StoreIndex` is the parsed include/name/title/abstract/body/`collection` data inside `StoreContent`. Header chrome is `PageHeader.collectorPageHeader` (`header.store-header`: ancestor `<l>` lines and this node as `<l>` — live [rgada/003](https://www.alter-rebbe.org/rgada/003)). Collection documents (`DocumentContent` under a collection) add `table.document-header` (Описание / Дата / Кто / Кому / Расшифровка from harvested `teiHeader`; `teiHeader` is omitted from the body). Entity `ref`s in titles and table cells go through `PageContent.resolveConverted`. Then abstract/body and this store’s `by/@selector` label. Selector labels are `Selector.xml` (copied from the old collector; display name prefers Russian: `category` → `разряд`). The parent store’s `by/@selector` labels this node; under a `collection` with no `by`, documents use `document`; if the parent directory name is a known selector (`archive/`), that is used (`архив`). Store and entity-lists skip `TeiMarkup.process`; `StoreContent.markupBody` is `None` so the body is only the `DirectoryPage` listing. Documents under a store or collection (not only the index pages) use the same collector header. `StoreContent.bind` reports files under the indexed directory not named in the includes as `PageError.NotInStore`. Intermediate selector folders (`book/`, `volume/`, `fund/`) are hops in the href, not pages (`/archive/books/book` stays 404); `Page.parent` skips them so `up` from Державин is `/archive/books`. Nested stores list their own includes. Collections without includes still use filesystem listing. `/collections` (`site.xml`) is out of scope.
+
+Collector used a second stylesheet (`wide.css`, `$content-width: 1800px`) for `Collection` pages. We put `class="wide"` on `<html>` when `Content.wide` (`StoreContent.isCollection`) and override `--content-width` on `.page-content > .wrapper` only (header/footer stay 800px). Settings JS adds classes with `classList`, so it does not drop `wide`.
 
 Site config `home` (absolute path, resolved with `Pages.find` after the tree including chunks exists) occupies `/index.html` with a Refresh `Alias` to that page (`target.path`, so a chunked TOC is not rewritten to `P.html`). A synthetic root `DirectoryPage` is dropped from `pages` (not written); an authored `index` plus `home` is `PageError.Duplicate`. Does not flatten the chunk tree onto `/`.
 
@@ -187,11 +209,11 @@ Not Jekyll’s `/page/:num/` index layout — that would move `/posts.html`.
 
 ### Sections and TOC
 
-Canonical IR: nested `div.section` with a heading (HTML `hN` nested after convert; TEI already nested, heading is `tei-head`; DocBook `section` / `sectN` / nested `chapter` become `div`, heading is `db-title`). Permalinks and missing ids are added on that IR (`Section.normalize`). `xml:id` is copied to `id`. TOC walks through non-section wrappers; a heading need not be the first child (`pb`/`fw` before `head`).
+Canonical IR: nested `div.section` with class `heading` on the title node (HTML `hN` nested after convert; TEI `tei-head`; DocBook `db-title`). Converters stamp both when they mark a section (`Section.markHeaded` / `nestSections`). `Section.normalize` and `Toc` find `.heading` (not `Markup.isSectionHeader`); permalinks are added unless an `anchor` child is already there. `xml:id` is copied to `id`. TOC walks through non-section wrappers; a heading need not be the first child (`pb`/`fw` before `head`).
 
-Document title (`process` second value, same as HTML `h1` / DocBook `db-title`): TEI `titleStmt/title` (`tei-title` after `Xml2Html`; `@type="main"` if several); `store` / `collection` child `title`. Not body `head`, not `bibl`/`cit` titles, not entity names. Stripped from the tree. Empty `titleStmt` (common in the archive) leaves `Page.title` to front matter then the file name. If both front-matter `title` and the document title are present and differ (trimmed), `PageError.AmbiguousTitle`; `Page.title` still prefers the document title.
+Document title (`PageContent.title`, same as HTML `h1` / DocBook `db-title`): TEI `titleStmt/title` from `process` (`tei-title` after `Xml2Html`; `@type="main"` if several); `store` / `collection` / `entityLists` child `title` from `Content.parse` (no `process`). Not body `head`, not `bibl`/`cit` titles, not entity names. Authored titles are stripped from the tree. Empty `titleStmt` (common in the archive) leaves `Page.title` to front matter then the file name. If both front-matter `title` and the document title are present and differ (trimmed), `PageError.AmbiguousTitle`; `Page.title` still prefers the document title.
 
-Kramdown `{:toc}` is a TOC placeholder in Markdown.
+Kramdown `{:toc}` on a Markdown `ul`/`ol` (FlexMark leaves the IAL on the last `li`) and a top-level `[TOC]` paragraph become `div.toc-placeholder`. `insertToc` replaces the first element with `Toc.PlaceholderClass`. Not in lists, quotes, code, or a resolved `[TOC]:` link. HTML may author the class directly.
 
 ### DocBook
 
@@ -205,7 +227,7 @@ IR: stub `span.footnote-link` with `footnote-correlation-id`; body `span.footnot
 
 Tooltips: `Tip.attachTip` returns `span.footnote-ref` containing the `<a>` and `span.footnote-tip` as siblings. Recurse only into the tip (`attachTips = false`) so links in the note resolve without nested tips.
 
-AsciiDoc leftover `div#footnotes` and Markdown `div.footnotes` are stripped as spurious containers.
+Converters pass a leftover-container predicate to `Footnote.unwrapLeftovers` (Markdown `div.footnotes`, AsciiDoc `div#footnotes`); IR bodies are lifted, the wrapper dropped. Published `div.footnotes` is only the list `appendReferenced` adds.
 
 ### Task lists
 
