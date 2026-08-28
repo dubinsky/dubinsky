@@ -177,7 +177,7 @@ Wiki links (`[[…]]`), internal link resolution, backlinks. Front-matter `perma
 
 ### Collection aliases (static hosting)
 
-Plan for alter-rebbe.org on **GitHub Pages** with the domain on **Cloudflare** (proxied, orange cloud; SSL Full Strict after GitHub’s Enforce HTTPS is green). Collector `GET /rgada/003` is 200 at that URL.
+Plan for alter-rebbe.org on **GitHub Pages** with the domain on **Cloudflare** (proxied, orange cloud; SSL Full Strict after GitHub’s Enforce HTTPS is green). Collector `GET /rgada/003` is 200 at that URL. Preview host while `www` stays on the collector: **ng.alter-rebbe.org** (`opentorah/alter-rebbe.org` Pages, `CNAME` → `opentorah.github.io`).
 
 **Worker, not Transform Rules.** Free Transform Rules are 10; `site.xml` has 48 collection aliases (two patterns each: exact `/rgada` and `/rgada/*`). A Worker does slash-delimited prefix replace and appends `.html` (GitHub Pages will not serve `/…/003` as `003.html` without Jekyll pretty permalinks). Browser URL stays short (rewrite, not 301). Route the Worker only at alias prefixes (`www.alter-rebbe.org/rgada*`, …) so CSS/JS/images go straight to GitHub and do not count as Worker requests.
 
@@ -352,8 +352,10 @@ Markup-independent. Front matter `pdf: true` adds a `PdfPage` at `P.pdf` (Chromi
 
 - Group backlinks by alias (like mentions in the old collector)?
 - clean up, modularize and modernize the CSS (and layout)
+- add pretty-printing of XML files
 - Markup/Content split: do I need it? Store/Collection split.
 - collection aliases: Cloudflare Worker (see Design)
+- add a viewer for individual images: fragments, alternative scans etc.
 - sort the pages in transclusion order, extract sections and blocks,  transclude, and style the transclusions;
 - handle categories; they can be wiki links?!
 - auto-create category pages
