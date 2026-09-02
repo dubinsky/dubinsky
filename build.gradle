@@ -10,7 +10,7 @@ application.mainClass = 'org.podval.finance.Main'
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(25)
 
-scala.scalaVersion = '3.8.4'
+scala.scalaVersion = '3.9.0'
 
 // There is no Java in the project :)
 project.gradle.startParameter.excludedTaskNames.add('compileJava')
