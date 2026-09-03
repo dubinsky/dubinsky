@@ -5,6 +5,12 @@ TODO publish:
 - [ ]  move photo equipment out of the "Best" list into a blog post
 - [ ]  Edcforums - "best"
 
+- [ ] blog: publishing TEI on the web: CETEIcean -> direct
+- [ ] blog about XML parsing etc. 
+- [ ] blog about CloudRun plugin;
+- [ ] update "sbt" blog post: Maven -> Gradle; Odersky's sentiment
+- [ ] blog about the switch from DocBook to AsciiDoc
+
 TODO buy books:
 - [Леонид Каганов](https://lleo.me/arhive)
 - [ ] Stasheff's books in epub

@@ -158,7 +158,9 @@ ignores the rest, which is _definitely_ not the right thing.
 
 ## XML codec
 
-I tried to data-bind TEI (`TEI` / `teiHeader` / `Entity` / `store` / `entityLists`) with `Schema.derived` and `XmlFormat` (`zio-blocks-schema-xml` 0.0.51). The AST is fine; the deriver is a JSON-shaped record mapper, not a document binder. Workarounds live in [[Site Publisher]] (`org.podval.tei.Tei`, `RawXml`, `WithRawXml`). File these against [zio-blocks](https://github.com/zio/zio-blocks) when I get to it.
+I tried to data-bind TEI (`TEI` / `teiHeader` / `Entity` / `store` / `entityLists`) with `Schema.derived` and `XmlFormat` (`zio-blocks-schema-xml` 0.0.51). The AST is fine; the deriver is a JSON-shaped record mapper, not a document binder. Workarounds were `RawXml` / `WithRawXml`; they are gone. Use `XmlExtras` (leftovers) and `XmlNode.Element` (named opaque child) with `org.podval.xml.XmlCodec`. File the zio-blocks bugs against [zio-blocks](https://github.com/zio/zio-blocks) when I get to it.
+
+I wrote a document binder in `org.podval.xml.XmlCodec` (published with the XML library) instead of using `XmlFormat`. It walks `Schema.derived` but treats `Seq` as unwrapped siblings, keeps attributes on leaf records, and encodes/decodes any `XmlAst`. Binding hints are still `@Modifier.config` because `Modifier` is sealed.
 
 ### `@xmlAttribute` / `@xmlNamespace` are documentation-only
 
