@@ -111,6 +111,36 @@ Code lives in `site-publisher`. Dialect conversion sits next to `XxxMarkup`; sha
 `PagedList`, `CollectionIndex`, `EntityLists.generate`). The page graph and link/asset lookup sit in `site/`
 (`Pages.resolve`, `Pages.resolveAsset`, `BackLink` / `BackLinks`). There is no `feature/` package.
 
+`org.podval.xml` is a standalone library (`org.podval:org.podval.xml`, https://github.com/dubinsky/xml). OpenTorah can depend on it without the site generator. The wholesale replacement of OpenTorah `ElementTo`/`Parser`/`Unparser` is planned in the OpenTorah repo file `xml-codec-plan.md`.
+
+`XmlParser.parseXml` / `parseResource` load a document from a string, URL, file, or classpath resource. XInclude is off unless `xinclude = true`: default parse leaves `xi:include` in the tree (store/collection indexes use `@href` as a page ref). Expansion is implemented here, not via Xerces; `xml:base` on included roots is relative to the initial document (no [XERCESJ-1102](https://issues.apache.org/jira/browse/XERCESJ-1102)).
+
+A catalog is a named wrapper whose children are one record type: `codec.decodeCatalog(root, name)` or `XmlParser.parseCatalog(resource, name, codec)` (OpenTorah `wrappedSeq` / `HasName.load` without the key bind). `Selector.xml` loads this way.
+
+### XML codec
+
+`org.podval.xml.XmlCodec` is a ZIO Schema `Deriver` that binds Scala records to XML *documents*, not JSON-shaped trees. Methods are polymorphic over `XmlAst` (ZIO XML, Scala XML, HTML). YAML in the publisher stays on Schema + YamlFormat. Selector, collection `<part>`, and `entityLists` decode with it.
+
+`Schema.derived` only copies `Modifier` annotations (`Modifier` is sealed), so binding hints are `@Modifier.config(XmlCodec.Attribute, "")` and friends — not the zio-blocks `@xmlAttribute` that `Schema.derived` ignores.
+
+Mapping:
+
+- one case class = one element (name = `XmlCodec.Element` or the type name)
+- `@Modifier.config(XmlCodec.Attribute, "")` / `"xml:id"` = attribute
+- `@Modifier.config(XmlCodec.Text, "")` = character content of this element
+- unannotated field = child element (`XmlCodec.Element` / `Modifier.rename` / nested type name / field name)
+- `Seq[A]` = unwrapped siblings (item name from the field or from `A`; tagged/variant codecs supply all item names)
+- nested records keep attributes (no dummy child)
+- sealed trait = element name per case
+- `XmlCodec.derived("kind", XmlTag)` binds a field from the element name (`EntityKind.asRoot` / `asName` / `asList`); encode uses that field. Nested tagged types need `.instance(TypeId.of[Nested], Nested.codec)`
+- leftover attributes/elements are errors unless a field is `XmlExtras` (or `XmlCodec.Extras`)
+- `XmlNode.Element` is identity: copy the child through any `XmlAst`
+- `RawXml` / `WithRawXml` are gone (`Entity` / `EntityReference` use `extras: XmlExtras`)
+- booleans decode `true`/`false`/`yes`/`no`/`1`/`0`; encode `true`/`false`
+- decode is `Either[XmlError, A]`; pin `encode` with a type ascription when more than one `XmlAst` is in scope
+
+This replaces zio-blocks `XmlFormat` for document types and is meant to replace OpenTorah `ElementTo`/`Parser`/`Unparser` later. TEI harvest in the publisher is not migrated yet.
+
 ### Pipeline
 
 `Site` coordinates. `Pages` scans the source tree and builds the page graph, including synthetic pages (`/posts`,
