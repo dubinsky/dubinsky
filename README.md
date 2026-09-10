@@ -13,6 +13,16 @@
 [![](https://img.shields.io/badge/OS-Linux-informational?logo=linux)](https://www.linux.org/)
 [![](https://img.shields.io/badge/OS-Omarchy-informational?logo=omarchy)](https://getfedora.org/)
 
+```
+./gradlew generateSite
+./gradlew serveSite
+```
+
+`generateSite` writes `_site` (GitHub Pages). A local site-publisher checkout at
+`../site-publisher` is used when present (`-PsitePublisherDir=`); CI resolves
+`org.podval.tools:org.podval.tools.publisher` from Maven Central. Finance code
+is `./gradlew run` (`org.podval.finance.Main`).
+
 ## Open Source Work ##
 
 - [multi-backend Scala Gradle plugin](https://github.com/dubinsky/scalajs-gradle)
