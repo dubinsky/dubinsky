@@ -57,29 +57,6 @@ def siteArgs(boolean serve) {
   args
 }
 
-def siteSourceTree = fileTree(layout.projectDirectory) {
-  exclude '_site'
-  exclude '_site/**'
-  exclude 'build'
-  exclude 'build/**'
-  exclude '.gradle'
-  exclude '.gradle/**'
-  exclude '.git'
-  exclude '.git/**'
-  exclude '.idea'
-  exclude '.idea/**'
-  exclude 'out'
-  exclude 'out/**'
-  exclude '.obsidian'
-  exclude '.obsidian/**'
-  exclude '.bsp'
-  exclude '.bsp/**'
-  exclude '.scala-build'
-  exclude '.scala-build/**'
-  exclude 'src'
-  exclude 'src/**'
-}
-
 tasks.register('generateSite', JavaExec) {
   group = 'documentation'
   description = 'Generate the static site into _site'
@@ -88,8 +65,6 @@ tasks.register('generateSite', JavaExec) {
   args = siteArgs(false)
   environment 'PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS', '1'
   environment 'PLAYWRIGHT_BROWSERS_PATH', "${gradle.gradleUserHomeDir}/ms-playwright"
-  inputs.files(siteSourceTree)
-  outputs.dir(layout.projectDirectory.dir('_site'))
 }
 
 tasks.register('serveSite', JavaExec) {
