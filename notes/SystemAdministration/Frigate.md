@@ -15,7 +15,9 @@ I used Grok to configure Frigate ;)
 
 ## Where it runs
 
-On the `docker` VM ([[ProxMox]] guest 101, `192.168.1.187`), not inside [[Home Assistant]]. Config and recordings live on the PVE host at `/mnt/data/apps/frigate` and are NFS-exported only to that VM (mounted at `/frigate`, NFS4, `_netdev,nofail`). UniFi DHCP reservation is on **docker** at `.187` — there is no separate client named `frigate`.
+On the `docker` VM ([[ProxMox]] guest 101, `192.168.1.187`), not inside [[Home Assistant]]. Config and recordings live on the PVE host at `/mnt/data/apps/frigate` and are NFS-exported only to that VM (mounted at `/frigate`, NFS4, `_netdev,nofail,x-systemd.automount`). UniFi DHCP reservation is on **docker** at `.187` — there is no separate client named `frigate`.
+
+`restart: unless-stopped` is not enough after a VM reboot. On 2026-09-01 **12:45 EDT** the [[ProxMox]] host reset uncleanly (not a guest `reboot`); `startall` brought docker back, dockerd started Frigate while IPv4 to PVE was still `ENETUNREACH`, `mount.nfs` failed, bind-mount of `/frigate/config` failed (`mkdir: no such device`), and the container stayed **exited** until 2026-09-03. HA's Frigate integration went `setup_retry`, occupancy sensors went unavailable, and **Doorbell Notification** died (`frigate.create_event` missing — that abort also skipped `notify.phones`). Recovery: `docker start frigate` once NFS is mounted, then reload the HA Frigate config entry. To survive the next reboot, `frigate-ensure.service` on the docker VM (`/usr/local/sbin/start-frigate.sh`) retries every 15 s until `/frigate` is a mountpoint and the container is running.
 
 UI: http://192.168.1.187:8971 (not port 5000).
 

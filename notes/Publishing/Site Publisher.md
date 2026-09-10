@@ -113,13 +113,13 @@ Code lives in `site-publisher`. Dialect conversion sits next to `XxxMarkup`; sha
 
 `org.podval.xml` is a standalone library (`org.podval:org.podval.xml`, https://github.com/dubinsky/xml). OpenTorah can depend on it without the site generator. The wholesale replacement of OpenTorah `ElementTo`/`Parser`/`Unparser` is planned in the OpenTorah repo file `xml-codec-plan.md`.
 
-`XmlParser.parseXml` / `parseResource` load a document from a string, URL, file, or classpath resource. XInclude is off unless `xinclude = true`: default parse leaves `xi:include` in the tree (store/collection indexes use `@href` as a page ref). Expansion is implemented here, not via Xerces; `xml:base` on included roots is relative to the initial document (no [XERCESJ-1102](https://issues.apache.org/jira/browse/XERCESJ-1102)).
+`XmlParser.parseXml` / `parseResource` load a document from a string or classpath resource. `xi:include` stays in the tree (store/collection indexes use `@href` as a page ref).
 
-A catalog is a named wrapper whose children are one record type: `codec.decodeCatalog(root, name)` or `XmlParser.parseCatalog(resource, name, codec)` (OpenTorah `wrappedSeq` / `HasName.load` without the key bind). `Selector.xml` loads this way.
+A catalog is a named wrapper whose children are one record type: `codec.decodeCatalog(root, name)` or `XmlParser.loadCatalog(from, codec)` (`Foo` → `Foo.xml` / `<Foo>`). `Selector.xml` loads this way.
 
 ### XML codec
 
-`org.podval.xml.XmlCodec` is a ZIO Schema `Deriver` that binds Scala records to XML *documents*, not JSON-shaped trees. Methods are polymorphic over `XmlAst` (ZIO XML, Scala XML, HTML). YAML in the publisher stays on Schema + YamlFormat. Selector, collection `<part>`, and `entityLists` decode with it.
+`org.podval.xml.XmlCodec` is a ZIO Schema `Deriver` that binds Scala records to XML *documents*, not JSON-shaped trees. Methods are polymorphic over `XmlAst` (ZIO XML, Scala XML, HTML). YAML in the publisher stays on Schema + YamlFormat. Collection `<part>` and `entityLists` decode with it; `org.podval.store.Selector` does too, in the xml library.
 
 `Schema.derived` only copies `Modifier` annotations (`Modifier` is sealed), so binding hints are `@Modifier.config(XmlCodec.Attribute, "")` and friends — not the zio-blocks `@xmlAttribute` that `Schema.derived` ignores.
 
@@ -302,9 +302,10 @@ node as `<l>` — live [rgada/003](https://www.alter-rebbe.org/rgada/003)). Coll
 a collection) add `table.document-header` (Описание / Дата / Кто / Кому / Расшифровка from harvested `teiHeader`;
 `teiHeader` is omitted from the body). Entity `ref`s in titles and table cells go through
 `PageContent.resolveConverted`. Then abstract/body and this store’s `by/@selector` label. Selector labels are
-`Selector.xml` (copied from the old collector; display name prefers Russian: `category` → `разряд`). The parent store’s
+`org.podval.store.Selector` (`Selector.xml` in the xml library; `PageHeader.selectorDisplayName` uses
+the site `_site_config.yml` `lang`, default English: `category` → `разряд` when `lang` is `ru`). The parent store’s
 `by/@selector` labels this node; under a `collection` with no `by`, documents use `document`; if the parent directory
-name is a known selector (`archive/`), that is used (`архив`). Store and entity-lists skip `TeiMarkup.process`. A
+name is a known selector (`archive/`), that is used (`архив` / `archive`). Store and entity-lists skip `TeiMarkup.process`. A
 `store` body’s listing is still `DirectoryPage` (`StoreContent.markupBody` is `None`). A `collection` sets
 `suppressDirectoryListing` and `markupBody` is `CollectionIndex.generate` (`table.collection-index`, same columns as the
 live [rgada](https://www.alter-rebbe.org/rgada) index). Date cells are `date/@when` (calendar tables later). `Страницы`
@@ -326,7 +327,7 @@ not backlinks):
 - `{file}-index.html` — collector `Index.Flat` (`/`): one `<li>` per descendant collection, `pathHeaderHorizontal`
   (`архив РГАДА, разряд VII, опись 2, дело 3140: title`) plus the collection abstract.
 
-Titles: `Selector.xml` title of this store’s `by/@selector` (tree) and of `case` (flat); else the store `<title>`, else
+Titles: xml `Selector.xml` title of this store’s `by/@selector` (tree) and of `case` (flat); else the store `<title>`, else
 the file name. Exactly one root-store tree also occupies the `/collections` prefix in `aliasByPrefix` (Worker /
 `serve()` / `Pages.find`; no Refresh file). `header-pages` and `home` stay site config (`archive-collections`,
 `home: /archive-index.html`).
@@ -335,8 +336,8 @@ the file name. Exactly one root-store tree also occupies the `/collections` pref
 
 Live collector [rgada](https://www.alter-rebbe.org/rgada) is `table.collection-index`, not a `ul.page-list`. Generated
 at render (`CollectionIndex`, same timing as `EntityLists`) so index XML stays empty and table hrefs are not backlinks.
-Columns: Описание, Дата, Кто, Кому, Язык, Документ, Страницы, Расшифровка. Date is `date/@when` (Julian/Gregorian/Jewish
-tables later). Страницы page numbers are `pb` in the text (`#p{n}`, `pageType` manuscript `000`/`000об` or book
+Columns: Описание, Дата, Кто, Кому, Язык, Документ, Страницы, Расшифровка. Date is `date/@when` with a calendar hover
+table (`TeiDate`). Страницы page numbers are `pb` in the text (`#p{n}`, `pageType` manuscript `000`/`000об` or book
 numbers). Footer lists `pb@missing` empty vs non-empty photos. `note place="end"` in abstracts is footnote IR
 (`TeiMarkup.finishFootnotes` on the assembled table / collector header, one id sequence), not inline at the reference.
 
@@ -353,6 +354,24 @@ Site config `home` (absolute path, resolved with `Pages.find` after the tree inc
 `/index.html` with a Refresh `Alias` to that page (`target.path`, so a chunked TOC is not rewritten to `P.html`). A
 synthetic root `DirectoryPage` is dropped from `pages` (not written); an authored `index` plus `home` is
 `PageError.Duplicate`. Does not flatten the chunk tree onto `/`.
+
+### TEI dates
+
+Old Collector `TeiToHtml.dateTooltip` prepended `<span class="tooltip"><table>…</table></span>` as the first child of
+every TEI `<date>` with `@when`, CSS `*:hover > .tooltip`. That is too broad next to footnote/glossary/citation tips, so
+the publisher wraps instead: `span.date-ref` around the `<date>` plus sibling `span.date-tip` (same hover/focus CSS as
+`Tip`, but not inlined under `html.glossary-expand` or print — the table is not a parenthetical gloss).
+
+`@when` parse (ISO `YYYY` / `YYYY-MM` / `YYYY-MM-DD`, and `..` ranges whose right-hand side may be shorter) stays in the
+publisher; `org.opentorah:opentorah-core` only converts days (`Julian` / `Gregorian` / `Jewish`,
+`Day.toLanguageString`). Display language is `Site.languageSpec`. Source calendar is Gregorian unless
+`@calendar="#julian"` or site `tei-default-calendar: julian`. Invalid `@when` is `PageError.InvalidDate`; the element is
+left as authored. No `@when` means no tooltip (bibliography imprint `<date>1994</date>`).
+
+Header/index Дата keeps Collector `forDisplay`: the `<date>` wrapper with `@when` as the visible text, then
+`convertFragment` attaches the tip. Body dates keep authored content. Conversion runs in `TeiMarkup.convertSpecial` so
+`process` (body) and `convertFragment` (chrome) share one path. Transform is parent-first and would wrap twice; the
+inner `<date>` gets `data-calendars` so the second visit is a no-op (`class` would be rewritten to `tei-class`).
 
 ### TEI facsimiles
 
