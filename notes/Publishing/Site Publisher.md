@@ -194,6 +194,16 @@ including Atom `<generator>`. No images, Facebook, or webmaster proofs.
 Page `description` is also the feed `<summary>` and the `/posts` list teaser (`p.post-excerpt`) when set. Not an
 auto-excerpt of the body; site `description` is not a fallback there.
 
+### Analytics
+
+`_site_config.yml` `google-analytics` is emitted only with `--production` (`js.GoogleAnalytics`, gtag). Several sites
+still have Universal Analytics property ids (`UA-…`: dub.podval.org, alter-rebbe.org). UA is retired; gtag with those
+ids is not a real replacement.
+
+Follow-up (all sites, not alter-rebbe-only): replace `UA-…` with GA4 measurement ids, then pass `--production` on
+generate for every published site so gtag actually runs. Do not turn `--production` on until the ids are GA4. Collector
+`window.js` still sends UA; if that helper is reused for named windows, keep analytics out of it.
+
 ### Markup
 
 Supported: [[Markdown]], [[AsciiDoc]], HTML, [[TEI]], [[DocBook]].
@@ -206,7 +216,10 @@ need them — unless we later compute the set of markups actually used.
 Internal (in the markup file) or external (same name, `.yaml` / `.yml`). Both present is an error.
 
 A file is markup if its extension is associated with a dialect (`.md`, `.adoc`, …) or it is `.xml` whose root element is
-associated with a dialect. TODO: front-matter boolean `asset` to declare that a file is *not* markup.
+associated with a dialect. Standalone sidecar `asset: true` (same basename, `.yml` / `.yaml`) reclassifies the markup
+file as an asset at scan (`Pages.forName`): byte copy, no dialect `process`. The sidecar is not published. Internal
+`asset: true` is an error (the file stays markup). A directory `index` so marked stays a `DirectoryPage` (parent/children);
+`write` copies the file (no listing, no chrome).
 
 [[Jekyll]] ignored Markdown without front matter; this publisher does not.
 
@@ -277,8 +290,10 @@ document title from the names). `persName` / `placeName` / `orgName` with a non-
 original name as class (`LinkKind.Entity`). Resolution is `(kind, source file name without extension)` — not the wiki
 title walk, not a path. Duplicate ids of the same kind are `PageError.Duplicate` and do not resolve. Wiki `[[id]]` still
 title-walks to the file name. A bare `@ref` looks like a citeproc key, so `convertCite` skips those `a`s.
-`Page.listTitle` for an entity is the first name element (the `<h1>` stays the file name). Backlinks on the entity page
-are the usual internal-link harvest (`persName@ref` in documents); not collector-style per-collection mentions.
+`Page.title` / `Page.listTitle` for an entity is the first name element (`<h1>` and `<title>`). Backlinks on the entity page
+are the usual internal-link harvest (`persName@ref` in documents), grouped by TEI `collection` (`pathHeaderHorizontal`)
+when the source sits under one; not collector-style mentions (no **Имена:** line, no compact doc-id list). Snippet text
+skips `*-tip` subtrees.
 
 `entityLists` beside a directory (`names.xml` next to `names/`) is `EntityListsContent`, same scan as `store`
 (`/names/index.html`). Each `listPerson` / `listPlace` / `listOrg` (`@n`, optional `@role`, child `title`) is a bucket:
@@ -287,6 +302,14 @@ kind from the element, members are sibling entity files whose `entityKind` and r
 harvests backlinks from the empty index `xml`, so index → entity `<a>`s are display-only. Subpages `/names/{n}.html` are
 synthetic. `DirectoryPage` does not dump `ul.page-list` of every file. A `listPerson` inside a normal `TEI` document is
 not filled.
+
+TODO rework the name/names duality; remove special cases; route using aliases if at all; same for reports.
+
+Collector `/name` is a synthetic all-entities page at `/name.html` (not `/names`). Inbound `/name` and `/name/{id}`
+rewrite (`Pages.find` / Worker); emitted entity hrefs stay `/names/{id}.html` when that is the file. `/report` and
+`/report/{id}` are synthetic apparatus pages. Harvest (not generated indexes): `persName` /
+`placeName` / `orgName` with empty `@ref`; TEI `unclear`; entity file name ≠ spaces-to-underscores of
+the first name. Walks entity files, TEI documents, and store title/abstract/body.
 
 ### Directories and posts
 
@@ -373,6 +396,9 @@ Header/index Дата keeps Collector `forDisplay`: the `<date>` wrapper with `@
 `process` (body) and `convertFragment` (chrome) share one path. Transform is parent-first and would wrap twice; the
 inner `<date>` gets `data-calendars` so the second visit is a no-op (`class` would be rewritten to `tei-class`).
 
+TEI `<gap reason>` uses the same tip family (`span.gap-ref` / `span.gap-tip`) after the Xml2Html pass so `class` is not
+rewritten to `tei-class`. No `@reason` → no wrap.
+
 ### TEI facsimiles
 
 Collector `site.xml` `<tei facsimilesUrl>` is `_site_config.yml` `facsimiles-url`. When it is set, each
@@ -385,8 +411,21 @@ the GCS tree, not `publishedPath`); `pb@facs` wins. Missing `pb`s are omitted fr
 not know the site URL. `PageContent` fills `href` to the viewer fragment and `target="facsimile"` when a viewer exists.
 Collection **Страницы** numbers stay on the transcription `#p{n}`. `{base}-{xx}` translations share the original's
 viewer. Viewer photos link back `target="text"`. Not collector facets, not `/collection/facsimile/P` as the *emitted*
-URL, not a 1060×1586 `resize: both` box (`html.facsimile` + `.facsimile-scroller`). Inbound old `/alias/facsimile/P`
-still resolves (see Collection aliases).
+URL, not a 1060×1586 `resize: both` box. `html.facsimile` fills the window; `.facsimile-scroller` is the inner
+scrollport (`100dvh` under the header; footer hidden). Inbound old `/alias/facsimile/P` still resolves (see Collection
+aliases).
+
+Collector also served `GET /alias/P.xml` as the TEI with `publicationStmt` (site URL, CC BY), `sourceDesc`,
+`langUsage`, and `calendarDesc` filled in. The publisher does not. GitHub is the source; HTML is the publication. Do
+not stamp and serve original TEI until someone asks.
+
+### Named windows
+
+Opt-in `_site_config.yml` `named-windows` (default off). When on, every page sets `window.name` and internal
+links `target` the destination viewer: `hierarchyViewer` (stores, collections, notes, home), `apparatusViewer`
+(entities, entity lists, reports), `textViewer` (collection documents), `facsimileViewer` (`FacsimilePage`).
+Name + scroll restore live in `siteSettings.js` (`data-window-name`); no analytics. Off: no helper attribute, no
+`target` on wiki/header except the existing facsimile/`text` photo links. alter-rebbe.org turns it on.
 
 Posts: `_posts/`, `_drafts/`, Obsidian daily-notes folder (from `.obsidian`). Auto-post vs permalink. Filename
 convention `YYYY-MM-DD-title`. `_posts` is emptied out of the directory listing (`Posts.isDirectoryEmptiedOut`).
