@@ -21,20 +21,18 @@ Idle timings live in `~/.config/omarchy/shell.json` (`idle.screensaver` / `idle.
 
 ## Grok Bot
 
-There is no official Linux desktop app ([docs](https://docs.x.ai/grok-bot/get-started)). This machine runs the unofficial [glorics/grok-bot-linux](https://github.com/glorics/grok-bot-linux) AppImage (Windows payload on Linux Electron). Not in [[dotfiles]] bootstrap; not a pacman/AUR package. Installed 2026-08-27 at **0.28.1** (in-app version 0.28.0). Needs `fuse2`.
+Official Linux desktop AppImage ([docs](https://docs.x.ai/grok-bot/get-started); downloads at [x.ai/bot](https://x.ai/bot)). Not in [[dotfiles]] bootstrap. Needs `fuse2`. Last session 2026-09-16 reported in-app **0.53.0**; on-disk file was `Grok_Bot_0.51.0.AppImage`.
+
+An Omarchy repo package (`grok-bot` 0.29.0, menu **AI → Install → Grok Bot**) was installed 2026-09-14 and removed 2026-09-16: the repo lagged the AppImage. Do not reinstall from that menu until the package version catches up. **AI → Remove → Grok Bot** also deletes `~/.config/Grok Bot`.
 
 | What | Where |
 |---|---|
-| Live binary | `~/Applications/GrokBot-current.AppImage` |
-| Versioned copy | `~/Applications/Grok_Bot_<ver>_x86_64.AppImage` |
-| Command | `grok-bot` (`~/.local/bin/grok-bot`; `--no-sandbox`) |
+| Live binary | `~/Applications/Grok_Bot_<ver>.AppImage` |
+| Integrator | `~/.local/share/grok-bot/appimage` → that file |
+| Command | `grok-bot` (`~/.local/bin/grok-bot`) |
 | Menu | `~/.local/share/applications/grok-bot.desktop` |
+| Profile | `~/.config/Grok Bot` |
 
-`omarchy update` does not touch it. To upgrade: quit the running app, download a newer AppImage from [releases](https://github.com/glorics/grok-bot-linux/releases), check the SHA256 on that page, then:
-
-```shell
-$ git clone --depth 1 --branch vNEW https://github.com/glorics/grok-bot-linux.git
-$ ./grok-bot-linux/scripts/install-linux.sh /path/to/Grok_Bot_NEW_x86_64.AppImage
-```
+Start from the app menu or `grok-bot`. Upgrade in-app: **Settings → Beta → Check for Updates**. `omarchy update` does not touch it.
 
 Not Grok Build (`grok`).
