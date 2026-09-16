@@ -13,10 +13,11 @@ PVE storage: `local` (dir `/var/lib/vz`, ISO/backup) and `local-lvm` (thin pool 
 | 100 | VM | haos | 192.168.1.209 | [[Home Assistant]] OS. `ssh ha`. 4G RAM, 2 cores, 32G disk |
 | 101 | VM | docker | 192.168.1.187 | [[Docker]] / [[DevPod]] / [[Frigate]]. `ssh docker`. 32G RAM, 16 cores (`cpu: host`), 100G disk |
 | 103 | LXC | cloudflare-ddns | 192.168.1.235 | Dynamic DNS (`k39.podval.org`). 3G disk |
-| 104 | LXC | cloudflared | 192.168.1.236 | Cloudflare Tunnel |
 | 105 | LXC | unifi-os-server | 192.168.1.184 | [[UniFi]] OS (controller). **Not** the switch at 192.168.1.101 |
 
-All guests: `onboot: 1`, `vmbr0`, community-script tags. LXC 103/104 unprivileged + nesting. No snapshots when last inventoried.
+LXC **104** (`cloudflared`, `.236`) was destroyed 2026-09-16. Unfinished Zero Trust tunnel; remote SSH if needed is Tailscale, not Cloudflare Tunnel. See [[Domains]].
+
+All guests: `onboot: 1`, `vmbr0`, community-script tags. LXC 103/105 unprivileged + nesting. No snapshots when last inventoried.
 
 On **2026-09-01 12:45 EDT** the host itself came back from an **unclean** stop (no `reboot` in the journal, EFI dirty bit, journal “uncleanly shut down”, guest ext4 recovery). Same kernel as before (`7.0.14-12-pve`). No UPS/NUT/IPMI log, no `qmreboot`. `startall` then started 100/101/103–105. Docker/Frigate fallout: [[Frigate]].
 

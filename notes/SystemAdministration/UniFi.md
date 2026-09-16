@@ -107,5 +107,5 @@ UniFi hardware (2026-08-20):
 | 204 | cube4 |
 | 209 | homeassistant |
 | 235 | cloudflare-ddns |
-| 236 | cloudflared |
+| 236 | *(was cloudflared LXC 104; destroyed 2026-09-16)* |
 | 240 | ratgdo (`podval-2g`) |
