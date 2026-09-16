@@ -1,3 +1,18 @@
+pluginManagement {
+  repositories {
+    mavenCentral()
+    gradlePluginPortal()
+  }
+  // Composite: plugin id + library. Override with -PsitePublisherDir=.
+  // Missing directory (CI): resolve both from Maven Central.
+  final File publisherDir = file(
+    providers.gradleProperty('sitePublisherDir').getOrElse('../site-publisher')
+  )
+  if (publisherDir.isDirectory() && new File(publisherDir, 'settings.gradle').isFile()) {
+    includeBuild(publisherDir)
+  }
+}
+
 plugins {
   // Auto-provision JDKs for the Java toolchain (e.g. 25 when only 21 is installed).
   id 'org.gradle.toolchains.foojay-resolver-convention' version '1.0.0'
@@ -9,14 +24,4 @@ dependencyResolutionManagement {
   repositories {
     mavenCentral()
   }
-}
-
-// Composite: substitute org.podval.tools:org.podval.tools.publisher from a local
-// checkout. Override with -PsitePublisherDir=. If the directory is missing,
-// Gradle resolves the artifact from Maven Central (CI).
-final File publisherDir = file(
-  providers.gradleProperty('sitePublisherDir').getOrElse('../site-publisher')
-)
-if (publisherDir.isDirectory() && new File(publisherDir, 'settings.gradle').isFile()) {
-  includeBuild(publisherDir)
 }

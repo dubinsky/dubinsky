@@ -111,6 +111,38 @@ Code lives in `site-publisher`. Dialect conversion sits next to `XxxMarkup`; sha
 `PagedList`, `CollectionIndex`, `EntityLists.generate`). The page graph and link/asset lookup sit in `site/`
 (`Pages.resolve`, `Pages.resolveAsset`, `BackLink` / `BackLinks`). There is no `feature/` package.
 
+### Gradle plugin
+
+The SSG stays plugin-free. Sites already have Gradle; the wrapper that used to be copied (`sitePublisher`
+configuration + `JavaExec`) lives in plugin id `org.podval.tools.site-publisher` (`plugin/` in this repo). It runs
+`Site.main` the way `org.podval.tools.scalajs` wraps Scala.js.
+
+The plugin JAR is Java and must not `implementation`-depend on the publisher: Scala 3, Playwright, and AsciidoctorJ
+stay off the Gradle daemon. The plugin only creates a `sitePublisher` configuration on the **consumer** and puts the
+library coordinate there. `generateSite` / `serveSite` are `JavaExec` (Java 25, native-access flags, Playwright env).
+`generateSite` is not a dependency of `build`. Its declared output is the target directory; inputs are the source tree
+minus that directory and Gradle `build/` — up-to-date can skip a run; the tool itself is not incremental.
+
+**Layout.** The library is the Gradle **root** project (`rootProject.name` = `org.podval.tools.publisher`, group
+`org.podval.tools`). The plugin is the only subproject (`plugin/`, artifact `org.podval.tools:site-publisher-plugin`).
+One `pluginManagement { includeBuild }` of the repo supplies both the plugin id and library substitution. Do not
+`mavenLocal()` to dogfood.
+
+Gradle’s usual multi-project shape is an empty root and two children. That **can** keep the Maven coordinate: artifact
+id is `project.name` of the project that publishes `components.java`, not a privilege of being the root. A child named
+`org.podval.tools.publisher` still publishes `org.podval.tools:org.podval.tools.publisher`. Composite task paths use the
+directory name (`:site-publisher:…`), not the artifact id.
+
+We did not do that yet: this repository *was* a single-project library, and isolation already holds with the library at
+the root. TODO: re-evaluate moving to an empty root with library and plugin as sibling subprojects (source files can
+move; keep Maven artifact id `org.podval.tools.publisher` as the library child’s `project.name`). Remaining work is
+`./gradlew run` (root forwarding or `:publisher:run`), IntelliJ content roots, and in-repo paths.
+
+The plugin is Java, not Scala: a Scala plugin would still load a Scala runtime into the daemon for a thin wrapper, and
+sharing `SiteOptions` from the library would pull Playwright with it.
+
+How to apply the plugin, `site { }` flags, library version override, and CI: README **Gradle plugin**.
+
 `org.podval.xml` is a standalone library (`org.podval:org.podval.xml`, https://github.com/dubinsky/xml). OpenTorah can depend on it without the site generator. The wholesale replacement of OpenTorah `ElementTo`/`Parser`/`Unparser` is planned in the OpenTorah repo file `xml-codec-plan.md`.
 
 `XmlParser.parseXml` / `parseResource` load a document from a string or classpath resource. `xi:include` stays in the tree (store/collection indexes use `@href` as a page ref).

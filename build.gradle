@@ -2,6 +2,7 @@ plugins {
   id 'io.github.ben-manes.versions' version '0.61.0'
   id 'scala'
   id 'application'
+  id 'org.podval.tools.site-publisher' version '0.2.0'
 }
 
 description = 'Financial Calculations'
@@ -28,17 +29,12 @@ tasks.withType(ScalaCompile).configureEach {
   }
 }
 
-configurations {
-  sitePublisher
+site {
+  treatErrorsAsWarnings = true
 }
 
-dependencies {
-  sitePublisher "org.podval.tools:org.podval.tools.publisher:${providers.gradleProperty('sitePublisherVersion').get()}"
-}
-
-// JDK 22+ compatibility flags for transitive / ecosystem native & Unsafe use:
-// - AsciidoctorJ → JRuby → jffi calls System.load (restricted native access)
-// - scala.runtime.LazyVals$ (old lazy-val bytecode on the classpath) uses sun.misc.Unsafe
+// JDK 22+ compatibility flags for the finance `run` task (not site-publisher):
+// scala.runtime.LazyVals$ (old lazy-val bytecode on the classpath) uses sun.misc.Unsafe
 ext.jdkCompatJvmArgs = [
   '--enable-native-access=ALL-UNNAMED',
   '--sun-misc-unsafe-memory-access=allow',
@@ -46,35 +42,6 @@ ext.jdkCompatJvmArgs = [
 
 tasks.withType(JavaExec).configureEach {
   jvmArgs jdkCompatJvmArgs
-}
-
-def siteArgs(boolean serve) {
-  def args = [
-    layout.projectDirectory.asFile.absolutePath,
-    '--treat-errors-as-warnings',
-  ]
-  if (serve) args.add('--serve')
-  args
-}
-
-tasks.register('generateSite', JavaExec) {
-  group = 'documentation'
-  description = 'Generate the static site into _site'
-  classpath = configurations.sitePublisher
-  mainClass = 'org.podval.tools.publish.site.Site'
-  args = siteArgs(false)
-  environment 'PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS', '1'
-  environment 'PLAYWRIGHT_BROWSERS_PATH', "${gradle.gradleUserHomeDir}/ms-playwright"
-}
-
-tasks.register('serveSite', JavaExec) {
-  group = 'documentation'
-  description = 'Generate the static site and serve it locally'
-  classpath = configurations.sitePublisher
-  mainClass = 'org.podval.tools.publish.site.Site'
-  args = siteArgs(true)
-  environment 'PLAYWRIGHT_SKIP_VALIDATE_HOST_REQUIREMENTS', '1'
-  environment 'PLAYWRIGHT_BROWSERS_PATH', "${gradle.gradleUserHomeDir}/ms-playwright"
 }
 
 def isNonStable = { String version ->

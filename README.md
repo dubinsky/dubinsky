@@ -18,9 +18,10 @@
 ./gradlew serveSite
 ```
 
-`generateSite` writes `_site` (GitHub Pages). A local site-publisher checkout at
-`../site-publisher` is used when present (`-PsitePublisherDir=`); CI resolves
-`org.podval.tools:org.podval.tools.publisher` from Maven Central. Finance code
+`generateSite` writes `_site` (GitHub Pages). Plugin id `org.podval.tools.site-publisher`.
+A local site-publisher checkout at `../site-publisher` is used when present
+(`pluginManagement { includeBuild }`, `-PsitePublisherDir=`); CI resolves the plugin
+and `org.podval.tools:org.podval.tools.publisher` from Maven Central. Finance code
 is `./gradlew run` (`org.podval.finance.Main`).
 
 ## Open Source Work ##
