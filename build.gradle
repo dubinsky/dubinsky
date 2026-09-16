@@ -1,7 +1,7 @@
 plugins {
-  id 'io.github.ben-manes.versions' version '0.61.0'
   id 'scala'
   id 'application'
+  id 'org.podval.conventions'
   id 'org.podval.tools.site-publisher' version '0.2.0'
 }
 
@@ -9,25 +9,8 @@ description = 'Financial Calculations'
 
 application.mainClass = 'org.podval.finance.Main'
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(25)
-
-scala.scalaVersion = providers.gradleProperty('scalaVersion').get()
-
 // There is no Java in the project :)
 project.gradle.startParameter.excludedTaskNames.add('compileJava')
-
-tasks.withType(ScalaCompile).configureEach {
-  scalaCompileOptions.with {
-    additionalParameters = [
-      // Scala 3.9 requires JDK 17+; emit 25 to match the Java toolchain.
-      '-release:25',
-      '-new-syntax',
-      '-feature',
-      '-language:strictEquality',
-      '-source:future'
-    ]
-  }
-}
 
 site {
   treatErrorsAsWarnings = true
@@ -44,20 +27,4 @@ tasks.withType(JavaExec).configureEach {
   jvmArgs jdkCompatJvmArgs
 }
 
-def isNonStable = { String version ->
-  boolean stableKeyword = ['RELEASE', 'FINAL', 'GA'].any { it -> version.toUpperCase().contains(it) }
-  String regex = /^[0-9,.v-]+(-r)?$/
-  return !stableKeyword && !(version ==~ regex)
-}
 
-// Maven has zio-blocks-schema_3:0.017 (a padded 0.0.17), which both Maven and Gradle
-// rank above 0.0.x because the second component is 17.
-def hasPaddedNumericComponent = { String version ->
-  version.tokenize('.-').any { it.length() > 1 && it ==~ /0\d+/ }
-}
-
-tasks.named("dependencyUpdates").configure {
-  rejectVersionIf {
-    isNonStable(it.candidate.version) || hasPaddedNumericComponent(it.candidate.version)
-  }
-}
