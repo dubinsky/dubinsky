@@ -11,7 +11,7 @@
 [![](https://img.shields.io/badge/Deploy-Docker-informational?logo=Docker)](https://www.docker.com/)
 [![](https://img.shields.io/badge/Cloud-GCP-informational?logo=google-cloud)](https://cloud.google.com/)
 [![](https://img.shields.io/badge/OS-Linux-informational?logo=linux)](https://www.linux.org/)
-[![](https://img.shields.io/badge/OS-Omarchy-informational?logo=omarchy)](https://getfedora.org/)
+[![](https://img.shields.io/badge/OS-Omarchy-informational?logo=omarchy)](https://omarchy.org/)
 
 ```
 ./gradlew generateSite
