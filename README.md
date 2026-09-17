@@ -13,28 +13,14 @@
 [![](https://img.shields.io/badge/OS-Linux-informational?logo=linux)](https://www.linux.org/)
 [![](https://img.shields.io/badge/OS-Omarchy-informational?logo=omarchy)](https://omarchy.org/)
 
-```
-./gradlew generateSite
-./gradlew serveSite
-```
-
-`generateSite` writes `_site` (GitHub Pages). Plugin id `org.podval.tools.site-publisher`.
-A local site-publisher checkout at `../site-publisher` is used when present
-(`pluginManagement { includeBuild }` plus settings-body `includeBuild`, `-PsitePublisherDir=`);
-CI resolves the plugin and `org.podval.tools:org.podval.tools.publisher` from Maven Central. Finance code
-is `./gradlew run` (`org.podval.finance.Main`).
-
-## Open Source Work ##
+## Open Source Work
 
 - [multi-backend Scala Gradle plugin](https://github.com/dubinsky/scalajs-gradle)
 - [parsing XML with ZIO and pretty-printing it with Paiges](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/xml)
-- [TEI](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/tei)
-  [site generation](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/site) and
-  [publishing of document collections](https://github.com/opentorah/opentorah/tree/master/collector)
+- [site publisher](https://github.com/dubinsky/site-publisher) with support for Markdown, AsciiDoc, DocBook, TEI collections
 - [Jewish calendrical calculations](https://github.com/opentorah/opentorah/tree/master/core/src/main/scala/org/opentorah/calendar)
 - [learning schedules](https://github.com/opentorah/opentorah/tree/master/texts/src/main/scala/org/opentorah/schedule) for
   [various Jewish texts](https://github.com/opentorah/opentorah/tree/master/texts/src/main/scala/org/opentorah/texts)
-- [Google Cloud Run Gradle plugin](https://github.com/dubinsky/cloud-run)
 - [photo archive management](https://github.com/dubinsky/gphoto-sync)
 
 Archived:
@@ -42,8 +28,10 @@ Archived:
 - [photo metadata extraction](https://github.com/dubinsky/podval-imageio) and
   [archive synchronization](https://github.com/dubinsky/podval-photo-sync)
 - [where is this code running?](https://github.com/dubinsky/podval-run)
+- [Google Cloud Run Gradle plugin](https://github.com/dubinsky/cloud-run)
 
-## Small Open Source Contributions ##
+
+## Small Open Source Contributions
 
 - [Scala](https://github.com/scala/bug/):
   [11963](https://github.com/scala/bug/issues/11963).
@@ -266,8 +254,21 @@ Archived:
 - [toml-scala](https://github.com/indoorvivants/toml-scala):
   [10](https://github.com/indoorvivants/toml-scala/issues/10).
 
-## Proofreading ##
+## Proofreading
 
 Some of the corrections I suggested were accepted by the author of the (excellent!) book
 ["Program = Proof"](https://www.lix.polytechnique.fr/Labo/Samuel.Mimram/teaching/INF551/course.pdf),
 Samuel Mimram.
+
+## Site
+
+```
+./gradlew generateSite
+./gradlew serveSite
+```
+
+`generateSite` writes `_site` (GitHub Pages). Plugin id `org.podval.tools.site-publisher`.
+A local site-publisher checkout at `../site-publisher` is used when present
+(`pluginManagement { includeBuild }` plus settings-body `includeBuild`, `-PsitePublisherDir=`);
+CI resolves the plugin and `org.podval.tools:org.podval.tools.publisher` from Maven Central. Finance code
+is `./gradlew run` (`org.podval.finance.Main`).
