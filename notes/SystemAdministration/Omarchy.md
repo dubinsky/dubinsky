@@ -13,6 +13,14 @@ My notes on dotfiles in general and tweaks specific to [[Omarchy]] are in [[dotf
 
 A critique: [A Word on Omarchy](https://xn--gckvb8fzb.com/a-word-on-omarchy/?s=03).
 
+## Patron
+
+Class 256 (Mountain Hairpin) since 2026-09-03.
+
+<p>
+<a href="https://omarchy.org/"><img alt="Omarchy Class 256 Patron" width="300" height="300" src="https://omarchy.org/assets/images/badges/256/preview.webp"/></a>
+</p>
+
 ## Screensaver
 
 Idle timings live in `~/.config/omarchy/shell.json` (`idle.screensaver` / `idle.lock`, seconds from idle). On this machine: 10 minutes then 15 minutes lock.

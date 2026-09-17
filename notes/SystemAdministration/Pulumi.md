@@ -1,5 +1,5 @@
 ---
-title: 'Bootstrapping Terraform or Pulumi for Google Organization'
+post-title: bootstrapping-terraform-google-organization
 tags: [pulumi, terraform, gcp]
 post: true
 date: '2023-07-07'

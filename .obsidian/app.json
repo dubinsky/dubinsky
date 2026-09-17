@@ -7,10 +7,9 @@
   "newFileLocation": "folder",
   "newFileFolderPath": "notes",
   "userIgnoreFilters": [
-    "_includes/",
-    "_layouts/",
-    "_sass/",
     "_site/",
-    "assets/"
+    "build/",
+    "gradle/",
+    "src/"
   ]
 }
