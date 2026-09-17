@@ -123,20 +123,15 @@ library coordinate there. `generateSite` / `serveSite` are `JavaExec` (Java 25, 
 `generateSite` is not a dependency of `build`. Its declared output is the target directory; inputs are the source tree
 minus that directory and Gradle `build/` — up-to-date can skip a run; the tool itself is not incremental.
 
-**Layout.** The library is the Gradle **root** project (`rootProject.name` = `org.podval.tools.publisher`, group
-`org.podval.tools`). The plugin is the only subproject (`plugin/`, artifact `org.podval.tools:site-publisher-plugin`).
-One `pluginManagement { includeBuild }` of the repo supplies both the plugin id and library substitution. Do not
-`mavenLocal()` to dogfood.
-
-Gradle’s usual multi-project shape is an empty root and two children. That **can** keep the Maven coordinate: artifact
-id is `project.name` of the project that publishes `components.java`, not a privilege of being the root. A child named
-`org.podval.tools.publisher` still publishes `org.podval.tools:org.podval.tools.publisher`. Composite task paths use the
-directory name (`:site-publisher:…`), not the artifact id.
-
-We did not do that yet: this repository *was* a single-project library, and isolation already holds with the library at
-the root. TODO: re-evaluate moving to an empty root with library and plugin as sibling subprojects (source files can
-move; keep Maven artifact id `org.podval.tools.publisher` as the library child’s `project.name`). Remaining work is
-`./gradlew run` (root forwarding or `:publisher:run`), IntelliJ content roots, and in-repo paths.
+**Layout.** Empty Gradle root (`rootProject.name` = `site-publisher`). Library child `publisher/`
+(`project.name` = `org.podval.tools.publisher`, group `org.podval.tools`). Plugin child `plugin/`
+(artifact `org.podval.tools:site-publisher-plugin`). Artifact id is `project.name` of the project that publishes
+`components.java`, not a privilege of being the root. After the name remap, task paths are
+`:org.podval.tools.publisher:…` and `:site-publisher-plugin:…` (not the directory names). One
+`pluginManagement { includeBuild }` of the repo supplies the plugin id (pass a String path).
+A second `includeBuild` of the same directory in the settings body substitutes the library child.
+`pluginManagement` alone does not substitute `org.podval.tools:org.podval.tools.publisher` now that
+that module is not the included-build root. Do not `mavenLocal()` to dogfood.
 
 The plugin is Java, not Scala: a Scala plugin would still load a Scala runtime into the daemon for a thin wrapper, and
 sharing `SiteOptions` from the library would pull Playwright with it.

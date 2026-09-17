@@ -9,8 +9,8 @@ pluginManagement {
   if (file(conventionsDir).isDirectory() && file("${conventionsDir}/settings.gradle").isFile()) {
     includeBuild conventionsDir
   }
-  // Composite: plugin id + library. Override with -PsitePublisherDir=.
-  // Missing directory (CI): resolve both from Maven Central.
+  // Composite: plugin id. Library substitution is the settings-body includeBuild below.
+  // Override with -PsitePublisherDir=. Missing directory (CI): resolve both from Maven Central.
   final String publisherDir =
     providers.gradleProperty('sitePublisherDir').getOrElse('../site-publisher')
   if (file(publisherDir).isDirectory() && file("${publisherDir}/settings.gradle").isFile()) {
@@ -23,3 +23,12 @@ plugins {
 }
 
 rootProject.name = 'dub.podval.org'
+
+// Composite: substitute org.podval.tools:org.podval.tools.publisher (library child).
+// Same directory as pluginManagement includeBuild; required now that the library is not the root.
+final File publisherLibDir = file(
+  providers.gradleProperty('sitePublisherDir').getOrElse('../site-publisher')
+)
+if (publisherLibDir.isDirectory() && new File(publisherLibDir, 'settings.gradle').isFile()) {
+  includeBuild(publisherLibDir)
+}
