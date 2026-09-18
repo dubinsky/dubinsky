@@ -366,6 +366,9 @@ Putting `/assets/css/graph.css` on `Cytoscape` would request
 `https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.34.2/assets/css/graph.css` (404).
 Companion `GraphCss` is a `JSLibrary` with `cdn = ""` and that local path, listed in `extraLibraries` next to Cytoscape.
 Cytoscape itself is ESM from cdnjs (jsDelivr fallback), Mermaid-style `inlineJs` import, empty `imports`.
+The init script is `/assets/js/graph.js` (copied like CSS), not inlined: HTML serialization XML-escapes `<` and `&` in
+`<script>` (`a < b` became `a &lt; b`, `&&` became `&amp;&amp;`), which is a syntax error and left an empty canvas.
+Pretty-print also wraps lines, so `//` comments in inline JS would comment out the rest of the line.
 
 **Local neighborhood (not v1).**
 Quartz / ole.dev / Obsidian Publish keep a **local** graph (this page plus N hops) as the daily tool; global is the
