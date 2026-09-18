@@ -125,6 +125,7 @@ I also added [HACS - Home Assistant Community Store](https://www.hacs.xyz/).
 Integrations I use:
 - ESPHome
 - MQTT
+- Opower (Eversource electric — see below)
 - Viessmann ViCare
 - Z-wave
 - Zigbee Home Automation
@@ -144,6 +145,25 @@ To bring my new a Viessmann's [Vitodens 100-W](https://www.viessmann-us.com/en/p
 A few month later I noticed that there are things that I can do using the ViCare application that I can't do in Home Assistant. I filed a [bug](https://github.com/home-assistant/core/issues/126447) - and it got fixed (thank you, [@CFenner](https://github.com/CFenner)!). Now I can switch from ViCare to Home Assistant completely :)
 
 On July 10, 2025 I got a message from Viessmann about a Domain Change for the Viessmann API https://​api.​viessmann.​com to https://​api.​viessmann-climatesolutions.​com; not clear at this point what, if anything, I need to do about this...
+
+## Electric meter (Eversource)
+
+Eversource replaced the analog meter at 39 Keefe Ave (account ending 4092) with an Itron Gen5 Riva AMI meter in September 2026. It reports 15-minute usage to Eversource over their private 900 MHz mesh — not house Wi‑Fi, not Zigbee, not rtl_433. Customer-facing data is the same Opower portal that sends the weekly usage emails (`eversource@email.opower.com`).
+
+Home Assistant pulls that feed with the built-in [Opower](https://www.home-assistant.io/integrations/opower/) integration (utility **Eversource**, same login as eversource.com). Config entry title `Eversource (dubinsky)`, loaded. The device is **Eversource electric** (Opower still stores an internal account id in the entity ids; that is expected and is not the billing number).
+
+Do **not** enroll Eversource MFA until the Opower integration supports it. Login currently offers a skippable “set up MFA, it will become mandatory later” screen; skip it. Once MFA is required, this integration will fail until Core grows an Eversource challenge.
+
+Usage in HA is **statistics**, ~48 hours behind, not live watts. Energy dashboard grid consumption / cost:
+
+- `opower:ever_elec_*_energy_consumption`
+- `opower:ever_elec_*_energy_cost`
+
+Return/compensation statistics exist but stay at 0 (no solar). Current-bill sensors (`sensor.elec_account_*_current_bill_*`) can read 0 at the start of a billing period; use the Opower statistics for the Energy dashboard, not those sensors. Typical-monthly sensors are populated (about 1054 kWh / $390 as of the first pull).
+
+The Energy panel is in the sidebar (it had been hidden). Today/yesterday on that dashboard will often be empty; look back two days.
+
+Gas is **National Grid**, a different login. There is no Opower gas statistic yet. Do not point Energy at the ViCare `*_gas_consumption_today` sensors — those reset every day.
 
 ## Garage Door Opener
 When I replaced my garage door openers in 2015, I wanted to be able to open the doors with my phone - just for fun! But it turned out that I needed some WiFi accessory that wasn't compatible with my model of the opener or some such...
@@ -252,7 +272,7 @@ I added my SSH public key to Home Assistant's Terminal/SSH add-on ("app"). Grok 
 
 ## Current setup (2026-08)
 
-Core **2026.9.0** on qemux86-64 (HAOS 18.2, [[ProxMox]] VM 100). Hostnames: `homeassistant.local`, `homeassistant.lan.podval.org` (`192.168.1.209`). **Not** 192.168.1.101 (that's the UniFi switch). Core HTTP is `:8123` with `ssl: false`. Doorbell talk/mic needs a secure context; today that means Nabu Casa. `/config` is a symlink to `/homeassistant`.
+Core **2026.9.2** on qemux86-64 (HAOS 18.2, [[ProxMox]] VM 100). Hostnames: `homeassistant.local`, `homeassistant.lan.podval.org` (`192.168.1.209`). **Not** 192.168.1.101 (that's the UniFi switch). Core HTTP is `:8123` with `ssl: false`. Doorbell talk/mic needs a secure context; today that means Nabu Casa. `/config` is a symlink to `/homeassistant`.
 
 `configuration.yaml` is stock: `default_config` plus includes for automations/scripts/scenes, plus a YAML notify action group `notify.phones` (Pixel 10 / Pixel 8 / Pixel 8 Remote). No `packages/`, no `/config/esphome/`. Scripts file is empty. Logic is YAML automations. Node-RED is installed but stopped (`boot: manual`, empty flow) — check it is still empty before adding YAML that might duplicate a future flow.
 
@@ -285,6 +305,7 @@ Prefer the entity the UI/voice uses. Example: `fan.master_bathroom_fan` is `swit
 - Garden: `valve.back_garden_water`, `switch.sonoff_swv`
 - Climate: `climate.t6_pro_z_wave_programmable_thermostat`
 - Boiler: `sensor.e3_vitodens_100_na_0521_*`
+- Eversource electric (Opower): device **Eversource electric**; Energy uses statistics `opower:ever_elec_*_energy_consumption` / `_energy_cost` (not the `sensor.elec_account_*_current_bill_*` sensors). No National Grid gas in HA yet.
 - Doorbell button/chime (Reolink): `binary_sensor.front_door_visitor`, `number.reolink_chime_*`. Video/person ([[Frigate]]): `camera.doorbell`, `binary_sensor.doorbell_person_occupancy`. Disable `camera.front_door_fluent`.
 - Phones: `device_tracker.pixel_10`, `notify.phones` (group). Singles: `notify.mobile_app_pixel_10` / `notify.pixel_10` (and Pixel 8 / Pixel 8 Remote).
 - Speakers / Cast: **Entryway speaker** `media_player.entryway_speaker` (Nest Mini, Google Home name *Entryway speaker*, `.117` on `podval-u`, area Entranceway). Google Cast hub is already configured (zeroconf + known host `.117`). Also on Cast: Family Room TV (`media_player.family_room_tv_3`; androidtv_remote is `media_player.family_room_tv`). Master Bedroom Nest Audio `media_player.bedroom_speaker` is currently unavailable. The Mini is a Google Assistant device — Cast gives HA a `media_player` (TTS / play media), not a Home Assistant voice satellite.
