@@ -107,9 +107,10 @@ Opinionated, because I am writing this for myself:
 The layout is Minima-inspired CSS and HTML, not a Jekyll theme engine.
 
 Code lives in `site-publisher`. Dialect conversion sits next to `XxxMarkup`; shared IR sits in `markup/` (`Citation`,
-`Bibliography`, `Footnote`, `Glossary`, `Section`, …). Page chrome and generated indexes sit in `page/` (`PageHeader`,
-`PagedList`, `CollectionIndex`, `EntityLists.generate`). The page graph and link/asset lookup sit in `site/`
-(`Pages.resolve`, `Pages.resolveAsset`, `BackLink` / `BackLinks`). There is no `feature/` package.
+`Bibliography`, `Footnote`, `Glossary`, `Section`, `Transclusion`, …). Page chrome and generated indexes sit in `page/`
+(`PageHeader`, `PagedList`, `CollectionIndex`, `EntityLists.generate`). The page graph and link/asset lookup sit in
+`site/` (`Pages.resolve`, `Pages.resolveAsset`, `BackLink` / `BackLinks`, `TransclusionEdge`). There is no `feature/`
+package.
 
 ### Gradle plugin
 
@@ -188,11 +189,13 @@ Per document:
 4. HTML-shaped leftovers → IR in `HtmlIr.normalize` (`Aside`, `Quote`, `Strike`, `Figure`, `PdfEmbed`, `Video`).
    `HtmlMarkup.process` is title + nest sections + that pass; Markdown and AsciiDoc finish there. TEI and DocBook do
    not: leftovers are still native names until their converters run.
-5. Authored `PageContent.prepareAuthored`: sections/ids, internal-link marks, wiki embed (images, audio, video, PDF),
-   footnote harvest
-6. `Content.markupBody`: store is `None` (directory listing); entity lists generated at render; authored selects XML,
-   appends footnotes, resolves citations/links/tooltips, injects TOC
-7. Minima-inspired HTML → write (`textContent` or copy assets)
+5. Authored `PageContent.prepareAuthored`: sections/ids, internal-link marks, wiki embed (images, audio, video, PDF
+   only), footnote harvest
+6. `Site.load` gathers backlinks (skips `a.transclude`) and `TransclusionEdge`s (silent)
+7. `Content.markupBody`: store is `None` (directory listing); entity lists generated at render; authored selects XML,
+   `Transclusion.expand`, appends footnotes (host + copies), resolves citations/links/tooltips, injects TOC.
+   `resolveLinks` does not walk `aside.transclusion` or leftover transclude stubs.
+8. Minima-inspired HTML → write (`textContent` or copy assets)
 
 `.xml` files are disambiguated by root element (`TEI`, DocBook `article` / `book` / …).
 
@@ -200,7 +203,7 @@ Per document:
 
 `PageHeader` composes the HTML header from ancestor stores plus pieces on `Content` (store chrome, `documentHeader`
 table). Collector chrome is a path property (this page is a store, or an ancestor is), not only this page’s type:
-markdown under a collection still gets `header.store-header`. `Site.load` walks `Content.xml` for backlinks; indexes use
+markdown under a collection still gets `header.store-header`. `Site.load` walks `Content.xml` for backlinks (not transclude stubs) and transclusion edges; indexes use
 an empty root so generated listing hrefs are display-only.
 
 `StoreContent.bind` takes scanned pages, resolves `xi:include/@href`, sets directory children, and reports `NotInStore`
@@ -235,8 +238,9 @@ generate for every published site so gtag actually runs. Do not turn `--producti
 
 Supported: [[Markdown]], [[AsciiDoc]], HTML, [[TEI]], [[DocBook]].
 
-Cross-markup transclusion means stylesheets (and MathJax etc.) are included even when a page’s source dialect would not
-need them — unless we later compute the set of markups actually used.
+Site CSS (including `tei.css`) and MathJax ship on every HTML page so a transcluded fragment still has its dialect’s
+look and math. We might later load less by calculating which dialects are actually present on the page. See
+[[#Transclusion]].
 
 ### Front matter
 
@@ -268,6 +272,43 @@ all digits, so ids like `255.2` stay one segment and `/dubnov/255.2` can prefix-
 the end of a paragraph, or a following line after a list/table/quote/code fence) become `id` plus `class="wiki-block"`
 on that element; `[[note#^id]]` resolves through `WikiBlocks`. Open questions about Obsidian wiki links: case
 sensitivity, file name vs title vs document title, ambiguous names, line wrapping, agglutination.
+
+### Transclusion
+
+Page embed, not media. `MarkdownWikiLink` turns `![[…]]` into `a.wiki-link.transclude`. `WikiLink.embed` still consumes
+image / audio / video / PDF at `prepareAuthored`; remaining stubs are page transclusions. Expand is IR, so a hand-written
+HTML stub of that shape also embeds. AsciiDoc `include::` is Asciidoctor source include at convert time; store
+`xi:include/@href` is a child page ref (never XInclude). Neither is this.
+
+**Target** is `AuthoredContent` after unwrap (`link.page.real`; `ChunkedMarkupPage.markupPage`; directory index body
+only). Not stores, entity-list catalogs, assets, PDF/facsimile/synthetics. `Pages.resolve` on a chunk has `content =
+None`, so `Link.fragment` is always empty: fail-closed `#` re-resolves on the owning `PageContent` after unwrap. Extra
+`#` wins (`/P/Alpha.html#One` is `One`, not `Alpha`). Missing `#` is `UnresolvedTransclusion` (frozen stub, author text
+kept), never a silent whole-page copy — that would look like a correct titled embed and `T = Whole` can false-cycle.
+
+**Region** (`markup/Transclusion.scala`): `Whole` | `Preamble` | `Section(id)` | `Block(id)`. From-region is never
+Whole (preamble includes trailing nodes after the last top-level section). Cycle is non-termination on a **region
+stack**, not page topo-sort: `wouldReenter` iff same page and `T == S` or `T` contains `S` (irreflexive `contains`).
+`S = hostOf(anchor)` on the **full** authored tree. Unchunked initial stack is empty; a section chunk starts with that
+section. Child→parent is a loop stub (no outer aside body). A#X → B#Y → A#Z is not a cycle when Z does not contain X.
+Depth cap is 32 **hops** (`TransclusionLoop`).
+
+**Expand** after `toc.select` + `selectedXml` (chunks only copy what they show). Cache is pre-nested source XML only.
+Nested hops return wrapped; prefix/hash-rewrite the **direct** copy (skip inner `aside.transclusion`); **then** wrap this
+hop. Do not mutate authored XML; TOC stays authored. Prefix `transclusion-{n}-` on ids / `xml:id` / `aria-describedby` /
+`aria-labelledby`; in-copy hashes use the live direct tree; permalinks and interpage hrefs in the copy point at the
+**source** published URL + original id. `a.pb` → `facsimilePage(source).publishedPath` + original id. Citeproc stubs in
+the copy use the **host** `.bib`; `Citation.isPlaceholder` is stripped. Footnotes: prefix correlation ids, merge source
+bodies, re-number in host document order. Host `resolveLinks` skips `aside.transclusion` and leftover `a.transclude`.
+
+**Chrome** is always boxed HTML (`aside.transclusion`, header is one clickable source title, no extra icon). Default look
+is the box (left accent border). Settings **Seamless transclusions** (`data-setting="transclusion-clean"`, same
+`localStorage` / `<html>` class as glossary-expand) hides header and border. Print follows the class; Playwright PDFs
+have empty `localStorage` → boxed. `p > aside` is invalid: child-first walk, replace or split the paragraph.
+
+**Backlinks:** do not harvest transclude stubs (`BackLink.apply` returns `None`). Reverse discovery is **Embedded in**
+from resolved `TransclusionEdge`s on the unwrapped owning `FullMarkupPage` (skip chunks/aliases/synthetics; dedup
+`fromPage`; page ref, no `![[…]]` snippet).
 
 ### Collection aliases (static hosting)
 
