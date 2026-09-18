@@ -172,7 +172,7 @@ This replaces zio-blocks `XmlFormat` for document types and is meant to replace 
 ### Pipeline
 
 `Site` coordinates. `Pages` scans the source tree and builds the page graph, including synthetic pages (`/posts`,
-`/tags`, `/errors`, `sitemap.xml`, …).
+`/tags`, `/errors`, `sitemap.xml`, `/graph.html` when `graph.enabled`, …).
 
 Per document:
 
@@ -195,7 +195,9 @@ Per document:
 7. `Content.markupBody`: store is `None` (directory listing); entity lists generated at render; authored selects XML,
    `Transclusion.expand`, appends footnotes (host + copies), resolves citations/links/tooltips, injects TOC.
    `resolveLinks` does not walk `aside.transclusion` or leftover transclude stubs.
-8. Minima-inspired HTML → write (`textContent` or copy assets)
+8. Minima-inspired HTML → write (`textContent` or copy assets).
+   `GraphJson` (if enabled) is a `SyntheticAsset` in that loop; its body is built from the harvest in step 6, not a
+   second XML walk.
 
 `.xml` files are disambiguated by root element (`TEI`, DocBook `article` / `book` / …).
 
@@ -309,6 +311,72 @@ have empty `localStorage` → boxed. `p > aside` is invalid: child-first walk, r
 **Backlinks:** do not harvest transclude stubs (`BackLink.apply` returns `None`). Reverse discovery is **Embedded in**
 from resolved `TransclusionEdge`s on the unwrapped owning `FullMarkupPage` (skip chunks/aliases/synthetics; dedup
 `fromPage`; page ref, no `![[…]]` snippet).
+
+### Graph
+
+Opt-in `_site_config.yml` `graph.enabled` (default off).
+When on, `Pages.load` adds `GraphPage` (`/graph.html`) and `GraphJson` (`/graph.json`) with the other automatic pages,
+**before** `resolveHeaderPages` / `installCollectionAliases`, so `header-pages: [graph]` resolves and a collection
+`@alias="graph"` is `Duplicate`.
+A Worker empty-remainder rewrite would otherwise serve HTML for `/graph.json`.
+JSON is computed at **write**, after `Site.load` has filled `BackLinks` and `TransclusionEdges`.
+No second XML walk.
+Cytoscape.js 3.34.2 loads **only** on `/graph.html` (`MarkupPage.extraLibraries`).
+Author lists `graph` in `header-pages` (no automatic icon).
+Click uses the owner’s `publishedPath` and `NamedWindows.targetAttr` when `named-windows` is on.
+
+**Vertices.**
+Canonical authored `FullMarkupPage` with a source file, via `GraphOwner` (not `Page.real`, which only unwraps `Alias`).
+Chunks, facsimile viewers, and PDFs collapse to the owning document.
+Synthetics, assets, and pass-through directory indexes are out.
+Node `id` / click `href` is `publishedPath` (collection aliases, daily remap).
+`group` is the first **source** path segment.
+
+**Source prefixes, not published URLs.**
+`exclude-path-prefixes` match `sourcePath.path.startsWith(...)`.
+Posts and Obsidian dailies are rewritten at scan (`Posts.path`) to `/YYYY/MM/DD/…`.
+The vault folder (`days/` from `.obsidian/daily-notes.json`) never appears on the public href.
+TEI `collection` `@alias` rewrites `/archive/lvia/1799/2/…` to `/lvia1799-2/…`.
+Matching `publishedPath` against `days` or `archive` would drop almost none of those trees.
+The notes-vault recipe `exclude-path-prefixes: [days]` hides daily notes (Obsidian’s graph users filter `-path:Daily/`
+for the same reason: a year of date nodes is a hairball, not a map of ideas).
+Default is an empty list; README recommends `[days]` when that is the daily-notes folder.
+alter-rebbe.org stays off; if enabled, `[archive]` on **source** leaves `name/` entities and notes.
+
+**Edges.**
+Directed pairs in JSON: `BackLink` → `kind: link` (wiki, HTML, TEI `@ref`, …); `TransclusionEdge` → `kind: transclude`.
+`include-transclusions` defaults to **true** (omit the key, or set `true`).
+`include-transclusions: false` omits every transclude edge; wiki/HTML/TEI **links** are unchanged.
+Dedup per directed pair per kind.
+Intrapage / same-owner skipped.
+Unresolved links stay on the Errors page (no phantom nodes).
+
+**Undirected draw.**
+JSON stays directed so a later arrows checkbox can restore A→B vs B→A.
+Cytoscape will paint **two** lines if both records exist, even with arrows off.
+Obsidian’s default is one undirected stroke.
+`graph.js` collapses reciprocal pairs of the same `kind` to one element (`data.id` = sorted `a~b:kind`).
+`link` and `transclude` between the same pair stay two strokes.
+
+**Local CSS and empty CDN.**
+`graph.css` is a site asset under `/assets/css/`.
+`MarkupPage.toHtml` always prefixes `library.cdn` onto `JSLibrary.stylesheet`.
+`Site` is the only library with `cdn = ""` (that is how `/assets/css/style.css` is linked).
+Putting `/assets/css/graph.css` on `Cytoscape` would request
+`https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.34.2/assets/css/graph.css` (404).
+Companion `GraphCss` is a `JSLibrary` with `cdn = ""` and that local path, listed in `extraLibraries` next to Cytoscape.
+Cytoscape itself is ESM from cdnjs (jsDelivr fallback), Mermaid-style `inlineJs` import, empty `imports`.
+
+**Local neighborhood (not v1).**
+Quartz / ole.dev / Obsidian Publish keep a **local** graph (this page plus N hops) as the daily tool; global is the
+overview.
+One `/graph.json` already supports a client BFS.
+Follow-up (“PR 4”): `?focus=/notes.html` on `/graph.html`, and/or a per-page overlay.
+Overlay must not fetch Cytoscape + the JSON on every TEI page (lazy import, or skip when N is huge).
+v1 is the global page only.
+
+No Playwright graph tests (JSON + HTML hook).
+How to enable: README **Graph**.
 
 ### Collection aliases (static hosting)
 

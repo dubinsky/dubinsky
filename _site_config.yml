@@ -11,6 +11,12 @@ header-pages:
   - notes/index.md
   - posts
   - tags
+  - graph
+
+graph:
+  enabled: true
+  exclude-path-prefixes:
+    - days
 
 social:
   github:  dubinsky
