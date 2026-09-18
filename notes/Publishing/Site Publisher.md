@@ -322,18 +322,19 @@ are the usual internal-link harvest (`persName@ref` in documents), grouped by TE
 when the source sits under one; not collector-style mentions (no **Имена:** line, no compact doc-id list). Snippet text
 skips `*-tip` subtrees.
 
-`entityLists` beside a directory (`names.xml` next to `names/`) is `EntityListsContent`, same scan as `store`
-(`/names/index.html`). Each `listPerson` / `listPlace` / `listOrg` (`@n`, optional `@role`, child `title`) is a bucket:
-kind from the element, members are sibling entity files whose `entityKind` and root `@role` match (`None` matches
-`None`). Empty lists are dropped. Member lists are generated at render (`EntityLists.generate`) after `Site.load`
-harvests backlinks from the empty index `xml`, so index → entity `<a>`s are display-only. Subpages `/names/{n}.html` are
-synthetic. `DirectoryPage` does not dump `ul.page-list` of every file. A `listPerson` inside a normal `TEI` document is
-not filled.
+`entityLists` is `EntityListsContent` (same scan as `store` when it is `dir.xml` beside `dir/`). Each `listPerson` /
+`listPlace` / `listOrg` (`@n`, optional `@role`, child `title`) is a bucket: kind from the element, members are **all**
+entity files on the site whose `entityKind` and root `@role` match (`None` matches `None`). Empty lists are dropped.
+Member lists are generated at render (`EntityLists.generate`) after `Site.load` harvests backlinks from the empty index
+`xml`, so catalog → entity `<a>`s are display-only. Two or more non-empty lists: catalog page is TOC of list pages
+(`/name/{n}.html`); members are not inlined. One non-empty list: the catalog page *is* that list (no `{n}` subpage).
+Several `entityLists` files are independent catalogs. `DirectoryPage` does not dump `ul.page-list` of every file. A
+`listPerson` inside a normal `TEI` document is not filled.
 
-TODO rework the name/names duality; remove special cases; route using aliases if at all.
+The catalog directory is an identity prefix (`installPrefixAlias`, Worker table): `/name` → `/name/index.html`,
+`/name/{id}` → `/name/{id}.html`. No synthetic `/name.html` dump, no `name`→`names` inbound remap.
 
-Collector `/name` is a synthetic all-entities page at `/name.html` (not `/names`). Inbound `/name` and `/name/{id}`
-rewrite (`Pages.find` / Worker); emitted entity hrefs stay `/names/{id}.html` when that is the file.
+TODO rework the store-tree `By("names")` / `By("name")` hops (`/jews`, `/jews/alter-rebbe`).
 
 On first parse of the source file (`Content.parse`, not a second harvest): `persName` / `placeName` /
 `orgName` with empty `@ref` in TEI documents and in store title/abstract/body are `PageError.NoRef`;
@@ -341,7 +342,7 @@ TEI `unclear` is `PageError.Unclear`; an entity file whose name is not spaces-to
 first name is `PageError.MisnamedEntity`. Entity-file name elements are the definition, not `NoRef`.
 Generated collection and name-list tables are not scanned. There are no `/report` pages.
 Each Errors-page kind is `div.kind` with `id` from the case-object name (`#no-ref`, `#unclear`,
-`#misnamed-entity`).
+`#misnamed-entity`). More than one kind: a TOC of those fragments.
 
 ### Directories and posts
 
