@@ -330,13 +330,18 @@ harvests backlinks from the empty index `xml`, so index → entity `<a>`s are di
 synthetic. `DirectoryPage` does not dump `ul.page-list` of every file. A `listPerson` inside a normal `TEI` document is
 not filled.
 
-TODO rework the name/names duality; remove special cases; route using aliases if at all; same for reports.
+TODO rework the name/names duality; remove special cases; route using aliases if at all.
 
 Collector `/name` is a synthetic all-entities page at `/name.html` (not `/names`). Inbound `/name` and `/name/{id}`
-rewrite (`Pages.find` / Worker); emitted entity hrefs stay `/names/{id}.html` when that is the file. `/report` and
-`/report/{id}` are synthetic apparatus pages. Harvest (not generated indexes): `persName` /
-`placeName` / `orgName` with empty `@ref`; TEI `unclear`; entity file name ≠ spaces-to-underscores of
-the first name. Walks entity files, TEI documents, and store title/abstract/body.
+rewrite (`Pages.find` / Worker); emitted entity hrefs stay `/names/{id}.html` when that is the file.
+
+On first parse of the source file (`Content.parse`, not a second harvest): `persName` / `placeName` /
+`orgName` with empty `@ref` in TEI documents and in store title/abstract/body are `PageError.NoRef`;
+TEI `unclear` is `PageError.Unclear`; an entity file whose name is not spaces-to-underscores of the
+first name is `PageError.MisnamedEntity`. Entity-file name elements are the definition, not `NoRef`.
+Generated collection and name-list tables are not scanned. There are no `/report` pages.
+Each Errors-page kind is `div.kind` with `id` from the case-object name (`#no-ref`, `#unclear`,
+`#misnamed-entity`).
 
 ### Directories and posts
 
@@ -450,7 +455,7 @@ not stamp and serve original TEI until someone asks.
 
 Opt-in `_site_config.yml` `named-windows` (default off). When on, every page sets `window.name` and internal
 links `target` the destination viewer: `hierarchyViewer` (stores, collections, notes, home), `apparatusViewer`
-(entities, entity lists, reports), `textViewer` (collection documents), `facsimileViewer` (`FacsimilePage`).
+(entities, entity lists), `textViewer` (collection documents), `facsimileViewer` (`FacsimilePage`).
 Name + scroll restore live in `siteSettings.js` (`data-window-name`); no analytics. Off: no helper attribute, no
 `target` on wiki/header except the existing facsimile/`text` photo links. alter-rebbe.org turns it on.
 
