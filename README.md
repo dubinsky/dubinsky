@@ -41,7 +41,10 @@ Archived:
   _[5134](https://github.com/scala-js/scala-js/pull/5134)_,
   [5199](https://github.com/scala-js/scala-js/issues/5199);
   [Scala.js Website](https://www.scala-js.org):
-  _[658](https://github.com/scala-js/scala-js-website/pull/658)_.
+  [657](https://github.com/scala-js/scala-js-website/issues/657),
+  _[658](https://github.com/scala-js/scala-js-website/pull/658)_;
+  [jsdom Node.js env](https://github.com/scala-js/scala-js-env-jsdom-nodejs):
+  [57](https://github.com/scala-js/scala-js-env-jsdom-nodejs/issues/57).
 - [Scala Native](https://scala-native.org/):
   _[4320](https://github.com/scala-native/scala-native/pull/4320)_,
   [4323](https://github.com/scala-native/scala-native/issues/4323),
@@ -77,8 +80,8 @@ Archived:
   _[678](https://github.com/scala/scala-xml/pull/678)_,
   [689](https://github.com/scala/scala-xml/issues/689),
   [694](https://github.com/scala/scala-xml/discussions/694),
-  [764](https://github.com/scala/scala-xml/discussions/764),
-  [765](https://github.com/scala/scala-xml/discussions/765).
+  [764](https://github.com/scala/scala-xml/issues/764),
+  _[765](https://github.com/scala/scala-xml/pull/765)_.
 - [ZIO](https://zio.dev/):
   _[9219](https://github.com/zio/zio/pull/9219)_,
   [9629](https://github.com/zio/zio/issues/9629),
@@ -101,6 +104,8 @@ Archived:
   [1327 (yaml)](https://github.com/zio/zio-blocks/issues/1327),
   [1377 (markdown)](https://github.com/zio/zio-blocks/issues/1377).
 - [XMLResolver](https://github.com/ndw/xmlresolver):
+  [26](https://github.com/xmlresolver/xmlresolver/issues/26),
+  _[27](https://github.com/xmlresolver/xmlresolver/pull/27)_,
   _[28](https://github.com/ndw/xmlresolver/pull/28)_,
   [44](https://github.com/xmlresolver/xmlresolver/issues/44),
   [54](https://github.com/xmlresolver/xmlresolver/issues/54).
@@ -113,6 +118,8 @@ Archived:
 - [http4s](https://github.com/http4s/http4s):
   [3565](https://github.com/http4s/http4s/issues/3565).
 - [Tapir](https://tapir.softwaremill.com/en/latest/):
+  _[2541](https://github.com/softwaremill/tapir/pull/2541)_,
+  _[2542](https://github.com/softwaremill/tapir/pull/2542)_,
   _[2543](https://github.com/softwaremill/tapir/pull/2543)_.
 - [Gradle](https://github.com/gradle/gradle):
   [9885](https://github.com/gradle/gradle/issues/9855),
@@ -174,6 +181,7 @@ Archived:
   _[256](https://github.com/skevetter/devpod/pull/256)_,
   _[257](https://github.com/skevetter/devpod/pull/257)_,
   _[528](https://github.com/skevetter/devpod/pull/528)_,
+  [570](https://github.com/skevetter/devpod/issues/570),
   [571](https://github.com/skevetter/devpod/issues/571),
   _[602](https://github.com/skevetter/devpod/pull/602)_,
   _[605](https://github.com/skevetter/devpod/pull/605)_,
@@ -241,10 +249,11 @@ Archived:
  _[5](https://github.com/rototor/jeuclid/pull/5)_.
 - [CETEIcean](https://github.com/TEIC/CETEIcean):
   [20](https://github.com/TEIC/CETEIcean/issues/20),
- _[23](https://github.com/TEIC/CETEIcean/pull/23)_,
- _[35](https://github.com/TEIC/CETEIcean/pull/35)_,
+  _[23](https://github.com/TEIC/CETEIcean/pull/23)_,
+  [34](https://github.com/TEIC/CETEIcean/issues/34),
+  _[35](https://github.com/TEIC/CETEIcean/pull/35)_,
   [36](https://github.com/TEIC/CETEIcean/issues/36),
- _[37](https://github.com/TEIC/CETEIcean/pull/37)_,
+  _[37](https://github.com/TEIC/CETEIcean/pull/37)_,
   [38](https://github.com/TEIC/CETEIcean/issues/38),
   [39](https://github.com/TEIC/CETEIcean/issues/39).
 - [wikibonsai/jekyll-wikirefs](https://github.com/wikibonsai/jekyll-wikirefs):
@@ -257,8 +266,14 @@ Archived:
 ## Proofreading
 
 Some of the corrections I suggested were accepted by the author of the (excellent!) book
-["Program = Proof"](https://www.lix.polytechnique.fr/Labo/Samuel.Mimram/teaching/INF551/course.pdf),
-Samuel Mimram.
+["Program = Proof"](https://www.lix.polytechnique.fr/Labo/Samuel.Mimram/teaching/INF551/course.pdf), Samuel Mimram.
+
+- [Functional Programming in Scala](https://github.com/fpinscala/fpinscala):
+  [175](https://github.com/fpinscala/fpinscala/issues/175),
+  [176](https://github.com/fpinscala/fpinscala/issues/176),
+  [177](https://github.com/fpinscala/fpinscala/issues/177),
+  [178](https://github.com/fpinscala/fpinscala/issues/178),
+  [179](https://github.com/fpinscala/fpinscala/issues/179).
 
 ## Site
 
@@ -267,8 +282,9 @@ Samuel Mimram.
 ./gradlew serveSite
 ```
 
-`generateSite` writes `_site` (GitHub Pages). Plugin id `org.podval.tools.site-publisher`.
+`generateSite` writes `_site` (GitHub Pages).
+Plugin id `org.podval.tools.site-publisher`.
 A local site-publisher checkout at `../site-publisher` is used when present
 (`pluginManagement { includeBuild }` plus settings-body `includeBuild`, `-PsitePublisherDir=`);
-CI resolves the plugin and `org.podval.tools:org.podval.tools.publisher` from Maven Central. Finance code
-is `./gradlew run` (`org.podval.finance.Main`).
+CI resolves the plugin and `org.podval.tools:org.podval.tools.publisher` from Maven Central.
+Finance code is `./gradlew run` (`org.podval.finance.Main`).
