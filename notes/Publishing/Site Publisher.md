@@ -791,7 +791,8 @@ A call site is `Table` when its nearest authored ancestor is a layout `table` (`
 Innermost table wins.
 The wrapper is `div.table-with-notes` > `table` + `div.footnotes.table-footnotes` (not `tfoot`).
 Letters restart at `a` per table (`letterLabel`: `a`…`z`, `aa`, `ab`).
-Markdown/AsciiDoc still define those bodies at file end; the published page moves them.
+Markdown still defines those bodies at file end; the published page moves them.
+AsciiDoc `footnote:[…]` is written at the call site; the published page still lists those notes under the table.
 Do not table-scope markers found in a parent note's `nodes`.
 
 **Chrome.**
