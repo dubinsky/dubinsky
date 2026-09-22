@@ -188,7 +188,12 @@ I am in awe: one person developed and continues to improve a solution that compl
 
 Professionally done labor of love - way to go!!
 
-Firmware is ESPHome **2024.8.3** (re-OTAd 2026-08-19 only to move Wi‑Fi to `podval-2g`; still `.240`). **Do not update** to current `esphome-ratgdo` unless something is actually broken. Latest builds need ESPHome 2026.4+ and an API encryption key this board does not have — HA would drop until the key is added. ESP8266 OTA is tight; some 2026.1/2026.2 updates broke the handshake. If we ever flash again: pin a release, compile with a noise key, OTA from `http://192.168.1.240`, have a USB cable ready.
+The v2.53i (ESPHome 2024.8.3 at `192.168.1.240`) was removed from Home Assistant on 2026-09-22.
+The opener is a ratgdo32 disco, ESPHome **2026.7.0**, Security+ 2.0, at `192.168.1.138` on `podval-2g`.
+The device name is Garage Door Opener, and Home Assistant may call services on it.
+`.138` is inside the DHCP pool, so that address can change.
+The old “do not OTA” warning applied only to that ESP8266 board.
+Current `esphome-ratgdo` needed an API encryption key it did not have, and the ESP8266 OTA slot was tight.
 
 ## Z-Wave
 From the list of Z-Wave controllers Home Assistant supports](https://www.home-assistant.io/docs/z-wave/controllers/), I picked "Zooz 800 Series Z-Wave Long Range S2 USB Stick ZST39 LR" ($37 on Amazon).
@@ -301,7 +306,7 @@ Prefer the entity the UI/voice uses. Example: `fan.master_bathroom_fan` is `swit
 
 ### Stable entities (re-check the registry)
 
-- Garage: `cover.ratgdov25i_0bd4e4_door` (ratgdo v2.5i, `.240` on `podval-2g`)
+- Garage: `cover.ratgdo32disco_d85704_door` (ratgdo32 disco, `.138` on `podval-2g`, ESPHome 2026.7.0)
 - Garden: `valve.back_garden_water`, `switch.sonoff_swv`
 - Climate: `climate.t6_pro_z_wave_programmable_thermostat`
 - Boiler: `sensor.e3_vitodens_100_na_0521_*`
@@ -316,7 +321,7 @@ Prefer the entity the UI/voice uses. Example: `fan.master_bathroom_fan` is `swit
 
 ## TODO
 
-**Move refrigerator to `podval-2g`, then make `podval-u` 5 GHz only.** See [[UniFi]] § Later. **ratgdo `.240` is already on `podval-2g`.**
+**Move refrigerator to `podval-2g`, then make `podval-u` 5 GHz only.** See [[UniFi]] § Later. The ratgdo32 disco is already on `podval-2g`.
 
 **Smoke / CO + garden leak notify.** Sensors exist, nothing notifies. Attic Zooz ZEN55: `binary_sensor.attic_fire_sensor_smoke_detected`, `binary_sensor.attic_fire_sensor_carbon_monoxide_detected`. Garden SONOFF valve: `binary_sensor.sonoff_swv_water_leak`. Send `notify.phones` (Pixel 10 + both Pixel 8s), high priority. Do not trigger on the fire sensor `idle` binary sensor.
 
