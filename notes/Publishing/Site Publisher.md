@@ -125,10 +125,13 @@ It runs `Site.main` the way `org.podval.tools.scalajs` wraps Scala.js.
 The plugin JAR is Java and must not `implementation`-depend on the publisher: Scala 3, Playwright, and AsciidoctorJ stay
 off the Gradle daemon.
 The plugin only creates a `sitePublisher` configuration on the **consumer** and puts the library coordinate there.
-`generateSite` / `serveSite` are `JavaExec` (Java 25, native-access flags, Playwright env).
-`generateSite` is not a dependency of `build`.
-Its declared output is the target directory; inputs are the source tree minus that directory and Gradle `build/` —
-up-to-date can skip a run; the tool itself is not incremental.
+`generateSite` / `serveSite` / `prettyPrintSite` are `JavaExec` (Java 25, native-access flags, Playwright env).
+`generateSite` and `prettyPrintSite` are not dependencies of `build`.
+`generateSite` and `serveSite` always pass `--pretty-print=false`.
+`prettyPrintSite` passes `--pretty-print` and does not declare the target directory as an output.
+`generateSite`'s declared output is the target directory; inputs are the source tree minus that directory and Gradle
+`build/`.
+Up-to-date can skip a generate run; the tool itself is not incremental.
 
 **Layout.**
 Empty Gradle root (`rootProject.name` = `site-publisher`).
@@ -1058,6 +1061,23 @@ Authored `listBibl` is kept (not cited-only, not auto-appended).
 Markup-independent.
 Front matter `pdf: true` adds a `PdfPage` at `P.pdf` (Chromium print of `P.html`, written last).
 Site-header format icons on the HTML (and chunks) link to it; the header is `display: none` in print.
+
+### Native XML pretty-print
+
+`--pretty-print` and `prettyPrintSite` rewrite authored TEI and DocBook with that dialect's `XmlWriterConfig`.
+The walk uses `Ignore` and `parseXmlDocument`.
+It does not call `Pages.load` or `Markup.process`.
+`process` renames elements toward HTML, and `dropIncludes` deletes `xi:include`.
+
+The writer suppresses an `xmlns` that is already bound to the same URI.
+It does not invent `xmlns=""` for a name with no URI, so a constructed Atom `entry` and sitemap `url` stay in the parent
+namespace.
+`selfCloseEmpty` on the TEI and DocBook configs writes an empty element as `<e/>`.
+
+`XmlWriterConfig.plus` is removed.
+A set union cannot follow `Xml2Html` and the dialect renames: TEI `p` becomes `tei-p`, and DocBook `para` becomes `p`.
+Published pages stay on `HtmlXmlWriterConfig`.
+A post-rename overlay for the TEI names that remain in a published page is not this feature.
 
 ### TEI
 
