@@ -565,7 +565,8 @@ Store and entity-lists skip `TeiMarkup.process`.
 A `store` body’s listing is still `DirectoryPage` (`StoreContent.markupBody` is `None`).
 A `collection` sets `suppressDirectoryListing` and `markupBody` is `CollectionIndex.generate` (`table.collection-index`,
 same columns as the live [rgada](https://www.alter-rebbe.org/rgada) index).
-Date cells are `date/@when` (calendar tables later).
+Date cells are `@when` when present, otherwise the date’s text.
+The `<date>` is what `dateCell` returns so the hover runs.
 `Страницы` page numbers link to `pb` ids (`p{n}`) in the text.
 `part from="…"` title rows split originals; `{base}-{xx}` files (dash at length 3, `xml:lang` must match) are
 translations: not rows, Язык links, `[lang]` on the original, prev/next skip them.
@@ -599,7 +600,8 @@ Live collector [rgada](https://www.alter-rebbe.org/rgada) is `table.collection-i
 Generated at render (`CollectionIndex`, same timing as `EntityLists`) so index XML stays empty and table hrefs are not
 backlinks.
 Columns: Описание, Дата, Кто, Кому, Язык, Документ, Страницы, Расшифровка.
-Date is `date/@when` with a calendar hover table (`TeiDate`).
+Date is `@when` when present, otherwise the date’s text.
+The `<date>` is what `dateCell` returns so the hover runs (`TeiDate`).
 Страницы page numbers are `pb` in the text (`#p{n}`, `pageType` manuscript `000`/`000об` or book numbers).
 Footer lists `pb@missing` empty vs non-empty photos.
 `note place="end"` in abstracts is footnote IR (`TeiMarkup.finishFootnotes` on the assembled table / collector header,
@@ -629,16 +631,33 @@ That is too broad next to footnote/glossary/citation tips, so the publisher wrap
 `<date>` plus sibling `span.date-tip` (same hover/focus CSS as `Tip`, but not inlined under `html.glossary-expand` or
 print — the table is not a parenthetical gloss).
 
-`@when` parse (ISO `YYYY` / `YYYY-MM` / `YYYY-MM-DD`, and `..` ranges whose right-hand side may be shorter) stays in the
-publisher; `org.opentorah:opentorah-core` only converts days (`Julian` / `Gregorian` / `Jewish`,
-`Day.toLanguageString`).
+`TeiDate` reads `when`, `from`, `to`, `notBefore`, and `notAfter`.
+`endsTable` columns match the ends present.
+Headers are `Date`, `From`, `To`, `Not before`, and `Not after`.
+There is no empty cell.
+Year-only and month-only `@when` stay a closed From/To interval (first day and last day).
+A one-sided `@from` or `@notBefore` expands with `last=false`.
+A one-sided `@to` or `@notAfter` expands with `last=true`.
+Expansion of a partial endpoint does not invent the other end.
+`@when` cannot combine with the other four.
+`@from` cannot combine with `@notBefore`.
+`@to` cannot combine with `@notAfter`.
+Each refusal is `PageError.InvalidDate`, and the element is left unchanged.
+`@from` plus `@notAfter`, and `@notBefore` plus `@to`, are legal.
+`..` in any temporal attribute is `InvalidDate` and the element is left unchanged.
+`org.opentorah:opentorah-core` only converts days (`Julian` / `Gregorian` / `Jewish`, `Day.toLanguageString`).
 Display language is `Site.languageSpec`.
-Source calendar is Gregorian unless `@calendar="#julian"` or site `tei-default-calendar: julian`.
-Invalid `@when` is `PageError.InvalidDate`; the element is left as authored.
-No `@when` means no tooltip (bibliography imprint `<date>1994</date>`).
+The Guidelines say W3C attribute values are Gregorian and `@calendar` applies to the text content.
+This publisher reads the numbers in the source calendar (`@calendar="#julian"` or site `tei-default-calendar: julian`).
+Otherwise the source calendar is Gregorian.
+The corpus is not being rewritten to `@when-custom`.
+None of the five attributes means no tooltip (bibliography imprint `<date>1994</date>`).
 
-Header/index Дата keeps Collector `forDisplay`: the `<date>` wrapper with `@when` as the visible text, then
-`convertFragment` attaches the tip.
+Дата: `dateCell` returns the `<date>` when `@when` or any end attribute is set.
+Only a dateless `<date>` unwraps to its children.
+`@when` still replaces those children with the attribute string.
+End attributes keep the authored children.
+`convertFragment` adds the tip because the element is still there.
 Body dates keep authored content.
 Conversion runs in `TeiMarkup.convertSpecial` so `process` (body) and `convertFragment` (chrome) share one path.
 Transform is parent-first and would wrap twice; the inner `<date>` gets `data-calendars` so the second visit is a no-op
