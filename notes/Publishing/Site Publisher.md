@@ -662,9 +662,10 @@ End attributes keep the authored children only when `@when` is absent.
 A non-blank `@when` replaces the children with the attribute string even if an end attribute is also set.
 `convertFragment` adds the tip because the element is still there.
 Body dates keep authored content.
-Conversion runs in `TeiMarkup.convertSpecial` so `process` (body) and `convertFragment` (chrome) share one path.
-Transform is parent-first and would wrap twice; the inner `<date>` gets `data-calendars` so the second visit is a no-op
-(`class` would be rewritten to `tei-class`).
+`TeiDate.convert` runs after the Xml2Html walk, in `process`'s IR rewrite and in `convertFragment`'s second transform.
+That walk re-enters the tip span it creates.
+`Xml2Html.convert` on that visit renames `class` to `tei-class`, so `.date-tip` does not match.
+`data-calendars` on the inner `<date>` makes the re-entry a no-op and leaves the one wrapper.
 
 TEI `<gap reason>` uses the same tip family (`span.gap-ref` / `span.gap-tip`) after the Xml2Html pass so `class` is not
 rewritten to `tei-class`.
@@ -847,7 +848,16 @@ writes prefixed nodes back into `toContent.footnotes`.
 Converters pass a leftover-container predicate to `Footnote.unwrapLeftovers` (Markdown `div.footnotes`, AsciiDoc
 `div#footnotes`); IR bodies are lifted, the wrapper dropped.
 Published `div.footnotes` is only the list `appendReferenced` adds.
-TEI still converts only `place="end"`; `place="foot"` and unplaced `note` are unchanged; `@n` is ignored.
+TEI still converts only `place="end"`; `place="foot"` and unplaced `note` are unchanged.
+`@n` and DocBook `footnote/@label` are an optional display marker when non-blank.
+The converter copies the value onto the link and body stubs as `footnote-label`.
+`Footnote.remapped` copies it, so chunk renumbering and transclusion keep the marker.
+The call-site link and the backlink show it.
+Series position, scope, and fragment ids stay on the generated series (`_footnote_1`, `_table_1_fn_a`,
+`_footnote_1_n_a`).
+A supplied marker does not skip or reshuffle later notes.
+The same marker may appear on more than one note.
+A blank value is absent.
 
 **Errors** (all in `PageError.all`; kebab-case `Kind.id`): `UnknownFootnote`; `OrphanFootnote` (body with no tree site
 and no id in any harvested `nodes`); `FootnoteScopeConflict` (two tables, or table plus running text, or two nested
