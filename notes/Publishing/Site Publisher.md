@@ -565,8 +565,10 @@ Store and entity-lists skip `TeiMarkup.process`.
 A `store` body’s listing is still `DirectoryPage` (`StoreContent.markupBody` is `None`).
 A `collection` sets `suppressDirectoryListing` and `markupBody` is `CollectionIndex.generate` (`table.collection-index`,
 same columns as the live [rgada](https://www.alter-rebbe.org/rgada) index).
-Date cells are `@when` when present, otherwise the date’s text.
-The `<date>` is what `dateCell` returns so the hover runs.
+Date cells: `dateCell` returns the `<date>` when `@when` or any end attribute is non-blank, so the hover can run.
+A dateless `<date>` unwraps to its children and has no hover.
+End attributes keep the authored children only when `@when` is absent.
+A non-blank `@when` replaces the children with the attribute string even if an end attribute is also set.
 `Страницы` page numbers link to `pb` ids (`p{n}`) in the text.
 `part from="…"` title rows split originals; `{base}-{xx}` files (dash at length 3, `xml:lang` must match) are
 translations: not rows, Язык links, `[lang]` on the original, prev/next skip them.
@@ -600,8 +602,10 @@ Live collector [rgada](https://www.alter-rebbe.org/rgada) is `table.collection-i
 Generated at render (`CollectionIndex`, same timing as `EntityLists`) so index XML stays empty and table hrefs are not
 backlinks.
 Columns: Описание, Дата, Кто, Кому, Язык, Документ, Страницы, Расшифровка.
-Date is `@when` when present, otherwise the date’s text.
-The `<date>` is what `dateCell` returns so the hover runs (`TeiDate`).
+Date: `dateCell` returns the `<date>` when `@when` or any end attribute is non-blank, so the hover can run (`TeiDate`).
+A dateless `<date>` unwraps to its children and has no hover.
+End attributes keep the authored children only when `@when` is absent.
+A non-blank `@when` replaces the children with the attribute string even if an end attribute is also set.
 Страницы page numbers are `pb` in the text (`#p{n}`, `pageType` manuscript `000`/`000об` or book numbers).
 Footer lists `pb@missing` empty vs non-empty photos.
 `note place="end"` in abstracts is footnote IR (`TeiMarkup.finishFootnotes` on the assembled table / collector header,
@@ -648,15 +652,17 @@ Each refusal is `PageError.InvalidDate`, and the element is left unchanged.
 `org.opentorah:opentorah-core` only converts days (`Julian` / `Gregorian` / `Jewish`, `Day.toLanguageString`).
 Display language is `Site.languageSpec`.
 The Guidelines say W3C attribute values are Gregorian and `@calendar` applies to the text content.
-This publisher reads the numbers in the source calendar (`@calendar="#julian"` or site `tei-default-calendar: julian`).
-Otherwise the source calendar is Gregorian.
+This publisher reads the numbers in the source calendar.
+Site `tei-default-calendar` applies only when `@calendar` is omitted.
+The only `@calendar` value that selects Julian is exactly `#julian`.
+Any other `@calendar` value is Gregorian, even when the site default is julian.
 The corpus is not being rewritten to `@when-custom`.
 None of the five attributes means no tooltip (bibliography imprint `<date>1994</date>`).
 
-Дата: `dateCell` returns the `<date>` when `@when` or any end attribute is set.
-Only a dateless `<date>` unwraps to its children.
-`@when` still replaces those children with the attribute string.
-End attributes keep the authored children.
+Дата: `dateCell` returns the `<date>` when `@when` or any end attribute is non-blank, so the hover can run.
+A dateless `<date>` unwraps to its children and has no hover.
+End attributes keep the authored children only when `@when` is absent.
+A non-blank `@when` replaces the children with the attribute string even if an end attribute is also set.
 `convertFragment` adds the tip because the element is still there.
 Body dates keep authored content.
 Conversion runs in `TeiMarkup.convertSpecial` so `process` (body) and `convertFragment` (chrome) share one path.
