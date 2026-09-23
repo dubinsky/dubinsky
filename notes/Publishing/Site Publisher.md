@@ -565,10 +565,7 @@ Store and entity-lists skip `TeiMarkup.process`.
 A `store` body’s listing is still `DirectoryPage` (`StoreContent.markupBody` is `None`).
 A `collection` sets `suppressDirectoryListing` and `markupBody` is `CollectionIndex.generate` (`table.collection-index`,
 same columns as the live [rgada](https://www.alter-rebbe.org/rgada) index).
-Date cells: `dateCell` returns the `<date>` when `@when` or any end attribute is non-blank, so the hover can run.
-A dateless `<date>` unwraps to its children and has no hover.
-End attributes keep the authored children only when `@when` is absent.
-A non-blank `@when` replaces the children with the attribute string even if an end attribute is also set.
+Date cells use `PageHeader.dateCell` (see TEI dates).
 `Страницы` page numbers link to `pb` ids (`p{n}`) in the text.
 `part from="…"` title rows split originals; `{base}-{xx}` files (dash at length 3, `xml:lang` must match) are
 translations: not rows, Язык links, `[lang]` on the original, prev/next skip them.
@@ -602,10 +599,7 @@ Live collector [rgada](https://www.alter-rebbe.org/rgada) is `table.collection-i
 Generated at render (`CollectionIndex`, same timing as `EntityLists`) so index XML stays empty and table hrefs are not
 backlinks.
 Columns: Описание, Дата, Кто, Кому, Язык, Документ, Страницы, Расшифровка.
-Date: `dateCell` returns the `<date>` when `@when` or any end attribute is non-blank, so the hover can run (`TeiDate`).
-A dateless `<date>` unwraps to its children and has no hover.
-End attributes keep the authored children only when `@when` is absent.
-A non-blank `@when` replaces the children with the attribute string even if an end attribute is also set.
+Date is `PageHeader.dateCell` (see TEI dates).
 Страницы page numbers are `pb` in the text (`#p{n}`, `pageType` manuscript `000`/`000об` or book numbers).
 Footer lists `pb@missing` empty vs non-empty photos.
 `note place="end"` in abstracts is footnote IR (`TeiMarkup.finishFootnotes` on the assembled table / collector header,
