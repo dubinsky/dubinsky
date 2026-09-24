@@ -297,6 +297,20 @@ chrome).
 
 [[Jekyll]] ignored Markdown without front matter; this publisher does not.
 
+### Categories
+
+A category is an authored page.
+Front matter `categories` holds wiki links to those pages (`[[Books]]`, `[[Books|label]]`, or a bare name).
+`Categories.resolve` runs in `Site.load` after `Pages.load` has called `throwIfErrors`.
+A miss is `PageError.Unresolved` and does not abort generation.
+There is no synthetic category page and no `LinkKind.Category`: the target is an ordinary title/path lookup.
+Membership is a separate edge, not a `BackLink`, because the property is not an element with an `href`.
+The hub page keeps its body and appends the members, by title.
+Header chips on the member use that edge.
+The site graph emits it as a `link` edge, collapsed with a body link to the same page.
+`![[….base]]` (an Obsidian Bases embed, including a `#view`) is dropped and is not an unresolved transclusion.
+The member list replaces that embed.
+
 ### Page names and wiki links
 
 [[Jekyll]] used front-matter titles and ignored file names; I needed an Obsidian plugin to copy names into titles.
@@ -307,6 +321,7 @@ Obsidian uses file names and ignores the front-matter title; a plugin would be n
 
 Wiki links (`[[…]]`), internal link resolution, backlinks.
 Front-matter `permalink` and `aliases` add Refresh `Alias` pages (`/short.html` → the real page).
+`permalink` must start with `/`; a relative value is `PageError.Permalink` and is not installed.
 `Pages.find` also treats those paths as prefixes: after exact path match, longest alias prefix wins and the remainder is
 joined onto the real page’s directory (`/short/child` → `child` next to `/aliased/index.html`).
 That is the old collector `alias/@n` + `alias/@to` rule used in alter-rebbe TEI (`/lvia1868-3470/006`).
@@ -380,7 +395,8 @@ When on, `Pages.load` adds `GraphPage` (`/graph.html`) and `GraphJson` (`/graph.
 **before** `resolveHeaderPages` / `installCollectionAliases`, so `header-pages: [graph]` resolves and a collection
 `@alias="graph"` is `Duplicate`.
 A Worker empty-remainder rewrite would otherwise serve HTML for `/graph.json`.
-JSON is computed at **write**, after `Site.load` has filled `BackLinks` and `TransclusionEdges`.
+JSON is computed at **write**, after `Site.load` has filled `BackLinks`, category membership, and
+`TransclusionEdges`.
 No second XML walk.
 Cytoscape.js 3.34.2 loads **only** on `/graph.html` (`MarkupPage.extraLibraries`).
 Author lists `graph` in `header-pages` (no automatic icon).
@@ -441,6 +457,46 @@ v1 is the global page only.
 
 No Playwright graph tests (JSON + HTML hook).
 How to enable: README **Graph**.
+
+### External links
+
+Opt-in `_site_config.yml` `check-links` (default off).
+When on, generate checks author-written `http` and `https` URLs and records failures as `PageError.BrokenLink`
+(`#broken-link` on `/errors.html`).
+`Site.isInternalLink` stays a classifier: no scheme is internal, same host is `SelfLink`, and a bad URI is internal so
+resolution can report `Unresolved`.
+It does not fetch.
+`Site.sameSiteHost` is the shared host test.
+
+The check runs on the element `PageContent.renderAuthored` returns for the full page, after citeproc HTML is spliced
+in, and on the element `resolveConverted` returns.
+That second tree is store title, abstract, and body, and document-header cells (`PageHeader.resolvedFragment`,
+`CollectionIndex.convertedNodes`).
+Chunks do not check the body again.
+`Feed` and chunk headers re-render the same trees.
+A fetch is cached by URL with the fragment removed, and each source path reports a broken URL once.
+
+The walk reads `a@href` and media `src` / `object@data` (`AssetRef`).
+It does not descend into `code` or `aside.transclusion`.
+An embed is checked on the source page.
+Same-host URLs are not fetched.
+`SelfLink` already covers them, and `config.url` is the live site.
+
+`HEAD`, then one `GET` (body discarded) on 403, 405, or 501.
+Redirects follow `HttpClient.Redirect.NORMAL`.
+Status `>= 400` and transport failures are broken.
+A remaining `3xx` is success.
+Connect timeout 5 seconds, request timeout 10 seconds.
+`User-Agent` is a desktop Chrome string so the result matches a reader.
+Java's default agent is blocked by hosts that still serve browsers.
+Fetches are sequential.
+
+`Pages.load` calls `throwIfErrors()` before any page is written.
+A broken link is logged and listed.
+Generation still finishes, same as `Unresolved` and `UnknownCitation`.
+
+Outside the walk: iframes, facsimile JPEGs, and footer chrome (social, license, feed, sitemap, footer `mailto:`).
+How to enable: README **External links**.
 
 ### Collection aliases (static hosting)
 
@@ -708,9 +764,17 @@ Name + scroll restore live in `siteSettings.js` (`data-window-name`); no analyti
 Off: no helper attribute, no `target` on wiki/header except the existing facsimile/`text` photo links. alter-rebbe.org
 turns it on.
 
-Posts: `_posts/`, `_drafts/`, Obsidian daily-notes folder (from `.obsidian`).
-Auto-post vs permalink.
-Filename convention `YYYY-MM-DD-title`.
+Posts come from `_posts/`, `_drafts/`, and the Obsidian daily-notes folder (from `.obsidian`).
+A `YYYY-MM-DD-title` file name rewrites the page path to `/YYYY/MM/DD/title`.
+`post: true` keeps the file path and adds a Refresh alias at `/YYYY/MM/DD/{file name}`
+(`post-title` overrides the slug).
+`date` is required for that alias.
+An absolute `permalink` `/YYYY/MM/DD/any-name` is also a post, so the source file can have any name.
+`Page.isPost` is the path date, `post: true`, or that permalink.
+`Page.date` is the path date, else front-matter `date`, else the date in that permalink.
+`/posts` lists real pages that are posts and skips `Alias` Refresh files, so a post appears once.
+A `permalink` that does not start with `/` is `PageError.Permalink` and is not installed.
+`aliases` may still be relative to the page directory or absolute.
 `_posts` is emptied out of the directory listing (`Posts.isDirectoryEmptiedOut`).
 
 ### Chunking
