@@ -216,8 +216,9 @@ Per document:
    `sidebar`, …).
    Store and entity-lists skip this.
 4. HTML-shaped leftovers → IR in `HtmlIr.normalize` (`Aside`, `Quote`, `Strike`, `Figure`, `PdfEmbed`, `Video`).
-   `HtmlMarkup.process` is title + nest sections + that pass; Markdown and AsciiDoc finish there.
-   TEI and DocBook do not: leftovers are still native names until their converters run.
+   `HtmlMarkup.process` is title + nest sections + that pass; Markdown, AsciiDoc, and HTML finish there.
+   TEI and DocBook emit the same IR in their converters and do not run this pass.
+   TEI `<s>` is a sentence, so `Strike.normalize` must not see that tree.
 5. Authored `PageContent.prepareAuthored`: sections/ids, internal-link marks, wiki embed (images, audio, video, PDF
    only), footnote harvest
 6. `Site.load` gathers backlinks (skips `a.transclude`) and `TransclusionEdge`s (silent)
@@ -244,7 +245,8 @@ so generated listing hrefs are display-only.
 Empty includes keep filesystem listing; a collection without includes still binds originals (not `{base}-{xx}`
 translations) for prev/next.
 `CollectionIndex` is generated at render (`StoreContent.markupBody`), like `EntityLists`.
-`EntityListsContent` buckets sibling `EntityContent` pages and creates synthetic `/names/{n}.html` list pages.
+`EntityListsContent` buckets entity files site-wide (kind and role) and, when more than one list is non-empty,
+creates list pages at `/{prefix}/{n}.html` (`/name/{n}.html` for a directory catalog).
 
 ### SEO
 
@@ -586,7 +588,11 @@ The catalog directory is an identity prefix (`installPrefixAlias`, Worker table)
 `/name/{id}` → `/name/{id}.html`.
 No synthetic `/name.html` dump, no `name`→`names` inbound remap.
 
-TODO rework the store-tree `By("names")` / `By("name")` hops (`/jews`, `/jews/alter-rebbe`).
+No `names` selector.
+List pages are direct children of the catalog in the store tree, so `Pages.find` and local `serve()` resolve `/jews`.
+Each list page is `By("name")` of its members, so `/jews/alter-rebbe` resolves with that hop omitted.
+The Worker table stays the identity prefix above.
+Canonical hrefs stay `/name/jews.html` and `/name/alter-rebbe.html`.
 
 On first parse of the source file (`Content.parse`, not a second harvest): `persName` / `placeName` / `orgName` with
 empty `@ref` in TEI documents and in store title/abstract/body are `PageError.NoRef`; TEI `unclear` is
