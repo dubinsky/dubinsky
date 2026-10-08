@@ -296,6 +296,14 @@ Mermaid initializes `theme` `dark` or `default` and re-renders on `site-color-sc
 The graph reads `--graph-node-color`, `--graph-label-color`, and `--graph-edge-color` from the computed tokens.
 Pencil underlines use `--pencil-color`.
 
+### Footer
+
+The footer does not repeat the site title.
+Column 3 is `div.footer-description`, not a `p`, so its first line meets the contact list and the social list.
+`license` is one record (`name`, `link`, `holder`, `holder-link`).
+It emits the head `<link rel="license">` and, when set, `div.footer-license` (holder, then license name).
+The feed is an icon-only `a.footer-feed` on the line after that.
+
 ### Markup
 
 Supported: [[Markdown]], [[AsciiDoc]], HTML, [[TEI]], [[DocBook]].
@@ -521,7 +529,8 @@ Fetches are sequential.
 A broken link is logged and listed.
 Generation still finishes, same as `Unresolved` and `UnknownCitation`.
 
-Outside the walk: iframes, facsimile JPEGs, and footer chrome (social, license, feed, sitemap, footer `mailto:`).
+Outside the walk: iframes, facsimile JPEGs, and footer chrome (social, license, holder link, feed, sitemap, footer
+`mailto:`).
 How to enable: README **External links**.
 
 ### Collection aliases (static hosting)
