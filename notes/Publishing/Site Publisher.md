@@ -106,6 +106,9 @@ Opinionated, because I am writing this for myself:
 - no layouts
 
 The layout is Minima-inspired CSS and HTML, not a Jekyll theme engine.
+Sheets are `tokens.css`, `base.css`, `chrome.css`, `prose.css`, `tei.css`, and `print.css`, imported by `style.css`.
+`facsimile.css` is linked only on the viewer page.
+`tei.css` stays on every page: a transclusion copies TEI elements into the host, and the host is often Markdown.
 
 Code lives in `site-publisher`.
 Dialect conversion sits next to `XxxMarkup`; shared IR sits in `markup/` (`Citation`, `Bibliography`, `Footnote`,
@@ -273,6 +276,25 @@ generate for every published site so gtag actually runs.
 Do not turn `--production` on until the ids are GA4.
 Named windows and scroll position are `siteSettings.js` (`data-window-name`).
 They do not load Analytics.
+
+### Color scheme
+
+The gear menu offers System, Light, and Dark (`input[name=color-scheme]`).
+Nothing saved, or System, follows `prefers-color-scheme`.
+Light and Dark are explicit.
+The value is the `localStorage` key `color-scheme`.
+`siteSettings.js` runs in `<head>` and sets `html.color-scheme-dark` when the resolved scheme is dark, before paint.
+Dark token overrides live in `tokens.css` under `@media screen`, so print and PDF keep the light palette.
+Folio color is read in print media.
+Brand gray stays.
+The link blue is `#5b93e6` on the dark ground: `#1e69d8` is the same hue and is 3.5:1 there, under the 4.5:1 body-text
+bar.
+Highlight.js ships the `default` and `dark` stylesheets.
+The head script enables one (`data-hljs-theme`).
+The dark sheet’s ground matches `--code-background-color` (`#303030`).
+Mermaid initializes `theme` `dark` or `default` and re-renders on `site-color-scheme`.
+The graph reads `--graph-node-color`, `--graph-label-color`, and `--graph-edge-color` from the computed tokens.
+Pencil underlines use `--pencil-color`.
 
 ### Markup
 
@@ -953,7 +975,7 @@ Markdown leftovers (FlexMark `li.task-list-item`, checkbox, `&nbsp;`) convert in
 AsciiDoc leftovers (`ul.checklist`; default html5 `✓`/`❏`, `%interactive` `<input>`, `icons=font` Font Awesome) convert
 in `AsciiDocMarkup.cleanup`.
 Mixed lists: only task items get `task-list-item`; the parent gets `task-list` if it has any.
-CSS in `layout.css` styles only these classes.
+CSS in `prose.css` styles only these classes.
 HTML that is already IR is left alone.
 
 ### Callouts
