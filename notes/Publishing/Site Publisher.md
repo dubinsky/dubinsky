@@ -296,6 +296,61 @@ Mermaid initializes `theme` `dark` or `default` and re-renders on `site-color-sc
 The graph reads `--graph-node-color`, `--graph-label-color`, and `--graph-edge-color` from the computed tokens.
 Pencil underlines use `--pencil-color`.
 
+### Apparatus
+
+Opt-in `_site_config.yml` `apparatus` (default off).
+When on, `MarkupPage.pageRoot` sets `data-apparatus-enabled="true"` on `<html>`, in the same chain as `data-window-name`.
+The gear menu then adds three radio groups, `apparatus-add`, `apparatus-see`, and `apparatus-del`.
+Values are `distinct`, `plain`, and `hidden`.
+Distinct is checked in the static HTML.
+These names are not checkbox `keys` (`"1"` / `"0"`).
+They follow the color-scheme radios.
+
+`siteSettings.js` is static and runs in `<head>`.
+It reads `data-apparatus-enabled` on `document.documentElement` before paint.
+If the marker is not `"true"`, stored modes are ignored and no `apparatus-*-plain` or `apparatus-*-hidden` class is
+added.
+A later visit with the flag back on applies the stored value again.
+If the marker is `"true"`, `localStorage` `plain` or `hidden` adds `html.apparatus-add-plain` or
+`html.apparatus-add-hidden` (and the `see` and `del` pairs).
+Any other stored value, including a missing key, removes both classes.
+Radios are wired on `DOMContentLoaded`.
+
+AsciiDoc `[.add]#…#`, `[.see]#…#`, and `[.del]#…#` are a role on a constrained `#`.
+Asciidoctor 2.0.26 then emits `<span class="add">`, not `<mark>`: a role on the mark type makes the quoted text
+unquoted, and the HTML5 converter's default quote tags are empty.
+`AsciiDocMarkup.cleanup` sets `data-apparatus` to that role only on a `span` whose classes contain exactly one of `add`,
+`see`, or `del`.
+The class stays.
+Two of those roles on one span are not marked and not styled.
+A block `[.add]` is not a span.
+`removeSpuriousDivs` unwraps `paragraph`, `ulist`, `olist`, `openblock`, and `sectN`, so that role class is dropped.
+`convertQuote` rebuilds `blockquote.quote` and does not copy the extra role.
+`imageblock` can keep an extra class on the figure.
+Only a `span` gets `data-apparatus`, so a leftover class is still not apparatus.
+
+`prose.css` styles only `[data-apparatus="add"]`, `[data-apparatus="see"]`, and `[data-apparatus="del"]`.
+Not the TEI element `add`, not a bare `.add`, and not the HTML `<del>` that `Strike` emits for line-through.
+`--add-color` stays on the TEI element.
+Distinct is the absence of a mode class, so no-JS matches the sheet.
+Additions are `[` `]` from `::before` / `::after`.
+Sources are `<` `>` and `font-size: var(--small-font-size)`.
+Deletions are `(` `)`.
+The brackets are not text nodes, so copy and find-in-page see the words only.
+Plain sets `content: none`.
+Plain sources also set `font-size: inherit`.
+Hidden is `display: none`.
+The spans stay in the HTML.
+The rules are not under `@media screen`, and `print.css` does not override them, so a browser print follows the classes
+on `<html>`.
+Playwright PDF prints with empty `localStorage`, so the generated PDF stays distinct.
+The same is why dark mode does not apply to PDF.
+
+`apparatusViewer` on `data-window-name` is the named-window target for entities.
+It is not this feature.
+
+How to write the roles and the yaml flag: README **Apparatus**.
+
 ### Footer
 
 The footer does not repeat the site title.
@@ -400,8 +455,7 @@ contains `S` (irreflexive `contains`).
 `S = hostOf(anchor)` on the **full** authored tree.
 Unchunked initial stack is empty; a section chunk starts with that section.
 Child→parent is a loop stub (no outer aside body).
-A#X → B#Y → A#Z is not a cycle when Z does not contain X.
-Depth cap is 32 **hops** (`TransclusionLoop`).
+A#X → B#Y → A#Z is not a cycle when Z does not contain X. Depth cap is 32 **hops** (`TransclusionLoop`).
 
 **Expand** after `toc.select` + `selectedXml` (chunks only copy what they show).
 Cache is pre-nested source XML only.
@@ -597,8 +651,8 @@ They are authored TEI pages (no document title from the names).
 Resolution is `(kind, source file name without extension)` — not the wiki title walk, not a path.
 Duplicate ids of the same kind are `PageError.Duplicate` and do not resolve.
 Wiki `[[id]]` still title-walks to the file name.
-A bare `@ref` looks like a citeproc key, so `convertCite` skips those `a`s.
-`Page.title` / `Page.listTitle` for an entity is the first name element (`<h1>` and `<title>`).
+A bare `@ref` looks like a citeproc key, so `convertCite` skips those `a`s. `Page.title` / `Page.listTitle` for an
+entity is the first name element (`<h1>` and `<title>`).
 Backlinks on the entity page are the usual internal-link harvest (`persName@ref` in documents), grouped by TEI
 `collection` (`pathHeaderHorizontal`) when the source sits under one; not collector-style mentions (no **Имена:** line,
 no compact doc-id list).
