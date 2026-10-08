@@ -133,8 +133,7 @@ The plugin only creates a `sitePublisher` configuration on the **consumer** and 
 `build/`.
 Up-to-date can skip a generate run; the tool itself is not incremental.
 
-**Layout.**
-Empty Gradle root (`rootProject.name` = `site-publisher`).
+**Layout.** Empty Gradle root (`rootProject.name` = `site-publisher`).
 Library child `publisher/` (`project.name` = `org.podval.tools.publisher`, group `org.podval.tools`).
 Plugin child `plugin/` (artifact `org.podval.tools:site-publisher-plugin`).
 Artifact id is `project.name` of the project that publishes `components.java`, not a privilege of being the root.
@@ -192,8 +191,8 @@ Mapping:
 - booleans decode `true`/`false`/`yes`/`no`/`1`/`0`; encode `true`/`false`
 - decode is `Either[XmlError, A]`; pin `encode` with a type ascription when more than one `XmlAst` is in scope
 
-This replaces zio-blocks `XmlFormat` for document types and is meant to replace OpenTorah
-`ElementTo`/`Parser`/`Unparser` later.
+This replaces zio-blocks `XmlFormat` for document types and is meant to replace OpenTorah `ElementTo`/`Parser`/`Unparser`
+later.
 TEI harvest in the publisher is not migrated yet.
 
 ### Pipeline
@@ -212,8 +211,8 @@ Per document:
     - `TEI` → `DocumentContent` (`DocumentHeader` + authored tree)
     - `person` / `place` / `org` → `EntityContent` (kind, role, display name + authored tree)
     - else → `MarkupContent` (md / adoc / html / docbook)
-3. Dialect converters emit shared IR (leftover soup on `XxxMarkup`: `quoteblock`, `[!tip]`, TEI `cit`, DocBook
-   `sidebar`, …).
+3. Dialect converters emit shared IR (leftover soup on `XxxMarkup`: `quoteblock`, `[!tip]`, TEI `cit`, DocBook `sidebar`,
+   …).
    Store and entity-lists skip this.
 4. HTML-shaped leftovers → IR in `HtmlIr.normalize` (`Aside`, `Quote`, `Strike`, `Figure`, `PdfEmbed`, `Video`).
    `HtmlMarkup.process` is title + nest sections + that pass; Markdown, AsciiDoc, and HTML finish there.
@@ -245,8 +244,8 @@ so generated listing hrefs are display-only.
 Empty includes keep filesystem listing; a collection without includes still binds originals (not `{base}-{xx}`
 translations) for prev/next.
 `CollectionIndex` is generated at render (`StoreContent.markupBody`), like `EntityLists`.
-`EntityListsContent` buckets entity files site-wide (kind and role) and, when more than one list is non-empty,
-creates list pages at `/{prefix}/{n}.html` (`/name/{n}.html` for a directory catalog).
+`EntityListsContent` buckets entity files site-wide (kind and role) and, when more than one list is non-empty, creates
+list pages at `/{prefix}/{n}.html` (`/name/{n}.html` for a directory catalog).
 
 ### SEO
 
@@ -272,7 +271,8 @@ UA is retired; gtag with those ids is not a real replacement.
 Follow-up (all sites, not alter-rebbe-only): replace `UA-…` with GA4 measurement ids, then pass `--production` on
 generate for every published site so gtag actually runs.
 Do not turn `--production` on until the ids are GA4.
-Collector `window.js` still sends UA; if that helper is reused for named windows, keep analytics out of it.
+Named windows and scroll position are `siteSettings.js` (`data-window-name`).
+They do not load Analytics.
 
 ### Markup
 
@@ -288,10 +288,17 @@ See [[#Transclusion]].
 Internal (in the markup file) or external (same name, `.yaml` / `.yml`).
 Both present is an error.
 
-A file is markup if its extension is associated with a dialect (`.md`, `.adoc`, …) or it is `.xml` whose root element is
-associated with a dialect.
-Standalone sidecar `asset: true` (same basename, `.yml` / `.yaml`) reclassifies the markup file as an asset at scan
-(`Pages.forName`): byte copy, no dialect `process`.
+Unknown front-matter keys stay on the value (`extraKeys`) and are not a parse error.
+`modified_time` is read from that stash when the value is a date; a non-date leaves `modifiedTime` empty and keeps the
+key.
+The YAML codec spells record fields in kebab-case, so this key cannot be a field (`modified-time`).
+`FrontMatter.write` is a debug dump: it omits default `false` and empty lists and is not used to rewrite author files.
+`_site_config.yml` rejects unknown keys, including keys nested under `social` and `graph`.
+
+A file is markup if its extension is associated with a dialect (`.md`, `.adoc`, …)
+or it is `.xml` whose root element is associated with a dialect.
+Standalone sidecar `asset: true` (same basename, `.yml` / `.yaml`) reclassifies the markup file as an asset at scan (`Pages.forName`):
+byte copy, no dialect `process`.
 The sidecar is not published.
 Internal `asset: true` is an error (the file stays markup).
 A directory `index` so marked stays a `DirectoryPage` (parent/children); `write` copies the file (no listing, no
@@ -397,48 +404,44 @@ When on, `Pages.load` adds `GraphPage` (`/graph.html`) and `GraphJson` (`/graph.
 **before** `resolveHeaderPages` / `installCollectionAliases`, so `header-pages: [graph]` resolves and a collection
 `@alias="graph"` is `Duplicate`.
 A Worker empty-remainder rewrite would otherwise serve HTML for `/graph.json`.
-JSON is computed at **write**, after `Site.load` has filled `BackLinks`, category membership, and
-`TransclusionEdges`.
+JSON is computed at **write**, after `Site.load` has filled `BackLinks`, category membership, and `TransclusionEdges`.
 No second XML walk.
 Cytoscape.js 3.34.2 loads **only** on `/graph.html` (`MarkupPage.extraLibraries`).
 Author lists `graph` in `header-pages` (no automatic icon).
 Click uses the owner’s `publishedPath` and `NamedWindows.targetAttr` when `named-windows` is on.
 
-**Vertices.**
-Canonical authored `FullMarkupPage` with a source file, via `GraphOwner` (not `Page.real`, which only unwraps `Alias`).
+**Vertices.** Canonical authored `FullMarkupPage` with a source file, via `GraphOwner` (not `Page.real`, which only
+unwraps `Alias`).
 Chunks, facsimile viewers, and PDFs collapse to the owning document.
 Synthetics, assets, and pass-through directory indexes are out.
 Node `id` / click `href` is `publishedPath` (collection aliases, daily remap).
 `group` is the first **source** path segment.
 
-**Source prefixes, not published URLs.**
-`exclude-path-prefixes` match `sourcePath.path.startsWith(...)`.
+**Source prefixes, not published URLs.** `exclude-path-prefixes` match `sourcePath.path.startsWith(...)`.
 Posts and Obsidian dailies are rewritten at scan (`Posts.path`) to `/YYYY/MM/DD/…`.
 The vault folder (`days/` from `.obsidian/daily-notes.json`) never appears on the public href.
 TEI `collection` `@alias` rewrites `/archive/lvia/1799/2/…` to `/lvia1799-2/…`.
 Matching `publishedPath` against `days` or `archive` would drop almost none of those trees.
 The notes-vault recipe `exclude-path-prefixes: [days]` hides daily notes (Obsidian’s graph users filter `-path:Daily/`
 for the same reason: a year of date nodes is a hairball, not a map of ideas).
-Default is an empty list; README recommends `[days]` when that is the daily-notes folder. alter-rebbe.org stays off; if
-enabled, `[archive]` on **source** leaves `name/` entities and notes.
+Default is an empty list; README recommends `[days]` when that is the daily-notes folder.
+alter-rebbe.org stays off; if enabled, `[archive]` on **source** leaves `name/` entities and notes.
 
-**Edges.**
-Directed pairs in JSON: `BackLink` → `kind: link` (wiki, HTML, TEI `@ref`, …); `TransclusionEdge` → `kind: transclude`.
+**Edges.** Directed pairs in JSON: `BackLink` → `kind: link` (wiki, HTML, TEI `@ref`, …); `TransclusionEdge` →
+`kind: transclude`.
 `include-transclusions` defaults to **true** (omit the key, or set `true`).
 `include-transclusions: false` omits every transclude edge; wiki/HTML/TEI **links** are unchanged.
 Dedup per directed pair per kind.
 Intrapage / same-owner skipped.
 Unresolved links stay on the Errors page (no phantom nodes).
 
-**Undirected draw.**
-JSON stays directed so a later arrows checkbox can restore A→B vs B→A.
+**Undirected draw.** JSON stays directed so a later arrows checkbox can restore A→B vs B→A.
 Cytoscape will paint **two** lines if both records exist, even with arrows off.
 Obsidian’s default is one undirected stroke.
 `graph.js` collapses reciprocal pairs of the same `kind` to one element (`data.id` = sorted `a~b:kind`).
 `link` and `transclude` between the same pair stay two strokes.
 
-**Local CSS and empty CDN.**
-`graph.css` is a site asset under `/assets/css/`.
+**Local CSS and empty CDN.** `graph.css` is a site asset under `/assets/css/`.
 `MarkupPage.toHtml` always prefixes `library.cdn` onto `JSLibrary.stylesheet`.
 `Site` is the only library with `cdn = ""` (that is how `/assets/css/style.css` is linked).
 Putting `/assets/css/graph.css` on `Cytoscape` would request
@@ -449,9 +452,8 @@ The init script is `/assets/js/graph.js` (copied like CSS), not inlined: HTML se
 `<script>` (`a < b` became `a &lt; b`, `&&` became `&amp;&amp;`), which is a syntax error and left an empty canvas.
 Pretty-print also wraps lines, so `//` comments in inline JS would comment out the rest of the line.
 
-**Local neighborhood (not v1).**
-Quartz / ole.dev / Obsidian Publish keep a **local** graph (this page plus N hops) as the daily tool; global is the
-overview.
+**Local neighborhood (not v1).** Quartz / ole.dev / Obsidian Publish keep a **local** graph (this page plus N hops) as
+the daily tool; global is the overview.
 One `/graph.json` already supports a client BFS.
 Follow-up (“PR 4”): `?focus=/notes.html` on `/graph.html`, and/or a per-page overlay.
 Overlay must not fetch Cytoscape + the JSON on every TEI page (lazy import, or skip when N is huge).
@@ -463,15 +465,15 @@ How to enable: README **Graph**.
 ### External links
 
 Opt-in `_site_config.yml` `check-links` (default off).
-When on, generate checks author-written `http` and `https` URLs and records failures as `PageError.BrokenLink`
-(`#broken-link` on `/errors.html`).
+When on, generate checks author-written `http` and `https` URLs and records failures as `PageError.BrokenLink` (`#broken-link`
+on `/errors.html`).
 `Site.isInternalLink` stays a classifier: no scheme is internal, same host is `SelfLink`, and a bad URI is internal so
 resolution can report `Unresolved`.
 It does not fetch.
 `Site.sameSiteHost` is the shared host test.
 
-The check runs on the element `PageContent.renderAuthored` returns for the full page, after citeproc HTML is spliced
-in, and on the element `resolveConverted` returns.
+The check runs on the element `PageContent.renderAuthored` returns for the full page, after citeproc HTML is spliced in,
+and on the element `resolveConverted` returns.
 That second tree is store title, abstract, and body, and document-header cells (`PageHeader.resolvedFragment`,
 `CollectionIndex.convertedNodes`).
 Chunks do not check the body again.
@@ -508,13 +510,13 @@ Collector `GET /rgada/003` is 200 at that URL.
 Preview host while `www` stays on the collector: **ng.alter-rebbe.org** (`opentorah/alter-rebbe.org` Pages, `CNAME` →
 `opentorah.github.io`).
 
-**Worker, not Transform Rules.**
-Free Transform Rules are 10; `site.xml` has 48 collection aliases (two patterns each: exact `/rgada` and `/rgada/*`).
+**Worker, not Transform Rules.** Free Transform Rules are 10; `site.xml` has 48 collection aliases (two patterns each:
+exact `/rgada` and `/rgada/*`).
 A Worker does slash-delimited prefix replace and appends `.html` (GitHub Pages will not serve `/…/003` as `003.html`
 without Jekyll pretty permalinks).
 Browser URL stays short (rewrite, not 301).
-Route the Worker only at alias prefixes (`ng.alter-rebbe.org/rgada*`, …) so CSS/JS/images go straight to GitHub and do
-not count as Worker requests.
+Route the Worker only at alias prefixes (`ng.alter-rebbe.org/rgada*`, …)
+so CSS/JS/images go straight to GitHub and do not count as Worker requests.
 
 Generate writes `collection-aliases.json` from the same `aliasByPrefix` map (`from` / `to` segment arrays).
 Wrangler bakes that JSON into the Worker at deploy (`.github/actions/deploy-alias-worker`); it does not fetch the table
@@ -560,8 +562,7 @@ YouTube/Vimeo iframes are skipped.
 TEI files whose root is `person`, `place`, or `org` are `EntityContent`; `Page.entityKind` / `entityRole` /
 `entityDisplayName` come from the parsed root (not a walk of the processed tree).
 They are authored TEI pages (no document title from the names).
-`persName` / `placeName` / `orgName` with a non-empty `@ref` become `a` with the original name as class
-(`LinkKind.Entity`).
+`persName` / `placeName` / `orgName` with a non-empty `@ref` become `a` with the original name as class (`LinkKind.Entity`).
 Resolution is `(kind, source file name without extension)` — not the wiki title walk, not a path.
 Duplicate ids of the same kind are `PageError.Duplicate` and do not resolve.
 Wiki `[[id]]` still title-walks to the file name.
@@ -570,6 +571,9 @@ A bare `@ref` looks like a citeproc key, so `convertCite` skips those `a`s.
 Backlinks on the entity page are the usual internal-link harvest (`persName@ref` in documents), grouped by TEI
 `collection` (`pathHeaderHorizontal`) when the source sits under one; not collector-style mentions (no **Имена:** line,
 no compact doc-id list).
+The collapsed document row links to the first mention outside `teiHeader`.
+Those anchors are not on the published page (the document-header table is rebuilt without their ids).
+When every mention is in the header, the row links to the document.
 Snippet text skips `*-tip` subtrees.
 
 `entityLists` is `EntityListsContent` (same scan as `store` when it is `dir.xml` beside `dir/`).
@@ -649,8 +653,8 @@ After `StoreContent.bind`, two synthetic pages are registered (`StoreIndexPage`,
 - `{file}-collections.html` — collector `Index.Tree` (`/collections`): `div.tree-index`, outer `<em>` is the
   `by/@selector` display name (`архив`), nested stores recurse with their own `by`, collections are leaves.
   Link text is `name:` or `name: title`.
-- `{file}-index.html` — collector `Index.Flat` (`/`): one `<li>` per descendant collection, `pathHeaderHorizontal`
-  (`архив РГАДА, разряд VII, опись 2, дело 3140: title`) plus the collection abstract.
+- `{file}-index.html` — collector `Index.Flat` (`/`): one `<li>` per descendant collection, `pathHeaderHorizontal` (`архив РГАДА, разряд VII, опись 2, дело 3140: title`)
+  plus the collection abstract.
 
 Titles: xml `Selector.xml` title of this store’s `by/@selector` (tree) and of `case` (flat); else the store `<title>`,
 else the file name.
@@ -767,13 +771,13 @@ When on, every page sets `window.name` and internal links `target` the destinati
 collections, notes, home), `apparatusViewer` (entities, entity lists), `textViewer` (collection documents),
 `facsimileViewer` (`FacsimilePage`).
 Name + scroll restore live in `siteSettings.js` (`data-window-name`); no analytics.
-Off: no helper attribute, no `target` on wiki/header except the existing facsimile/`text` photo links. alter-rebbe.org
-turns it on.
+Off: no helper attribute, no `target` on wiki/header except the existing facsimile/`text` photo links.
+alter-rebbe.org turns it on.
 
 Posts come from `_posts/`, `_drafts/`, and the Obsidian daily-notes folder (from `.obsidian`).
 A `YYYY-MM-DD-title` file name rewrites the page path to `/YYYY/MM/DD/title`.
-`post: true` keeps the file path and adds a Refresh alias at `/YYYY/MM/DD/{file name}`
-(`post-title` overrides the slug).
+`post: true` keeps the file path and adds a Refresh alias at `/YYYY/MM/DD/{file name}` (`post-title` overrides the
+slug).
 `date` is required for that alias.
 An absolute `permalink` `/YYYY/MM/DD/any-name` is also a post, so the source file can have any name.
 `Page.isPost` is the path date, `post: true`, or that permalink.
@@ -826,9 +830,9 @@ child is already there.
 `xml:id` is copied to `id`.
 TOC walks through non-section wrappers; a heading need not be the first child (`pb`/`fw` before `head`).
 
-Document title (`PageContent.title`, same as HTML `h1` / DocBook `db-title`): TEI `titleStmt/title` from `process`
-(`tei-title` after `Xml2Html`; `@type="main"` if several); `store` / `collection` / `entityLists` child `title` from
-`Content.parse` (no `process`).
+Document title (`PageContent.title`, same as HTML `h1` / DocBook `db-title`): TEI `titleStmt/title` from `process` (`tei-title`
+after `Xml2Html`; `@type="main"` if several); `store` / `collection` / `entityLists` child `title` from `Content.parse`
+(no `process`).
 Not body `head`, not `bibl`/`cit` titles, not entity names.
 Authored titles are stripped from the tree.
 Empty `titleStmt` (common in the archive) leaves `Page.title` to front matter then the file name.
@@ -849,7 +853,8 @@ Prefix `db` (`title` → `db-title`).
 Claimed roots: `article`, `book`, `chapter`, `appendix`, `part`, `set`, `preface`, `refentry`, `topic` — not `section`.
 Nested `section` / `sect1`–`sect5` / `simplesect` / `chapter` / `appendix` / `preface` rename to `div` then
 `Section.mark`; a claimed root is not renamed (so a `chapter` file stays `<chapter>`).
-Document title is the root or `info`/`articleinfo`/… `title`, stripped from the body (HTML `h1` analog).
+Document title is the root or `info`/`articleinfo`/…
+`title`, stripped from the body (HTML `h1` analog).
 CALS `tgroup` is unwrapped; `row`/`entry` become `tr`/`td` (class `entry` kept).
 No DocBook XSLT and no `org.podval.docbook` package.
 
@@ -878,8 +883,7 @@ Table-kind id there.
 A host table and a transcluded copy in one HTML get `_table_1_fn_a` vs `_table_2_fn_a`.
 `k` may differ between `/P.html` and a chunk, same as arabic remapping.
 
-**Tables.**
-A call site is `Table` when its nearest authored ancestor is a layout `table` (`XmlElement.Table`, not
+**Tables.** A call site is `Table` when its nearest authored ancestor is a layout `table` (`XmlElement.Table`, not
 `collection-index` / `document-header`, not inside a `*-tip`).
 Innermost table wins.
 The wrapper is `div.table-with-notes` > `table` + `div.footnotes.table-footnotes` (not `tfoot`).
@@ -888,17 +892,15 @@ Markdown still defines those bodies at file end; the published page moves them.
 AsciiDoc `footnote:[…]` is written at the call site; the published page still lists those notes under the table.
 Do not table-scope markers found in a parent note's `nodes`.
 
-**Chrome.**
-Collector `CollectionIndex.generate` and `PageHeader.collectorPageHeader` use `TeiMarkup.finishFootnotes` →
+**Chrome.** Collector `CollectionIndex.generate` and `PageHeader.collectorPageHeader` use `TeiMarkup.finishFootnotes` →
 `Footnote.finish(..., localTables = false)`, which forces Document on every **tree** site so those fragments stay one
 arabic series.
 Class exclusion already skips `collection-index` / `document-header`; `localTables = false` is the policy for any other
 table in a `finish` fragment.
 Inner-only ids in chrome may still be Nested.
 
-**Option N.**
-A stub whose only sites are inside one parent body's `nodes` is `Nested(parentId)` (parent correlation id after any
-transclusion prefix).
+**Option N.** A stub whose only sites are inside one parent body's `nodes` is `Nested(parentId)` (parent correlation id
+after any transclusion prefix).
 The inner list is `span.footnotes.nested-footnotes` from `body(nested)`, never stored in `Footnote.nodes`.
 Hover on the outer marker uses `nodes` only (`attachTips = false` inside tips, including in `Footnote.finish`), so the
 tooltip shows inner letter markers and not the inner list.
@@ -923,8 +925,7 @@ TEI still converts only `place="end"`; `place="foot"` and unplaced `note` are un
 The converter copies the value onto the link and body stubs as `footnote-label`.
 `Footnote.remapped` copies it, so chunk renumbering and transclusion keep the marker.
 The call-site link and the backlink show it.
-Series position, scope, and fragment ids stay on the generated series (`_footnote_1`, `_table_1_fn_a`,
-`_footnote_1_n_a`).
+Series position, scope, and fragment ids stay on the generated series (`_footnote_1`, `_table_1_fn_a`, `_footnote_1_n_a`).
 A supplied marker does not skip or reshuffle later notes.
 The same marker may appear on more than one note.
 A blank value is absent.
@@ -1045,8 +1046,7 @@ Markdown/HTML: a `<p>` whose only child is `<img>` (or a lone linked `<img>`) be
 `title` on the image is the caption and is removed from the `<img>`.
 TEI: `<graphic url>` becomes `<img src>` in the first pass; `<figure>` with `<head>`/`<figDesc>` converts in the second
 pass so IR `class` is not prefixed.
-Wiki `![[image]]` embeds stay `<img>` (resolved after convert); Obsidian `|WIDTH` or `|WIDTHxHEIGHT` become
-`width`/`height`.
+Wiki `![[image]]` embeds stay `<img>` (resolved after convert); Obsidian `|WIDTH` or `|WIDTHxHEIGHT` become `width`/`height`.
 `AssetRef` rewrites local `src`/`data` after link resolution.
 
 ### PDF embeds
@@ -1093,9 +1093,8 @@ Term id is the `id` on `<dt>` if present, otherwise the term text with spaces tu
 Two kinds, usable together on one page.
 Ids do not collide: citeproc entries are `#bibl-{key}`; native entries keep the authored id.
 
-**External.**
-Dialect syntax → `Citation` IR (`span.citation` / `span.citation-item` with `data-key`, optional `data-locator`,
-`data-mode`; empty `div.bibliography` placeholder).
+**External.** Dialect syntax → `Citation` IR (`span.citation` / `span.citation-item` with `data-key`, optional
+`data-locator`, `data-mode`; empty `div.bibliography` placeholder).
 Then a **per-document** BibTeX file plus citeproc-java (CSL).
 No site-level bibliography file or style; both `bibliography` and `csl` are required on the document’s front matter.
 Locale is page `lang`, else site `lang`, else `en-US`.
@@ -1117,8 +1116,8 @@ TEI: `ref`/`ptr` `@cRef` (optional `@n` locator) → the same `Citation` stubs.
 Empty `div type="bibliography"` is the placeholder.
 A bare `@target` that is a bib key and is *not* a native `listBibl` id is also a stub.
 
-**Internal.**
-Authored list harvested like glossary (`BibliographyItem` IR: `class="bibliography-item"` with `id`; harvest/tips only).
+**Internal.** Authored list harvested like glossary (`BibliographyItem` IR: `class="bibliography-item"` with `id`;
+harvest/tips only).
 Dialects convert native lists (`TeiMarkup` `listBibl`/`bibl`, `DocBookMarkup` `bibliography`/ `biblioentry`, AsciiDoc
 `[bibliography]` / `[[[id]]]` empty-anchor hoist).
 Links to those ids get `a.citation` and a `citation-tip` of the entry.
@@ -1158,6 +1157,30 @@ namespace.
 A set union cannot follow `Xml2Html` and the dialect renames: TEI `p` becomes `tei-p`, and DocBook `para` becomes `p`.
 Published pages stay on `HtmlXmlWriterConfig`.
 A post-rename overlay for the TEI names that remain in a published page is not this feature.
+
+### Prose pretty-print
+
+Markdown and AsciiDoc are reflowed by splicing into the original bytes.
+Flexmark offsets and Asciidoctor line matches select the prose.
+The parsers do not print.
+
+`Formatter.render` reprints the tree.
+It has no sentence mode, a leading `---` without a YAML extension becomes a setext heading, and a wrap can put a block
+marker at column 0.
+An AsciiDoc reprint is worse: `Document.getSource()` drops trailing spaces, there is no inline source map, and a
+successful `include::` is reported on the parent line.
+Paiges indents XML.
+Prose only needs a column budget.
+
+On AsciidoctorJ 3.0.1 the parse copy escapes `include::` and `ifdef::` lines.
+A span is written only when the parsed lines still match the original file.
+`SafeMode.SECURE` alone rewrites an unescaped include to `link:`.
+The wiki extension is only on the prose parser, so HTML rendering still uses `MarkdownWikiLink`.
+
+`--sentence-per-line` defaults to true.
+`--sentence-per-line=false` only wraps.
+The file extensions are `Markup.extensions` (`md`, `markdown`, `adoc`, `asciidoc`).
+There is no second list.
 
 ### TEI
 

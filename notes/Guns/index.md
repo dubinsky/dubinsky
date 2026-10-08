@@ -2,12 +2,8 @@
 - PX9230LAOS 5" $1,392 ($1,237.95) - classic or
 - PX9228LAOS 4.25" $1,392 ($1,237.95) - futuristic ;)
 
-Order from GrabAGun to Weston?
+Ordered on 10/06/2026 from GrabAGun to Weston.
 
-https://capegunworks.com/home publishes nicely formatted MA gun roster, where the gun appears, but their product search says - "not in MA"; they did not reply to my email...
-
-Pioneer Valley Arms of 173 Shaker Road in East Longmeadow, MA lists the gun as [available online](https://shop.pioneervalleyarms.com/products/handguns-springfield-armory-px9230laos-706397964603-6851)...
-
-https://massarmament.com/hand-guns/ - !!!
+AOS plates: https://store.springfield-armory.com/agency-optic-system-aos-mounting-plate-1911-ds-1911/
 
 [[TODO]] Look into 5.7x28mm pistols.

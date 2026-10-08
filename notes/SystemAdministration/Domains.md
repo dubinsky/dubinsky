@@ -180,4 +180,10 @@ LAN SSH is `ssh pve` / `ha` / `docker` / `unifi` (YubiKey). `k39.podval.org` is 
 
 A Cloudflare Tunnel LXC (104, `cloudflared`, `.236`) and Zero Trust tunnel `keefe39` (team `podvalorg`) were started and never given a `config.yml`. LXC 104 was destroyed 2026-09-16 (`/root/104.conf.bak.*` on PVE). `keefe39` is gone (API list of live and deleted tunnels on the Podval account is empty).
 
-Do not use Cloudflare Tunnel for admin SSH. If a laptop off the LAN needs `ssh pve`, install [Tailscale](https://tailscale.com/) (subnet router on PVE or Tailscale on each guest). That keeps normal SSH + YubiKey and does not publish port 22.
+Do not use Cloudflare Tunnel for admin SSH.
+The subnet router is [[ProxMox]] LXC 106 (`tailscale`, `192.168.1.237`, tailnet `100.82.39.37`).
+It advertises `192.168.1.0/24`.
+That route still has to be enabled for this machine in the Tailscale admin console.
+A laptop off the LAN cannot use it until then.
+It is not an exit node and Tailscale SSH is off, so admin login stays normal SSH plus the YubiKey, and port 22 is not published.
+A laptop off the LAN accepts the route and uses `ssh pve` / `ha` / `docker` / `unifi` as on the LAN.

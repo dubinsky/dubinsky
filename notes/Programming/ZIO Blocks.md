@@ -18,8 +18,20 @@ Specifically, I read one field `folder` from one file `.obsidian/daily-notes.jso
 ZIO Blocks JSON support that I actually use works flawlessly.
 
 ## Yaml
-- pester ZIO Blocks people to fix the hard-coded kebab-case bug (https://github.com/dubinsky/site-publisher/issues/6)
-- report to ZIO Blocks people enumeration handling bug (https://github.com/dubinsky/site-publisher/issues/7)
+
+For reasons unknown, ZIO Blocks YAML hard-codes kebab case for the fields, making it impossible to work with - for instance - standard YAML front-matter fields tlike `modified_time`.
+
+Filed an issue https://github.com/zio/zio-blocks/issues/1327; with no reaction so far, I am reluctant to work on a pull request making this configurable...
+
+When a type is an enumeration, i.e. it is a sealed hierarchy with all leaves being objects (or an `enum`), JSON Codec Deriver handles it correctly: objects are coded by their class names (`Regular`); YAML Codec Deriver does not: objects are coded as nullary records:
+
+```yaml
+style:
+  Regular: {}
+```
+
+Report this bug to ZIO Blocks maintainers.
+
 - my stashed extra keys will not survive round trip once FrontMatter becomes a case class and `.copy()` is used!
 - besides, I stash keys other than the ones in the schema of the `Config`
 class, but the codec changes the names: currently - because of the kebab bug, but even once it is fixed, a name mapper could be in effect...
@@ -81,6 +93,21 @@ On May 12, 2026 I found out that ZIO Blocks XML parser
 is *useless*: it chokes on entities other than `amp`, `lt`, `gt`, `quot` and `apos`! Fucking amateur hour! I have to switch to something standard and convert the result to ZIO Blocks XML AST; SAX or StAX?
 
 ## XML
+
+from an issue:
+
+ZIO Blocks XML turned out to be a viable alternative to Scala XML - with caveats:
+- their writer is broken (describe how and file issues), but I use my own pretty-printer anyways;
+- their reader is broken (describe how and file issues), so I have to adapt a normal parser to their AST;
+- their AST limited: no prologue/epilogue/DTD and no direct support for namespaces;
+
+but! They auto-generate codecs for Scala objects, so this is probably a way to eliminate all post-parsing from OpenTorah!
+
+- [ ] post my Scala XML plan as an issue/discussion in Scala XML
+- [ ] make a pull request for my (yet unwritten) XML parse adaptor
+- [ ] figure out if my pretty-printer really needs to glue quotes to sibling elements and such, or is whitespace introduced by substandard parsers, or?
+
+
 
 As a part of the OpenTorah project, I developed a custom
 XML pretty-printer for the Scala XML AST;
