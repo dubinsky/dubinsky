@@ -335,9 +335,10 @@ Not the TEI element `add`, not a bare `.add`, and not the HTML `<del>` that `Str
 Distinct is the absence of a mode class, so no-JS matches the sheet.
 Additions are `[` `]` from `::before` / `::after`.
 Sources are `<` `>` and `font-size: var(--small-font-size)`.
-Deletions are `(` `)`.
+Deletions are `text-decoration: line-through`.
 The brackets are not text nodes, so copy and find-in-page see the words only.
-Plain sets `content: none`.
+Plain removes the brackets and the small size.
+A plain deletion drops the line-through.
 Plain sources also set `font-size: inherit`.
 Hidden is `display: none`.
 The spans stay in the HTML.
@@ -346,10 +347,29 @@ on `<html>`.
 Playwright PDF prints with empty `localStorage`, so the generated PDF stays distinct.
 The same is why dark mode does not apply to PDF.
 
+AsciiDoc `[.add]` is an editorial insertion, the same kind of words as TEI `supplied`.
+TEI `add` is a scribal insertion (`place` above, below, or in the line) and is not that role.
+TEI `del` is the scribe's strikeout (`rend="overstrike"`, danger red) and is not AsciiDoc `[.del]`.
+The names stay in each markup.
+Nothing in the calendar paper uses `[.del]` or `[.see]`.
+
+Abbreviation expansions are a reading checkbox, not these three radios, and not gated on `apparatus`.
+The control is `abbr-expand`, default on.
+`siteSettings.js` adds `html.abbr-expand-off` only when `localStorage` is `"0"`, before paint.
+No class means the expansion stays inline, including when script never runs.
+`choice > expan` is italic.
+The parentheses from `::before` / `::after` stay roman.
+Off, `expan` is a hover tip, an `abbr` without `rend~=titlo` gets a dotted underline, and a titlo keeps the overline.
+`print.css` puts the italic expansion back, because a tip does not print.
+`supplied` stays square brackets.
+`corr` stays on `--editorial-color`.
+Those parentheses are the same CSS pair, and they are not italic.
+
 `apparatusViewer` on `data-window-name` is the named-window target for entities.
 It is not this feature.
 
 How to write the roles and the yaml flag: README **Apparatus**.
+How to write `abbr` / `expan`: README **TEI choice**.
 
 ### Footer
 
