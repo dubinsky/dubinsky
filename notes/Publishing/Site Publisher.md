@@ -849,6 +849,44 @@ The publisher does not.
 GitHub is the source; HTML is the publication.
 Do not stamp and serve original TEI until someone asks.
 
+### Facsimile aside
+
+The companion sits on the owning full transcription.
+The viewer page, named windows, and inbound `/alias/facsimile/P` URLs stay.
+
+IR: `html` class `facsimile-aside` (one class string, not `html.facsimile`).
+`aside.facsimile-aside` is a sibling of `.wrapper`.
+`data-facsimile-src` is written by `Facsimile.resolveLink` from the same `imageUrl` as the viewer, and only when the
+page is not chunked.
+The primary `img` has no `src` until the pane is shown.
+
+`facsimile.css` stays viewer-only (full viewport, hidden footer).
+The aside has its own sheet.
+
+Script split: the off-class `facsimile-aside-off` is in `siteSettings.js` (`defaultOn`, before paint).
+The milestone walker is the classic script `/assets/js/facsimile-aside.js`, loaded only on the owning full
+transcription.
+
+Breakpoint 1312px.
+The text column stays 800px.
+The scan is at least about 420px and at most 40rem.
+1312 is the media query after the minimum row 800 + wrapper padding + gap + 420.
+Between 1312 and 1528 only the aside shrinks.
+
+The active scan is the last owning `pb` above the reading line (header bottom plus 0.75rem).
+Before the first milestone, the first scan.
+Prefetch only the next JPEG.
+The previous scan stays until the next one has loaded.
+
+Chunks get no aside and no script.
+A transcluded copy does not get the pane.
+Translations share the original viewer.
+No new `_site_config.yml` key.
+No new `PageError` kind.
+
+What the reader sees: site-publisher README `[#facsimiles]`.
+Full-viewer targets: `### Named windows`.
+
 ### Named windows
 
 Opt-in `_site_config.yml` `named-windows` (default off).
