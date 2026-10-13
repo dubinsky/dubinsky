@@ -725,10 +725,27 @@ TEI `store` / `collection` as `dir.xml` beside `dir/` is `StoreContent` (same as
 XInclude.
 `StoreIndex` is the parsed include/name/title/abstract/body/`collection` data inside `StoreContent` (plus collection
 `part`s and `pageType`).
-Header chrome is `PageHeader.collectorPageHeader` (`header.store-header`: ancestor `<l>` lines and this node as `<l>` —
-live [rgada/003](https://www.alter-rebbe.org/rgada/003)).
+Header chrome is `PageHeader.collectorPageHeader` (`header.store-header`).
+Ancestors are one `nav.store-path` of links separated by `/`, not a stack of `<l>` lines.
+This node stays `<l class="store-current">` when it is a store or collection, or a document with a real title.
+A real title is a nonempty extracted title: TEI `titleStmt/title`, or a nonempty markup or front-matter title.
+The file name, and `Page.title`'s filename fallback, are not a title.
+Описание stays in the table and is not an `h1`.
+A collection document with no real title omits `l.store-current`.
+Its crumb (`документ 071`) is the last item of `nav.store-path`, not a link, with `aria-current="page"`.
+When the site has exactly one root store (`StoreIndexes.isRootStore`), that store is omitted from descendant paths.
+A second root puts the crumb back.
+The root page's own heading is unchanged, because it has no ancestors.
+`StoreIndexes.collectionHeader` still drops a root-store prefix from backlink headers whenever one is an ancestor,
+including when the site has two roots.
+Print hides `.store-path` links and separators.
+A path that contains `.store-path-current` still prints that crumb.
+A path of only ancestor links is hidden.
 Collection documents (`DocumentContent` under a collection) add `table.document-header` (Описание / Дата / Кто / Кому /
-Расшифровка from harvested `teiHeader`; `teiHeader` is omitted from the body).
+Расшифровка / Перевод from harvested `teiHeader`; `teiHeader` is omitted from the body).
+The breadcrumb line is a `div.store-path-bar`: the path on the left, and on the right the TEI link, the GitHub link, and
+a Cite button (see Stamped TEI).
+The citation is not shown on the page.
 Entity `ref`s in titles and table cells go through `PageContent.resolveConverted`.
 Then abstract/body and this store’s `by/@selector` label.
 Selector labels are `org.podval.store.Selector` (`Selector.xml` in the xml library; `PageHeader.selectorDisplayName`
@@ -863,11 +880,89 @@ Not collector facets, not `/collection/facsimile/P` as the *emitted* URL, not a 
 hidden).
 Inbound old `/alias/facsimile/P` still resolves (see Collection aliases).
 
-Collector also served `GET /alias/P.xml` as the TEI with `publicationStmt` (site URL, CC BY), `sourceDesc`, `langUsage`,
-and `calendarDesc` filled in.
-The publisher does not.
-GitHub is the source; HTML is the publication.
-Do not stamp and serve original TEI until someone asks.
+### Stamped TEI
+
+Collector served `GET /alias/P.xml` as the TEI with `publicationStmt`, `sourceDesc`, `langUsage`, and `calendarDesc`
+filled in.
+The publisher now does the same job for each TEI document (`DocumentContent`, so `documentHeader` is present), as a
+generated file beside the HTML.
+The git file stays the source.
+HTML stays the reading copy.
+
+`TeiDocumentPage` is registered in `Pages.add` next to `PdfPage`, at `path.withExtension("xml")`.
+It is written with the ordinary pages.
+`TeiStamp` re-reads the source (`PageSource.readRaw`) and does not use the processed tree, which has already dropped
+`teiHeader` from a collection document's body.
+It does not rewrite the git file.
+The writer is `TeiXmlWriterConfig`, so the XML declaration is present.
+
+Header order is the stamped `fileDesc`, then the other header children (`encodingDesc` and the like), then `profileDesc`,
+then `revisionDesc`.
+`fileDesc` drops an existing `publicationStmt` and `sourceDesc` and inserts the stamped pair after `titleStmt`.
+`profileDesc` replaces `langUsage` and `calendarDesc` and keeps `abstract`, `creation`, and `correspDesc`.
+New elements use the TEI root's namespace, so a later writer does not emit `xmlns=""`.
+
+`publicationStmt` is `publisher/ptr@target` set to `config.url` as stored, plus `availability@status=free` and
+`licence@target` (British spelling) from the nested `license` (`name`, `link`, and a `p` for `holder` when set).
+`date@when` is the build's HEAD commit time, the site zone via `Site.toOffsetDateTime`, as `YYYY-MM-DD`.
+It is omitted when the source directory is not in a git checkout.
+`sourceDesc` is one paragraph of the same path labels as the citation (the single root omitted, then this document),
+plus a second paragraph of `facsimiles-url` when that is set.
+It is not the old `<p>Facsimile</p>` placeholder and not an invented `msDesc`.
+`langUsage` is that document's `xml:lang`, not the site `lang`.
+`calendarDesc` is `tei-default-calendar` when set: `calendar@xml:id` and prose such as "Julian calendar" for `julian`.
+`revisionDesc` says the published file is generated and the file in git is the source, and includes the HEAD SHA when
+one exists.
+A stamp does not make the file vanilla TEI.
+The corpus still has project markup (`l` inside `p`, `pb/@missing`, a name `@ref` that is a filename).
+
+The XML page is not in the sitemap.
+`DirectoryPage.filesystemChildren`, `CollectionIndex.originalsUnder`, and `CollectionIndex.translationsOf` drop it, so
+it is not a listing row and a `{base}-{xx}.xml` sibling is not a language link.
+Search and the graph stay on `FullMarkupPage`.
+Local serve guesses `application/xml` from the `.xml` name.
+Alias lookup finds the XML page by its extension before it can return the HTML page.
+
+On a TEI document the breadcrumb line (`div.store-path-bar`, or the same bar around `page-path` on a standalone page)
+holds the TEI link, the GitHub link, and a Cite button on the right.
+The `title` tooltips are "Published TEI", "Source file on GitHub", and "Copy citation".
+The same GitHub tooltip is on the `page-meta` link.
+The citation is not rendered.
+`button.citation-copy` carries it in `data-citation`.
+`assets/js/citation.js` (on the document, its chunks, and its facsimile) copies that attribute.
+The text is the archive path (the same visible ancestors, then this document), `Seo.canonical`, the transcriber names (`Расшифровка`),
+and the license name plus holder.
+Parts join with `. ` and a final period.
+There is no access date.
+When HEAD exists, the text then says `Git hash` and the full SHA, with a period.
+When `origin` is GitHub, it then gives the file blob URL, the same URL as the GitHub link, with no further period.
+That is not the commit URL.
+`Seo.canonical` is `site.uri` plus the published path, the same string as `<link rel="canonical">`.
+`Site.uri` is `URI(config.url)`.
+A `url` with no scheme is not rewritten, so a schemeless site URL stays schemeless in the citation, the canonical link,
+and the sitemap.
+Facsimile and chunk headers are built from the document page, so the citation URL is the document.
+
+The GitHub link is on every authored page that has a source file: TEI documents, notes, entity records, stores, and
+collections.
+On a TEI document, and on a store or collection, it sits on the right of the breadcrumb line and is not repeated in
+`page-meta`.
+On a note or entity it sits in `page-meta`.
+A chunk points at the whole file.
+The URL is the blob on the branch tip (`/blob/`), not `/edit/` and not a pinned SHA.
+`Git` walks up from the source directory (`FileRepositoryBuilder.findGitDir`, including a worktree `.git` file), so a
+project under `docs/` is prefixed on the path.
+It reads `origin` only and does not call `readEnvironment`, so a temp-dir test is not attached to this repo via
+`GIT_DIR`.
+`git@github.com:owner/repo.git`, `ssh://git@github.com/owner/repo.git`, and
+`https://user:token@github.com/owner/repo.git` become `https://github.com/owner/name`.
+Userinfo is dropped.
+The host must be `github.com` or `www.github.com`.
+A missing `origin`, or any other host, emits no link.
+The branch is HEAD's branch.
+A detached HEAD uses `GITHUB_REF_NAME` when `GITHUB_REF` is `refs/heads/…`, otherwise `origin/HEAD`.
+Each path segment is encoded, and slashes stay, so a branch name can contain a slash.
+There is no `repository` key in `_site_config.yml`.
 
 ### Named windows
 
@@ -1289,4 +1384,8 @@ There is no second list.
 
 ### TEI
 
-- decided not to bother with serving raw TEI with licenisng/source information stamped on them until someone asks
+Each TEI document is published as generated XML beside the HTML.
+The header is stamped from site config and the build's HEAD commit.
+The git file stays the source.
+See Stamped TEI.
+A `url` with no scheme is not rewritten on the canonical URL.
