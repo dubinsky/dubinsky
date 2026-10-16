@@ -1049,6 +1049,40 @@ TEI `<gap reason>` uses the same tip family (`span.gap-ref` / `span.gap-tip`) af
 rewritten to `tei-class`.
 No `@reason` → no wrap.
 
+### TEI apparatus
+
+Empty `gap` with a non-empty `@reason` draws one `[…]` from CSS `:empty`.
+The old `lost` / `illegible` / `@content` bracket rules are gone, because an empty `lost` gap would otherwise be `[…]`
+plus a trailing `]`.
+A gap that still has text (the underscore runs) does not get a second mark.
+The reason stays the existing tip (`span.gap-ref` / `span.gap-tip`, above).
+Blank or missing `@reason` still does not wrap.
+
+`@hand="#id"` points at `handNote`.
+`TeiHand` runs after `TeiGap` in the same post-Xml2Html pass, because the words are in the header and collection
+documents then drop `teiHeader`.
+The tip is `span.hand-ref` / `span.hand-tip` with `class`, not `tei-class`.
+`data-hand-tip` makes `convertFragment`'s re-entry a no-op, same reason as `data-gap-tip` and `data-calendars`.
+
+`data-medium` is copied from `handNote/@medium`.
+A lone mark is `box-shadow: inset 0 -1px`.
+A nested hand clears that shadow and paints a 1px no-repeat gradient whose bottom is 3px above the edge.
+A thicker inset (`inset 0 -3px`) is a wider band on the same edge and would cover the outer line, because the descendant
+paints after the ancestor.
+`del[rend=overstrike]` stays the red line-through.
+That line is the deletion.
+The medium marks are separate.
+
+An unresolved or ill-formed `@hand` is `PageError.UnresolvedHand` once per pointer.
+The element is not wrapped.
+It fails the build the same way `NoRef` does, unless the site sets `treatErrorsAsWarnings`.
+
+`choice` / `abbr` / `expan` have no converter.
+CSS parenthesizes whichever child is second, so authored order is the reading order.
+Titlo is `abbr/@rend=titlo` as an overline, not a second element.
+The TEI writer clings `abbr` and `expan` the way it clings `sic` and `corr`.
+An abbreviation in the source is not `supplied` and not `corr`.
+
 ### TEI facsimiles
 
 Collector `site.xml` `<tei facsimilesUrl>` is `_site_config.yml` `facsimiles-url`.
