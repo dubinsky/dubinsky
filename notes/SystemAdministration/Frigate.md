@@ -3,9 +3,9 @@
 - detects and publishes events
 - integrates with [[Home Assistant]]
 
-Frigate can be installed in the [[Home Assistant]] itself; I do not want to do that because Frigate can be used
-without Home Assistant - and because I want to be able to record the camera feeds on a disk that does not belong to
-Home Assistant.
+Frigate can be installed in the [[Home Assistant]] itself; I do not want to do that because Frigate can be used without
+Home Assistant - and because I want to be able to record the camera feeds on a disk that does not belong to Home
+Assistant.
 
 Frigate [documentation](https://frigate.video/) advises against running Frigate in a ProxMox LXC, and suggests a VM
 instead; I did try using a [community script](https://community-scripts.org/scripts/frigate) that creates an LXC as
@@ -22,19 +22,19 @@ I used Grok to configure Frigate ;)
 ## Where it runs
 
 On the `docker` VM ([[ProxMox]] guest 101, `192.168.1.187`), not inside [[Home Assistant]].
-Config and recordings live on the PVE host at `/mnt/data/apps/frigate` and are NFS-exported only to that VM (mounted
-at `/frigate`, NFS4, `_netdev,nofail,x-systemd.automount`).
+Config and recordings live on the PVE host at `/mnt/data/apps/frigate` and are NFS-exported only to that VM (mounted at
+`/frigate`, NFS4, `_netdev,nofail,x-systemd.automount`).
 UniFi DHCP reservation is on **docker** at `.187` — there is no separate client named `frigate`.
 
 `restart: unless-stopped` is not enough after a VM reboot.
-On 2026-09-01 **12:45 EDT** the [[ProxMox]] host reset uncleanly (not a guest `reboot`); `startall` brought docker
-back, dockerd started Frigate while IPv4 to PVE was still `ENETUNREACH`, `mount.nfs` failed, bind-mount of
-`/frigate/config` failed (`mkdir: no such device`), and the container stayed **exited** until 2026-09-03.
-HA's Frigate integration went `setup_retry`, occupancy sensors went unavailable, and **Doorbell Notification** died
-(`frigate.create_event` missing — that abort also skipped `notify.phones`).
+On 2026-09-01 **12:45 EDT** the [[ProxMox]] host reset uncleanly (not a guest `reboot`); `startall` brought docker back,
+dockerd started Frigate while IPv4 to PVE was still `ENETUNREACH`, `mount.nfs` failed, bind-mount of `/frigate/config`
+failed (`mkdir: no such device`), and the container stayed **exited** until 2026-09-03.
+HA's Frigate integration went `setup_retry`, occupancy sensors went unavailable, and **Doorbell Notification** died (`frigate.create_event`
+missing — that abort also skipped `notify.phones`).
 Recovery: `docker start frigate` once NFS is mounted, then reload the HA Frigate config entry.
-To survive the next reboot, `frigate-ensure.service` on the docker VM (`/usr/local/sbin/start-frigate.sh`) retries
-every 15 s until `/frigate` is a mountpoint and the container is running.
+To survive the next reboot, `frigate-ensure.service` on the docker VM (`/usr/local/sbin/start-frigate.sh`) retries every
+15 s until `/frigate` is a mountpoint and the container is running.
 
 UI: http://192.168.1.187:8971 (not port 5000).
 
@@ -65,8 +65,8 @@ NFS only.
 One camera: Reolink hostname `Front`, MAC `c4:8b:66:0e:97:21`, UniFi reservation `192.168.1.110`.
 HTTP is enabled on the camera.
 go2rtc video is HTTP-FLV (`channel0_main.bcs` / `channel0_ext.bcs`).
-Two-way talk is **only** on `doorbell_sub` (`rtsp://…/Preview_01_sub`, no `ffmpeg:` prefix) — that is the stream the
-HA card uses.
+Two-way talk is **only** on `doorbell_sub` (`rtsp://…/Preview_01_sub`, no `ffmpeg:` prefix) — that is the stream the HA
+card uses.
 Do not put talk on `doorbell_main` (one backchannel).
 Frigate consumes `rtsp://127.0.0.1:8554/doorbell_*`.
 
@@ -78,8 +78,8 @@ Sidewalk people can still be detections / `doorbell_person_occupancy`; they are 
 For HA phone notify to match, trigger on the stoop occupancy entity (not generic person occupancy).
 
 A person object mask covers the left rail at the top of the stairs (`0.145,0.62`–`0.255,0.79`).
-A dark post there was detected as a person (score about 0.57), and the box bottom jumped between the stoop edge
-(y≈0.66) and the upper step (y≈0.75).
+A dark post there was detected as a person (score about 0.57), and the box bottom jumped between the stoop edge (y≈0.66)
+and the upper step (y≈0.75).
 That made `binary_sensor.stoop_person_occupancy` chatter, and Doorbell Notification fired every few seconds
 (2026-10-07).
 The mask drops a person whose bottom-center lands on that rail.
@@ -112,8 +112,7 @@ The GPU to pass is the **[[ProxMox]] host** iGPU, not the Arrow Lake desktop:
 - Do **not** attach virtiofs to 101 (UEFI hang).
   NFS stays.
 
-VM 101 today: OVMF, `cpu: host`, 16 cores, 32G, **i440fx** (no `machine:` line), QEMU stdvga `1234:1111`, no
-`hostpci`.
+VM 101 today: OVMF, `cpu: host`, 16 cores, 8G, **i440fx** (no `machine:` line), QEMU stdvga `1234:1111`, no `hostpci`.
 Frigate `compose.yml` already has `/dev/dri/renderD128` commented out.
 `config.yaml` has no `ffmpeg.hwaccel_args`.
 Do not pass HDMI audio `00:1f.3`.
@@ -166,8 +165,8 @@ Timestamped backups of `compose.yml` and `config.yaml` on `/mnt/data/apps/frigat
    Do not set `privileged` unless that fails.
 2. In `config.yaml` ffmpeg: `hwaccel_args: preset-vaapi` (fallback `preset-intel-qsv-h264`).
 3. `docker compose -f /frigate/compose.yml up -d` — do not `compose down`.
-4. Check: logs no longer say `Did not detect hwaccel`; System page shows VAAPI; `docker exec frigate vainfo` lists
-   iHD; doorbell still records/detects; Talk stays on `doorbell_sub` only.
+4. Check: logs no longer say `Did not detect hwaccel`; System page shows VAAPI; `docker exec frigate vainfo` lists iHD;
+   doorbell still records/detects; Talk stays on `doorbell_sub` only.
 
 ### Phase 3 — OpenVINO (later, after VAAPI is boring)
 
@@ -184,8 +183,7 @@ Keep a `config.yaml.bak.*` so CPU tflite is one restart away.
 
 1. Comment the compose device bind, remove `hwaccel_args` (and OpenVINO); recreate the container — CPU Frigate still
    works with the GPU passed in.
-2. Full undo: shutdown 101, delete `hostpci0`, restore host `vfio.conf`/GRUB, reboot PVE so `i915` owns `00:02.0`
-   again.
+2. Full undo: shutdown 101, delete `hostpci0`, restore host `vfio.conf`/GRUB, reboot PVE so `i915` owns `00:02.0` again.
 
 Cutover when I ask: Phases 0–2 in one evening window.
 Phase 3 on a later day.

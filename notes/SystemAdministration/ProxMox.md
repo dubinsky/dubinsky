@@ -3,12 +3,12 @@ tags:
   - sysadmin
 ---
 Standalone node `proxmox` (`proxmox.lan.podval.org`, `192.168.1.40`).
-PVE **9.2.21** (packages updated 2026-10-07).
-Running kernel **7.0.14-20-pve** (booted 2026-10-07).
-Installed kernels: **7.0.14-20**, **7.0.14-15**, **7.0.14-12**, and **7.0.14-5**.
-`apt` now offers to autoremove **7.0.14-5**.
-Leave that kernel installed.
-ZFS **2.4.4-pve1**, including the module shipped with **7.0.14-20**.
+PVE **9.2.21** (packages updated 2026-10-15).
+Running kernel **7.0.14-24-pve** (booted 2026-10-15).
+Installed kernels: **7.0.14-24**, **7.0.14-20**, **7.0.14-15**, **7.0.14-12**, and **7.0.14-5**.
+`apt` offers to autoremove **7.0.14-15**, **7.0.14-12**, and **7.0.14-5**.
+Leave those kernels installed.
+ZFS **2.4.4-pve1**, including the module shipped with **7.0.14-24**.
 Hardware: i9-12900K (24 threads), 64G RAM, boot NVMe `KINGSTON SKC3000D2048G`.
 Bridge `vmbr0` on `enp3s0`, `192.168.1.40/24`, gw `192.168.1.1`.
 Host iGPU is Intel AlderLake-S GT1, `/dev/dri/renderD128` on the **hypervisor** (not passed to the docker VM) — see
@@ -21,15 +21,16 @@ PVE storage: `local` (dir `/var/lib/vz`, ISO/backup) and `local-lvm` (thin pool 
 | ID | Type | Name | LAN IPv4 | Role |
 |---|---|---|---|---|
 | 100 | VM | haos | 192.168.1.209 | [[Home Assistant]] OS. `ssh ha`. 4G RAM, 2 cores, 32G disk |
-| 101 | VM | docker | 192.168.1.187 | [[Docker]] / [[DevPod]] / [[Frigate]]. `ssh docker`. 32G RAM, 16 cores (`cpu: host`), 100G disk |
+| 101 | VM | docker | 192.168.1.187 | [[Docker]] / [[DevPod]] / [[Frigate]]. `ssh docker`. 8G RAM, 16 cores (`cpu: host`), 100G disk |
 | 103 | LXC | cloudflare-ddns | 192.168.1.235 | Dynamic DNS (`k39.podval.org`). 3G disk |
 | 105 | LXC | unifi-os-server | 192.168.1.184 | [[UniFi]] OS (controller). **Not** the switch at 192.168.1.101 |
 | 106 | LXC | tailscale | 192.168.1.237 | Tailscale subnet router for `192.168.1.0/24`. 1G RAM, 1 core, 4G disk, Debian 13 |
+| 107 | LXC | escriptorium | 192.168.1.238 | [[eScriptorium]] v26.07 and Kraken CLI 7.1.1. Debian 13, unprivileged, 8 cores, 16G RAM, 32G disk. Compose on port 8080. Tailscale node `escriptorium` (`100.81.96.9`); `tailscale serve` is tailnet-only. Funnel is off |
 
 LXC **104** (`cloudflared`, `.236`) was destroyed 2026-09-16.
 Its UniFi fixed-IP reservation was removed 2026-10-07.
 The remote path is LXC **106** (`tailscale`, static `192.168.1.237`).
-Tailscale 1.102.5 is on the tailnet as `tailscale` (`100.82.39.37`, `tailscale.tailc87f26.ts.net`).
+Tailscale 1.104.1 is on the tailnet as `tailscale` (`100.82.39.37`, `tailscale.tailc87f26.ts.net`).
 It advertises `192.168.1.0/24` only.
 That route is not enabled yet.
 Peers cannot use it until it is turned on for this machine in the Tailscale admin console.
@@ -38,8 +39,9 @@ See [[Domains]].
 
 All guests: `onboot: 1`, `vmbr0`.
 103 and 105 carry the community-script tag.
-LXC 103/105/106 are unprivileged with nesting.
-106 also has `keyctl=1` and `/dev/net/tun` so Tailscale can open its tunnel.
+LXC 103/105/106/107 are unprivileged with nesting.
+106 and 107 also have `keyctl=1` and `/dev/net/tun`.
+106 uses that so Tailscale can open its tunnel.
 No snapshots when last inventoried.
 
 On **2026-09-01 12:45 EDT** the host itself came back from an **unclean** stop (no `reboot` in the journal, EFI dirty
@@ -84,6 +86,9 @@ $ bash -c "$(wget -qLO - https://github.com/community-scripts/ProxmoxVE/raw/main
 
 I use this VM to run [[DevPod]] workspaces locally - and to run `docker compose` stacks like [[Frigate]].
 
+[[eScriptorium]] and Kraken run in LXC 107.
+Do not move that stack onto this VM.
+
 Passing the host iGPU into that VM for Frigate VAAPI is planned (not done): see [[Frigate]] § iGPU passthrough.
 It needs a PVE reboot.
 Do not start it until I ask.
@@ -92,8 +97,8 @@ TODO in July 2026 suddenly this VM started hanging up on start! - possibly becau
 
 ## Terminal
 
-To make arrow keys etc. work when connected to the container over SSH and such,
-inside the container make the symbolic link from `/bin/sh` to `/bin/bash`.
+To make arrow keys etc. work when connected to the container over SSH and such, inside the container make the symbolic
+link from `/bin/sh` to `/bin/bash`.
 
 ## File Store
 
@@ -166,8 +171,8 @@ Photo/media (including Calibre under `Books/`) + [[Frigate]] NFS source.
 `Pictures/originals` uses the gphoto-sync layout `YYYY/MM/DD` (renamed from `YYYY/YYYY-MM/YYYY-MM-DD` on 2026-08-21).
 
 `sda`/`sdb` (2×2T WD): leftover `md127` superblocks from the old `/mnt/data`.
-Array is **stopped**; `/etc/mdadm/mdadm.conf` has `ARRAY <ignore> UUID=dbc353c9:9eddf842:f209850f:8c30d5ea`
-and `AUTO -all`.
+Array is **stopped**; `/etc/mdadm/mdadm.conf` has `ARRAY <ignore> UUID=dbc353c9:9eddf842:f209850f:8c30d5ea` and
+`AUTO -all`.
 Do not start it.
 Superblocks not wiped.
 
@@ -186,8 +191,8 @@ $ pct set <container id> -mp0 /path/on/host,mp=/path/in/container
 ```
 For additional mounts use `-mp1` etc.
 
-To [mount](https://woshub.com/proxmox-shared-host-directory/) a directory from the host in a virtual machine
-(see [post](https://forum.proxmox.com/threads/proxmox-8-4-virtiofs-virtiofs-shared-host-folder-for-linux-and-or-windows-guest-vms.167435/)):
+To [mount](https://woshub.com/proxmox-shared-host-directory/) a directory from the host in a virtual machine (see
+[post](https://forum.proxmox.com/threads/proxmox-8-4-virtiofs-virtiofs-shared-host-folder-for-linux-and-or-windows-guest-vms.167435/)):
 - in the ProxMox UI `Datacenter | Directory Mappings` add a mapping from name/tag to the path on the host
 - in the settings of the virtual machine `Hardware | Virtiofs` pass it in
 - in the guest virtual machine, create a mountpoint

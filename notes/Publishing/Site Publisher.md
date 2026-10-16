@@ -770,6 +770,30 @@ There are no `/report` pages.
 Each Errors-page kind is `div.kind` with `id` from the case-object name (`#no-ref`, `#unclear`, `#misnamed-entity`).
 More than one kind: a TOC of those fragments.
 
+### Place map
+
+A `listPlace` whose members include a `place` with `location/geo` draws a map above the list (`PlaceMap`, from
+`EntityLists.listXml`).
+The coordinate is latitude, then longitude, separated by a space.
+`idno` with `type="wikidata"` may name the same place and is not read by the map.
+`place > location` and `place > idno` are hidden on the entity page.
+The area of a circle is the number of cases that name the place.
+A case is a collection whose parent store groups by `case` or `дело`.
+Leaves of one case count once.
+A mention that is not under such a collection counts as none.
+A place with a coordinate and no case is a ring.
+Places are dropped, farthest from the median first, until the latitude span and the longitude span are each at most 15°.
+A dropped place stays in the table and is marked outside the frame.
+Rivers and the coast are read from `_place-map-base.txt` at the site root when that file exists.
+The publisher ships none.
+`README.adoc` has the prompt for writing that file from Natural Earth.
+A blank line separates polylines.
+`#` comments.
+A block whose first line is `# coast` is coastline; any other block is a river.
+Each coordinate line is longitude, then latitude.
+The file is ignored by the `_*` rule and is not published.
+The map is omitted when no member has a coordinate.
+
 ### Directories and posts
 
 Directory pages, navigation (up/prev/next), path navigation, missing index pages.
@@ -1480,6 +1504,8 @@ The inline-macro regexp allows an empty target so `cite:[key]` matches; `CiteMac
 attributes (not just `1`).
 
 Markdown: Pandoc citation syntax scanned after FlexMark; no extra extension.
+`code` and `pre` are not scanned, so `@key` there stays literal.
+A cite created inside them would be invisible to lookup, which stops at `code`, and the characters would be gone.
 
 TEI: `ref`/`ptr` `@cRef` (optional `@n` locator) → the same `Citation` stubs.
 Empty `div type="bibliography"` is the placeholder.
