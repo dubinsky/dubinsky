@@ -1157,6 +1157,38 @@ A detached HEAD uses `GITHUB_REF_NAME` when `GITHUB_REF` is `refs/heads/…`, ot
 Each path segment is encoded, and slashes stay, so a branch name can contain a slash.
 There is no `repository` key in `_site_config.yml`.
 
+### Facsimile aside
+
+The companion sits on the owning full transcription.
+The viewer page, named windows, and inbound `/alias/facsimile/P` URLs stay.
+
+IR: `html` class `facsimile-aside` (one class string, not `html.facsimile`).
+`aside.facsimile-aside` is a sibling of `.wrapper`.
+`data-facsimile-src` is written by `Facsimile.resolveLink` from the same `imageUrl` as the viewer, and only when the
+page is not chunked.
+The primary `img` has no `src` until the pane is shown.
+
+`facsimile.css` stays viewer-only.
+The aside has its own sheet.
+
+Script split: the off-class `facsimile-aside-off` is in `siteSettings.js` (`defaultOn`, before paint).
+The milestone walker is the classic script `/assets/js/facsimile-aside.js`, loaded only on the owning full
+transcription.
+
+1312px is the media query after the minimum row of an 800px text column plus wrapper padding plus gap plus 420px, with
+the scan at most 40rem, and between 1312 and 1528 only the aside shrinks.
+
+The active scan is the last owning `pb` above the reading line (header bottom plus 0.75rem).
+Before the first milestone, the first scan.
+Prefetch only the next JPEG.
+The previous scan stays until the next one has loaded.
+
+Chunks get no aside and no script.
+A transcluded copy does not get the pane.
+
+What the reader sees: site-publisher README `[#facsimiles]`.
+Full-viewer targets: `### Named windows`.
+
 ### Named windows
 
 Opt-in `_site_config.yml` `named-windows` (default off).
