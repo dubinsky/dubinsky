@@ -379,6 +379,25 @@ Column 3 is `div.footer-description`, not a `p`, so its first line meets the con
 It emits the head `<link rel="license">` and, when set, `div.footer-license` (holder, then license name).
 The feed is an icon-only `a.footer-feed` on the line after that.
 
+### Messages
+
+Interface strings live in `Messages.xml` next to the site package.
+Each message is a `Names` list with English first and Russian second.
+`Messages.text` looks the key up and calls `Names.doFind`.
+English is first, so a site with no `lang`, or a language the catalog does not list, gets the English sentence.
+Selector display names already fall back that way.
+The file uses the `Name` codec: the `n` attribute or the element text, not both.
+Scala substitutes brace placeholders after the lookup.
+A brace left with no supplied value throws.
+An extra supplied value is ignored.
+
+Scripts do not read `Messages.xml` and do not branch on the site language.
+The page has already chosen the sentence, and the script assigns that text with `textContent` or `setAttribute`.
+`search.js` replaces `{n}` only in the overflow sentence stored on `#site-search`.
+`graph.js` replaces `{n}` and `{e}` only in the status pattern stored on `#site-graph-status`.
+The facsimile aside reads `data-missing` and `data-error` from its status element.
+`data-interface-lang` is not a second copy of the sentences.
+
 ### Markup
 
 Supported: [[Markdown]], [[AsciiDoc]], HTML, [[TEI]], [[DocBook]].
@@ -410,6 +429,44 @@ A directory `index` so marked stays a `DirectoryPage` (parent/children); `write`
 chrome).
 
 [[Jekyll]] ignored Markdown without front matter; this publisher does not.
+
+### Page language
+
+`langDefault` was `Some("en")` in front of the site language.
+`MarkupPage.lang` asked front matter, then that default, then `site.config.lang`.
+The default was always present, so a Russian site still published `html lang="en"` whenever the file itself was silent.
+Removing it lets the site language be the fallback the configuration already named.
+The cascade that stores the code is in Alternates.
+
+`html lang` is the document, not the interface.
+The interface is the site language: `dir` and `data-interface-lang` on `<html>`.
+The existing `[lang]` rules set both `direction` and `text-align`, and alignment inherits.
+`direction` on `html[dir]` alone would leave `text-align: right` from `<html lang="he" dir="ltr">`.
+`html[dir="ltr"]` and `html[dir="rtl"]` set both properties.
+Their specificity is higher than `[lang]`, so the chrome stays with the interface even when the document language would
+flip it.
+
+The copy is not in `Xml2Html`.
+That rewrite strips a reserved `lang`.
+TEI `<code lang="scala">` is the highlight language, and the rewrite already stores it as `tei-lang`.
+Putting that value on HTML `lang` would announce a programming language as a human language.
+A second `Xml2Html.convert` would rename an HTML `lang` back to `tei-lang`.
+The publisher copies only `xml:lang`, and only after `tei2Html.convert`, so the converted node is not fed through the
+rewrite again.
+
+A store title is wrapped after `getChildren` because that call drops the title element.
+`copyContentLang` may have set `lang` on the element, and the children no longer carry it.
+`l.store-current` also holds the selector word.
+A `lang` on the `l` would mark that word as the document language.
+The title children get their own wrapper.
+The body is the same shape: `getChildren` of the converted body, then one wrapper.
+
+A collection document has no `h1.page-title`.
+The heading line is `l.store-current`: the selector word (`selectorDisplayName`, already the interface language) plus
+the file stem.
+`titleStmt/title` is not rendered there.
+`hasBibliographicTitle` only chooses whether that line is shown or the crumb replaces it.
+The document language belongs on `td.value`, where the header table quotes the document, not on the heading line.
 
 ### Categories
 
@@ -797,8 +854,14 @@ Footer lists `pb@missing` empty vs non-empty photos.
 one id sequence), not inline at the reference.
 
 `<part from="000">` title rows split originals.
-A sibling `{base}-{xx}` (dash at length 3; `xml:lang` must match) is a translation: not a row; Язык links it; original
-site header `[xx]`; prev/next is originals only.
+A sibling `{base}-{xx}` is not a row.
+The Язык cell lists the code of each other reading.
+The header link is the autonym.
+Prev/next stays on originals.
+A site-root language directory is the other way to name a reading.
+See Alternates.
+A `+reg` file is not a row either.
+See +reg.
 Store indexes stay lists.
 
 Collector used a second stylesheet (`wide.css`, `$content-width: 1800px`) for `Collection` pages.
@@ -811,6 +874,109 @@ Site config `home` (absolute path, resolved with `Pages.find` after the tree inc
 A synthetic root `DirectoryPage` is dropped from `pages` (not written); an authored `index` plus `home` is
 `PageError.Duplicate`.
 Does not flatten the chunk tree onto `/`.
+
+### Alternates
+
+A page has another reading in exactly two ways.
+
+The suffix `{base}-{xx}` sits in the same source directory, with the same extension.
+`splitLang` is unchanged.
+The two letters are the code even when `forDefaultName` does not know them.
+
+The directory is a site-root prefix.
+The first segment counts only when `Language.forDefaultName` returns a language: `en`, not `English`, and not `zz`.
+The tail, with the same extension, is the other page.
+`en/notes/about.md` is a reading of `notes/about.md`.
+`col/en/001.xml` is not one, because `col` is not a language code.
+
+The original is the page that is neither a suffix translation nor under a language prefix.
+A cluster is that original plus the other readings.
+A lone `001-ru.xml` or a lone `en/about.md` has no original, so it is not a cluster: no header link and no `hreflang`.
+
+`html lang` is one stored code.
+The cascade is `text/@xml:lang`, then the suffix, then the directory, then front matter, then the site language, then
+`en`.
+Suffix before directory is why `ru/about-en.md` is stored as `en`.
+
+The signals on this file are front matter, `text/@xml:lang`, `text/@lang`, the suffix, and the directory.
+The site language is not a signal.
+Two different signals are one `Wrong language` error.
+On a TEI root only, a missing `text/@xml:lang` is a signal when a suffix or a language directory is present.
+That is why a `-ru` file with no `text/@xml:lang` is still `missing != ru`.
+Markdown and AsciiDoc have no such attribute, so `en/about.md` with no front matter is not an error.
+
+Two files with the same code (`about-en.md` and `en/about.md`) are an error on both.
+One remains: the suffix sibling if there is one, otherwise the first published path.
+The head then has one `hreflang="en"`.
+
+`hreflang="x-default"` is the URL to offer when none of the language-specific URLs fits.
+That URL is the page the author wrote without a language marker: no suffix, and not under a language directory.
+The suffixed file and the directory copy are the other readings, not the default.
+Canonical stays the page itself.
+There is no redirect and no `Accept-Language`.
+A page with no other reading emits no `hreflang`.
+
+The collection Язык cell is a catalog column.
+It stays the code (`he ru`) so the column stays narrow and matches the file suffix.
+The header is navigation between readings, so its text is the autonym (`русский`): `forDefaultName(code).names` in that
+language's own spec, or the raw code when the catalog has none.
+The original's code is that page's stored `lang`, which is already a code.
+A Russian site note with no front matter is therefore `ru` / `русский`, not `Russian`.
+
+### +reg
+
+`splitLang` means one thing: a dash at `length - 3` is a language code.
+A regularized reading is not a language.
+`doc+reg` stays the whole stem with no language, and so does `doc-ru+reg`, even though `doc-ru` is Russian.
+That keeps the reading out of the translation row, the alternate cluster, and `hreflang`.
+
+The facsimile rewrite wants the viewer, not the reading.
+It removes `+reg` first, then runs the same `splitLang`.
+`doc+reg` becomes `doc`.
+`doc-ru+reg` becomes `doc-ru`, and that is a translation, so the viewer is `doc`, the same viewer `doc-ru` already uses.
+If `splitLang` saw the raw stem it would keep `doc-ru+reg` whole, and the URL would look for a viewer that is not
+registered.
+The Scala copy and `rewrite.js` do this in the same order.
+
+The reading is another reading of the same document, not a second set of photographs.
+`Facsimile.needed` is false for it, so no second `facsimile.html` is registered.
+Links and the worker URL resolve to the original's viewer.
+
+Search stores the diplomatic text of the original.
+The regularized spelling is editorial.
+A record for the reading would publish that spelling as a hit and add a second document the reader did not ask to land
+on.
+`SearchJson.recordOf` returns nothing for a reading, and the index stays the one diplomatic record.
+
+### Search dehyphenation
+
+`PlainText.diplomaticBody` still returns one string.
+`search.json` stays version 1.
+`search.js` is unchanged.
+
+The stored text keeps the diplomatic spelling, including a `U+002D` hyphen before `lb break="no"`.
+The same string also holds the joined spelling, letters and numbers only, with that hyphen omitted.
+`Борухо-<lb break="no"/>вичъ` is stored as `Борухо-вичъ Боруховичъ`.
+Punctuation stays on the diplomatic word, so `Борухо-<lb break="no"/>вичъ,` is `Борухо-вичъ, Боруховичъ`.
+Consecutive `break="no"` hyphens are one extra token: `на-хо-дилось находилось`.
+
+The extra token is the next whitespace-separated word after the diplomatic word.
+It is not a list appended at the end of the document.
+A hit on the joined spelling then still has the hyphenated spelling inside the snippet window (40 characters before, 80
+after).
+
+The browser tokenizer is unchanged because it already splits on everything that is not a letter or a number.
+The hyphenated spelling and the joined spelling are two tokens in the same string.
+No new splitting rule is required.
+
+An ordinary hyphen is not joined (`что-то` does not become `чтото`).
+A hyphen before a normal `lb` is not joined.
+A maqaf (`U+05BE`) is not this hyphen and is not joined.
+An authored hyphen earlier in the word is left alone, so `Римскому-Кор-<lb break="no"/>сакову` adds `Корсакову`, not
+`РимскомуКорсакову`.
+Whitespace the break introduces before the continuation is not part of the token.
+The continuation stops at the next real whitespace, so `Могилев-<lb break="no"/> скою губерніею` adds `Могилевскою` and
+does not swallow `губерніею`.
 
 ### TEI dates
 
@@ -917,8 +1083,11 @@ A stamp does not make the file vanilla TEI.
 The corpus still has project markup (`l` inside `p`, `pb/@missing`, a name `@ref` that is a filename).
 
 The XML page is not in the sitemap.
-`DirectoryPage.filesystemChildren`, `CollectionIndex.originalsUnder`, and `CollectionIndex.translationsOf` drop it, so
-it is not a listing row and a `{base}-{xx}.xml` sibling is not a language link.
+`DirectoryPage.filesystemChildren` and `CollectionIndex.originalsUnder` drop `TeiDocumentPage`, so the stamped file is
+not a listing row.
+`translationsOf` is gone.
+A `{base}-{xx}` page is dropped by `isTranslation`, and a `+reg` page by `isReading`.
+Neither check sees the stamped XML page.
 Search and the graph stay on `FullMarkupPage`.
 Local serve guesses `application/xml` from the `.xml` name.
 Alias lookup finds the XML page by its extension before it can return the HTML page.
