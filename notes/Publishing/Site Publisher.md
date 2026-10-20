@@ -801,7 +801,7 @@ Header links are `header-pages` in `_site_config.yml` (ordered source or site pa
 in front matter).
 
 TEI `store` / `collection` as `dir.xml` beside `dir/` is `StoreContent` (same as live
-[alter-rebbe.org collections](https://www.alter-rebbe.org/collections) / `/archive/books`).
+[alter-rebbe.org collections](https://www.alter-rebbe.org/archive-collections.html) / `/archive/books`).
 `xi:include/@href` is a page reference resolved with `Path.resolveFrom` from the store file; StAX does not expand
 XInclude.
 `StoreIndex` is the parsed include/name/title/abstract/body/`collection` data inside `StoreContent` (plus collection
@@ -814,7 +814,9 @@ The file name, and `Page.title`'s filename fallback, are not a title.
 Описание stays in the table and is not an `h1`.
 A collection document with no real title omits `l.store-current`.
 Its crumb (`документ 071`) is the last item of `nav.store-path`, not a link, with `aria-current="page"`.
-When the site has exactly one root store (`StoreIndexes.isRootStore`), that store is omitted from descendant paths.
+When the site has exactly one root store (`StoreIndexes.isRootStore`), that store is omitted from descendant path text (`visibleAncestors`,
+and the archive-path strings that drop that root).
+This does not rewrite `/collections` or `/years`, and it does not depend on those names.
 A second root puts the crumb back.
 The root page's own heading is unchanged, because it has no ancestors.
 `StoreIndexes.collectionHeader` still drops a root-store prefix from backlink headers whenever one is an ancestor,
@@ -853,16 +855,18 @@ A TEI `store` whose source file sits in the site root (`archive.xml`) is a **roo
 After `StoreContent.bind`, two synthetic pages are registered (`StoreIndexPage`, generated at render like
 `CollectionIndex` so listing hrefs are not backlinks):
 
-- `{file}-collections.html` — collector `Index.Tree` (`/collections`): `div.tree-index`, outer `<em>` is the
-  `by/@selector` display name (`архив`), nested stores recurse with their own `by`, collections are leaves.
+- `{file}-collections.html` — collector `Index.Tree`: `div.tree-index`, outer `<em>` is the `by/@selector` display name
+  (`архив`), nested stores recurse with their own `by`, collections are leaves.
   Link text is `name:` or `name: title`.
-- `{file}-index.html` — collector `Index.Flat` (`/`): one `<li>` per descendant collection, `pathHeaderHorizontal` (`архив РГАДА, разряд VII, опись 2, дело 3140: title`)
+- `{file}-index.html` — collector `Index.Flat`: one `<li>` per descendant collection, `pathHeaderHorizontal` (`архив РГАДА, разряд VII, опись 2, дело 3140: title`)
   plus the collection abstract.
 
-Titles: xml `Selector.xml` title of this store’s `by/@selector` (tree) and of `case` (flat); else the store `<title>`,
-else the file name.
-Exactly one root-store tree also occupies the `/collections` prefix in `aliasByPrefix` (Worker / `serve()` /
-`Pages.find`; no Refresh file).
+The tree title is the `Selector.xml` plural of this store’s `by/@selector`; else the store `<title>`, else the file
+name.
+The flat title is `Messages` `index.title` (Collections / «Коллекции»).
+A file at either path, or at `{file}-years`, is rendered above the generated list.
+Its `h1` or front-matter `title` replaces the page title.
+There is no `/collections` or `/years` alias, including when the site has one root store.
 `header-pages` and `home` stay site config (`archive-collections`, `home: /archive-index.html`).
 
 ### Collection index
