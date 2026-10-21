@@ -5,9 +5,6 @@ plugins {
   id 'org.podval.tools.site-publisher' version '0.8.0'
 }
 
-// Gradle 9.8.1 still defaults Zinc to 1.12.0.
-scala.zincVersion = '1.12.1'
-
 description = 'Financial Calculations'
 
 application.mainClass = 'org.podval.finance.Main'
@@ -20,15 +17,7 @@ site {
   production = true
 }
 
-// JDK 22+ compatibility flags for the finance `run` task (not site-publisher):
-// scala.runtime.LazyVals$ (old lazy-val bytecode on the classpath) uses sun.misc.Unsafe
-ext.jdkCompatJvmArgs = [
-  '--enable-native-access=ALL-UNNAMED',
-  '--sun-misc-unsafe-memory-access=allow',
-]
-
-tasks.withType(JavaExec).configureEach {
-  jvmArgs jdkCompatJvmArgs
-}
+// scala.runtime.LazyVals$ uses sun.misc.Unsafe
+podval.allowJdk25RestrictedAccess()
 
 
