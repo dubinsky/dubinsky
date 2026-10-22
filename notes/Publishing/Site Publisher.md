@@ -296,24 +296,48 @@ Mermaid initializes `theme` `dark` or `default` and re-renders on `site-color-sc
 The graph reads `--graph-node-color`, `--graph-label-color`, and `--graph-edge-color` from the computed tokens.
 Pencil underlines use `--pencil-color`.
 
+### Reader settings
+
+One `ReaderFeatures` value is computed at the end of `Site.load`, after `pages.load()`, the backlink walk, and
+transclusion harvest.
+`siteHeader` and `<html data-apparatus-kinds>` both read it.
+The pass walks each prepared tree once: every `MarkupPage` that has a source, including a synthetic page that absorbed
+`{root}-years`, `{root}-index`, `{root}-collections`, map, or multi-list prose, plus `inlineListProse`, plus the raw
+store title, description, and body.
+Footnote bodies are walked with that page.
+They are stripped from the tree and published again.
+The walk counts `choice`, `data-apparatus`, `Glossary.definitions`, and bibliography tips there, and not transclusion.
+A collection document also walks the published header cells: abstract, author, addressee, transcriber, and translator.
+Store fragments and those header cells count for `choice` and `span[data-apparatus]` only.
+A terms row is `glossaryDefinitions` (a list with no refs still counts), `Glossary.definitions` on a footnote node, or
+an internal link `bibliographyTip` would tip, including one that sits only in a note.
+`cite:[key]` does not.
+An expansions row is a `choice` outside `code`, including one that sits only in a footnote body or in a published
+collection-document header cell, and not one that remains only in `encodingDesc` or `revisionDesc`.
+A transclusion row is `toPage` on a full markup page, or the same harvest predicate on synthetic content and
+`inlineListProse`.
+A facsimile row is `Facsimile.needed` on any full page.
+Each apparatus group is a `span` whose `data-apparatus` is `add`, `del`, or `see`.
+The same list, in that order, is `data-apparatus-kinds` on `<html>`.
+The attribute is omitted when empty.
+A row is on every page of the site, or on none.
+
 ### Apparatus
 
-Opt-in `_site_config.yml` `apparatus` (default off).
-When on, `MarkupPage.pageRoot` sets `data-apparatus-enabled="true"` on `<html>`, in the same chain as `data-window-name`.
-The gear menu then adds three radio groups, `apparatus-add`, `apparatus-see`, and `apparatus-del`.
+There is no `apparatus` key in `_site_config.yml`, and `<html>` does not carry `data-apparatus-enabled`.
+Which groups appear is Reader settings.
+The gear adds a radio group only for a kind the site uses: `apparatus-add`, `apparatus-del`, or `apparatus-see`.
 Values are `distinct`, `plain`, and `hidden`.
-Distinct is checked in the static HTML.
+The label for `distinct` is Marked.
+That radio is checked in the static HTML.
 These names are not checkbox `keys` (`"1"` / `"0"`).
 They follow the color-scheme radios.
 
 `siteSettings.js` is static and runs in `<head>`.
-It reads `data-apparatus-enabled` on `document.documentElement` before paint.
-If the marker is not `"true"`, stored modes are ignored and no `apparatus-*-plain` or `apparatus-*-hidden` class is
-added.
-A later visit with the flag back on applies the stored value again.
-If the marker is `"true"`, `localStorage` `plain` or `hidden` adds `html.apparatus-add-plain` or
-`html.apparatus-add-hidden` (and the `see` and `del` pairs).
-Any other stored value, including a missing key, removes both classes.
+It reads `data-apparatus-kinds` on `document.documentElement` before paint.
+A stored `plain` or `hidden` for a kind that is not listed does not add `html.apparatus-*-plain` or
+`html.apparatus-*-hidden`.
+A missing stored value, or `distinct`, removes both classes.
 Radios are wired on `DOMContentLoaded`.
 
 AsciiDoc `[.add]#…#`, `[.see]#…#`, and `[.del]#…#` are a role on a constrained `#`.
@@ -332,7 +356,8 @@ Only a `span` gets `data-apparatus`, so a leftover class is still not apparatus.
 `prose.css` styles only `[data-apparatus="add"]`, `[data-apparatus="see"]`, and `[data-apparatus="del"]`.
 Not the TEI element `add`, not a bare `.add`, and not the HTML `<del>` that `Strike` emits for line-through.
 `--add-color` stays on the TEI element.
-Distinct is the absence of a mode class, so no-JS matches the sheet.
+Marked is the absence of a mode class, so no-JS matches the sheet.
+The stored radio value remains `distinct`.
 Additions are `[` `]` from `::before` / `::after`.
 Sources are `<` `>` and `font-size: var(--small-font-size)`.
 Deletions are `text-decoration: line-through`.
@@ -344,7 +369,7 @@ Hidden is `display: none`.
 The spans stay in the HTML.
 The rules are not under `@media screen`, and `print.css` does not override them, so a browser print follows the classes
 on `<html>`.
-Playwright PDF prints with empty `localStorage`, so the generated PDF stays distinct.
+Playwright PDF prints with empty `localStorage`, so the generated PDF stays Marked.
 The same is why dark mode does not apply to PDF.
 
 AsciiDoc `[.add]` is an editorial insertion, the same kind of words as TEI `supplied`.
@@ -353,7 +378,7 @@ TEI `del` is the scribe's strikeout (`rend="overstrike"`, danger red) and is not
 The names stay in each markup.
 Nothing in the calendar paper uses `[.del]` or `[.see]`.
 
-Abbreviation expansions are a reading checkbox, not these three radios, and not gated on `apparatus`.
+Abbreviation expansions are a reading checkbox, not these three radios.
 The control is `abbr-expand`, default on.
 `siteSettings.js` adds `html.abbr-expand-off` only when `localStorage` is `"0"`, before paint.
 No class means the expansion stays inline, including when script never runs.
@@ -368,7 +393,7 @@ Those parentheses are the same CSS pair, and they are not italic.
 `apparatusViewer` on `data-window-name` is the named-window target for entities.
 It is not this feature.
 
-How to write the roles and the yaml flag: README **Apparatus**.
+How to write the roles: README **Apparatus**.
 How to write `abbr` / `expan`: README **TEI choice**.
 
 ### Footer
@@ -1108,6 +1133,8 @@ CSS parenthesizes whichever child is second, so authored order is the reading or
 Titlo is `abbr/@rend=titlo` as an overline, not a second element.
 The TEI writer clings `abbr` and `expan` the way it clings `sic` and `corr`.
 An abbreviation in the source is not `supplied` and not `corr`.
+`reg` joins the off-state of `expan` and `corr`, parentheses included, and print puts it back.
+`reg` is not a new element and is not italic.
 
 ### TEI facsimiles
 
