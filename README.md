@@ -268,7 +268,10 @@ Archived:
 Some of the corrections I suggested were accepted by the author of the (excellent!) book
 ["Program = Proof"](https://www.lix.polytechnique.fr/Labo/Samuel.Mimram/teaching/INF551/course.pdf), Samuel Mimram.
 
-- [Functional Programming in Scala](https://github.com/fpinscala/fpinscala):
+Some of the corrections I suggested were accepted by the authors of the (excellent!) book
+["Principles of Dependent Type Theory"](https://www.danielgratzer.com/papers/type-theory-book.pdf), Carlo Angiuli and Daniel Gratzer.
+
+Minor corrections in the book [Functional Programming in Scala](https://github.com/fpinscala/fpinscala):
   [175](https://github.com/fpinscala/fpinscala/issues/175),
   [176](https://github.com/fpinscala/fpinscala/issues/176),
   [177](https://github.com/fpinscala/fpinscala/issues/177),

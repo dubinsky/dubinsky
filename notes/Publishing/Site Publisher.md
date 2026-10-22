@@ -746,6 +746,8 @@ Member lists are generated at render (`EntityLists.generate`) after `Site.load` 
 `xml`, so catalog → entity `<a>`s are display-only.
 Two or more non-empty lists: catalog page is TOC of list pages (`/name/{n}.html`); members are not inlined.
 One non-empty list: the catalog page *is* that list (no `{n}` subpage).
+A markup file at that list path is prose above the inlined list: the catalog `MarkupPage` keeps a detached `PageSource`,
+and `{n}.html` is still not published.
 Several `entityLists` files are independent catalogs.
 `DirectoryPage` does not dump `ul.page-list` of every file.
 A `listPerson` inside a normal `TEI` document is not filled.
@@ -772,11 +774,19 @@ More than one kind: a TOC of those fragments.
 
 ### Place map
 
-A `listPlace` whose members include a `place` with `location/geo` draws a map above the list (`PlaceMap`, from
-`EntityLists.listXml`).
+`/map.html` (leaf alias `/map`) is drawn when any `place` has a parseable `location/geo`, including a site with no
+`listPlace`.
+Points are those place files, not the members of a list.
+`PlaceMap.render` is called only from `MapPage`, at write, so case counts see harvested backlinks.
+`PlaceMap.located` is the emit check and does not count cases.
 The coordinate is latitude, then longitude, separated by a space.
 `idno` with `type="wikidata"` may name the same place and is not read by the map.
 `place > location` and `place > idno` are hidden on the entity page.
+The page heading is `map.page` (Map / «Карта»).
+The SVG `<title>` stays `map.title`.
+An optional `map.md` is prose above the figure; its `h1` or front-matter title replaces the page heading only.
+The page is not a header link and not a directory-listing entry.
+The place list does not draw the map and does not link to it.
 The area of a circle is the number of cases that name the place.
 A case is a collection whose parent store groups by `case` or `дело`.
 Leaves of one case count once.
@@ -792,7 +802,20 @@ A blank line separates polylines.
 A block whose first line is `# coast` is coastline; any other block is a river.
 Each coordinate line is longitude, then latitude.
 The file is ignored by the `_*` rule and is not published.
-The map is omitted when no member has a coordinate.
+The page is omitted when no place has a coordinate.
+
+A markup file at a list path is prose on that `EntityListPage` (`takeProse` accepts only `MarkupContent`).
+An `h1` replaces that page's `<title>` and `l.store-current`.
+The catalog TOC and `StoreTree.nameList` stay the list `<head>`.
+`Pages.resolve` keeps a fragment when the target content is empty, or the page is a `YearIndexPage` or an
+`EntityListPage`, or `EntityLists.kept` for that catalog has length 1.
+That last check is computed at resolve time.
+It is not stored: `EntityListsContent` is rebuilt when the soft cache misses.
+A one-list catalog therefore keeps the file as `inlineListProse` on the catalog `MarkupPage`, drops the scanned page
+immediately, and renders `detached.content` at write, above the inlined list.
+The copy is `recordParseErrors = false`.
+The `.doc` test is the parse that records.
+The catalog `<title>` is not replaced.
 
 ### Directories and posts
 
@@ -861,8 +884,7 @@ After `StoreContent.bind`, two synthetic pages are registered (`StoreIndexPage`,
 - `{file}-index.html` — collector `Index.Flat`: one `<li>` per descendant collection, `pathHeaderHorizontal` (`архив РГАДА, разряд VII, опись 2, дело 3140: title`)
   plus the collection abstract.
 
-The tree title is the `Selector.xml` plural of this store’s `by/@selector`; else the store `<title>`, else the file
-name.
+The tree title is `Messages` `tree.title` (Tree / «Дерево»).
 The flat title is `Messages` `index.title` (Collections / «Коллекции»).
 A file at either path, or at `{file}-years`, is rendered above the generated list.
 Its `h1` or front-matter `title` replaces the page title.
