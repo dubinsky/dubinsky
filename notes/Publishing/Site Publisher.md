@@ -292,7 +292,8 @@ bar.
 Highlight.js ships the `default` and `dark` stylesheets.
 The head script enables one (`data-hljs-theme`).
 The dark sheet’s ground matches `--code-background-color` (`#303030`).
-Mermaid initializes `theme` `dark` or `default` and re-renders on `site-color-scheme`.
+Pele mounts `code.language-mermaid` and reads `--pele-*` variables that follow the site tokens, so a scheme change does
+not re-render the diagram.
 The graph reads `--graph-node-color`, `--graph-label-color`, and `--graph-edge-color` from the computed tokens.
 Pencil underlines use `--pencil-color`.
 
