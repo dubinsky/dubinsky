@@ -2,7 +2,7 @@ plugins {
   id 'scala'
   id 'application'
   id 'org.podval.conventions'
-  id 'org.podval.tools.site-publisher' version '0.8.0'
+  id 'org.podval.tools.site-publisher' version '0.9.0'
 }
 
 description = 'Financial Calculations'
