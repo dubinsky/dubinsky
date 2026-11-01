@@ -266,7 +266,7 @@ Archived:
 ## Proofreading
 
 Some of the corrections I suggested were accepted by the author of the (excellent!) book
-["Program = Proof"](https://www.lix.polytechnique.fr/Labo/Samuel.Mimram/teaching/INF551/course.pdf), Samuel Mimram.
+["Program = Proof"](https://www.lix.polytechnique.fr/Labo/Samuel.Mimram/teaching/pp/course.pdf), Samuel Mimram.
 
 Some of the corrections I suggested were accepted by the authors of the (excellent!) book
 ["Principles of Dependent Type Theory"](https://www.danielgratzer.com/papers/type-theory-book.pdf), Carlo Angiuli and Daniel Gratzer.

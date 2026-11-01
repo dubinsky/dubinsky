@@ -1,8 +1,7 @@
 ---
 tags: [sysadmin]
 ---
-* TOC
-{:toc}
+* TOC {:toc}
 
 ## Square Space
 
@@ -257,10 +256,9 @@ LXC 104 was destroyed 2026-09-16 (`/root/104.conf.bak.*` on PVE).
 `keefe39` is gone (API list of live and deleted tunnels on the Podval account is empty).
 
 Do not use Cloudflare Tunnel for admin SSH.
-The subnet router is [[ProxMox]] LXC 106 (`tailscale`, `192.168.1.237`, tailnet `100.82.39.37`).
-It advertises `192.168.1.0/24`.
-That route still has to be enabled for this machine in the Tailscale admin console.
-A laptop off the LAN cannot use it until then.
+The subnet router is [[ProxMox]] LXC 106 (`homelab-tailscale`, `192.168.1.237`, tailnet `100.82.39.37`, MagicDNS
+`homelab-tailscale`).
+It advertises `192.168.1.0/24`, and that route is enabled for this machine.
 It is not an exit node and Tailscale SSH is off, so admin login stays normal SSH plus the YubiKey, and port 22 is not
 published.
 A laptop off the LAN accepts the route and uses `ssh pve` / `ha` / `docker` / `unifi` as on the LAN.

@@ -24,16 +24,15 @@ PVE storage: `local` (dir `/var/lib/vz`, ISO/backup) and `local-lvm` (thin pool 
 | 101 | VM | docker | 192.168.1.187 | [[Docker]] / [[DevPod]] / [[Frigate]]. `ssh docker`. 8G RAM, 16 cores (`cpu: host`), 100G disk |
 | 103 | LXC | cloudflare-ddns | 192.168.1.235 | Dynamic DNS (`k39.podval.org`). 3G disk |
 | 105 | LXC | unifi-os-server | 192.168.1.184 | [[UniFi]] OS (controller). **Not** the switch at 192.168.1.101 |
-| 106 | LXC | tailscale | 192.168.1.237 | Tailscale subnet router for `192.168.1.0/24`. 1G RAM, 1 core, 4G disk, Debian 13 |
+| 106 | LXC | homelab-tailscale | 192.168.1.237 | Tailscale subnet router for `192.168.1.0/24`. 1G RAM, 1 core, 4G disk, Debian 13 |
 | 107 | LXC | escriptorium | 192.168.1.238 | [[eScriptorium]] v26.07 and Kraken CLI 7.1.1. Debian 13, unprivileged, 8 cores, 16G RAM, 32G disk. Compose on port 8080. Tailscale node `escriptorium` (`100.81.96.9`); `tailscale serve` is tailnet-only. Funnel is off |
 
 LXC **104** (`cloudflared`, `.236`) was destroyed 2026-09-16.
 Its UniFi fixed-IP reservation was removed 2026-10-07.
-The remote path is LXC **106** (`tailscale`, static `192.168.1.237`).
-Tailscale 1.104.1 is on the tailnet as `tailscale` (`100.82.39.37`, `tailscale.tailc87f26.ts.net`).
-It advertises `192.168.1.0/24` only.
-That route is not enabled yet.
-Peers cannot use it until it is turned on for this machine in the Tailscale admin console.
+The remote path is LXC **106** (`homelab-tailscale`, static `192.168.1.237`).
+Tailscale 1.104.4 is on the tailnet as `homelab-tailscale` (`100.82.39.37`, `homelab-tailscale.tailc87f26.ts.net`).
+The machine name is generated from the OS hostname.
+It advertises `192.168.1.0/24` only, and that route is enabled for this machine.
 It does not run Grok, is not an exit node, and does not use Tailscale SSH.
 See [[Domains]].
 

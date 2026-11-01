@@ -299,15 +299,18 @@ Pencil underlines use `--pencil-color`.
 
 ### Reader settings
 
-One `ReaderFeatures` value is computed at the end of `Site.load`, after `pages.load()`, the backlink walk, and
-transclusion harvest.
+One `ReaderFeatures` value is assigned in `Site.load`.
 `siteHeader` and `<html data-apparatus-kinds>` both read it.
-The pass walks each prepared tree once: every `MarkupPage` that has a source, including a synthetic page that absorbed
-`{root}-years`, `{root}-index`, `{root}-collections`, map, or multi-list prose, plus `inlineListProse`, plus the raw
-store title, description, and body.
-Footnote bodies are walked with that page.
+Local flags are recorded in `prepareAuthored`.
+Store fragments and header cells are recorded with the content.
+`Site.load` unions those with the page-level transclusion and facsimile checks.
+The recorded trees are every `MarkupPage` that has a source, including a synthetic page that absorbed `{root}-years`,
+`{root}-index`, `{root}-collections`, map, or multi-list prose, plus `inlineListProse`, plus the raw store title,
+description, and body.
+Footnote bodies are recorded with that page.
 They are stripped from the tree and published again.
-The walk counts `choice`, `data-apparatus`, `Glossary.definitions`, and bibliography tips there, and not transclusion.
+That recording counts `choice`, `data-apparatus`, `Glossary.definitions`, and bibliography tips there, and not
+transclusion.
 A collection document also walks the published header cells: abstract, author, addressee, transcriber, and translator.
 Store fragments and those header cells count for `choice` and `span[data-apparatus]` only.
 A terms row is `glossaryDefinitions` (a list with no refs still counts), `Glossary.definitions` on a footnote node, or
@@ -629,8 +632,9 @@ Obsidian’s default is one undirected stroke.
 `link` and `transclude` between the same pair stay two strokes.
 
 **Local CSS and empty CDN.** `graph.css` is a site asset under `/assets/css/`.
-`MarkupPage.toHtml` always prefixes `library.cdn` onto `JSLibrary.stylesheet`.
-`Site` is the only library with `cdn = ""` (that is how `/assets/css/style.css` is linked).
+`JSLibrary.styleLinks` prefixes `cdn` onto `stylesheet`.
+`Site` is not a `JSLibrary`.
+It implements `HeadContribution` and links `/assets/css/style.css` with no CDN prefix.
 Putting `/assets/css/graph.css` on `Cytoscape` would request
 `https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.34.2/assets/css/graph.css` (404).
 Companion `GraphCss` is a `JSLibrary` with `cdn = ""` and that local path, listed in `extraLibraries` next to Cytoscape.
@@ -836,7 +840,10 @@ The catalog TOC and `StoreTree.nameList` stay the list `<head>`.
 `Pages.resolve` keeps a fragment when the target content is empty, or the page is a `YearIndexPage` or an
 `EntityListPage`, or `EntityLists.kept` for that catalog has length 1.
 That last check is computed at resolve time.
-It is not stored: `EntityListsContent` is rebuilt when the soft cache misses.
+It is not stored on the page.
+During load a soft miss still replaces `EntityListsContent`, so the prose stays on the `MarkupPage`.
+After `pages.load()` returns, `Site.load` pins each page `source` and each `inlineListProse`.
+A later soft miss does not rebuild that content.
 A one-list catalog therefore keeps the file as `inlineListProse` on the catalog `MarkupPage`, drops the scanned page
 immediately, and renders `detached.content` at write, above the inlined list.
 The copy is `recordParseErrors = false`.
