@@ -495,7 +495,22 @@ The heading line is `l.store-current`: the selector word (`selectorDisplayName`,
 the file stem.
 `titleStmt/title` is not rendered there.
 `hasBibliographicTitle` only chooses whether that line is shown or the crumb replaces it.
-The document language belongs on `td.value`, where the header table quotes the document, not on the heading line.
+Editorial rows do not carry the document language on `td.value`.
+Unmarked Кто and Кому still do when the names have no `xml:lang`.
+The heading line does not.
+
+`div.page-body` does not carry the document language.
+The transcription's `text` does.
+A non-TEI prose root is stamped with the owning page's document language only when it has no `lang`.
+On a chunk that owner is the full page, and the chunk's `html lang` stays the site language.
+TEI footnote lists carry the interface language and direction when those differ.
+A note with `xml:lang` keeps `lang` and `dir` on `span.footnote`.
+Markdown, AsciiDoc, and DocBook lists are not stamped.
+
+Detached page breaks are wrapped in `div.pb-run` after footnote harvest, under a structural parent only.
+The run includes whitespace, any `fw`, a `span.hand-ref` around `fw`, and a footnote link.
+It carries interface `lang` and `dir` when the languages differ.
+A break inside a line is not wrapped, and `fw` is not stamped.
 
 ### Categories
 
