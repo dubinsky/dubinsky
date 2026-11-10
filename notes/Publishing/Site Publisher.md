@@ -496,7 +496,8 @@ the file stem.
 `titleStmt/title` is not rendered there.
 `hasBibliographicTitle` only chooses whether that line is shown or the crumb replaces it.
 Editorial rows do not carry the document language on `td.value`.
-Unmarked Кто and Кому still do when the names have no `xml:lang`.
+Unmarked Кто and Кому still do when the names have no `xml:lang` and are written in the document script.
+A name in another script inherits the store header.
 The heading line does not.
 
 `div.page-body` does not carry the document language.
