@@ -223,7 +223,9 @@ Per document:
    TEI `<s>` is a sentence, so `Strike.normalize` must not see that tree.
 5. Authored `PageContent.prepareAuthored`: sections/ids, internal-link marks, wiki embed (images, audio, video, PDF
    only), footnote harvest
-6. `Site.load` gathers backlinks (skips `a.transclude`) and `TransclusionEdge`s (silent)
+6. `Site.load` gathers backlinks (skips `a.transclude`) and `TransclusionEdge`s (silent).
+   Absorbed authored prose and `inlineListProse` are harvested.
+   The empty store / entity-lists root is why generated index hrefs are not.
 7. `Content.markupBody`: store is `None` (directory listing); entity lists generated at render; authored selects XML,
    `Transclusion.expand`, appends footnotes (host + copies), resolves citations/links/tooltips, injects TOC.
    `resolveLinks` does not walk `aside.transclusion` or leftover transclude stubs.
@@ -239,8 +241,9 @@ Per document:
 table).
 Collector chrome is a path property (this page is a store, or an ancestor is), not only this page’s type: markdown under
 a collection still gets `header.store-header`.
-`Site.load` walks `Content.xml` for backlinks (not transclude stubs) and transclusion edges; indexes use an empty root
-so generated listing hrefs are display-only.
+`Site.load` walks absorbed authored prose and `inlineListProse` for backlinks (not transclude stubs) and transclusion
+edges.
+Indexes still use an empty root, so generated listing hrefs stay display-only.
 
 `StoreContent.bind` takes scanned pages, resolves `xi:include/@href`, sets directory children, and reports `NotInStore`
 (not translation files).
@@ -620,6 +623,7 @@ Click uses the owner’s `publishedPath` and `NamedWindows.targetAttr` when `nam
 unwraps `Alias`).
 Chunks, facsimile viewers, and PDFs collapse to the owning document.
 Synthetics, assets, and pass-through directory indexes are out.
+A backlink from a non-`FullMarkupPage` is not an edge and is not a vertex.
 Node `id` / click `href` is `publishedPath` (collection aliases, daily remap).
 `group` is the first **source** path segment.
 
