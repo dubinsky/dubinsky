@@ -10,7 +10,7 @@ description = 'Financial Calculations'
 application.mainClass = 'org.podval.finance.Main'
 
 // There is no Java in the project :)
-project.gradle.startParameter.excludedTaskNames.add('compileJava')
+podval.compileJavaEnabled = false
 
 site {
   treatErrorsAsWarnings = true
@@ -18,6 +18,6 @@ site {
 }
 
 // scala.runtime.LazyVals$ uses sun.misc.Unsafe
-podval.allowJdk25RestrictedAccess()
+podval.allowJdkRestrictedAccess()
 
 
