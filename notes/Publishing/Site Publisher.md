@@ -114,6 +114,7 @@ Code lives in `site-publisher`.
 Dialect conversion sits next to `XxxMarkup`; shared IR sits in `markup/` (`Citation`, `Bibliography`, `Footnote`,
 `Glossary`, `Section`, `Transclusion`, …).
 Page chrome and generated indexes sit in `page/` (`PageHeader`, `PagedList`, `CollectionIndex`, `EntityLists.generate`).
+The header and footer markup is `SiteChrome` and `Site` forwards.
 The page graph and link/asset lookup sit in `site/` (`Pages.resolve`, `Pages.resolveAsset`, `BackLink` / `BackLinks`,
 `TransclusionEdge`).
 There is no `feature/` package.
