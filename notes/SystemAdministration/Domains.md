@@ -75,15 +75,18 @@ For each domain:
 Three organizations use `org.podval.tools:org.podval.tools.pulumi` ([github.com/dubinsky/pulumi](https://github.com/dubinsky/pulumi),
 checkout `~/Podval/pulumi`) from their `infra` repositories — GCP org, buckets, groups, and Cloudflare DNS:
 
-| Org | Checkout | Cloudflare account | Pulumi stack |
-|---|---|---|---|
-| Podval | `~/Podval/infra` | `dub@podval.org` | `podval-infra` / `dev` |
-| OpenTorah | `~/OpenTorah/infra` | `dub@opentorah.org` | `opentorah-infra` / `dev` |
-| CognoMath | `~/CognoMath/infra` | `dub@cognomath.org` | `cognomath-infra` / `dev` |
+| Org | Checkout | Repo | Cloudflare account | Pulumi stack |
+|---|---|---|---|---|
+| Podval | `~/Podval/infra` | `dubinsky/podval-infra` | `dub@podval.org` | `podval-infra` / `dev` |
+| OpenTorah | `~/OpenTorah/infra` | `opentorah/infra` | `dub@opentorah.org` | `opentorah-infra` / `dev` |
+| CognoMath | `~/CognoMath/infra` | `cognomath/infra` | `dub@cognomath.org` | `cognomath-infra` / `dev` |
 
-Each `settings.gradle` composite-`includeBuild`s the sibling pulumi checkout when it exists (`-PpulumiDir=` to
-override).
+There is exactly one library checkout, `~/Podval/pulumi`, and no symlinks.
+Each infra `settings.gradle` defaults `pulumiDir` to `../../Podval/pulumi` (i.e. `~/Podval/pulumi` from
+`~/<Org>/infra`; `-PpulumiDir=` overrides) and composite-`includeBuild`s that directory when it exists.
 If that directory is missing, Gradle resolves the published artifact from Maven Central.
+The same file includes the conventions build from `../../Podval/podval-gradle` (property `podvalGradleDir`)
+when that directory is present.
 Published version is `0.5.0`; local composite is `0.5.1` (alias / Google-apex redirects).
 
 Every zone also gets `min_tls_version` 1.2, DNSSEC, and CAA.
