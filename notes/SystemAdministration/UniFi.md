@@ -14,10 +14,10 @@ I now run it in a LXC container in [[ProxMox]] :) Guest **105** (`unifi-os-serve
 UI: https://192.168.1.184:11443 (**not** :8443).
 **192.168.1.101** is the USW-Pro-24-PoE, not the controller.
 
-As of 2026-10-15: UniFi OS Server **5.1.42**, Network **10.6.106**.
-No application update was applied.
+As of 2026-11-11: UniFi OS Server **5.1.42**, Network **10.6.109**.
+No UniFi application update was applied on 2026-11-11 (OS Server stayed 5.1.42).
 `uosserver-updater.service` is the app updater, and `uosserver` has no update command.
-Debian packages on the LXC were upgraded 2026-10-15 (and on 2026-10-07).
+Debian packages on the LXC were upgraded 2026-11-11 (and earlier on 2026-10-15 and 2026-10-07).
 Host units `uosserver.service` / `uosserver-updater.service` (user `uosserver`).
 Data on the LXC: `/var/lib/uosserver/`.
 App data in the container: `/usr/lib/unifi/data/`.

@@ -47,14 +47,26 @@ UI: http://192.168.1.187:8971 (not port 5000).
   storage/                       # recordings, clips, snapshots
 ```
 
-Image `ghcr.io/blakeblackshear/frigate:stable`, CPU only (no Coral).
+Image `ghcr.io/blakeblackshear/frigate:0.18.2`, pinned in `compose.yml` on 2026-11-11 (was `:stable` at 0.17.2).
+CPU only (no Coral). Config is `version: 0.18-0` after Frigate's auto-migration.
+Do not hand-edit `version` — leaving the old value is what triggers migration.
+A local rollback tag `frigate:0.17.2` is on the docker VM.
 Ports 8971, 8554 (go2rtc RTSP), 8555 WebRTC.
 MQTT to HA Mosquitto at `192.168.1.209:1883`, user `frigate`.
+After 0.18.2, nginx logs `using uninitialized "go2rtc_stream_proxy" variable` on API requests (including HA `/api/stats`).
+Harmless: those requests still return 200, and detect/record/MQTT work.
 
 This tree is not in yadm and not in HA Google Drive Backup.
 Safe to copy off-box: `compose.yml` and `config/config.yaml`.
 Do not copy `.env`, `config/.jwt_secret`, or `config/frigate.db*`.
-Today the only backups are those `*.bak.*` files on the same share.
+Backups from the 2026-11-11 0.17.2 → 0.18.2 upgrade, on this same share:
+
+- `compose.yml.bak.20261111151330` and `compose.yml.bak.20261111151745`
+- `config/config.yaml.bak.20261111151330`
+- Frigate's own migrator copies: `config/backup_config.yaml` (0.17) and `config/backup.db`
+- dated `config/frigate.db*.bak.20261111151745` and directory `backups-pre-0.18.2-20261111151745/`
+
+To roll back: restore the dated `config.yaml` + `frigate.db*`, set the compose image to `frigate:0.17.2`, and `docker compose -f /frigate/compose.yml up -d` (never `compose down`).
 Later: include this dataset in PVE/PBS, or rsync the two safe files somewhere tracked.
 
 Do **not** attach virtiofs to VM 101 (UEFI hang).
@@ -73,7 +85,10 @@ Frigate consumes `rtsp://127.0.0.1:8554/doorbell_*`.
 Detect **on**, 480×640 on the sub stream; record+audio on main.
 Review **alerts = person only**, and `review.alerts.required_zones: [stoop]`.
 Zone `stoop` is the brick landing + brick stairs (not the sidewalk / street; sidewalk feet sit around y=0.57–0.67).
-Frigate 0.17 does **not** accept `objects.filters.person.required_zones` (safe-mode).
+On 0.17, `objects.filters.person.required_zones` was invalid (safe-mode).
+The 0.18 migrator left `review.alerts.required_zones: [stoop]` in place and added `enabled` / `friendly_name` on the person and motion masks; coordinates were unchanged.
+YAML stayed block-style (not a single-line `{...}` document).
+Talk is still the raw RTSP line on `doorbell_sub` only (no `ffmpeg:` prefix, no `#hardware`).
 Sidewalk people can still be detections / `doorbell_person_occupancy`; they are not Review **alerts**.
 For HA phone notify to match, trigger on the stoop occupancy entity (not generic person occupancy).
 

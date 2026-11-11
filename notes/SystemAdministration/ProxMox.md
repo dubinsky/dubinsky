@@ -3,12 +3,12 @@ tags:
   - sysadmin
 ---
 Standalone node `proxmox` (`proxmox.lan.podval.org`, `192.168.1.40`).
-PVE **9.2.21** (packages updated 2026-10-15).
-Running kernel **7.0.14-24-pve** (booted 2026-10-15).
-Installed kernels: **7.0.14-24**, **7.0.14-20**, **7.0.14-15**, **7.0.14-12**, and **7.0.14-5**.
+PVE **9.2.26** (packages updated 2026-11-11).
+Running kernel **7.0.14-28-pve** (booted 15:25 America/New_York 2026-11-11).
+Installed kernels: **7.0.14-28**, **7.0.14-24**, **7.0.14-20**, **7.0.14-15**, **7.0.14-12**, and **7.0.14-5**.
 `apt` offers to autoremove **7.0.14-15**, **7.0.14-12**, and **7.0.14-5**.
-Leave those kernels installed.
-ZFS **2.4.4-pve1**, including the module shipped with **7.0.14-24**.
+Leave those kernels installed. Do not `apt autoremove`.
+ZFS **2.4.4-pve1** (as of 2026-10-15).
 Hardware: i9-12900K (24 threads), 64G RAM, boot NVMe `KINGSTON SKC3000D2048G`.
 Bridge `vmbr0` on `enp3s0`, `192.168.1.40/24`, gw `192.168.1.1`.
 Host iGPU is Intel AlderLake-S GT1, `/dev/dri/renderD128` on the **hypervisor** (not passed to the docker VM) — see
@@ -30,7 +30,7 @@ PVE storage: `local` (dir `/var/lib/vz`, ISO/backup) and `local-lvm` (thin pool 
 LXC **104** (`cloudflared`, `.236`) was destroyed 2026-09-16.
 Its UniFi fixed-IP reservation was removed 2026-10-07.
 The remote path is LXC **106** (`homelab-tailscale`, static `192.168.1.237`).
-Tailscale 1.104.4 is on the tailnet as `homelab-tailscale` (`100.82.39.37`, `homelab-tailscale.tailc87f26.ts.net`).
+Tailscale 1.104.6 is on the tailnet as `homelab-tailscale` (`100.82.39.37`, `homelab-tailscale.tailc87f26.ts.net`).
 The machine name is generated from the OS hostname.
 It advertises `192.168.1.0/24` only, and that route is enabled for this machine.
 It does not run Grok, is not an exit node, and does not use Tailscale SSH.
@@ -41,7 +41,15 @@ All guests: `onboot: 1`, `vmbr0`.
 LXC 103/105/106/107 are unprivileged with nesting.
 106 and 107 also have `keyctl=1` and `/dev/net/tun`.
 106 uses that so Tailscale can open its tunnel.
-No snapshots when last inventoried.
+Snapshots taken 2026-11-11 (leave them in place until I say otherwise):
+
+- VM 100: `pre-pve-reboot-20261111` (USB passthrough did not block the snapshot)
+- VM 101: `pre-101-window-20261111`, then `pre-pve-reboot-20261111`
+- LXC 103/105/106: `pre-phase1-20261111`, then `pre-pve-reboot-20261111`
+- LXC 107 cannot `pct snapshot` because of the bind mounts (`mp0` facsimiles, `mp1` `/mnt/data/apps/htr`).
+  Use a file backup on the PVE host instead: `/root/107-pre-phase1-20261111150901` and
+  `/root/107-pre-pve-reboot-20261111152106`.
+
 
 On **2026-09-01 12:45 EDT** the host itself came back from an **unclean** stop (no `reboot` in the journal, EFI dirty
 bit, journal “uncleanly shut down”, guest ext4 recovery).
@@ -57,6 +65,7 @@ HAOS USB passthrough (do not steal these off VM 100):
 - `303a:4001` Nabu Casa ZWA-2 (Z-Wave)
 
 Docker VM hostname `docker`.
+Debian 13, kernel **6.12.116+deb13-amd64**, timezone **America/New_York** (set 2026-11-11; was UTC).
 **Does not use virtiofs** (no `virtiofs` / `fsN` in `101.conf`).
 **Do not attach it** — it hangs UEFI boot.
 Frigate is NFS from `/mnt/data/apps/frigate` to `192.168.1.187` only; guest mounts `/frigate`.

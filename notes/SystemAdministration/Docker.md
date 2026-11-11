@@ -5,6 +5,14 @@ tags:
 - [Documentation](https://docs.docker.com/reference/)
 - [Fedora Instructions](https://linuxconfig.org/how-to-install-and-configure-docker-ce-moby-engine-on-fedora-32)
 
+## docker VM (ProxMox 101)
+
+The long-lived Docker host is [[ProxMox]] VM **101** (`docker`, `192.168.1.187`), Debian 13.
+As of 2026-11-11: docker-ce **29.9.3**, docker-ce-cli **29.9.3**, containerd.io **2.4.2-3**, Compose plugin **5.7.1**, buildx **0.38.1**, timezone **America/New_York** (was UTC).
+Kernel **6.12.116+deb13-amd64**.
+The only compose stack on this VM is [[Frigate]].
+Do not attach virtiofs.
+
 ## Install
 ```shell
 $ sudo dnf install moby-engine docker-compose

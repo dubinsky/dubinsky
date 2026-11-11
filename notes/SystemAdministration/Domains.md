@@ -256,6 +256,11 @@ Turns out, the client
 [is](https://community-scripts.github.io/ProxmoxVE/scripts?id=cloudflare-ddns&category=Network+%26+Firewall) available
 as an LXC after all - and that is how I run it now.
 
+As of 2026-11-11 the binary is favonia cloudflare-ddns **1.18.0** at `/usr/local/bin/cloudflare-ddns`.
+It was extracted from the official image `ghcr.io/favonia/cloudflare-ddns:1.18.0` pinned by digest
+(`sha256:345b41895a8846d74c62d30bd27e61101a754f8ab8da10c68115823883803afb`), not built on the LXC.
+Do **not** update it with `go run …@latest` — that filled the 3G disk once.
+
 Configuration file is in `/etc/systemd/system/cloudflare-ddns.service`; for changes to take:
 `systemctl restart cloudflare-ddns`.
 
@@ -271,7 +276,7 @@ LXC 104 was destroyed 2026-09-16 (`/root/104.conf.bak.*` on PVE).
 
 Do not use Cloudflare Tunnel for admin SSH.
 The subnet router is [[ProxMox]] LXC 106 (`homelab-tailscale`, `192.168.1.237`, tailnet `100.82.39.37`, MagicDNS
-`homelab-tailscale`).
+`homelab-tailscale`, Tailscale **1.104.6** as of 2026-11-11).
 It advertises `192.168.1.0/24`, and that route is enabled for this machine.
 It is not an exit node and Tailscale SSH is off, so admin login stays normal SSH plus the YubiKey, and port 22 is not
 published.

@@ -80,7 +80,7 @@ The password is only in `/root/escriptorium-admin.txt` and `variables.env` insid
 
 ## Tailscale
 
-Tailscale 1.104.1 is installed and logged in.
+Tailscale 1.104.6 is installed and logged in (updated from 1.104.1 on 2026-11-11).
 `/dev/net/tun` is passed in.
 The node is `escriptorium` at `100.81.96.9`, MagicDNS `escriptorium.tailc87f26.ts.net`.
 Login was `tailscale up --hostname=escriptorium --ssh=false --accept-dns=false`: no subnet routes, no Tailscale SSH, and
@@ -98,6 +98,8 @@ Kraken 7.1.1 and ketos are on the container with `pipx install --global 'kraken=
 The binaries are `/usr/local/bin/kraken` and `/usr/local/bin/ketos`.
 The venv is `/opt/pipx/venvs/kraken` on the 32G rootfs.
 After that install about 11G of the rootfs was free.
+On 2026-11-11 rootfs was at 65% (20G used); purging `/root/.cache/pip` brought it to 55% (17G used, about 14G free).
+A Docker image prune would not have helped in any useful way and was not run.
 Lightning is pinned at 2.6.1 by this Kraken release, with Torch 2.14.0.
 Do not upgrade Lightning on its own.
 The eScriptorium image also contains Kraken.
