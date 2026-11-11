@@ -87,7 +87,8 @@ If that directory is missing, Gradle resolves the published artifact from Maven 
 Published version is `0.5.0`; local composite is `0.5.1` (alias / Google-apex redirects).
 
 Every zone also gets `min_tls_version` 1.2, DNSSEC, and CAA.
-Workspace zones get DMARC `p=none`; names without mail get SPF `-all` and DMARC `p=reject`.
+Workspace zones (`podval.org`, `opentorah.org`, `cognomath.org`) get `_dmarc` `v=DMARC1; p=none` with no `rua`
+(aggregate reports were too noisy); names without mail get SPF `-all` and DMARC `p=reject`.
 
 `DnsZone` patterns:
 
@@ -110,7 +111,8 @@ Workspace zones get DMARC `p=none`; names without mail get SPF `-all` and DMARC 
 - [x] auxiliary 301s: `podval.dev`; OpenTorah `opentorah.dev` / `chabad.dev` / `jewish-calendar.org`; CognoMath
       `cognomath.com` `.net` `.app` `.games` and both `congomath.*`
 - [x] MX / DKIM on Workspace zones (`smtp.google.com`, `google._domainkey`)
-- [x] DMARC: Workspace `_dmarc` `p=none` `rua=mailto:dub@<domain>`; mail-less names SPF `-all` + `_dmarc` `p=reject`
+- [x] DMARC: Workspace `_dmarc` `v=DMARC1; p=none` with no `rua` (aggregate reports were too noisy); mail-less names
+      SPF `-all` + `_dmarc` `p=reject`
 - [x] CAA `issue` / `issuewild` for `pki.goog` and `letsencrypt.org`
 - [x] DNSSEC on every zone (`status` goes `pending` then `active`; Cloudflare registrar publishes DS)
 - [x] `min_tls_version` 1.2 on every zone
@@ -118,6 +120,10 @@ Workspace zones get DMARC `p=none`; names without mail get SPF `-all` and DMARC 
 - [x] Square Space accounts deleted (registrar is Cloudflare)
 
 - remove all mentions of domains etc. in all infrastructures and pulumi
+
+**Verified 2026-11-11.** All 16 zones are on the Free plan. SSL is Full (not strict). Always Use HTTPS,
+`min_tls_version` 1.2, DNSSEC `active`, and CAA are on everywhere. Email Routing is unconfigured. No tunnels, no
+Pages projects, and R2 is not enabled on any account.
 
 ## Current state (podval)
 
@@ -128,7 +134,7 @@ Pulumi stack `podval-infra` / `dev` is clean.
 
 | Zone | Role |
 |---|---|
-| `podval.org` | GitHub Pages, orange-cloud CNAME `@` → `www` → `dubinsky.github.io` + Always Use HTTPS. Extra CNAMEs stay grey: Workspace `ghs.googlehosted.com`, `dub` → GitHub Pages, `nina` → `ghs.google.com` (Blogger), `ha` + `_acme-challenge.ha` → Nabu Casa, `ssh`/`sds` → `k39.podval.org`. |
+| `podval.org` | GitHub Pages, orange-cloud CNAME `@` → `www` → `dubinsky.github.io` + Always Use HTTPS. Extra CNAMEs stay grey: Workspace `calendar`, `docs`, `drive`, `email`, `groups`, `hangouts`, `mail`, `sheets`, `slides` → `ghs.googlehosted.com` (DNS-only), `dub` → GitHub Pages, `nina` → `ghs.google.com` (Blogger), `ha` + `_acme-challenge.ha` → Nabu Casa, `ssh`/`sds` → `k39.podval.org`. |
 | `podval.dev` | Auxiliary: dummy A + 301 → `https://www.podval.org` |
 
 `k39.podval.org` A record is **not** in Pulumi. [[ProxMox]]
@@ -146,9 +152,13 @@ Pulumi stack `opentorah-infra` / `dev` is clean.
 | Zone | Role |
 |---|---|
 | `opentorah.org` | GitHub Pages, orange-cloud + Always Use HTTPS, same as `alter-rebbe.org` |
-| `chumashquestions.org` | GitHub Pages, orange-cloud + Always Use HTTPS. Single Redirect `/book.pdf` → `https://www.chumashquestions.org/book/book.pdf` (301). |
+| `chumashquestions.org` | GitHub Pages, orange-cloud + Always Use HTTPS. Single Redirect `/book.pdf` → `https://www.chumashquestions.org/book/book.pdf` (301); ruleset named `default`. |
 | `alter-rebbe.org` | GitHub Pages, orange-cloud + Always Use HTTPS; extra `app` → Workspace, `store`/`facsimiles` → GCS |
 | `opentorah.dev`, `chabad.dev`, `jewish-calendar.org` | Auxiliary: dummy A + 301 → `https://www.opentorah.org` |
+
+Worker `alter-rebbe-aliases` and its routes on `www.alter-rebbe.org` (about 51 patterns: archive prefixes `lvia*`,
+`niab*`, `rgia*`, plus `/search*`, `/name*`, `/map*`) are deployed by `site-publisher.yml` in
+`opentorah/alter-rebbe.org`, not by Pulumi.
 
 No Blogger `ghs.google.com`.
 No Dynamic DNS A records.
@@ -161,7 +171,7 @@ Pulumi stack `cognomath-infra` / `dev` is clean (redirect ruleset for `cognomath
 
 | Zone | Role |
 |---|---|
-| `cognomath.org` | Google Sites `www` → `ghs.googlehosted.com`; apex dummy A + 301 → `https://www.cognomath.org`. Extra: `blog` → Google, `games`/`treasure-hunt` → GCS. MX/DKIM as usual. |
+| `cognomath.org` | Google Sites `www` → `ghs.googlehosted.com`; apex dummy A + 301 → `https://www.cognomath.org`. Extra: `blog` → `blog.cognomath.org.ghs.googlehosted.com`, `games`/`treasure-hunt` → GCS. MX/DKIM as usual. |
 | `mathworlds.org` | GitHub Pages (`cognomath.github.io`), orange-cloud + Always Use HTTPS |
 | `cognomath.com` `.net` `.app` `.games`, `congomath.org` `.com` | Auxiliary: dummy A + 301 → `https://www.cognomath.org` |
 
@@ -178,7 +188,8 @@ Grants are consistent enough to run `DnsZone`: Zone DNS Edit, Zone Edit, Zone Se
 (rulesets work).
 `GET /zones` also reports `#waf:edit` / Page Shield / SSL Read — WAF package APIs 403, tunnels list as empty 200; those
 are not extra checkboxes that matter.
-Page Rules API returns 1011 for account-owned tokens; unused (Single Redirects instead).
+Page Rules API returns 1011 for the account-owned Pulumi tokens; a user-level OAuth connection returns an empty
+list (no page rules on any zone). Unused (Single Redirects instead).
 
 All three Pulumi tokens can PATCH `always_use_https` (CognoMath used to 403; it no longer does).
 CognoMath can also read Universal SSL / certificate packs; Podval and OpenTorah 403 those — extra on CognoMath, not
