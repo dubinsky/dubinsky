@@ -1,8 +1,10 @@
-Notes on dotfiles in general and tweaks specific to [[Omarchy]]; my dotfiles repository is:
-[https://github.com/dubinsky/dotfiles](https://github.com/dubinsky/dotfiles).
+Notes on dotfiles in general and tweaks specific to [[Omarchy]].
+Notes on dotfiles in general and tweaks specific to [[Omarchy]]; my dotfiles repository is private:
+[github.com/dubinsky/dotfiles](https://github.com/dubinsky/dotfiles).
+The link opens when I am logged in to GitHub.
 
 * TOC
-{:toc}
+* {:toc}
 ## Motivation
 
 Around year 2000, I heard, saw, and - I vaguely recall - used myself a bare repository approach to store my
@@ -15,14 +17,13 @@ Now that I use [[Omarchy]] on both my [[Framework Laptop 13]] and [[Desktop 2024
 
 The options I see are:
 
-- [GNU stow](https://www.gnu.org/software/stow/): although recommended in the Omarchy Manual, its symlink-based
-  approach does not appeal to me;
-- bare GIT repository: there are many [guides](https://www.atlassian.com/git/tutorials/dotfiles), but I'd like
-  something that helps with creating and maintaining the dotfiles repository;
-- [yadm](https://yadm.io/) seems to be a thin enough wrapper around a GIT repository which does help with routine
-  tasks;
-- [chezmoi](https://www.chezmoi.io/) gets a lot of praise for better templating than `yadm`, but since I don't
-  even understand what templating is, let alone need it, I am going to go with `yadm` for now :)
+- [GNU stow](https://www.gnu.org/software/stow/): although recommended in the Omarchy Manual, its symlink-based approach
+  does not appeal to me;
+- bare GIT repository: there are many [guides](https://www.atlassian.com/git/tutorials/dotfiles), but I'd like something
+  that helps with creating and maintaining the dotfiles repository;
+- [yadm](https://yadm.io/) seems to be a thin enough wrapper around a GIT repository which does help with routine tasks;
+- [chezmoi](https://www.chezmoi.io/) gets a lot of praise for better templating than `yadm`, but since I don't even
+  understand what templating is, let alone need it, I am going to go with `yadm` for now :)
 
 `yadm` arranges for the home directory to be the work tree of the dotfiles repository stored in
 `.local/share/yadm/repo.git`.
@@ -38,11 +39,11 @@ The options I see are:
 There is **no** `~/.git`.
 `$HOME` is not a Git repository.
 
-Only a small explicit set is tracked (~60–70 files: shell, Hypr/Omarchy, yadm bootstrap, a few `.grok/skills`,
-rclone helpers) — not the whole home directory.
+Only a small explicit set is tracked (~60–70 files: shell, Hypr/Omarchy, yadm bootstrap, a few `.grok/skills`, rclone
+helpers) — not the whole home directory.
 
-`status.showUntrackedFiles = no`, so `yadm status` hides untracked files; `yadm ls-files` shows what is actually
-in the repo.
+`status.showUntrackedFiles = no`, so `yadm status` hides untracked files; `yadm ls-files` shows what is actually in the
+repo.
 
 ## Installation
 
@@ -59,15 +60,15 @@ $ yadm push
 
 ## Bootstrap
 
-After checkout, `yadm` [runs](https://yadm.io/docs/bootstrap) `.config/yadm/bootstrap` executable; it can also be
-run explicitly with
+After checkout, `yadm` [runs](https://yadm.io/docs/bootstrap) `.config/yadm/bootstrap` executable; it can also be run
+explicitly with
 
 ```shell
 $ yadm bootstrap
 ```
 
-I use a [script](https://github.com/dubinsky/dotfiles/tree/master/.config/yadm/bootstrap) copied from the `yadm`
-manual which runs all the executables in `.config/yadm/bootstrap.d/`.
+I use a script at `.config/yadm/bootstrap`, copied from the `yadm` manual, which runs all the executables in
+`.config/yadm/bootstrap.d/`.
 
 AUR packages that `bootstrap.d` installs:
 
@@ -84,15 +85,15 @@ Grok Bot is not part of bootstrap.
 
 ## Readme
 
-There are [ways](https://github.com/yadm-dev/yadm/issues/93) to add README to the `yadm` repository without
-polluting the home directory: use `sparse checkout` or put `README` under `.github`.
+There are [ways](https://github.com/yadm-dev/yadm/issues/93) to add README to the `yadm` repository without polluting
+the home directory: use `sparse checkout` or put `README` under `.github`.
 
 My README is the note you are reading ;)
 
 ## Secrets
 
-Traveling secrets (HA/UniFi API tokens, and the like) go through
-[`yadm encrypt`](https://yadm.io/docs/encryption), not plaintext in the repo.
+Traveling secrets (HA/UniFi API tokens, and the like) go through [`yadm encrypt`](https://yadm.io/docs/encryption), not
+plaintext in the repo.
 
 | What | Where |
 |---|---|
@@ -125,12 +126,26 @@ Other approaches I considered and did not use:
 
 `yadm` supports `transcrypt` and `git-crypt` directly.
 
+## Private repository
+
+[yadm](https://yadm.io/docs/encryption) recommends a private repository when keeping confidential files, even though
+they are encrypted.
+The pattern file has to be committed so a new machine knows what to decrypt, and it lists every secret path.
+The ciphertext archive is committed next to it.
+The [[YubiKey]] is what protects the values: decrypt needs the card, the OpenPGP User PIN, and a touch.
+A private repository is the additional boundary.
+The pattern list and the archive are not on an anonymous clone, and a plaintext file added by mistake is not
+world-readable.
+History that was pushed while the repository was public stays on GitHub.
+Making the repository private does not retract it.
+
 ## Clone
 
-On the new machine, run:
+The repository is private, so clone over SSH.
+On a new machine, load the FIDO key (`ssh-add -K`, then tap the [[YubiKey]]) and run:
 
 ```shell
-$ yadm clone --bootstrap https://github.com/dubinsky/dotfiles.git
+$ yadm clone --bootstrap git@github.com:dubinsky/dotfiles.git
 ```
 
 yadm does not change pre-existing files; they can be overwritten with
@@ -167,16 +182,16 @@ Enable native Wayland support: in `Help | Edit custom VM options` add
   * `Settings | Appearance | Advanced | Zoom level` to 150% and
   * `Settings | Appearance | Font size` to 16
 - **CLI / `user-flags.conf`:** Omarchy ships `~/.config/obsidian/user-flags.conf` with `-disable-gpu` (single dash).
-  Arch's `/usr/bin/obsidian` appends those flags after `app.asar`, and Obsidian CLI (1.12+) treats single-dash
-  tokens as commands (`Command "-disable-gpu" not found`) while stripping unknown `--switches`.
+  Arch's `/usr/bin/obsidian` appends those flags after `app.asar`, and Obsidian CLI (1.12+) treats single-dash tokens as
+  commands (`Command "-disable-gpu" not found`) while stripping unknown `--switches`.
   Keep `--disable-gpu` (double dash).
-  After `omarchy update`, or after `omarchy refresh config obsidian/user-flags.conf`, check that the file was
-  not restored from `/usr/share/omarchy/config/obsidian/user-flags.conf`.
+  After `omarchy update`, or after `omarchy refresh config obsidian/user-flags.conf`, check that the file was not
+  restored from `/usr/share/omarchy/config/obsidian/user-flags.conf`.
 
 ### Zotero
 
-- bootstrap installs AUR [`zotero-bin`](https://aur.archlinux.org/packages/zotero-bin) (official binaries), not
-  source `zotero`
+- bootstrap installs AUR [`zotero-bin`](https://aur.archlinux.org/packages/zotero-bin) (official binaries), not source
+  `zotero`
 - install [ZotMoove](https://github.com/wileyyugioh/zotmoov) plugin
 - install [Better BibTex](https://retorque.re/zotero-better-bibtex/) plugin
 
