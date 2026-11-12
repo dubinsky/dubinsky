@@ -126,9 +126,49 @@ The cloud bot is root through `pct exec` on the host.
 
 The desktop bootstrap and the guest both install `pulumi-language-scala` 0.5.2 from
 `github://api.github.com/VirtusLab/besom`.
-The first preview, on 2026-11-11, was not empty.
-Podval wanted 34 updates, OpenTorah 55, CognoMath 70.
-The DNS rows were `includeShadowMetadata` and `modifiedOn`.
-The Cloudflare provider wanted `userAgentOperatorSuffix`.
-OpenTorah also wanted `disableOnDestroy` on `opentorah-devpod` compute.
-Nothing was applied.
+GCP is pinned to `9.0.0`, the plugin in `besom-gcp_3:9.0.0-core.0.5`.
+Cloudflare is pinned to `6.20.0`, the plugin in `besom-cloudflare_3:6.20.0-core.0.5`.
+Each stack config sets `gcp:version` and `cloudflare:version` to those versions.
+The shared program sets the same version on the provider, on each resource, and on the GCP invokes, because the
+resources use the default provider.
+Desktop and guest both have Cloudflare `6.20.0` and GCP `9.0.0`.
+The selected stack is not stored in git.
+On a new checkout, `pulumi stack select organization/<project>/dev` once.
+`<project>` is `podval-infra`, `opentorah-infra`, or `cognomath-infra`.
+
+## Besom provider update
+
+A newer Pulumi plugin binary is not a Besom upgrade.
+The Besom jar's `plugin.json` names the plugin the program was generated for.
+`besom-gcp_3:9.0.0-core.0.5` asks for GCP `9.0.0`.
+`besom-cloudflare_3:6.20.0-core.0.5` asks for Cloudflare `6.20.0`.
+Those were the newest jars on Maven Central on 2026-11-11.
+Upstream plugins can be newer and still have no Besom jar.
+
+Bump `besom-core_3`, `besom-gcp_3`, and `besom-cloudflare_3` together in `~/Podval/pulumi` and in each infra
+`build.gradle`.
+The infra builds also depend on published `org.podval.tools.pulumi`.
+`includeBuild` of `~/Podval/pulumi` replaces that when the checkout is present, so the guest does not need a new library
+release to compile the pin.
+
+Change the version literals in `gcpResourceOptions` and `cloudflareResourceOptions`.
+Besom accepts a string literal there and rejects a `val`.
+Set `gcp:version` and `cloudflare:version` in each `Pulumi.dev.yaml` to those same versions.
+The resources use the default provider, so the version has to be on each resource.
+The provider resource option alone leaves the old `default_<version>` provider in state.
+GCP lookups use `gcpInvokeOptions`.
+There are no Cloudflare lookups.
+
+Install that plugin on this desktop with `pulumi plugin install resource <name> <version>`.
+`direnv exec . pulumi preview` for Podval, OpenTorah, and CognoMath.
+`pulumi up` waits for an explicit go-ahead for that diff.
+A GCP provider upgrade can replace groups.
+`Group.initialGroupConfig` is ignored for that reason.
+
+Then install the same plugin on the guest and remove the older plugin of that name.
+The guest gets the code with `git pull` in `~/Podval/pulumi` and the three infra checkouts.
+State is already in the buckets from the desktop `pulumi up`.
+Do not run `pulumi up` on the guest only to copy state.
+`pulumi preview` on the guest should be empty.
+Remove an old plugin only after state no longer names it.
+A stack that still records the old version makes the next preview download that plugin again.
