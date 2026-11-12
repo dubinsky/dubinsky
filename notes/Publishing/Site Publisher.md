@@ -291,8 +291,8 @@ The value is the `localStorage` key `color-scheme`.
 Dark token overrides live in `tokens.css` under `@media screen`, so print and PDF keep the light palette.
 Folio color is read in print media.
 Brand gray stays.
-A published `assets/css/theme.css` is linked after `style.css` and may override tokens, including `--brand-color`, and a
-theme which changes the light brand has to set the dark brand itself.
+A published `assets/css/theme.css` may override tokens, including `--brand-color`.
+Link order and the dark brand: README **Color scheme**.
 The link blue is `#5b93e6` on the dark ground: `#1e69d8` is the same hue and is 3.5:1 there, under the 4.5:1 body-text
 bar.
 Highlight.js ships the `default` and `dark` stylesheets.
