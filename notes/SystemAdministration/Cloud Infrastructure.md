@@ -1,5 +1,8 @@
 LXC **108** on [[ProxMox]], hostname `cloud-infrastructure`.
-This is the shared machine for Pulumi across Podval, OpenTorah, and CognoMath.
+This is the cloud Grok Bot's Pulumi runner across Podval, OpenTorah, and CognoMath.
+I cannot push from it or run IntelliJ IDEA on it.
+I edit the `dubinsky/pulumi` library and the three infra repos on this desktop.
+The repos are `dubinsky/podval-infra`, `opentorah/infra`, and `cognomath/infra`.
 I reach it from this desktop with the [[YubiKey]], over Tailscale.
 The cloud Grok Bot reaches it from the [[ProxMox]] host with `pct exec`.
 Domain and DNS state stays in [[Domains]].
@@ -94,13 +97,31 @@ Each infra build uses that repo's Gradle wrapper.
 `direnv` is hooked for interactive shells.
 A non-interactive command has to be `direnv exec . pulumi preview`, because a plain `ssh` command does not load `.envrc`.
 
-## Git identity
+## Changes
 
-Commits use the desktop Git identity.
+When I ask the cloud Grok Bot for a change, it has a Cursor cloud agent open a pull request.
+The pull request is in the library or an infra repo.
+Each commit uses that org's identity.
 The name is Leonid Dubinsky.
-Podval uses `dub@podval.org`.
+Podval and the `dubinsky/pulumi` library use `dub@podval.org`.
 OpenTorah uses `dub@opentorah.org`.
 CognoMath uses `dub@cognomath.org`.
+I review and merge.
+I publish the library to Maven Central myself.
+The bot then runs `git pull --ff-only` on LXC 108.
+It runs `direnv exec . pulumi preview`.
+It runs `pulumi up` only after my go-ahead for that change.
+A library pull request has to merge before an infra pull request that depends on it.
+The guest builds against its `~/Podval/pulumi` checkout through `includeBuild`.
+
+## Git identity
+
+The guest has no Git identity.
+`~/.config/git/config` and the empty `~/.config/git` directory were deleted.
+The guest has no global Git config.
+`~/OpenTorah/.gitconfig` and `~/CognoMath/.gitconfig` were deleted.
+The guest only pulls, with its read-only deploy keys.
+Commit identity lives in the cloud agents' pull requests and on the desktop.
 
 ## Credentials
 
@@ -118,7 +139,7 @@ On the desktop those files stay the `terraform` key and the desktop Cloudflare t
 On the guest those same names are where the `grok-bot` key and a `grok-bot` account token go.
 `~/.local/bin/copy-cloud-infrastructure-credentials` installs the desktop `grok-bot-*` files onto the guest under those
 `.envrc` names, over `ssh infra`, and checks that the sizes match.
-It also copies `~/.config/git/config`, `~/OpenTorah/.gitconfig`, and `~/CognoMath/.gitconfig`.
+The script is YADM-managed and copies only the six credential files.
 
 The Cloudflare tokens are account-owned.
 Pulumi does not create them: the current tokens cannot create another token.
