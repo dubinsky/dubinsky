@@ -7,7 +7,8 @@ PVE **9.2.26** (packages updated 2026-11-11).
 Running kernel **7.0.14-28-pve** (booted 15:25 America/New_York 2026-11-11).
 Installed kernels: **7.0.14-28**, **7.0.14-24**, **7.0.14-20**, **7.0.14-15**, **7.0.14-12**, and **7.0.14-5**.
 `apt` offers to autoremove **7.0.14-15**, **7.0.14-12**, and **7.0.14-5**.
-Leave those kernels installed. Do not `apt autoremove`.
+Leave those kernels installed.
+Do not `apt autoremove`.
 ZFS **2.4.4-pve1** (as of 2026-10-15).
 Hardware: i9-12900K (24 threads), 64G RAM, boot NVMe `KINGSTON SKC3000D2048G`.
 Bridge `vmbr0` on `enp3s0`, `192.168.1.40/24`, gw `192.168.1.1`.
@@ -26,6 +27,7 @@ PVE storage: `local` (dir `/var/lib/vz`, ISO/backup) and `local-lvm` (thin pool 
 | 105 | LXC | unifi-os-server | 192.168.1.184 | [[UniFi]] OS (controller). **Not** the switch at 192.168.1.101 |
 | 106 | LXC | homelab-tailscale | 192.168.1.237 | Tailscale subnet router for `192.168.1.0/24`. 1G RAM, 1 core, 4G disk, Debian 13 |
 | 107 | LXC | escriptorium | 192.168.1.238 | [[eScriptorium]] v26.07 and Kraken CLI 7.1.1. Debian 13, unprivileged, 8 cores, 16G RAM, 32G disk. Compose on port 8080. Tailscale node `escriptorium` (`100.81.96.9`); `tailscale serve` is tailnet-only. Funnel is off |
+| 108 | LXC | cloud-infrastructure | 192.168.1.239 | [[Cloud Infrastructure]]. Pulumi for Podval, OpenTorah, and CognoMath. Debian 13, unprivileged, 4 cores, 8G RAM, 32G disk. Tailscale node `cloud-infrastructure` (`100.68.230.126`). SSH on the tailnet only. No vzdump |
 
 LXC **104** (`cloudflared`, `.236`) was destroyed 2026-09-16.
 Its UniFi fixed-IP reservation was removed 2026-10-07.
@@ -38,9 +40,12 @@ See [[Domains]].
 
 All guests: `onboot: 1`, `vmbr0`.
 103 and 105 carry the community-script tag.
-LXC 103/105/106/107 are unprivileged with nesting.
-106 and 107 also have `keyctl=1` and `/dev/net/tun`.
+LXC 103/105/106/107/108 are unprivileged with nesting.
+106, 107, and 108 also have `keyctl=1` and `/dev/net/tun`.
 106 uses that so Tailscale can open its tunnel.
+108 uses it the same way.
+SSH to 108 is tailnet-only.
+See [[Cloud Infrastructure]].
 Snapshots taken 2026-11-11 (leave them in place until I say otherwise):
 
 - VM 100: `pre-pve-reboot-20261111` (USB passthrough did not block the snapshot)
