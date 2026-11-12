@@ -104,19 +104,35 @@ CognoMath uses `dub@cognomath.org`.
 
 ## Credentials
 
-Six files, mode `0600`, directories mode `0700`.
-These are the desktop copies, not a second set.
+The desktop runs Pulumi as `terraform@<project>.iam.gserviceaccount.com`.
+The guest's identity is `grok-bot@<project>.iam.gserviceaccount.com`.
+`grok-bot` has the same organization roles as `terraform`.
+`roles/iam.serviceAccountKeyAdmin` is granted only on the `grok-bot` service account, to `terraform` and to `grok-bot`.
+The JSON key is a Pulumi resource, so the private key is also in the state bucket.
+A desktop `pulumi up` writes the decoded key, mode `0600`, to `~/<Org>/Keys/grok-bot-<project>.json`.
+The guest does not write that file.
 
-| Org | Service account key | Cloudflare token |
-|---|---|---|
-| Podval | `~/Podval/Keys/terraform-podval-infra.json` | `~/Podval/Keys/podval-cloudflare-api-token.txt` |
-| OpenTorah | `~/OpenTorah/Keys/terraform-opentorah-infra.json` | `~/OpenTorah/Keys/opentorah-cloudflare-api-token.txt` |
-| CognoMath | `~/CognoMath/Keys/terraform-cognomath-infra.json` | `~/CognoMath/Keys/cognomath-cloudflare-api-token.txt` |
-
-The rest of each `Keys` directory stays on the desktop.
-`~/.local/bin/copy-cloud-infrastructure-credentials` copies these six files over `ssh infra` and checks that the sizes
-match.
+`.envrc` is shared.
+It still reads `terraform-<project>.json` and the Cloudflare token file next to it.
+On the desktop those files stay the `terraform` key and the desktop Cloudflare token.
+On the guest those same names are where the `grok-bot` key and a `grok-bot` account token go.
+`~/.local/bin/copy-cloud-infrastructure-credentials` installs the desktop `grok-bot-*` files onto the guest under those
+`.envrc` names, over `ssh infra`, and checks that the sizes match.
 It also copies `~/.config/git/config`, `~/OpenTorah/.gitconfig`, and `~/CognoMath/.gitconfig`.
+
+The Cloudflare tokens are account-owned.
+Pulumi does not create them: the current tokens cannot create another token.
+Each `grok-bot` token needs Zone DNS Edit, Zone Edit, Zone Settings Edit, and Single Redirects, with no expiry.
+
+| Org | Desktop file for the guest GCP key | Desktop file for the guest Cloudflare token |
+|---|---|---|
+| Podval | `~/Podval/Keys/grok-bot-podval-infra.json` | `~/Podval/Keys/grok-bot-podval-cloudflare-api-token.txt` |
+| OpenTorah | `~/OpenTorah/Keys/grok-bot-opentorah-infra.json` | `~/OpenTorah/Keys/grok-bot-opentorah-cloudflare-api-token.txt` |
+| CognoMath | `~/CognoMath/Keys/grok-bot-cognomath-infra.json` | `~/CognoMath/Keys/grok-bot-cognomath-cloudflare-api-token.txt` |
+
+The guest files keep the names `.envrc` already uses: `terraform-<project>.json` and `<org>-cloudflare-api-token.txt`.
+The copy script has installed the `grok-bot` key and token into those names.
+The rest of each `Keys` directory stays on the desktop.
 State is in `gs://state.podval.org`, `gs://state.opentorah.org`, and `gs://state.cognomath.org`.
 
 `pulumi preview` is the usual command.
