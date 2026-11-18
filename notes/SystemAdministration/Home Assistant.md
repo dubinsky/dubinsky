@@ -275,7 +275,7 @@ The encryption key is not in either vault.
 From the list of Z-Wave controllers Home Assistant supports](https://www.home-assistant.io/docs/z-wave/controllers/), I
 picked "Zooz 800 Series Z-Wave Long Range S2 USB Stick ZST39 LR" ($37 on Amazon).
 
-In the zwave-js-ui, my Z-Wave USB stick reports firmware version v1.40 and SDK version v7.22.0, which seem fine.
+In the zwave-js-ui, the Zooz stick's firmware and SDK versions are in the private note.
 ZOOZ firmware [page](https://www.support.getzooz.com/kb/article/1158-zooz-ota-firmware-files/) has the latest firmware;
 ZOOZ firmware update
 [instructions](https://www.support.getzooz.com/kb/article/1276-how-to-perform-an-otw-firmware-update-on-your-zst39-800-long-range-z-wave-stick/)

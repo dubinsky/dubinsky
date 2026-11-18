@@ -1,7 +1,6 @@
 My notes on dotfiles in general and tweaks specific to [[Omarchy]] are in [[dotfiles]].
 
-* TOC
-{:toc}
+* TOC {:toc}
 
 ## Links
 
@@ -27,8 +26,8 @@ Idle timings live in `~/.config/omarchy/shell.json` (`idle.screensaver` / `idle.
 On this machine: 10 minutes then 15 minutes lock.
 
 `omarchy-screensaver` exits as soon as it is not the active window.
-`omarchy-launch-screensaver` restores the previously focused monitor after spawning, which refocuses the
-previous window, so the screensaver dies in about two seconds and the idle service logs `screensaver-dismissed`.
+`omarchy-launch-screensaver` restores the previously focused monitor after spawning, which refocuses the previous
+window, so the screensaver dies in about two seconds and the idle service logs `screensaver-dismissed`.
 Workaround in `~/.config/hypr/hyprland.lua`: `stay_focused` on `org.omarchy.screensaver`.
 Dismiss with a key.
 
@@ -39,16 +38,13 @@ Official Linux desktop AppImage ([docs](https://docs.x.ai/grok-bot/get-started);
 Not in [[dotfiles]] bootstrap.
 Needs `fuse2`.
 
-Checked 2026-10-05.
-The running app is **0.66.0** and signed in.
-The on-disk file is still named `~/Applications/Grok_Bot_0.51.0.AppImage`.
-The in-app updater replaces that file and does not rename it.
-`X-AppImage-Version` inside the AppImage is 0.66.0.
+The in-app updater replaces the AppImage and does not rename it, so the filename can lag the running version.
+The running version and the on-disk filename are in the private vault `dubinsky/dubinsky-private`, at this same path.
 `fuse2` is installed.
 The Omarchy package `grok-bot` is not installed.
 
-An Omarchy repo package (`grok-bot` 0.29.0, menu **AI → Install → Grok Bot**) was installed 2026-09-14 and
-removed 2026-09-16: the repo lagged the AppImage.
+An Omarchy repo package (menu **AI → Install → Grok Bot**) was installed 2026-09-14 and removed 2026-09-16: the repo
+lagged the AppImage.
 Do not reinstall from that menu until the package version catches up.
 **AI → Remove → Grok Bot** also deletes `~/.config/Grok Bot`.
 

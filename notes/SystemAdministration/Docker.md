@@ -7,11 +7,9 @@ tags:
 
 ## docker VM (ProxMox 101)
 
-The long-lived Docker host is a [[ProxMox]] VM named `docker`, Debian 13.
+The long-lived Docker host is a [[ProxMox]] VM named `docker`, Debian 13, timezone America/New_York.
 The address is in the private vault `dubinsky/dubinsky-private`, at this same path.
-Checked 2026-11-18: docker-ce **29.9.3**, docker-ce-cli **29.9.3**, containerd.io **2.4.2-4**, Compose plugin **5.7.1**,
-buildx **0.39.0**, timezone **America/New_York**.
-Kernel **6.12.117+deb13-amd64** (was 6.12.116 on 2026-11-11).
+Installed package versions are in that note.
 The only compose stack on this VM is [[Frigate]].
 Do not attach virtiofs.
 
