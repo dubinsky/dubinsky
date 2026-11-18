@@ -19,12 +19,16 @@ My Reolink Doorbell Wi-Fi had ONVIF and RTSP enabled out-of-the-box; those setti
 
 I used Grok to configure Frigate ;)
 
+Private details (camera address, stream paths, zone coordinates) are in the private vault `dubinsky/dubinsky-private`,
+at this same path.
+
 ## Where it runs
 
-On the `docker` VM ([[ProxMox]] guest 101, `192.168.1.187`), not inside [[Home Assistant]].
-Config and recordings live on the PVE host at `/mnt/data/apps/frigate` and are NFS-exported only to that VM (mounted at
-`/frigate`, NFS4, `_netdev,nofail,x-systemd.automount`).
-UniFi DHCP reservation is on **docker** at `.187` — there is no separate client named `frigate`.
+On the Docker VM, not inside [[Home Assistant]].
+Config and recordings live on the Proxmox host at `/mnt/data/apps/frigate` and are NFS-exported only to that VM (mounted
+at `/frigate`, NFS4, `_netdev,nofail,x-systemd.automount`).
+The UniFi reservation is on the Docker VM.
+There is no separate client named `frigate`.
 
 `restart: unless-stopped` is not enough after a VM reboot.
 On 2026-09-01 **12:45 EDT** the [[ProxMox]] host reset uncleanly (not a guest `reboot`); `startall` brought docker back,
@@ -36,7 +40,8 @@ Recovery: `docker start frigate` once NFS is mounted, then reload the HA Frigate
 To survive the next reboot, `frigate-ensure.service` on the docker VM (`/usr/local/sbin/start-frigate.sh`) retries every
 15 s until `/frigate` is a mountpoint and the container is running.
 
-UI: http://192.168.1.187:8971 (not port 5000).
+The UI is on port 8971, not port 5000.
+The address is in the private note.
 
 ```
 /mnt/data/apps/frigate/          # PVE NFS; docker mounts this at /frigate
@@ -48,11 +53,14 @@ UI: http://192.168.1.187:8971 (not port 5000).
 ```
 
 Image `ghcr.io/blakeblackshear/frigate:0.18.2`, pinned in `compose.yml` on 2026-11-11 (was `:stable` at 0.17.2).
-CPU only (no Coral). Config is `version: 0.18-0` after Frigate's auto-migration.
+CPU only (no Coral).
+Config is `version: 0.18-0` after Frigate's auto-migration.
 Do not hand-edit `version` — leaving the old value is what triggers migration.
 A local rollback tag `frigate:0.17.2` is on the docker VM.
 Ports 8971, 8554 (go2rtc RTSP), 8555 WebRTC.
-MQTT to HA Mosquitto at `192.168.1.209:1883`, user `frigate`.
+MQTT goes to the Home Assistant Mosquitto broker.
+The host, the username, and where the password is kept are in the private note.
+The password is not in either vault.
 After 0.18.2, nginx logs `using uninitialized "go2rtc_stream_proxy" variable` on API requests (including HA `/api/stats`).
 Harmless: those requests still return 200, and detect/record/MQTT work.
 
@@ -66,7 +74,8 @@ Backups from the 2026-11-11 0.17.2 → 0.18.2 upgrade, on this same share:
 - Frigate's own migrator copies: `config/backup_config.yaml` (0.17) and `config/backup.db`
 - dated `config/frigate.db*.bak.20261111151745` and directory `backups-pre-0.18.2-20261111151745/`
 
-To roll back: restore the dated `config.yaml` + `frigate.db*`, set the compose image to `frigate:0.17.2`, and `docker compose -f /frigate/compose.yml up -d` (never `compose down`).
+To roll back: restore the dated `config.yaml` + `frigate.db*`, set the compose image to `frigate:0.17.2`, and
+`docker compose -f /frigate/compose.yml up -d` (never `compose down`).
 Later: include this dataset in PVE/PBS, or rsync the two safe files somewhere tracked.
 
 Do **not** attach virtiofs to VM 101 (UEFI hang).
@@ -74,27 +83,32 @@ NFS only.
 
 ## Doorbell
 
-One camera: Reolink hostname `Front`, MAC `c4:8b:66:0e:97:21`, UniFi reservation `192.168.1.110`.
+One camera: a Reolink doorbell.
+The hostname, MAC, and reservation are in the private note.
 HTTP is enabled on the camera.
-go2rtc video is HTTP-FLV (`channel0_main.bcs` / `channel0_ext.bcs`).
-Two-way talk is **only** on `doorbell_sub` (`rtsp://…/Preview_01_sub`, no `ffmpeg:` prefix) — that is the stream the HA
-card uses.
-Do not put talk on `doorbell_main` (one backchannel).
-Frigate consumes `rtsp://127.0.0.1:8554/doorbell_*`.
+go2rtc takes the camera's main and sub streams.
+Two-way talk is **only** on the sub stream, and that stream has no `ffmpeg:` prefix.
+That is the stream the Home Assistant card uses.
+Do not put talk on the main stream (one backchannel).
+Frigate consumes the local go2rtc restreams.
+The paths are in the private note.
 
 Detect **on**, 480×640 on the sub stream; record+audio on main.
 Review **alerts = person only**, and `review.alerts.required_zones: [stoop]`.
-Zone `stoop` is the brick landing + brick stairs (not the sidewalk / street; sidewalk feet sit around y=0.57–0.67).
+Zone `stoop` is the brick landing and the brick stairs, not the sidewalk or the street.
+The coordinates are in the private note.
 On 0.17, `objects.filters.person.required_zones` was invalid (safe-mode).
-The 0.18 migrator left `review.alerts.required_zones: [stoop]` in place and added `enabled` / `friendly_name` on the person and motion masks; coordinates were unchanged.
+The 0.18 migrator left `review.alerts.required_zones: [stoop]` in place and added `enabled` / `friendly_name` on the
+person and motion masks; coordinates were unchanged.
 YAML stayed block-style (not a single-line `{...}` document).
 Talk is still the raw RTSP line on `doorbell_sub` only (no `ffmpeg:` prefix, no `#hardware`).
 Sidewalk people can still be detections / `doorbell_person_occupancy`; they are not Review **alerts**.
 For HA phone notify to match, trigger on the stoop occupancy entity (not generic person occupancy).
 
-A person object mask covers the left rail at the top of the stairs (`0.145,0.62`–`0.255,0.79`).
-A dark post there was detected as a person (score about 0.57), and the box bottom jumped between the stoop edge (y≈0.66)
-and the upper step (y≈0.75).
+A person object mask covers the left rail at the top of the stairs.
+The rectangle is in the private note.
+A dark post there was detected as a person (score about 0.57), and the box bottom jumped between the stoop edge and the
+upper step.
 That made `binary_sensor.stoop_person_occupancy` chatter, and Doorbell Notification fired every few seconds
 (2026-10-07).
 The mask drops a person whose bottom-center lands on that rail.
@@ -119,18 +133,21 @@ This is headroom for more cameras, and it would silence Frigate’s `Did not det
 
 The GPU to pass is the **[[ProxMox]] host** iGPU, not the Arrow Lake desktop:
 
-- Intel AlderLake-S GT1 `8086:4680` at `0000:00:02.0`, driver `i915`
-- `/dev/dri/renderD128` exists on the hypervisor only
-- IOMMU **group 0 is the GPU alone** (good)
-- DRM connectors are disconnected (PVE is headless)
-- GVT-g is not on 12th-gen; SR-IOV vGPU is not on this GT1 SKU → **full PCI passthrough** of `00:02.0` into VM 101
-- Do **not** attach virtiofs to 101 (UEFI hang).
+- The host iGPU (Intel, driver `i915`).
+  The PCI id is in the private note.
+- The render node exists on the hypervisor only.
+- IOMMU group 0 is the GPU alone.
+- DRM connectors are disconnected (the host is headless).
+- GVT-g is not on this generation, and SR-IOV vGPU is not on this SKU, so this is full PCI passthrough into the Docker
+  VM.
+- Do **not** attach virtiofs to that VM (UEFI hang).
   NFS stays.
 
-VM 101 today: OVMF, `cpu: host`, 16 cores, 8G, **i440fx** (no `machine:` line), QEMU stdvga `1234:1111`, no `hostpci`.
-Frigate `compose.yml` already has `/dev/dri/renderD128` commented out.
+The Docker VM today is OVMF, `cpu: host`, no `hostpci`.
+Frigate `compose.yml` already has the render node commented out.
 `config.yaml` has no `ffmpeg.hwaccel_args`.
-Do not pass HDMI audio `00:1f.3`.
+Do not pass the HDMI audio device.
+Its id is in the private note.
 
 **Blast radius:** Phase 0 needs a **PVE host reboot** (HA, docker, Cloudflare, UniFi OS all drop).
 After passthrough the host has no iGPU; PVE web UI is fine; a monitor on the PVE box will stay blank.
@@ -142,30 +159,23 @@ On `pve`:
 
 1. Backup `/etc/default/grub` and `/etc/pve/qemu-server/101.conf` (`/root/101.conf.bak.$(date +%Y%m%d%H%M%S)`).
 2. GRUB: `intel_iommu=on iommu=pt`.
-3. `/etc/modprobe.d/vfio.conf`:
-   ```
-   options vfio-pci ids=8086:4680
-   softdep i915 pre: vfio-pci
-   softdep xe pre: vfio-pci
-   ```
+3. `/etc/modprobe.d/vfio.conf` binds vfio-pci to the host iGPU id from the private note, with `softdep` so `i915` and
+   `xe` load after vfio-pci.
 4. Load `vfio`, `vfio_pci`, `vfio_iommu_type1` at boot.
 5. `update-initramfs -u && update-grub && reboot`.
-6. After reboot: `00:02.0` is `Kernel driver in use: vfio-pci` and still alone in IOMMU group 0.
+6. After reboot the iGPU's kernel driver is `vfio-pci`, and it is still alone in IOMMU group 0.
 
 HAOS USB radios stay on VM 100.
 
 ### Phase 1 — give the GPU to VM 101
 
-1. `qm shutdown 101`.
-   Do not `qm destroy`.
-2. Switch to **q35** (needed for PCIe `hostpci`):
-   ```
-   qm set 101 -machine q35
-   qm set 101 -hostpci0 0000:00:02.0,pcie=1,rombar=0
-   ```
+1. Shut the Docker VM down.
+   Do not destroy it.
+2. Switch it to **q35** (needed for PCIe `hostpci`) and pass the host iGPU with `pcie=1,rombar=0`.
+   The bus address is in the private note.
    Do **not** set `x-vga=1` unless the guest cannot see the device.
-3. `qm start 101`.
-   Guest-agent: `lspci` shows `8086:4680` with `i915`, and `/dev/dri/renderD128` exists (not only QEMU `card0`).
+3. Start the VM.
+   The guest should show the iGPU on `i915`, and `/dev/dri/renderD128` should exist (not only QEMU `card0`).
 
 ### Phase 2 — Frigate VAAPI
 

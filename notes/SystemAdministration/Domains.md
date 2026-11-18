@@ -3,6 +3,10 @@ tags: [sysadmin]
 ---
 * TOC {:toc}
 
+Private details (the house dynamic-DNS name, the records that point at the house, Cloudflare login emails, and
+token-file paths) are in the private vault `dubinsky/dubinsky-private`, at this same path.
+Token values are not in either vault.
+
 ## Square Space
 
 For a while, I registered my domains with Google Domains and used Google Domains DNS.
@@ -44,8 +48,9 @@ And I really hope that Google Workspace services attached to some of my domains 
 Let's go!
 
 ## Migration
-For each organization (dub@podval.org, dub@opentorah.org, dub@cognomath.org):
-- [sign up for Cloudflare](https://dash.cloudflare.com/sign-up) using admin Google email
+For each organization (Podval, OpenTorah, CognoMath):
+- [sign up for Cloudflare](https://dash.cloudflare.com/sign-up) using that org's admin Google email
+- The addresses are in the private note.
 - add billing
 
 Documentation:
@@ -77,16 +82,16 @@ checkout `~/Podval/pulumi`) from their `infra` repositories — GCP org, buckets
 
 | Org | Checkout | Repo | Cloudflare account | Pulumi stack |
 |---|---|---|---|---|
-| Podval | `~/Podval/infra` | `dubinsky/podval-infra` | `dub@podval.org` | `podval-infra` / `dev` |
-| OpenTorah | `~/OpenTorah/infra` | `opentorah/infra` | `dub@opentorah.org` | `opentorah-infra` / `dev` |
-| CognoMath | `~/CognoMath/infra` | `cognomath/infra` | `dub@cognomath.org` | `cognomath-infra` / `dev` |
+| Podval | `~/Podval/infra` | `dubinsky/podval-infra` | admin Google email | `podval-infra` / `dev` |
+| OpenTorah | `~/OpenTorah/infra` | `opentorah/infra` | admin Google email | `opentorah-infra` / `dev` |
+| CognoMath | `~/CognoMath/infra` | `cognomath/infra` | admin Google email | `cognomath-infra` / `dev` |
 
 There is exactly one library checkout, `~/Podval/pulumi`, and no symlinks.
-Each infra `settings.gradle` defaults `pulumiDir` to `../../Podval/pulumi` (i.e. `~/Podval/pulumi` from
-`~/<Org>/infra`; `-PpulumiDir=` overrides) and composite-`includeBuild`s that directory when it exists.
+Each infra `settings.gradle` defaults `pulumiDir` to `../../Podval/pulumi` (i.e. `~/Podval/pulumi` from `~/<Org>/infra`;
+`-PpulumiDir=` overrides) and composite-`includeBuild`s that directory when it exists.
 If that directory is missing, Gradle resolves the published artifact from Maven Central.
-The same file includes the conventions build from `../../Podval/podval-gradle` (property `podvalGradleDir`)
-when that directory is present.
+The same file includes the conventions build from `../../Podval/podval-gradle` (property `podvalGradleDir`) when that
+directory is present.
 Published version is `0.5.0`; local composite is `0.5.1` (alias / Google-apex redirects).
 
 Every zone also gets `min_tls_version` 1.2, DNSSEC, and CAA.
@@ -114,8 +119,8 @@ Workspace zones (`podval.org`, `opentorah.org`, `cognomath.org`) get `_dmarc` `v
 - [x] auxiliary 301s: `podval.dev`; OpenTorah `opentorah.dev` / `chabad.dev` / `jewish-calendar.org`; CognoMath
       `cognomath.com` `.net` `.app` `.games` and both `congomath.*`
 - [x] MX / DKIM on Workspace zones (`smtp.google.com`, `google._domainkey`)
-- [x] DMARC: Workspace `_dmarc` `v=DMARC1; p=none` with no `rua` (aggregate reports were too noisy); mail-less names
-      SPF `-all` + `_dmarc` `p=reject`
+- [x] DMARC: Workspace `_dmarc` `v=DMARC1; p=none` with no `rua` (aggregate reports were too noisy); mail-less names SPF
+      `-all` + `_dmarc` `p=reject`
 - [x] CAA `issue` / `issuewild` for `pki.goog` and `letsencrypt.org`
 - [x] DNSSEC on every zone (`status` goes `pending` then `active`; Cloudflare registrar publishes DS)
 - [x] `min_tls_version` 1.2 on every zone
@@ -124,31 +129,34 @@ Workspace zones (`podval.org`, `opentorah.org`, `cognomath.org`) get `_dmarc` `v
 
 - remove all mentions of domains etc. in all infrastructures and pulumi
 
-**Verified 2026-11-11.** All 16 zones are on the Free plan. SSL is Full (not strict). Always Use HTTPS,
-`min_tls_version` 1.2, DNSSEC `active`, and CAA are on everywhere. Email Routing is unconfigured. No tunnels, no
-Pages projects, and R2 is not enabled on any account.
+**Verified 2026-11-11.** All 16 zones are on the Free plan.
+SSL is Full (not strict).
+Always Use HTTPS, `min_tls_version` 1.2, DNSSEC `active`, and CAA are on everywhere.
+Email Routing is unconfigured.
+No tunnels, no Pages projects, and R2 is not enabled on any account.
 
 ## Current state (podval)
 
-Account `dub@podval.org`.
+The Cloudflare login is in the private note.
 Registrar for `podval.org` is Cloudflare (WHOIS); zone metadata still remembers Squarespace as the previous registrar.
 Nameservers `joel.ns.cloudflare.com` / `paislee.ns.cloudflare.com`.
 Pulumi stack `podval-infra` / `dev` is clean.
 
 | Zone | Role |
 |---|---|
-| `podval.org` | GitHub Pages, orange-cloud CNAME `@` → `www` → `dubinsky.github.io` + Always Use HTTPS. Extra CNAMEs stay grey: Workspace `calendar`, `docs`, `drive`, `email`, `groups`, `hangouts`, `mail`, `sheets`, `slides` → `ghs.googlehosted.com` (DNS-only), `dub` → GitHub Pages, `nina` → `ghs.google.com` (Blogger), `ha` + `_acme-challenge.ha` → Nabu Casa, `ssh`/`sds` → `k39.podval.org`. |
+| `podval.org` | GitHub Pages, orange-cloud CNAME `@` → `www` → `dubinsky.github.io` + Always Use HTTPS. Extra CNAMEs stay grey: Workspace `calendar`, `docs`, `drive`, `email`, `groups`, `hangouts`, `mail`, `sheets`, `slides` → `ghs.googlehosted.com` (DNS-only), `dub` → GitHub Pages, `nina` → `ghs.google.com` (Blogger), `ha` + its ACME name → Nabu Casa. The names that point at the house are in the private note. |
 | `podval.dev` | Auxiliary: dummy A + 301 → `https://www.podval.org` |
 
-`k39.podval.org` A record is **not** in Pulumi. [[ProxMox]]
-LXC 103 (`cloudflare-ddns`) updates it.
+The house dynamic-DNS name is an A record and is **not** in Pulumi.
+The dynamic-DNS container updates it.
 Keep it that way.
+The name, and the records that alias to it, are in the private note.
 
 `http://www.podval.org/` is now Cloudflare Always Use HTTPS (301 to `https://`).
 
 ## Current state (OpenTorah)
 
-Account `dub@opentorah.org`.
+The Cloudflare login is in the private note.
 Pulumi stack `opentorah-infra` / `dev` is clean.
 `opentorah/opentorah` Pages custom domain is only `www.opentorah.org` (not `jewish-calendar.org`).
 
@@ -168,7 +176,7 @@ No Dynamic DNS A records.
 
 ## Current state (CognoMath)
 
-Account `dub@cognomath.org`.
+The Cloudflare login is in the private note.
 Pulumi stack `cognomath-infra` / `dev` is clean (redirect ruleset for `cognomath.org` is the zone entrypoint named
 `default`).
 
@@ -182,17 +190,17 @@ Pulumi stack `cognomath-infra` / `dev` is clean (redirect ruleset for `cognomath
 
 Do not put token values here.
 
-Pulumi tokens (`~/Podval/Keys/podval-cloudflare-api-token.txt`, `~/OpenTorah/Keys/opentorah-cloudflare-api-token.txt`,
-`~/CognoMath/Keys/cognomath-cloudflare-api-token.txt`) are **account-owned** (user-token verify 401; account-token
-verify 200).
+The Pulumi tokens are **account-owned** (user-token verify 401; account-token verify 200).
+The file paths are in the private note.
 That is the right kind for automation — keep them; do not switch to user tokens.
 Each `.envrc` sets `CLOUDFLARE_API_TOKEN`.
 Grants are consistent enough to run `DnsZone`: Zone DNS Edit, Zone Edit, Zone Settings Edit, and Single Redirects
 (rulesets work).
 `GET /zones` also reports `#waf:edit` / Page Shield / SSL Read — WAF package APIs 403, tunnels list as empty 200; those
 are not extra checkboxes that matter.
-Page Rules API returns 1011 for the account-owned Pulumi tokens; a user-level OAuth connection returns an empty
-list (no page rules on any zone). Unused (Single Redirects instead).
+Page Rules API returns 1011 for the account-owned Pulumi tokens; a user-level OAuth connection returns an empty list (no
+page rules on any zone).
+Unused (Single Redirects instead).
 
 All three Pulumi tokens can PATCH `always_use_https` (CognoMath used to 403; it no longer does).
 CognoMath can also read Universal SSL / certificate packs; Podval and OpenTorah 403 those — extra on CognoMath, not
@@ -201,12 +209,12 @@ No expiry.
 
 Other tokens:
 
-- DDNS on [[ProxMox]] LXC 103: DNS Edit on `podval.org` only.
+- DDNS on the [[ProxMox]] dynamic-DNS container: DNS Edit on `podval.org` only.
   Keep zone-scoped; account-owned if it is not already.
 - OpenTorah worker token: GitHub Actions on `opentorah/alter-rebbe.org` deploys Worker `alter-rebbe-aliases` (`site-publisher.yml`
   → repo secret `CLOUDFLARE_API_TOKEN`).
   The live Worker does not use the token; only **redeploy** does.
-  Local copy: `~/OpenTorah/Keys/alter-rebbe-org-cloudflare-worker-api-token.txt`.
+  The local path is in the private note.
   Account token UI (2026-09): **Manage Account → Account API Tokens**.
   Workers grant is role **Editor** on **Specified Workers** → `alter-rebbe-aliases` (legacy name was Account → Workers
   Scripts → Edit).
@@ -248,7 +256,7 @@ services:
     security_opt: [no-new-privileges:true]
     environment:
       - CLOUDFLARE_API_TOKEN=...
-      - DOMAINS=k39.podval.org
+      - DOMAINS=<the house name, in the private note>
       - IP6_PROVIDER=none
 ```
 
@@ -257,8 +265,8 @@ Turns out, the client
 as an LXC after all - and that is how I run it now.
 
 As of 2026-11-11 the binary is favonia cloudflare-ddns **1.18.0** at `/usr/local/bin/cloudflare-ddns`.
-It was extracted from the official image `ghcr.io/favonia/cloudflare-ddns:1.18.0` pinned by digest
-(`sha256:345b41895a8846d74c62d30bd27e61101a754f8ab8da10c68115823883803afb`), not built on the LXC.
+It was extracted from the official image `ghcr.io/favonia/cloudflare-ddns:1.18.0` pinned by digest (`sha256:345b41895a8846d74c62d30bd27e61101a754f8ab8da10c68115823883803afb`),
+not built on the LXC.
 Do **not** update it with `go run …@latest` — that filled the 3G disk once.
 
 Configuration file is in `/etc/systemd/system/cloudflare-ddns.service`; for changes to take:
@@ -266,18 +274,25 @@ Configuration file is in `/etc/systemd/system/cloudflare-ddns.service`; for chan
 
 ## Remote SSH (not Cloudflare Tunnel)
 
-LAN SSH is `ssh pve` / `ha` / `docker` / `unifi` (YubiKey).
-`k39.podval.org` is DDNS for the home IP if something still needs a public name.
+On the LAN, SSH is `ssh pve` / `ha` / `docker` / `unifi`, with the [[YubiKey]].
+The dynamic-DNS name is there if something still needs a public name for the house.
+The name is in the private note.
+Port 22 is not published on the router.
+Checked 2026-11-18: there are no port-forward rules.
 
-A Cloudflare Tunnel LXC (104, `cloudflared`, `.236`) and Zero Trust tunnel `keefe39` (team `podvalorg`) were started and
-never given a `config.yml`.
-LXC 104 was destroyed 2026-09-16 (`/root/104.conf.bak.*` on PVE).
-`keefe39` is gone (API list of live and deleted tunnels on the Podval account is empty).
-
+A Cloudflare Tunnel container was started and never given a config.
+It was destroyed on 2026-09-16.
+The tunnel itself is gone.
+The Podval account has no live or deleted tunnels.
 Do not use Cloudflare Tunnel for admin SSH.
-The subnet router is [[ProxMox]] LXC 106 (`homelab-tailscale`, `192.168.1.237`, tailnet `100.82.39.37`, MagicDNS
-`homelab-tailscale`, Tailscale **1.104.6** as of 2026-11-11).
-It advertises `192.168.1.0/24`, and that route is enabled for this machine.
-It is not an exit node and Tailscale SSH is off, so admin login stays normal SSH plus the YubiKey, and port 22 is not
-published.
-A laptop off the LAN accepts the route and uses `ssh pve` / `ha` / `docker` / `unifi` as on the LAN.
+The tunnel's old name is in the private note.
+
+Remote access is a [[ProxMox]] container running Tailscale.
+It is not an exit node, and Tailscale SSH is off, so admin login stays normal SSH plus the YubiKey.
+Checked 2026-11-18: that container still advertises one subnet route, and the route is enabled.
+My own machines off the LAN accept it and use the same `ssh` aliases as on the LAN.
+That route is not the assistant path.
+Grok Bot comes in as a forwarding-only user on the same container, and that user can open SSH only on a short
+allow-list.
+The route, the tailnet names, and the allow-list are in the private note.
+Assistant access is `notes/SystemAdministration/Grok Bot access.md` in the private vault.

@@ -10,25 +10,27 @@ I used to run UniFi in [[Docker]] using various images:
 - https://github.com/11notes/docker-unifi
 - https://github.com/linuxserver/docker-unifi-network-application
 
-I now run it in a LXC container in [[ProxMox]] :) Guest **105** (`unifi-os-server`, Debian 13) at `192.168.1.184` (`unifi-os-server.lan.podval.org`).
-UI: https://192.168.1.184:11443 (**not** :8443).
-**192.168.1.101** is the USW-Pro-24-PoE, not the controller.
+I now run it in an LXC container in [[ProxMox]].
+Private details (address, SSIDs, the device list, DHCP reservations) are in the private vault
+`dubinsky/dubinsky-private`, at this same path.
 
-As of 2026-11-11: UniFi OS Server **5.1.42**, Network **10.6.109**.
-No UniFi application update was applied on 2026-11-11 (OS Server stayed 5.1.42).
-`uosserver-updater.service` is the app updater, and `uosserver` has no update command.
-Debian packages on the LXC were upgraded 2026-11-11 (and earlier on 2026-10-15 and 2026-10-07).
+The UI is on port **11443**, not the old **8443**.
+The PoE switch is not the controller.
+Versions and the LAN address are in the private note.
+
 Host units `uosserver.service` / `uosserver-updater.service` (user `uosserver`).
+`uosserver-updater.service` is the app updater, and `uosserver` has no update command.
 Data on the LXC: `/var/lib/uosserver/`.
 App data in the container: `/usr/lib/unifi/data/`.
-Inform/STUN published via pasta: `8080`, `3478/udp`, `11443→443`, plus 8444/8880–8882/5671/6789/9543.
+Inform/STUN is published via pasta.
+The port list is in the private note.
 
 ## Setup
 
 ### Basic
-- name: k39-3
-- choose "Advanced Setup" to avoid logging into Unifi UI account
-- Settings > System > Advanced > Inform Host > Override with the IP address of the machine running `unifi`
+- choose "Advanced Setup" to avoid logging into a UniFi cloud account
+- Settings > System > Advanced > Inform Host > Override with the address of the machine running `unifi`
+- The name used at first setup, and whether it is still the live name, is in the private note.
 
 ### Devices
 
@@ -41,24 +43,25 @@ Reset to the factory state with a `syswrapper.sh restore-default` command on the
 
 ### Networks
 
-- LAN: 192.168.1.0/24
-	- Settings | Network | Default | Advanced | Manual | DHCP | DHCP Service Management | Domain Name: "lan.podval.org"
-- WiFi:
-	- `podval-u`: people Wi‑Fi; currently **2.4 + 5 GHz** so the Samsung fridge can stay online
-	  (2.4-only, still on this SSID at `.113`)
-	- `podval-2g`: **2.4 GHz IoT** (boiler, dishwasher; ratgdo32 disco `.138`)
-- One LAN, no extra VLANs.
-  DHCP pool `192.168.1.100–199`.
+One LAN, no extra VLANs.
+The subnet, the DHCP pool, and the LAN domain are in the private note.
+
+Two Wi‑Fi networks:
+
+- people Wi‑Fi, currently **2.4 + 5 GHz**, because the Samsung fridge is 2.4-only and is still on this network
+- IoT, **2.4 GHz only** (boiler, dishwasher, the ratgdo)
+
+The SSID strings are in the private note.
 
 ### Later (do not start until I ask)
 
-- **Move refrigerator to `podval-2g`.** SmartThings has no Wi‑Fi picker for this fridge.
+- **Move the refrigerator to the IoT network.** SmartThings has no Wi‑Fi picker for this fridge.
   AP path (Door Alarm, hold Fridge until `AP`) tried 2026-08-19 and failed.
-  Next try: power the fridge off (or unplug a minute), then AP again; phone on `podval-2g`; Reclaim if “already
-  registered”.
+  Next try: power the fridge off (or unplug a minute), then AP again, with the phone on the IoT network.
+  Reclaim if “already registered”.
   Do not delete the device in SmartThings first.
-- Then set `podval-u` back to **5 GHz only** (disable 2.4 on that SSID).
-  Confirm UniFi shows `refrigerator` on `podval-2g` first.
+- Then set people Wi‑Fi back to **5 GHz only** (disable 2.4 on that SSID).
+  Confirm UniFi shows the refrigerator on the IoT network first.
   Same item lives under [[Home Assistant]] TODO.
 
 ### SSH
@@ -73,58 +76,14 @@ see [[ProxMox#Dynamic DNS]]
 
 ### Port forwarding
 
-TODO I'in the UniFi Console | Settings | Security | Port Forwarding, forward to the `gatekeeper`:
-- 22 - ssh
-- 80 - http
-- 443 - https
+No port forwards are configured (checked 2026-11-18).
+An old note proposed some.
+That list is in the private note, and it was never applied.
+Remote admin is not port forwarding.
+See [[Domains]].
+
 ### Addresses
 
-Addresses on the 192.168.1.* network (`*.lan.podval.org`).
-Site `default`, LAN `192.168.1.1/24`, DHCP `192.168.1.100–199`.
-Public WAN on the USG is `73.143.105.42` (same IP `cloudflare-ddns` tracks for `k39.podval.org`).
-
-TODO HOW DO I ASSIGN STATIC ADDRESSES TO UniFi DEVICES?
-
-UniFi hardware (2026-08-20):
-
-| Type | Model | Name | Address |
-|---|---|---|---|
-| ugw | UGW3 | USG 3P | WAN 73.143.105.42 / LAN .1 |
-| uap | U7PG2 | AC Pro | 192.168.1.100 |
-| usw | USPM24P | USW Pro Max 24 PoE | 192.168.1.101 |
-| usw | US8P60 | US 8 60W | 192.168.1.102 |
-| uap | U7NHD | Nano HD | 192.168.1.161 |
-
-| Address | Name |
-|---------|------|
-| 1 | USG-3P (gateway) |
-| 2 | dub |
-| 4 | OBi202 |
-| 21 | printer |
-| 22 | printer-colour2 |
-| 30 | TV |
-| 31 | gatekeeper |
-| 32 | gatekeeper-wifi |
-| 33 | dub-phone |
-| 34 | nina |
-| 35 | (nina-wifi) |
-| 36 | nina-phone |
-| 40 | proxmox |
-| 78 | dub-wifi |
-| 100 | UAP-AC-Pro |
-| 101 | USW Pro Max 24 PoE |
-| 102 | US 8 60W |
-| 110 | Reolink doorbell (Front) |
-| 113 | refrigerator (`podval-u`) |
-| 117 | Entryway speaker (Nest Mini, `podval-u`) |
-| 138 | ratgdo32 disco (`podval-2g`, DHCP) |
-| 161 | UAP-nanoHD |
-| 176 | Viessmann-2224 (`podval-2g`) |
-| 184 | unifi-os-server |
-| 187 | docker |
-| 200 | turingpi |
-| 201 | cube1 |
-| 202 | cube2 |
-| 204 | cube4 |
-| 209 | homeassistant |
-| 235 | cloudflare-ddns |
+The hardware list, DHCP reservations, and the WAN address are in the private note.
+Fixed addresses for UniFi's own devices are still a TODO: the gear has addresses, and I have not written down a
+procedure I trust for pinning the devices themselves.

@@ -7,9 +7,11 @@ tags:
 
 ## docker VM (ProxMox 101)
 
-The long-lived Docker host is [[ProxMox]] VM **101** (`docker`, `192.168.1.187`), Debian 13.
-As of 2026-11-11: docker-ce **29.9.3**, docker-ce-cli **29.9.3**, containerd.io **2.4.2-3**, Compose plugin **5.7.1**, buildx **0.38.1**, timezone **America/New_York** (was UTC).
-Kernel **6.12.116+deb13-amd64**.
+The long-lived Docker host is a [[ProxMox]] VM named `docker`, Debian 13.
+The address is in the private vault `dubinsky/dubinsky-private`, at this same path.
+Checked 2026-11-18: docker-ce **29.9.3**, docker-ce-cli **29.9.3**, containerd.io **2.4.2-4**, Compose plugin **5.7.1**,
+buildx **0.39.0**, timezone **America/New_York**.
+Kernel **6.12.117+deb13-amd64** (was 6.12.116 on 2026-11-11).
 The only compose stack on this VM is [[Frigate]].
 Do not attach virtiofs.
 
@@ -23,11 +25,14 @@ $ docker run hello-world
 ```
 
 ## Volume Permissions
-For Docker volumes that mount a host directory to not suffer from permission issues, `"Z"` needs to be added at the end of the volume string: `/path/to/host/directory:/path/to/mount/in/container:Z`.
+For Docker volumes that mount a host directory to not suffer from permission issues, `"Z"` needs to be added at the end
+of the volume string: `/path/to/host/directory:/path/to/mount/in/container:Z`.
 
 ## Managers
 
-Now that I use [[ProxMox]] to run [[UniFi]] and [[Home Assistant]], I do not see much need for running applications in Docker containers; I do run a virtual machine dedicated to running Docker containers for development, but they are transient and do not need to be managed; if at some point I need a Docker manager:
+Now that I use [[ProxMox]] to run [[UniFi]] and [[Home Assistant]], I do not see much need for running applications in
+Docker containers; I do run a virtual machine dedicated to running Docker containers for development, but they are
+transient and do not need to be managed; if at some point I need a Docker manager:
 - [Portainer](https://github.com/portainer/portainer)
 - [Dockge](https://github.com/louislam/dockge)
 - [Runtipio](https://runtipi.io/)
@@ -41,7 +46,8 @@ $ docker context export
 $ docker context import
 $ docker context update <context> --description "..."
 ```
-You can also set the current context using the `DOCKER_CONTEXT` environment variable. The environment variable overrides the context set with `docker context use`.
+You can also set the current context using the `DOCKER_CONTEXT` environment variable.
+The environment variable overrides the context set with `docker context use`.
 ```console
 $ export DOCKER_CONTEXT=<context>
 ```
@@ -64,9 +70,11 @@ See [[Docker#Expose]] on how to expose Docker.
 $ docker context create <context> --docker host=ssh://dub@box
 ```
 
-For an SSH context to start working, you have to first SSH into the Docker host manually, so that the host becomes known.
+For an SSH context to start working, you have to first SSH into the Docker host manually, so that the host becomes
+known.
 
-For the best user experience with SSH, configure `~/.ssh/config` as follows to allow reusing a SSH connection for multiple invocations of the `docker` CLI:
+For the best user experience with SSH, configure `~/.ssh/config` as follows to allow reusing a SSH connection for
+multiple invocations of the `docker` CLI:
 ```text
 ControlMaster     auto
 ControlPersist    1m
@@ -76,13 +84,15 @@ Directory `control` must exist; it should not be readable by others.
 
 ## Expose
 
-Ability to expose Docker so that it can be used remotely without authentication will be removed, but while it is still there, this is how to configure it on the host running Docker daemon:
+Ability to expose Docker so that it can be used remotely without authentication will be removed, but while it is still
+there, this is how to configure it on the host running Docker daemon:
 ```console
 $ sudo mkdir -p /etc/systemd/system/docker.service.d
 $ sudo cat /lib/systemd/system/docker.service | grep ExecStart > /etc/systemd/system/docker.service.d/expose-over-tcp.conf
 ```
 
-In `/etc/systemd/system/docker.service.d/expose-over-tcp.conf`, add `[Service]` header, `ExecStart=` reset, and `-H tcp://0.0.0.0:2375`, so that it looks like this:
+In `/etc/systemd/system/docker.service.d/expose-over-tcp.conf`, add `[Service]` header, `ExecStart=` reset, and
+`-H tcp://0.0.0.0:2375`, so that it looks like this:
 ```text
 [Service]
 ExecStart=

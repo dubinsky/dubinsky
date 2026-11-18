@@ -83,6 +83,19 @@ Grok Build (`grok`) is installed by `bootstrap.d/grok.sh` from the mise tool spe
 That is the official binary, not the npm package `npm:@xai-official/grok`.
 Grok Bot is not part of bootstrap.
 
+House skills live in `~/.grok/skills/` and are tracked in this dotfiles repo:
+
+- `proxmox`
+- `home-assistant`
+- `frigate`
+- `unifi`
+- `house-notes`
+
+`prose-pretty-print` and `release` are in the same directory.
+They are not house skills.
+A skill reads the public note and, when the note was split, the private note at the same path.
+See [[Obsidian]].
+
 ## Readme
 
 There are [ways](https://github.com/yadm-dev/yadm/issues/93) to add README to the `yadm` repository without polluting
@@ -102,8 +115,10 @@ plaintext in the repo.
 | Recipient | [[YubiKey]] OpenPGP `049DC4EF6FB97468` (`yadm.gpg-recipient`) |
 | Public key | `~/.config/yadm/yubikey-openpgp.asc` |
 
-Private material is **only** on the 5C (serial 18600387).
-Decrypt needs the card, User PIN, and a touch (`uif` decrypt=on).
+Private material is **only** on the 5C.
+The serial is in the private vault `dubinsky/dubinsky-private`, at this same path.
+Decrypt needs the card, the User PIN, and a touch (`uif` decrypt=on).
+The PIN is not written in either vault.
 Encrypt uses the public key (no tap).
 
 After changing a secret:
@@ -175,6 +190,7 @@ Enable native Wayland support: in `Help | Edit custom VM options` add
 ### Obsidian
 
 - open the vault in `Podval/dub.podval.org`
+- the private vault is `Podval/dubinsky-private` (see [[Obsidian]])
 - change Omarchy theme (this makes Omarchy theme available in Obsidian)
 - set theme to `Omarchy` so that Obsidian follows Omarchy theme changes
 - enable community plugins

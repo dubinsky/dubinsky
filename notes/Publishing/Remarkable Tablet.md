@@ -9,12 +9,17 @@ tags:
   - Free Connect: https://support.remarkable.com/hc/en-us/articles/4409609578001
 - Got: 2020-11-02
 - Setup
-  - SSH password (Settings | Help | Copyright and licenses): SVEPwWzjDP
-  - upload files via USB web interface (when enabled under "Storage" and the tablet connected) at http://10.11.99.1/ (see [File Transfer](https://remarkablewiki.com/tips/file_transfer))
-  - configured UniFi for the tablet's MAC address: remarkable.lan.podval.org (192.168.1.6); over USB: 10.11.99.1
-  - put the public SSH key on the tablet and configured local SSH so that `$ ssh remarkable` works (see [SSH](https://remarkablewiki.com/tech/ssh))
+  - SSH password is shown on the tablet under Settings | Help | Copyright and licenses.
+    It is not written in either vault.
+    The order id, serial, and LAN address are in the private vault `dubinsky/dubinsky-private`, at this same path.
+  - upload files via USB web interface (when enabled under "Storage" and the tablet connected) at http://10.11.99.1/
+    (see [File Transfer](https://remarkablewiki.com/tips/file_transfer))
+  - the tablet's LAN name is in the private note; over USB the address above is reMarkable's, not the house LAN
+  - put the public SSH key on the tablet and configured local SSH so that `$ ssh remarkable` works (see
+    [SSH](https://remarkablewiki.com/tech/ssh))
   - works in `mc` as a shell link
-  - mount over SSH: `$ sshfs remarkable:/home/root <mountpoint>` (see [Linux Mount](https://remarkablewiki.com/tips/sshmount))
+  - mount over SSH: `$ sshfs remarkable:/home/root <mountpoint>` (see
+    [Linux Mount](https://remarkablewiki.com/tips/sshmount))
   - [rclone](https://remarkablewiki.com/tips/rclone)?
 - Resources
   - https://my.remarkable.com

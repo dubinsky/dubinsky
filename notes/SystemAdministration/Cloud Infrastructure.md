@@ -1,11 +1,17 @@
 The Cloud Infrastructure Grok Bot runs Pulumi for Podval, OpenTorah, and CognoMath on its own computer.
 It runs only `pulumi preview`, and `pulumi preview --refresh` for drift checks.
-I run everything that writes on this desktop: `pulumi up`, refresh, import, and state surgery, with the `terraform` keys.
+I run everything that writes on this desktop: `pulumi up`, refresh, import, and state surgery, with the `terraform`
+keys.
 Code changes go through pull requests.
 Domain and DNS state stays in [[Domains]].
 The library stays in [[Pulumi]].
 
-For a while, what GBrok Bot does now on its own computer happened in a dedicated container in my homelab.0; that was more complex but not safer.
+Private details (Cloudflare logins, token-file paths) are in the private vault `dubinsky/dubinsky-private`, at this same
+path.
+Token values are not in either vault.
+
+For a while, what Grok Bot does now on its own computer happened in a dedicated container in the homelab.
+That was more complex but not safer.
 
 * TOC {:toc}
 
@@ -17,9 +23,8 @@ The repos are `dubinsky/podval-infra`, `opentorah/infra`, and `cognomath/infra`.
 The library is `dubinsky/pulumi`.
 Each commit uses that org's identity.
 The name is Leonid Dubinsky.
-Podval and the `dubinsky/pulumi` library use `dub@podval.org`.
-OpenTorah uses `dub@opentorah.org`.
-CognoMath uses `dub@cognomath.org`.
+Each org uses its own admin email.
+The addresses are in the private note.
 I review and merge.
 I publish the library to Maven Central myself.
 A library pull request has to merge before an infra pull request that depends on it.
@@ -27,22 +32,15 @@ The bot does not run `pulumi up`.
 
 ## Credentials
 
-`.envrc` in each infra repo uses `terraform-<project>.json` and `<org>-cloudflare-api-token.txt` when those files are present.
-That is this desktop.
-Otherwise it falls back to `grok-bot-<org>-infra.json` and `grok-bot-<org>-cloudflare-api-token.txt`.
-That is the bot's computer.
+`.envrc` in each infra repo prefers the desktop key files when they are present, and otherwise the bot's read-only
+files.
 `<org>` is `podval`, `opentorah`, or `cognomath`.
-On this desktop the files are in `~/<Org>/Keys/`.
-
-| Org | Desktop, when present | Bot fallback |
-|---|---|---|
-| Podval | `terraform-podval-infra.json`, `podval-cloudflare-api-token.txt` | `grok-bot-podval-infra.json`, `grok-bot-podval-cloudflare-api-token.txt` |
-| OpenTorah | `terraform-opentorah-infra.json`, `opentorah-cloudflare-api-token.txt` | `grok-bot-opentorah-infra.json`, `grok-bot-opentorah-cloudflare-api-token.txt` |
-| CognoMath | `terraform-cognomath-infra.json`, `cognomath-cloudflare-api-token.txt` | `grok-bot-cognomath-infra.json`, `grok-bot-cognomath-cloudflare-api-token.txt` |
+The file names and directories are in the private note.
 
 The desktop runs Pulumi as `terraform@<project>.iam.gserviceaccount.com`.
 The bot runs as `grok-bot@<project>.iam.gserviceaccount.com`.
-At org level, `grok-bot` has only `roles/browser`, `roles/iam.securityReviewer`, `roles/iam.serviceAccountViewer`, `roles/serviceusage.serviceUsageViewer`, `roles/billing.viewer`, and `roles/storage.bucketViewer`.
+At org level, `grok-bot` has only `roles/browser`, `roles/iam.securityReviewer`, `roles/iam.serviceAccountViewer`,
+`roles/serviceusage.serviceUsageViewer`, `roles/billing.viewer`, and `roles/storage.bucketViewer`.
 On the state bucket it also has `roles/storage.objectViewer`.
 It has no `roles/iam.serviceAccountKeyAdmin` on itself.
 State is in `gs://state.podval.org`, `gs://state.opentorah.org`, and `gs://state.cognomath.org`.
@@ -52,8 +50,9 @@ The grants are Zone, DNS, Zone Settings, and Single Redirect Read.
 Write attempts were verified to be denied.
 
 Each org's `grok-bot` service account has the Google Workspace Groups Reader admin role.
-`grok-bot@podval-infra.iam.gserviceaccount.com` is assigned in the podval.org Workspace, `grok-bot@opentorah-infra.iam.gserviceaccount.com` in opentorah.org, and `grok-bot@cognomath-infra.iam.gserviceaccount.com` in cognomath.org.
-Each org's own service account is assigned in that org's own Admin console, under Account > Admin roles > Groups Reader > Admins assigned > Assign service accounts.
+The account email is `grok-bot@<project>.iam.gserviceaccount.com`, assigned in that org's own Admin console, under
+Account > Admin roles > Groups Reader > Admins assigned > Assign service accounts.
+The spelled-out addresses are in the private note.
 The role may take a few minutes to take effect.
 With it, `direnv exec . pulumi preview --refresh` runs clean on all three dev stacks.
 
@@ -61,7 +60,8 @@ The desktop installs `pulumi-language-scala` 0.5.2 from `github://api.github.com
 GCP is pinned to `9.0.0`, the plugin in `besom-gcp_3:9.0.0-core.0.5`.
 Cloudflare is pinned to `6.20.0`, the plugin in `besom-cloudflare_3:6.20.0-core.0.5`.
 Each stack config sets `gcp:version` and `cloudflare:version` to those versions.
-The shared program sets the same version on the provider, on each resource, and on the GCP invokes, because the resources use the default provider.
+The shared program sets the same version on the provider, on each resource, and on the GCP invokes, because the
+resources use the default provider.
 The desktop has Cloudflare `6.20.0` and GCP `9.0.0`.
 The selected stack is not stored in git.
 On a new checkout, `pulumi stack select organization/<project>/dev` once.
@@ -75,7 +75,8 @@ The Besom jar's `plugin.json` names the plugin the program was generated for.
 Those were the newest jars on Maven Central on 2026-11-11.
 Upstream plugins can be newer and still have no Besom jar.
 
-Bump `besom-core_3`, `besom-gcp_3`, and `besom-cloudflare_3` together in `~/Podval/pulumi` and in each infra `build.gradle`.
+Bump `besom-core_3`, `besom-gcp_3`, and `besom-cloudflare_3` together in `~/Podval/pulumi` and in each infra
+`build.gradle`.
 The infra builds also depend on published `org.podval.tools.pulumi`.
 `includeBuild` of `~/Podval/pulumi` replaces that when the checkout is present.
 
