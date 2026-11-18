@@ -35,7 +35,7 @@ It does not run Grok, is not an exit node, and does not use Tailscale SSH.
 It still advertises a subnet route, and that route is what my own machines use off the LAN.
 An assistant does not get the LAN through that route.
 The route, the tailnet names, and the assistant allow-list are in the private note.
-Assistant access is `notes/SystemAdministration/Grok Bot Access.md` in the private vault.
+Assistant access is [[Grok Bot Access]].
 
 Snapshots taken 2026-11-11 are no longer on the host (checked 2026-11-18).
 eScriptorium cannot `pct snapshot` because of the bind mounts (facsimiles read-only, work dir read-write).
