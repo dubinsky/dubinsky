@@ -24,8 +24,8 @@ The UniFi OS container is privileged (nesting only).
 Checked 2026-11-18.
 The Tailscale and eScriptorium containers also have `keyctl=1` and `/dev/net/tun`, so Tailscale can open its tunnel.
 
-The dynamic-DNS container was destroyed 2026-11-18.
-Its backups were deleted.
+The dynamic-DNS container ran for a while and was never used.
+It was destroyed 2026-11-18, in favour of Tailscale.
 The Cloudflare Tunnel container and the cloud-infrastructure container were destroyed.
 Do not recreate them.
 See [[Domains]] and [[Cloud Infrastructure]].
@@ -70,10 +70,9 @@ https://community-scripts.github.io/ProxmoxVE/scripts.
 ```
 ## Dynamic DNS
 
-The `cloudflare-ddns` container was destroyed 2026-11-18.
-The Cloudflare token was revoked the same day.
-There is no public DDNS name.
-Remote access is the Tailscale container.
+An LXC (`cloudflare-ddns`) updated a Cloudflare A record for a while.
+Nothing used it.
+It is gone, in favour of the Tailscale container.
 The name and the address are in the private note.
 See [[Domains]].
 ## Running Docker Containers

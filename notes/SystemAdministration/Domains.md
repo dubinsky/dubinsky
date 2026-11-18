@@ -145,13 +145,10 @@ Pulumi stack `podval-infra` / `dev` is clean.
 | `podval.org` | GitHub Pages, orange-cloud CNAME `@` → `www` → `dubinsky.github.io` + Always Use HTTPS. Extra CNAMEs stay grey: Workspace `calendar`, `docs`, `drive`, `email`, `groups`, `hangouts`, `mail`, `sheets`, `slides` → `ghs.googlehosted.com` (DNS-only), `dub` → GitHub Pages, `nina` → `ghs.google.com` (Blogger), `ha` + its ACME name → Nabu Casa. The names that used to point at the house are in the private note. |
 | `podval.dev` | Auxiliary: dummy A + 301 → `https://www.podval.org` |
 
-The house dynamic-DNS name was deleted in Cloudflare on 2026-11-18.
-It was not in Pulumi.
-The records that aliased to it were removed in the Podval infra repo and applied with `pulumi up`.
-The pull request is in the private note.
-The dynamic-DNS container was destroyed the same day.
-There is no public DDNS name.
-Remote access is the Tailscale container on [[ProxMox]].
+Dynamic DNS was configured for a while.
+A Cloudflare A record pointed at the house, and an LXC on [[ProxMox]] updated it.
+Nothing used it.
+It is gone, in favour of Tailscale.
 The name, and the records that aliased to it, are in the private note.
 
 `http://www.podval.org/` is now Cloudflare Always Use HTTPS (301 to `https://`).
@@ -212,8 +209,6 @@ No expiry.
 
 Other tokens:
 
-- The DDNS token (DNS Edit on `podval.org` only) was for the [[ProxMox]] dynamic-DNS container.
-  The container was destroyed 2026-11-18, and the token was revoked the same day.
 - OpenTorah worker token: GitHub Actions on `opentorah/alter-rebbe.org` deploys Worker `alter-rebbe-aliases` (`site-publisher.yml`
   → repo secret `CLOUDFLARE_API_TOKEN`).
   The live Worker does not use the token; only **redeploy** does.
@@ -227,11 +222,10 @@ Other tokens:
 
 ## Dynamic DNS
 
-Retired 2026-11-18.
-The container was destroyed, and the Cloudflare token was revoked.
-There is no public DDNS name.
-Remote access is the Tailscale container on [[ProxMox]].
-The name and the records that aliased to it are in the private note.
+This ran for a while: a Cloudflare A record, and an LXC on [[ProxMox]] that updated it.
+Nothing used it.
+It is gone, in favour of Tailscale.
+The name is in the private note.
 
 Among other interesting things, CloudFlare *does*
 [support](https://developers.cloudflare.com/dns/manage-dns-records/how-to/managing-dynamic-ip-addresses/) Dynamic DNS.
@@ -282,8 +276,10 @@ Do not bring the container back.
 ## Remote SSH (not Cloudflare Tunnel)
 
 On the LAN, SSH is `ssh pve` / `ha` / `docker` / `unifi`, with the [[YubiKey]].
-There is no public DDNS name.
-The name that used to be there is in the private note.
+Dynamic DNS used to publish a name for the house.
+Nothing used it.
+It is gone, in favour of Tailscale.
+The name is in the private note.
 Port 22 is not published on the router.
 Checked 2026-11-18: there are no port-forward rules.
 
