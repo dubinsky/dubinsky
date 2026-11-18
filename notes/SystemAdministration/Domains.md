@@ -3,8 +3,8 @@ tags: [sysadmin]
 ---
 * TOC {:toc}
 
-Private details (the house dynamic-DNS name, the records that point at the house, Cloudflare login emails, and
-token-file paths) are in the private vault `dubinsky/dubinsky-private`, at this same path.
+Private details (the house dynamic-DNS name and the records that point at the house) are in the private vault
+`dubinsky/dubinsky-private`, at this same path.
 Token values are not in either vault.
 
 ## Square Space
@@ -48,9 +48,8 @@ And I really hope that Google Workspace services attached to some of my domains 
 Let's go!
 
 ## Migration
-For each organization (Podval, OpenTorah, CognoMath):
+For each organization (`dub@podval.org`, `dub@opentorah.org`, `dub@cognomath.org`):
 - [sign up for Cloudflare](https://dash.cloudflare.com/sign-up) using that org's admin Google email
-- The addresses are in the private note.
 - add billing
 
 Documentation:
@@ -82,9 +81,9 @@ checkout `~/Podval/pulumi`) from their `infra` repositories — GCP org, buckets
 
 | Org | Checkout | Repo | Cloudflare account | Pulumi stack |
 |---|---|---|---|---|
-| Podval | `~/Podval/infra` | `dubinsky/podval-infra` | admin Google email | `podval-infra` / `dev` |
-| OpenTorah | `~/OpenTorah/infra` | `opentorah/infra` | admin Google email | `opentorah-infra` / `dev` |
-| CognoMath | `~/CognoMath/infra` | `cognomath/infra` | admin Google email | `cognomath-infra` / `dev` |
+| Podval | `~/Podval/infra` | `dubinsky/podval-infra` | `dub@podval.org` | `podval-infra` / `dev` |
+| OpenTorah | `~/OpenTorah/infra` | `opentorah/infra` | `dub@opentorah.org` | `opentorah-infra` / `dev` |
+| CognoMath | `~/CognoMath/infra` | `cognomath/infra` | `dub@cognomath.org` | `cognomath-infra` / `dev` |
 
 There is exactly one library checkout, `~/Podval/pulumi`, and no symlinks.
 Each infra `settings.gradle` defaults `pulumiDir` to `../../Podval/pulumi` (i.e. `~/Podval/pulumi` from `~/<Org>/infra`;
@@ -137,7 +136,7 @@ No tunnels, no Pages projects, and R2 is not enabled on any account.
 
 ## Current state (podval)
 
-The Cloudflare login is in the private note.
+Account `dub@podval.org`.
 Registrar for `podval.org` is Cloudflare (WHOIS); zone metadata still remembers Squarespace as the previous registrar.
 Nameservers `joel.ns.cloudflare.com` / `paislee.ns.cloudflare.com`.
 Pulumi stack `podval-infra` / `dev` is clean.
@@ -156,7 +155,7 @@ The name, and the records that alias to it, are in the private note.
 
 ## Current state (OpenTorah)
 
-The Cloudflare login is in the private note.
+Account `dub@opentorah.org`.
 Pulumi stack `opentorah-infra` / `dev` is clean.
 `opentorah/opentorah` Pages custom domain is only `www.opentorah.org` (not `jewish-calendar.org`).
 
@@ -176,7 +175,7 @@ No Dynamic DNS A records.
 
 ## Current state (CognoMath)
 
-The Cloudflare login is in the private note.
+Account `dub@cognomath.org`.
 Pulumi stack `cognomath-infra` / `dev` is clean (redirect ruleset for `cognomath.org` is the zone entrypoint named
 `default`).
 
@@ -190,8 +189,9 @@ Pulumi stack `cognomath-infra` / `dev` is clean (redirect ruleset for `cognomath
 
 Do not put token values here.
 
-The Pulumi tokens are **account-owned** (user-token verify 401; account-token verify 200).
-The file paths are in the private note.
+Pulumi tokens (`~/Podval/Keys/podval-cloudflare-api-token.txt`, `~/OpenTorah/Keys/opentorah-cloudflare-api-token.txt`,
+`~/CognoMath/Keys/cognomath-cloudflare-api-token.txt`) are **account-owned** (user-token verify 401; account-token
+verify 200).
 That is the right kind for automation — keep them; do not switch to user tokens.
 Each `.envrc` sets `CLOUDFLARE_API_TOKEN`.
 Grants are consistent enough to run `DnsZone`: Zone DNS Edit, Zone Edit, Zone Settings Edit, and Single Redirects
@@ -214,7 +214,7 @@ Other tokens:
 - OpenTorah worker token: GitHub Actions on `opentorah/alter-rebbe.org` deploys Worker `alter-rebbe-aliases` (`site-publisher.yml`
   → repo secret `CLOUDFLARE_API_TOKEN`).
   The live Worker does not use the token; only **redeploy** does.
-  The local path is in the private note.
+  Local copy: `~/OpenTorah/Keys/alter-rebbe-org-cloudflare-worker-api-token.txt`.
   Account token UI (2026-09): **Manage Account → Account API Tokens**.
   Workers grant is role **Editor** on **Specified Workers** → `alter-rebbe-aliases` (legacy name was Account → Workers
   Scripts → Edit).

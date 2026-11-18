@@ -5,10 +5,7 @@ keys.
 Code changes go through pull requests.
 Domain and DNS state stays in [[Domains]].
 The library stays in [[Pulumi]].
-
-Private details (Cloudflare logins, token-file paths) are in the private vault `dubinsky/dubinsky-private`, at this same
-path.
-Token values are not in either vault.
+Token and key values are not in the notes.
 
 For a while, what Grok Bot does now on its own computer happened in a dedicated container in the homelab.
 That was more complex but not safer.
@@ -23,8 +20,9 @@ The repos are `dubinsky/podval-infra`, `opentorah/infra`, and `cognomath/infra`.
 The library is `dubinsky/pulumi`.
 Each commit uses that org's identity.
 The name is Leonid Dubinsky.
-Each org uses its own admin email.
-The addresses are in the private note.
+Podval and the `dubinsky/pulumi` library use `dub@podval.org`.
+OpenTorah uses `dub@opentorah.org`.
+CognoMath uses `dub@cognomath.org`.
 I review and merge.
 I publish the library to Maven Central myself.
 A library pull request has to merge before an infra pull request that depends on it.
@@ -32,10 +30,19 @@ The bot does not run `pulumi up`.
 
 ## Credentials
 
-`.envrc` in each infra repo prefers the desktop key files when they are present, and otherwise the bot's read-only
-files.
+`.envrc` in each infra repo uses `terraform-<project>.json` and `<org>-cloudflare-api-token.txt` when those files are
+present.
+That is this desktop.
+Otherwise it falls back to `grok-bot-<org>-infra.json` and `grok-bot-<org>-cloudflare-api-token.txt`.
+That is the bot's computer.
 `<org>` is `podval`, `opentorah`, or `cognomath`.
-The file names and directories are in the private note.
+On this desktop the files are in `~/<Org>/Keys/`.
+
+| Org | Desktop, when present | Bot fallback |
+|---|---|---|
+| Podval | `terraform-podval-infra.json`, `podval-cloudflare-api-token.txt` | `grok-bot-podval-infra.json`, `grok-bot-podval-cloudflare-api-token.txt` |
+| OpenTorah | `terraform-opentorah-infra.json`, `opentorah-cloudflare-api-token.txt` | `grok-bot-opentorah-infra.json`, `grok-bot-opentorah-cloudflare-api-token.txt` |
+| CognoMath | `terraform-cognomath-infra.json`, `cognomath-cloudflare-api-token.txt` | `grok-bot-cognomath-infra.json`, `grok-bot-cognomath-cloudflare-api-token.txt` |
 
 The desktop runs Pulumi as `terraform@<project>.iam.gserviceaccount.com`.
 The bot runs as `grok-bot@<project>.iam.gserviceaccount.com`.
@@ -50,9 +57,11 @@ The grants are Zone, DNS, Zone Settings, and Single Redirect Read.
 Write attempts were verified to be denied.
 
 Each org's `grok-bot` service account has the Google Workspace Groups Reader admin role.
-The account email is `grok-bot@<project>.iam.gserviceaccount.com`, assigned in that org's own Admin console, under
-Account > Admin roles > Groups Reader > Admins assigned > Assign service accounts.
-The spelled-out addresses are in the private note.
+`grok-bot@podval-infra.iam.gserviceaccount.com` is assigned in the podval.org Workspace,
+`grok-bot@opentorah-infra.iam.gserviceaccount.com` in opentorah.org, and
+`grok-bot@cognomath-infra.iam.gserviceaccount.com` in cognomath.org.
+Each org's own service account is assigned in that org's own Admin console, under Account > Admin roles > Groups Reader >
+Admins assigned > Assign service accounts.
 The role may take a few minutes to take effect.
 With it, `direnv exec . pulumi preview --refresh` runs clean on all three dev stacks.
 
