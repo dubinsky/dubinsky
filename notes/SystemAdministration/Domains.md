@@ -291,4 +291,4 @@ That route is not the assistant path.
 Grok Bot comes in as a forwarding-only user on the same container, and that user can open SSH only on a short
 allow-list.
 The route, the tailnet names, and the allow-list are in the private note.
-Assistant access is `notes/SystemAdministration/Grok Bot Access.md` in the private vault.
+Assistant access is [[Grok Bot Access]].
