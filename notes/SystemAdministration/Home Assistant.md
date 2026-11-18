@@ -2,10 +2,15 @@
 tags:
   - sysadmin
 ---
-* TOC
-{:toc}
+* TOC {:toc}
 
-I heard about [Home Assistant](https://www.home-assistant.io/) home automation project before: open source, integrates with [everything](https://www.home-assistant.io/integrations/)... But it wasn't until I replaced my HVAC system recently that I decided to see what it can do. And it is great!
+I heard about [Home Assistant](https://www.home-assistant.io/) home automation project before: open source, integrates
+with [everything](https://www.home-assistant.io/integrations/)...
+But it wasn't until I replaced my HVAC system recently that I decided to see what it can do.
+And it is great!
+
+Private details (addresses, entity ids, the meter account, the garage-opener device) are in the private vault
+`dubinsky/dubinsky-private`, at this same path.
 
 Some informational sites:
 - https://www.homeautomationguy.io/
@@ -14,10 +19,14 @@ Some informational sites:
 Home Assistant documentation describes a number of ways to [install](https://www.home-assistant.io/installation/) it.
 
 ### Dedicated Hardware - not the one
-One approach is to use dedicated Raspberry Pi-based hardware, and the purpose-built units offered for sale look great; this is probably the best way for those who do not have a home server; I do though, and prefer to run Home Assistant on it - along with other things.
+One approach is to use dedicated Raspberry Pi-based hardware, and the purpose-built units offered for sale look great;
+this is probably the best way for those who do not have a home server; I do though, and prefer to run Home Assistant on
+it - along with other things.
 
 ### Docker Containers - not the one
-One way to run Home Assistant on a machine not dedicated to it is to use Docker containers; this installation method is called [Home Assistant Container](https://www.home-assistant.io/installation/linux#docker-compose). Setting up Home Assistant this way is simple enough - here is the `docker-compose.yaml`:
+One way to run Home Assistant on a machine not dedicated to it is to use Docker containers; this installation method is
+called [Home Assistant Container](https://www.home-assistant.io/installation/linux#docker-compose).
+Setting up Home Assistant this way is simple enough - here is the `docker-compose.yaml`:
 ```yaml    
 version: '3'
 services:
@@ -33,7 +42,9 @@ services:
       - /run/dbus:/run/dbus:ro
 ```
 
-One issue with this approach is that there is no one-click updates: new image needs to be pulled explicitly with a Docker command; another is - no access to add-ons: each add-on needs to be installed manually using a separate `docker-compose.yaml`
+One issue with this approach is that there is no one-click updates: new image needs to be pulled explicitly with a
+Docker command; another is - no access to add-ons: each add-on needs to be installed manually using a separate
+`docker-compose.yaml`
 
 Here, for example, is one for Z-Wave:
 ```yaml
@@ -64,32 +75,51 @@ networks:
   zwave:
 ```
 
-(Instead of the UI-less minimalist image https://hub.docker.com/r/kpine/zwave-js-server, I went with the official image that also has a very nice UI: https://github.com/zwave-js/zwave-js-ui/blob/master/docker/docker-compose.yml. Note: `zwave-js-ui` used to be called `jwavejsmqtt`; some [instructions]( https://www.homeautomationguy.io/blog/docker-tips/installing-z-wave-js-with-docker-and-home-assistant) still use the old name...)
+(Instead of the UI-less minimalist image https://hub.docker.com/r/kpine/zwave-js-server, I went with the official image
+that also has a very nice UI: https://github.com/zwave-js/zwave-js-ui/blob/master/docker/docker-compose.yml.
+Note: `zwave-js-ui` used to be called `jwavejsmqtt`; some
+[instructions]( https://www.homeautomationguy.io/blog/docker-tips/installing-z-wave-js-with-docker-and-home-assistant)
+still use the old name...)
 
-With `zwave-js-ui` now running on port 8091, I followed [instructions](https://zwave-js.github.io/zwave-js-ui/#/homeassistant/homeassistant-officia): 
+With `zwave-js-ui` now running on port 8091, I followed
+[instructions](https://zwave-js.github.io/zwave-js-ui/#/homeassistant/homeassistant-officia):
 - in Settings / Home Assistant, enabled "WS Server"
 - kept MQTT discovery disabled
 - disabled MQTT gateway
 - used circular arrows icons to generate random keys (S2_Unauthenticated etc.)
 
-It [looks like](https://www.home-assistant.io/integrations/zwave_js) I [do not need to do anything](https://zwave-js.github.io/zwave-js-ui//#/getting-started/quick-start) about Home Assistant Z-Wave add-on; on the Home Assistant side, I added Z-Wave integration with the default web-socket settings - and that's it!
+It [looks like](https://www.home-assistant.io/integrations/zwave_js) I
+[do not need to do anything](https://zwave-js.github.io/zwave-js-ui//#/getting-started/quick-start) about Home Assistant
+Z-Wave add-on; on the Home Assistant side, I added Z-Wave integration with the default web-socket settings - and that's
+it!
 
-Appealing to the control freaks who love doing everything themselves, this approach quickly becomes inconvenient - one needs to hand-craft or find a working `docker-compose.yaml` file for each add-on, and then manually update them all. For those who value convenience, better approach is to let Home Assistant itself take care of the add-on management and updates: it does use Docker internally, and provides UI for managing the add-ons and updating everything. This means - install Home Assistant OS.
+Appealing to the control freaks who love doing everything themselves, this approach quickly becomes inconvenient - one
+needs to hand-craft or find a working `docker-compose.yaml` file for each add-on, and then manually update them all.
+For those who value convenience, better approach is to let Home Assistant itself take care of the add-on management and
+updates: it does use Docker internally, and provides UI for managing the add-ons and updating everything.
+This means - install Home Assistant OS.
 
-So, I want to run Home Assistant OS on a dedicated machine without dedicating my home server to it and without any additional hardware. This means - virtual machines!
+So, I want to run Home Assistant OS on a dedicated machine without dedicating my home server to it and without any
+additional hardware.
+This means - virtual machines!
 
 ### Virtual Machine - the one
 #### Manual
 One approach is to create Home Assistant virtual machine using `virt-manager`.
 
-For it to be accessible from other machines on my network (including my phone), I need a special network setup; see "Network" in [[Virtual Machines]]. In the following, network interface set up for this purpose is named "mac0".
+For it to be accessible from other machines on my network (including my phone), I need a special network setup; see
+"Network" in [[Virtual Machines]].
+In the following, network interface set up for this purpose is named "mac0".
 
-Official [instructions](https://www.home-assistant.io/installation/alternative) for installing Home Assistant in a virtual machine:
-- `wget` the `KVM` (`.qcow2`) image from the [list](https://www.home-assistant.io/installation/alternative#download-the-appropriate-image) to `/home/homeassistant`;
+Official [instructions](https://www.home-assistant.io/installation/alternative) for installing Home Assistant in a
+virtual machine:
+- `wget` the `KVM` (`.qcow2`) image from the
+  [list](https://www.home-assistant.io/installation/alternative#download-the-appropriate-image) to `/home/homeassistant`;
 - uncompress resulting file with: `unxz haos_ova-13.1.qcow2.xz`;
 - In `virt-manager`: create a new virtual machine;
 - "Import existing disk image": browse to the downloaded and uncompressed image;
-- "Generic or unknown OS. Usage is not recommended.";
+- "Generic or unknown OS.
+  Usage is not recommended.";
 - RAM: 8192 megabytes, 4 CPUs;
 - "Customize configuration before install.";
 - "Network selection: Macvtap device.": mac0
@@ -97,19 +127,24 @@ Official [instructions](https://www.home-assistant.io/installation/alternative) 
 - Add Hardware / Channel: device type "unix"; org.qemu.guest_agent.0
 - "Begin Installation"
 
-For the various USB dongles (Z-Wave, Zigbee, RTL) to be visible to the Home Assistant inside the virtual machine, they need to be added in "Add Hardware" of the `virt-manager`.
+For the various USB dongles (Z-Wave, Zigbee, RTL) to be visible to the Home Assistant inside the virtual machine, they
+need to be added in "Add Hardware" of the `virt-manager`.
 
-(Bluetooth controller did not work for me though, which is fine really; see https://www.reddit.com/r/VFIO/comments/wbsqy1/how_to_fix_onboard_intel_bluetooth_error_code_10/)
+(Bluetooth controller did not work for me though, which is fine really; see
+https://www.reddit.com/r/VFIO/comments/wbsqy1/how_to_fix_onboard_intel_bluetooth_error_code_10/)
 
 #### ProxMox
-Just as running Home Assistant in a virtual machine is more convenient than managing its components manually, it is more convenient to run virtual machines using [[ProxMox]] than setting them up manually:
-- ProxMox takes care of the network setup that exposes the virtual machines to the local network using a [bridge](https://pve.proxmox.com/wiki/Network_Configuration#_default_configuration_using_a_bridge)
-- there are [community scripts](https://community-scripts.github.io/ProxmoxVE/) that automate setting up virtual machines,
-  including one for the [Home Assistant](https://community-scripts.github.io/ProxmoxVE/scripts?id=haos-vm).
+Just as running Home Assistant in a virtual machine is more convenient than managing its components manually, it is more
+convenient to run virtual machines using [[ProxMox]] than setting them up manually:
+- ProxMox takes care of the network setup that exposes the virtual machines to the local network using a
+  [bridge](https://pve.proxmox.com/wiki/Network_Configuration#_default_configuration_using_a_bridge)
+- there are [community scripts](https://community-scripts.github.io/ProxmoxVE/) that automate setting up virtual
+  machines, including one for the [Home Assistant](https://community-scripts.github.io/ProxmoxVE/scripts?id=haos-vm).
 - ProxMox exposes a web-based management UI, so there is no need to run `virt-manager` UI over SSH
 
 ## Add-Ons and Integrations
-With Home Assistant installed in a virtual machine, adding add-ons is trivial. I use:
+With Home Assistant installed in a virtual machine, adding add-ons is trivial.
+I use:
 - [File Editor](https://github.com/home-assistant/addons/tree/master/configurator)
 - [Home Assistant Google Drive Backup](https://github.com/sabeechen/hassio-google-drive-backup)
 - [Mosquitto broker](https://github.com/home-assistant/addons/tree/master/mosquitto)
@@ -130,95 +165,162 @@ Integrations I use:
 - Z-wave
 - Zigbee Home Automation
 ## Home Assistant Cloud and Backups
-Just as it is more convenient to let Home Assistant OS manage itself than configure and update each add-on manually, it is more convenient to pay a little bit to [Nabu Casa](https://www.nabucasa.com/) than setting up remote access [manually](https://www.home-assistant.io/docs/configuration/remote/).
+Just as it is more convenient to let Home Assistant OS manage itself than configure and update each add-on manually, it
+is more convenient to pay a little bit to [Nabu Casa](https://www.nabucasa.com/) than setting up remote access
+[manually](https://www.home-assistant.io/docs/configuration/remote/).
 
 Home Assistant Cloud can be configured to use a custom domain too!
 
-Home Assistant Cloud supports storage of one backup; instead, I went with the [Google Drive Backup Add-On](https://github.com/sabeechen/hassio-google-drive-backup).
+Home Assistant Cloud supports storage of one backup; instead, I went with the
+[Google Drive Backup Add-On](https://github.com/sabeechen/hassio-google-drive-backup).
 
 ## Viessmann Boiler
-To bring my new a Viessmann's [Vitodens 100-W](https://www.viessmann-us.com/en/products/vitodens/vitodens-100-b1he.html) boiler under the control of Home Assistant, I:
+To bring my new a Viessmann's [Vitodens 100-W](https://www.viessmann-us.com/en/products/vitodens/vitodens-100-b1he.html)
+boiler under the control of Home Assistant, I:
 - installed Viessmann's ViCare application on my phone;
 - used it to connect the boiler to Viessmann's cloud over WiFi;
-- followed instructions on the [ViCare integration](https://www.home-assistant.io/integrations/vicare), and it just worked!
+- followed instructions on the [ViCare integration](https://www.home-assistant.io/integrations/vicare), and it just
+  worked!
 
-A few month later I noticed that there are things that I can do using the ViCare application that I can't do in Home Assistant. I filed a [bug](https://github.com/home-assistant/core/issues/126447) - and it got fixed (thank you, [@CFenner](https://github.com/CFenner)!). Now I can switch from ViCare to Home Assistant completely :)
+A few month later I noticed that there are things that I can do using the ViCare application that I can't do in Home
+Assistant.
+I filed a [bug](https://github.com/home-assistant/core/issues/126447) - and it got fixed (thank you,
+[@CFenner](https://github.com/CFenner)!).
+Now I can switch from ViCare to Home Assistant completely :)
 
-On July 10, 2025 I got a message from Viessmann about a Domain Change for the Viessmann API https://​api.​viessmann.​com to https://​api.​viessmann-climatesolutions.​com; not clear at this point what, if anything, I need to do about this...
+On July 10, 2025 I got a message from Viessmann about a Domain Change for the Viessmann API https://​api.​viessmann.​com
+to https://​api.​viessmann-climatesolutions.​com; not clear at this point what, if anything, I need to do about this...
 
 ## Electric meter (Eversource)
 
-Eversource replaced the analog meter at 39 Keefe Ave (account ending 4092) with an Itron Gen5 Riva AMI meter in September 2026. It reports 15-minute usage to Eversource over their private 900 MHz mesh — not house Wi‑Fi, not Zigbee, not rtl_433. Customer-facing data is the same Opower portal that sends the weekly usage emails (`eversource@email.opower.com`).
+Eversource replaced the analog electric meter with an Itron Gen5 Riva AMI meter in September 2026.
+It reports 15-minute usage to Eversource over their private 900 MHz mesh, not house Wi‑Fi, not Zigbee, not rtl_433.
+Customer-facing data is the same Opower portal that sends the weekly usage emails.
+The street address and the account number are in the private note.
+The login is the utility's own.
+It is not written in either vault.
 
-Home Assistant pulls that feed with the built-in [Opower](https://www.home-assistant.io/integrations/opower/) integration (utility **Eversource**, same login as eversource.com). Config entry title `Eversource (dubinsky)`, loaded. The device is **Eversource electric** (Opower still stores an internal account id in the entity ids; that is expected and is not the billing number).
+Home Assistant pulls that feed with the built-in [Opower](https://www.home-assistant.io/integrations/opower/)
+integration (utility **Eversource**).
+The device is **Eversource electric**.
+Opower still stores an internal account id in the entity ids.
+That is expected, and it is not the billing number.
 
-Do **not** enroll Eversource MFA until the Opower integration supports it. Login currently offers a skippable “set up MFA, it will become mandatory later” screen; skip it. Once MFA is required, this integration will fail until Core grows an Eversource challenge.
+Do **not** enroll Eversource MFA until the Opower integration supports it.
+Login currently offers a skippable “set up MFA, it will become mandatory later” screen; skip it.
+Once MFA is required, this integration will fail until Core grows an Eversource challenge.
 
-Usage in HA is **statistics**, ~48 hours behind, not live watts. Energy dashboard grid consumption / cost:
+Usage in HA is **statistics**, ~48 hours behind, not live watts.
+Energy dashboard grid consumption / cost:
 
 - `opower:ever_elec_*_energy_consumption`
 - `opower:ever_elec_*_energy_cost`
 
-Return/compensation statistics exist but stay at 0 (no solar). Current-bill sensors (`sensor.elec_account_*_current_bill_*`) can read 0 at the start of a billing period; use the Opower statistics for the Energy dashboard, not those sensors. Typical-monthly sensors are populated (about 1054 kWh / $390 as of the first pull).
+Return/compensation statistics exist but stay at 0 (no solar).
+Current-bill sensors can read 0 at the start of a billing period.
+Use the Opower statistics for the Energy dashboard, not those sensors.
+The typical-monthly figure from the first pull is in the private note.
 
-The Energy panel is in the sidebar (it had been hidden). Today/yesterday on that dashboard will often be empty; look back two days.
+The Energy panel is in the sidebar (it had been hidden).
+Today/yesterday on that dashboard will often be empty; look back two days.
 
-Gas is **National Grid**, a different login. There is no Opower gas statistic yet. Do not point Energy at the ViCare `*_gas_consumption_today` sensors — those reset every day.
+Gas is **National Grid**, a different login.
+There is no Opower gas statistic yet.
+Do not point Energy at the ViCare `*_gas_consumption_today` sensors — those reset every day.
 
 ## Garage Door Opener
-When I replaced my garage door openers in 2015, I wanted to be able to open the doors with my phone - just for fun! But it turned out that I needed some WiFi accessory that wasn't compatible with my model of the opener or some such...
+When I replaced my garage door openers in 2015, I wanted to be able to open the doors with my phone - just for fun!
+But it turned out that I needed some WiFi accessory that wasn't compatible with my model of the opener or some such...
 
-Over the years, I though about building some Raspberry Pi-based thingy to control the garage door opener, but since I do not really need it, and interfacing with the opener properly did not seem trivial, I did nothing ;)
+Over the years, I though about building some Raspberry Pi-based thingy to control the garage door opener, but since I do
+not really need it, and interfacing with the opener properly did not seem trivial, I did nothing ;)
 
-Recently, I saw a post [I added a ratgdo to my garage door, and I don’t know why I waited so long](https://arstechnica.com/gadgets/2024/09/i-home-automated-my-garage-door-finally-with-a-ratgdo/). Turns out, one guy *completely* solved the garage door opener integration, and how! The product is compatible with [any garage door opener](https://github.com/PaulWieland/ratgdo/wiki) and [any home automation approach](https://ratcloud.llc/pages/installation)! And it's completely local: my data doesn't get shipped to the Garage Door Opener Manufacturer's cloud! So, I:
-- ordered a [ratgdo v2.53i kit](https://ratcloud.llc/products/ratgdo-v2-5i-kit) for $45 and [ratgdo v2.53i holster](https://ratcloud.llc/products/ratgdo-v2-53i-mount) for $9;
+Recently, I saw a post
+[I added a ratgdo to my garage door, and I don’t know why I waited so long](https://arstechnica.com/gadgets/2024/09/i-home-automated-my-garage-door-finally-with-a-ratgdo/).
+Turns out, one guy *completely* solved the garage door opener integration, and how!
+The product is compatible with [any garage door opener](https://github.com/PaulWieland/ratgdo/wiki) and
+[any home automation approach](https://ratcloud.llc/pages/installation)!
+And it's completely local: my data doesn't get shipped to the Garage Door Opener Manufacturer's cloud!
+So, I:
+- ordered a [ratgdo v2.53i kit](https://ratcloud.llc/products/ratgdo-v2-5i-kit) for $45 and
+  [ratgdo v2.53i holster](https://ratcloud.llc/products/ratgdo-v2-53i-mount) for $9;
 - got them in a couple of days;
 - flashed the [ESPHome firmware](https://ratgdo.github.io/esphome-ratgdo/) recommended for use with Home Assistant;
 - the tool itself added my board to my Home Assistant;
 - in Home Assistant's settings, set "Allow the device to perform Home Assistant actions";
 - powered down my garage door opener;
-- [moved](https://ratcloud.llc/pages/installation) wires for the door button and obstruction sensors from the opener to the ratgo;
+- [moved](https://ratcloud.llc/pages/installation) wires for the door button and obstruction sensors from the opener to
+  the ratgo;
 - [connected](https://ratcloud.llc/pages/installation) ratgo to the opener using supplied three-wire harness;
 - powered ratgo up with the supplied USB brick and cable;
 - powered the opener back up - and it just worked!
 
-I am not sure how the sales of this little device can possibly fund continuous improvements to both hardware and firmware *and* research involved, especially since one needs to be a *little bit* of a geek to buy it...
+I am not sure how the sales of this little device can possibly fund continuous improvements to both hardware and
+firmware *and* research involved, especially since one needs to be a *little bit* of a geek to buy it...
 
 I am in awe: one person developed and continues to improve a solution that completely covers this application area ;)
 
 Professionally done labor of love - way to go!!
 
-The v2.53i (ESPHome 2024.8.3 at `192.168.1.240`) was removed from Home Assistant on 2026-09-22.
-The opener is a ratgdo32 disco, ESPHome **2026.7.0**, Security+ 2.0, at `192.168.1.138` on `podval-2g`.
-The device name is Garage Door Opener, and Home Assistant may call services on it.
-`.138` is inside the DHCP pool, so that address can change.
+The first board, a v2.53i on ESP8266, was removed from Home Assistant on 2026-09-22.
+The opener now is a ratgdo32 disco, Security+ 2.0.
+Home Assistant may call services on it.
+The address, the Wi‑Fi network, the firmware, and the entity id are in the private note.
+The address is inside the DHCP pool, so it can change.
 The old “do not OTA” warning applied only to that ESP8266 board.
 Current `esphome-ratgdo` needed an API encryption key it did not have, and the ESP8266 OTA slot was tight.
+The encryption key is not in either vault.
 
 ## Z-Wave
-From the list of Z-Wave controllers Home Assistant supports](https://www.home-assistant.io/docs/z-wave/controllers/), I picked "Zooz 800 Series Z-Wave Long Range S2 USB Stick ZST39 LR" ($37 on Amazon).
+From the list of Z-Wave controllers Home Assistant supports](https://www.home-assistant.io/docs/z-wave/controllers/), I
+picked "Zooz 800 Series Z-Wave Long Range S2 USB Stick ZST39 LR" ($37 on Amazon).
 
-In the zwave-js-ui, my Z-Wave USB stick reports firmware version v1.40 and SDK version v7.22.0, which seem fine. ZOOZ firmware [page](https://www.support.getzooz.com/kb/article/1158-zooz-ota-firmware-files/) has the latest firmware; ZOOZ firmware update [instructions](https://www.support.getzooz.com/kb/article/1276-how-to-perform-an-otw-firmware-update-on-your-zst39-800-long-range-z-wave-stick/) caution against updating the firmware using Home Assistant itself.
+In the zwave-js-ui, my Z-Wave USB stick reports firmware version v1.40 and SDK version v7.22.0, which seem fine.
+ZOOZ firmware [page](https://www.support.getzooz.com/kb/article/1158-zooz-ota-firmware-files/) has the latest firmware;
+ZOOZ firmware update
+[instructions](https://www.support.getzooz.com/kb/article/1276-how-to-perform-an-otw-firmware-update-on-your-zst39-800-long-range-z-wave-stick/)
+caution against updating the firmware using Home Assistant itself.
 
 By now, I switched to [Home Assistant Connect ZWA-2](https://www.home-assistant.io/connect/zwa-2/).
 ## Thermostat
-I have a Honeywell T6 Pro model [TH6210U2001](https://www.honeywellhome.com/us/en/support/air/thermostats/programmable-thermostats/t6-pro-programmable-thermostat-up-to-3-heat-2-cool-th6320u2008-u/) thermostat; it does not have remote capabilities, so I can not integrate it with Home Assistant, but it turns out that other models in the Honeywell T6 Pro lineup *do* work with Home Assistant, and I do not need to re-wire anything, since all T6 models have the same mounting plate! 
+I have a Honeywell T6 Pro model
+[TH6210U2001](https://www.honeywellhome.com/us/en/support/air/thermostats/programmable-thermostats/t6-pro-programmable-thermostat-up-to-3-heat-2-cool-th6320u2008-u/)
+thermostat; it does not have remote capabilities, so I can not integrate it with Home Assistant, but it turns out that
+other models in the Honeywell T6 Pro lineup *do* work with Home Assistant, and I do not need to re-wire anything, since
+all T6 models have the same mounting plate!
 
-Bitten by the "local control, no cloud accounts" bug, I rejected WiFi models [TH6220WF2006/U](https://www.honeywellhome.com/us/en/products/air/thermostats/wifi-thermostats/t6-pro-smart-thermostat-multi-stage-2-heat-2-cool-th6220wf2006-u/) and [TH6320WF2003/U](https://www.honeywellhome.com/us/en/products/air/thermostats/wifi-thermostats/t6-pro-smart-thermostat-multi-stage-3-heat-2-cool-th6320wf2003-u/), which require a Honeywell Cloud account, and settled on Z-Wave model [TH6320ZW2003-U](https://www.honeywellhome.com/us/en/products/air/thermostats/programmable-thermostats/t6-pro-z-wave-thermostat-th6320zw2003-u/) ($128 on Amazon).
+Bitten by the "local control, no cloud accounts" bug, I rejected WiFi models
+[TH6220WF2006/U](https://www.honeywellhome.com/us/en/products/air/thermostats/wifi-thermostats/t6-pro-smart-thermostat-multi-stage-2-heat-2-cool-th6220wf2006-u/)
+and
+[TH6320WF2003/U](https://www.honeywellhome.com/us/en/products/air/thermostats/wifi-thermostats/t6-pro-smart-thermostat-multi-stage-3-heat-2-cool-th6320wf2003-u/),
+which require a Honeywell Cloud account, and settled on Z-Wave model
+[TH6320ZW2003-U](https://www.honeywellhome.com/us/en/products/air/thermostats/programmable-thermostats/t6-pro-z-wave-thermostat-th6320zw2003-u/)
+($128 on Amazon).
 
-Thermostat replacement went without a hitch, and I was able to add it to Z-Wave controller even though the my Z-Wave stick is plugged into a server in the attic,two floors above the thermostat with a few walls in-between - beautiful!
+Thermostat replacement went without a hitch, and I was able to add it to Z-Wave controller even though the my Z-Wave
+stick is plugged into a server in the attic,two floors above the thermostat with a few walls in-between - beautiful!
 
 ## Zigbee
-I bought Sonoff Zigbee 3.0 USB Dongle Plus-E Gateway ($33 on Amazon). Integrating it into Home Assistant turned out to be much simpler than the [official instructions](https://www.home-assistant.io/integrations/zha/) for [ZHA](https://www.home-assistant.io/integrations/zha/) (Zigbee Home Automation) make it sound: I plugged the dongle into the machine where Home Assistant is running and restarted the Home Assistant; it discovered the dongle, and when I agreed to integrate it, everything got configured automatically!
+I bought Sonoff Zigbee 3.0 USB Dongle Plus-E Gateway ($33 on Amazon).
+Integrating it into Home Assistant turned out to be much simpler than the
+[official instructions](https://www.home-assistant.io/integrations/zha/) for
+[ZHA](https://www.home-assistant.io/integrations/zha/) (Zigbee Home Automation) make it sound: I plugged the dongle into
+the machine where Home Assistant is running and restarted the Home Assistant; it discovered the dongle, and when I
+agreed to integrate it, everything got configured automatically!
 
-I also bought a Sonoff Zigbee Indoor Temperature and Humidity Sensor, SNZB-02D LCD ($20 on Amazon). Told ZHA to add a new device, pressed the pairing button on the device for 5 seconds - and that was it!
+I also bought a Sonoff Zigbee Indoor Temperature and Humidity Sensor, SNZB-02D LCD ($20 on Amazon).
+Told ZHA to add a new device, pressed the pairing button on the device for 5 seconds - and that was it!
 
 ## RTL 433
-I have a little LCD device with three additional sensors that send data to the screen. Turns out, there is a library that handles the protocols such devices use: [rtl_433](https://github.com/merbanan/rtl_433)! Of course, to decode the messages the sensors transmit, we first need to receive them using an RTL-SDR USB dongle.
+I have a little LCD device with three additional sensors that send data to the screen.
+Turns out, there is a library that handles the protocols such devices use:
+[rtl_433](https://github.com/merbanan/rtl_433)!
+Of course, to decode the messages the sensors transmit, we first need to receive them using an RTL-SDR USB dongle.
 
 Receiver/decoder can be run stand-alone, but does not have to when used in Home Assistant:
 - add the RTL-SDR USB dongle to the virtual machine running Home Assistant
-- add [Mosquitto Broker](https://github.com/home-assistant/addons/blob/master/mosquitto/DOCS.md) add-on (HA creates a broker user for add-ons; do not add a Person named `mqtt`)
+- add [Mosquitto Broker](https://github.com/home-assistant/addons/blob/master/mosquitto/DOCS.md) add-on (HA creates a
+  broker user for add-ons; do not add a Person named `mqtt`)
 - start the add-on
 - add MQTT integration with the [Mosquitto broker](https://www.home-assistant.io/integrations/mqtt/)
 - add [rtl_433_next](https://github.com/pbkhrv/rtl_433-hass-addons/tree/main/rtl_433-next) add-on
@@ -231,23 +333,36 @@ convert     si
 verbose 4
 ```
 
-Only protocol 20 (Ambient Weather F007TH). Auto Discovery is stopped so neighbor sensors are not re-created; start it only if a real sensor gets a new ID after a battery change.
+Only protocol 20 (Ambient Weather F007TH).
+Auto Discovery is stopped so neighbor sensors are not re-created; start it only if a real sensor gets a new ID after a
+battery change.
 
 - start the add-on (it picks up the template and the Supervisor MQTT service)
-- add [rtl_433 MQTT Auto Discovery (next)](https://github.com/pbkhrv/rtl_433-hass-addons/tree/main/rtl_433_mqtt_autodiscovery-next) add-on
-- configure it: host homeassistant, user mqtt, password mqtt - ?
+- add
+  [rtl_433 MQTT Auto Discovery (next)](https://github.com/pbkhrv/rtl_433-hass-addons/tree/main/rtl_433_mqtt_autodiscovery-next)
+  add-on
+- the old note guessed a broker username and password here.
+  That guess is deleted.
+  Broker credentials are created by the Mosquitto add-on and are not written in either vault
 - start the add-on when adding a new 433 MHz sensor
 - add [MQTT Explorer](https://github.com/GollumDom/addon-repository/tree/master/mqtt-explorer) add-on
-- configure the connection to homeassistant:1883,user=mqtt,pass=mqtt
+- point it at the Mosquitto add-on.
+  Do not write the username or password in either vault
 - start the add-on when debugging topics
 
 
 ## Garden
 
-Added a [SONOFF Sprinkler Timer Zigbee 3.0](https://www.amazon.com/dp/B0D5B8S8N8); since it is far from my server in the attic, placed a [Zigbee plug](https://www.amazon.com/dp/B09KNDM4VV?th=1) on the inside of the wall where the garden faucet is :) 
+Added a [SONOFF Sprinkler Timer Zigbee 3.0](https://www.amazon.com/dp/B0D5B8S8N8); since it is far from my server in the
+attic, placed a [Zigbee plug](https://www.amazon.com/dp/B09KNDM4VV?th=1) on the inside of the wall where the garden
+faucet is :)
 
 ## Security
-I want to replace my door bell with a video one and install some cameras; I am thinking [Reolink](https://reolink.com/us/product/reolink-video-doorbell-wifi/), which [integrates](https://www.home-assistant.io/integrations/reolink/) with Home Assistant - although it seems that some additional [trickery](https://github.com/AlexxIT/WebRTC) is needed for audio... Also, the head-to-toe version (white, not black) does not seem to be available...
+I want to replace my door bell with a video one and install some cameras; I am thinking
+[Reolink](https://reolink.com/us/product/reolink-video-doorbell-wifi/), which
+[integrates](https://www.home-assistant.io/integrations/reolink/) with Home Assistant - although it seems that some
+additional [trickery](https://github.com/AlexxIT/WebRTC) is needed for audio...
+Also, the head-to-toe version (white, not black) does not seem to be available...
 
 Bought and installed in June 2026.
 
@@ -273,67 +388,110 @@ Integrate with Home Assistant with:
 
 ## Grok
 
-I added my SSH public key to Home Assistant's Terminal/SSH add-on ("app"). Grok can use it once I SSH there first ;)
+I added my SSH public key to Home Assistant's Terminal/SSH add-on ("app").
+Grok can use it once I SSH there first ;)
 
-## Current setup (2026-11-11)
+## Current setup
 
-Core **2026.11.1** on qemux86-64 (HAOS **18.4**, Supervisor **2026.11.0**, [[ProxMox]] VM 100). Boot slot B is 18.4; slot A is 18.3 (good). Hostnames: `homeassistant.local`, `homeassistant.lan.podval.org` (`192.168.1.209`). **Not** 192.168.1.101 (that's the UniFi switch). Core HTTP is `:8123` with `ssl: false`. Doorbell talk/mic needs a secure context; today that means Nabu Casa. `/config` is a symlink to `/homeassistant`.
+Checked 2026-11-18.
+Versions, hostnames, and the address are in the private note.
+Core HTTP is on the usual port with `ssl: false`.
+Doorbell talk and the mic need a secure context.
+Today that means Nabu Casa.
+`/config` is a symlink to `/homeassistant`.
 
-`configuration.yaml` is stock: `default_config` plus includes for automations/scripts/scenes, plus a YAML notify action group `notify.phones` (Pixel 10 / Pixel 8 / Pixel 8 Remote). No `packages/`, no `/config/esphome/`. Scripts file is empty. Logic is YAML automations. Node-RED is installed but stopped (`boot: manual`, empty flow) — check it is still empty before adding YAML that might duplicate a future flow.
+`configuration.yaml` is stock: `default_config` plus includes for automations/scripts/scenes, plus a YAML notify action
+group `notify.phones` (Pixel 10 / Pixel 8 / Pixel 8 Remote).
+No `packages/`, no `/config/esphome/`.
+Scripts file is empty.
+Logic is YAML automations.
+Node-RED is installed but stopped (`boot: manual`, empty flow) — check it is still empty before adding YAML that might
+duplicate a future flow.
 
-Add-ons **started**: Z-Wave JS **1.11.0**, Terminal & SSH **10.6.0**, Mosquitto **7.1.3**, Google Drive Backup **0.112.1**, rtl_433 (next). **Stopped** (not an error; boot manual or unused): Node-RED **22.2.2**, rtl_433 MQTT Auto Discovery (next), File editor **6.3.1**, MQTT Explorer **browser-1.0.3**. Custom: HACS + Frigate integration **5.15.6** (has the HA 2026.9 `via_device_id` fix; version last inventoried 2026-08). Advanced Camera Card is unpacked under `/config/www/advanced-camera-card/` v7.27.4 (not HACS); `lovelace_resources` is what actually loads it. If doorbell notify dies and Frigate entities are `unavailable`, the NVR container on docker is down — see [[Frigate]] (NFS race after VM reboot).
+Add-ons that are supposed to be running: Z-Wave JS, Terminal & SSH, Mosquitto, Google Drive Backup, rtl_433 (next).
+Stopped on purpose (boot manual or unused): Node-RED, rtl_433 MQTT Auto Discovery (next), File editor, MQTT Explorer.
+Versions are in the private note.
+Custom: HACS and the Frigate integration.
+Advanced Camera Card is unpacked under `/config/www/advanced-camera-card/` and is not from HACS.
+`lovelace_resources` is what actually loads it.
+If doorbell notify dies and Frigate entities are `unavailable`, the NVR container on the Docker VM is down.
+See [[Frigate]] (NFS race after the VM reboots).
 
-Keepers for the F007TH sensors: boiler `2-234`, garage `1-55`, deck `3-219`.
+The F007TH sensors I keep (boiler, garage, deck) are identified in the private note.
+Auto Discovery stays stopped so a neighbor's sensor is not re-created.
 
 ### Automations (do not clobber)
 
-YAML is a list of maps (`id`, `alias`, modern `triggers:` / `actions:` keys, `mode:`). Timers that should reset when the device is turned on again use `mode: restart` — that is per-automation, not per entity, so do not combine the bathroom fans into one automation.
+YAML is a list of maps (`id`, `alias`, modern `triggers:` / `actions:` keys, `mode:`).
+Timers that should reset when the device is turned on again use `mode: restart` — that is per-automation, not per
+entity, so do not combine the bathroom fans into one automation.
 
-- **Shabbos/Yom Tov** — tag `tag.shabbos_yom_tov` (`3ef26f62-ef32-4d27-b819-1abf66dfa0ee`) **and** automation `shabbos_yom_tov_scene_before_sunset` (`sensor.jewish_calendar_sunset_shkia` − 40 min, only if `upcoming_candle_lighting` is still ahead and within 2½ h) both `scene.turn_on` **`scene.shabbos_scene`**, then explicit `switch.turn_on` on `switch.refrigerator_sabbath_mode`. That scene: master bedroom Shabbos lights + fridge Sabbath **on**. No fridge tag (`tag.refrigerator_shabbos_mode` was removed). Do not use `scene.master_bedroom_shabbos_scene`.
-- **Fridge Sabbath mode** — `switch.refrigerator_sabbath_mode` (Samsung / SmartThings). Explicit `switch.turn_on` / `switch.turn_off` **does** reach the appliance (door light off/on). Do **not** rely on scenes alone: `scene.turn_on` skips an entity HA already thinks matches. Motzaei 2026-08-22 applied `scene.night` (which lists the switch **off**) while HA still showed `off`, so the fridge command never went out. Automation `refrigerator_sabbath_follows_shabbos` (`automation.refrigerator_sabbath_mode_follows_shabbos_yom_tov`) sends the switch command when Shabbos/Night/Day is actually activated (15 s recency, ignore unavailable) and when `binary_sensor.jewish_calendar_issur_melacha_in_effect` turns on/off. Motzaei `motzei_shabbos_yom_tov_night_scene` also `switch.turn_off` after Night.
-- Scenes YAML also has `scene.night` and `scene.day` (Day currently matches Night; both list fridge Sabbath **off**). Living Room is `light.s2_dimmer` (not `light.light_2`). Master bedroom on/off light is `light.master_bedroom_light` (not hidden `switch.background_light`).
-- Doorbell Notification → Reolink `binary_sensor.front_door_visitor` (button) or Frigate **`binary_sensor.stoop_person_occupancy`** (person whose feet are in the `stoop` zone) → **`notify.phones`**. `binary_sensor.doorbell_person_occupancy` is still anyone in frame — do not use it for notify. On **button**, `frigate.create_event` (`visitor`, 30s). **Talk** `/lovelace-doorbell/talk`. Keep Reolink for the chime. See [[Frigate]].
-- **Bathroom fan auto-off** (one automation per fan, `mode: restart`, 15 min):
-  - `fan.master_bathroom_fan`
-  - `fan.bathroom_fan` (UI name Bathroom Fan; helper over `switch.1st_floor_bathroom_fan`)
-  - `fan.guest_bathroom_fan`
-  - `fan.attic_bathroom_fan` (helper over `switch.attic_bathroom_fan_2`)
-  - **Not** `light.attic_bathroom_fan_light` / `switch.attic_bathroom_fan` (that's the attic fan *light*)
+- **Shabbos/Yom Tov** turns on the Shabbos scene (master bedroom Shabbos lights and fridge Sabbath mode) and then sends
+  an explicit switch command for the fridge.
+  A scene alone is not enough: `scene.turn_on` skips an entity Home Assistant already thinks matches.
+  Motzaei 2026-08-22 applied the Night scene, which lists the fridge switch off, while Home Assistant still showed off,
+  so the fridge command never went out.
+  A follower automation sends the switch command when Shabbos, Night, or Day is actually activated, and when issur
+  melacha turns on or off.
+  Entity ids are in the private note.
+  Do not use the older master-bedroom-only Shabbos scene.
+- **Fridge Sabbath mode** is a Samsung / SmartThings switch.
+  An explicit on or off does reach the appliance (the door light follows).
+  Night and Day both list that switch off.
+- Doorbell notification goes to the phones on the Reolink button, or on a person whose feet are in the stoop zone.
+  Anyone merely in frame is not a notify.
+  On the button, create a short Frigate visitor event.
+  Talk stays on the doorbell talk view.
+  Keep Reolink for the chime.
+  See [[Frigate]].
+- **Bathroom fan auto-off** is one automation per fan, `mode: restart`, 15 minutes.
+  Do not combine them.
+  The attic fan *light* is not the fan.
+  Prefer the `fan.*` entity the UI uses over the underlying switch.
+  The on-device Z-Wave auto-off timers stay disabled unless I want them.
 
-Those fan devices also have disabled Z-Wave `number.*_auto_turn_off_timer` config params. Prefer the YAML automations unless I want the on-device timer.
+### Stable entities
 
-Prefer the entity the UI/voice uses. Example: `fan.master_bathroom_fan` is `switch_as_x` over `switch.master_bathroom_fan` — automate the **fan**.
+The registry list (garage, garden, climate, boiler, meter, doorbell, phones, speakers) is in the private note.
+Many lights still have generic ids.
+Use the registry `original_name` / `name` to disambiguate.
 
-### Stable entities (re-check the registry)
-
-- Garage: `cover.ratgdo32disco_d85704_door` (ratgdo32 disco, `.138` on `podval-2g`, ESPHome 2026.7.0)
-- Garden: `valve.back_garden_water`, `switch.sonoff_swv`
-- Climate: `climate.t6_pro_z_wave_programmable_thermostat`
-- Boiler: `sensor.e3_vitodens_100_na_0521_*`
-- Eversource electric (Opower): device **Eversource electric**; Energy uses statistics `opower:ever_elec_*_energy_consumption` / `_energy_cost` (not the `sensor.elec_account_*_current_bill_*` sensors). No National Grid gas in HA yet.
-- Doorbell button/chime (Reolink): `binary_sensor.front_door_visitor`, `number.reolink_chime_*`. Video/person ([[Frigate]]): `camera.doorbell`, `binary_sensor.doorbell_person_occupancy`. Disable `camera.front_door_fluent`.
-- Phones: `device_tracker.pixel_10`, `notify.phones` (group). Singles: `notify.mobile_app_pixel_10` / `notify.pixel_10` (and Pixel 8 / Pixel 8 Remote).
-- Speakers / Cast: **Entryway speaker** `media_player.entryway_speaker` (Nest Mini, Google Home name *Entryway speaker*, `.117` on `podval-u`, area Entranceway). Google Cast hub is already configured (zeroconf + known host `.117`). Also on Cast: Family Room TV (`media_player.family_room_tv_3`; androidtv_remote is `media_player.family_room_tv`). Master Bedroom Nest Audio `media_player.bedroom_speaker` is currently unavailable. The Mini is a Google Assistant device — Cast gives HA a `media_player` (TTS / play media), not a Home Assistant voice satellite.
-
-~700 enabled entities, ~2600 registered. Many lights still have generic ids (`light.dimmer`, `light.light`). Use the registry `original_name` / `name` to disambiguate.
-
-`person.mqtt` is leftover from Mosquitto onboarding — delete in **Settings → People**. After that, the HA login user `mqtt` can go too; rtl_433 no longer uses it.
+`person.mqtt` is leftover from Mosquitto onboarding.
+Delete it in **Settings → People**.
+After that, the HA login user `mqtt` can go too.
+rtl_433 no longer uses it.
+Do not write that user's password in either vault.
 
 ## TODO
 
-**Move refrigerator to `podval-2g`, then make `podval-u` 5 GHz only.** See [[UniFi]] § Later. The ratgdo32 disco is already on `podval-2g`.
+**Move the refrigerator to the IoT Wi‑Fi, then make people Wi‑Fi 5 GHz only.** See [[UniFi]] § Later.
+The ratgdo is already on the IoT network.
+The SSID strings are in the private note.
 
-**Smoke / CO + garden leak notify.** Sensors exist, nothing notifies. Attic Zooz ZEN55: `binary_sensor.attic_fire_sensor_smoke_detected`, `binary_sensor.attic_fire_sensor_carbon_monoxide_detected`. Garden SONOFF valve: `binary_sensor.sonoff_swv_water_leak`. Send `notify.phones` (Pixel 10 + both Pixel 8s), high priority. Do not trigger on the fire sensor `idle` binary sensor.
+**Smoke / CO + garden leak notify.** Sensors exist, nothing notifies.
+The attic Zooz ZEN55 smoke and CO sensors, and the garden SONOFF leak sensor, should notify the phones at high priority.
+Entity ids are in the private note.
+Do not trigger on the fire sensor's idle binary sensor.
 
-**Advanced Camera Card via HACS** (today it is just files in `/config/www/advanced-camera-card/`). Then drop the leftover `frontend.extra_module_url` in `configuration.yaml`; `lovelace_resources` is what actually loads the card.
+**Advanced Camera Card via HACS** (today it is just files in `/config/www/advanced-camera-card/`).
+Then drop the leftover `frontend.extra_module_url` in `configuration.yaml`; `lovelace_resources` is what actually loads
+the card.
 
-**Official Z-Wave JS → Z-Wave JS UI** for network graph / heal / per-node debug. Do not run both add-ons. [Switch doc](https://www.home-assistant.io/integrations/zwave_js/#how-do-i-switch-between-the-official-z-wave-js-add-on-and-the-z-wave-js-ui-add-on).
+**Official Z-Wave JS → Z-Wave JS UI** for network graph / heal / per-node debug.
+Do not run both add-ons.
+[Switch doc](https://www.home-assistant.io/integrations/zwave_js/#how-do-i-switch-between-the-official-z-wave-js-add-on-and-the-z-wave-js-ui-add-on).
 
 [https://www.home-assistant.io/integrations/zwave_js/#how-do-i-switch-between-the-official-z-wave-js-add-on-and-the-z-wave-js-ui-add-on](https://www.home-assistant.io/integrations/zwave_js/#how-do-i-switch-between-the-official-z-wave-js-add-on-and-the-z-wave-js-ui-add-on)
 
-**Watchman + battery status.** [Watchman](https://github.com/dummylabs/thewatchman) for a weekly unavailable-entity report. Separate low-battery notify to `notify.phones` for real cells: eight SNZB-02D `sensor.sonoff_snzb_02d_battery*`, garden `sensor.sonoff_swv_battery`, T6 `sensor.t6_pro_z_wave_programmable_thermostat_battery_level` / `binary_sensor.t6_pro_z_wave_programmable_thermostat_low_battery_level`, F007TH keepers only (`sensor.ambientweather_234_battery`, `sensor.ambientweather_f007th_1_55_battery`, `sensor.ambientweather_f007th_3_219_battery`). Skip phone battery entities.
+**Watchman + battery status.** [Watchman](https://github.com/dummylabs/thewatchman) for a weekly unavailable-entity
+report.
+Separate low-battery notify to the phones for real cells: the SNZB-02D sensors, the garden valve, the T6 thermostat, and
+the F007TH keepers only.
+Skip phone battery entities.
+The entity ids are in the private note.
 
-**Floor plan** dashboard. Draw in Sweet Home 3D / RoomSketcher / FreeCAD; see Floor Plans above.
+**Floor plan** dashboard.
+Draw in Sweet Home 3D / RoomSketcher / FreeCAD; see Floor Plans above.
 
 Local HTTPS so doorbell Talk works on the LAN without Nabu Casa.
 

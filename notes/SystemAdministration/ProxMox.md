@@ -2,78 +2,61 @@
 tags:
   - sysadmin
 ---
-Standalone node `proxmox` (`proxmox.lan.podval.org`, `192.168.1.40`).
-PVE **9.2.26** (packages updated 2026-11-11).
-Running kernel **7.0.14-28-pve** (booted 15:25 America/New_York 2026-11-11).
-Installed kernels: **7.0.14-28**, **7.0.14-24**, **7.0.14-20**, **7.0.14-15**, **7.0.14-12**, and **7.0.14-5**.
-`apt` offers to autoremove **7.0.14-15**, **7.0.14-12**, and **7.0.14-5**.
-Leave those kernels installed.
-Do not `apt autoremove`.
-ZFS **2.4.4-pve1** (as of 2026-10-15).
-Hardware: i9-12900K (24 threads), 64G RAM, boot NVMe `KINGSTON SKC3000D2048G`.
-Bridge `vmbr0` on `enp3s0`, `192.168.1.40/24`, gw `192.168.1.1`.
-Host iGPU is Intel AlderLake-S GT1, `/dev/dri/renderD128` on the **hypervisor** (not passed to the docker VM) — see
-[[Frigate]] § iGPU passthrough.
+Standalone Proxmox node.
+Private details (addresses, the guest table, hardware ids) are in the private vault `dubinsky/dubinsky-private`, at this
+same path.
 
-PVE storage: `local` (dir `/var/lib/vz`, ISO/backup) and `local-lvm` (thin pool `pve/data` on the NVMe).
+PVE storage: `local` (dir `/var/lib/vz`, ISO/backup) and `local-lvm` (thin pool `pve/data` on the boot NVMe).
+Host iGPU stays on the hypervisor (not passed to the Docker VM) until [[Frigate]] § iGPU passthrough is started.
+Do not start that.
+Leave old kernels installed.
+Do not `apt autoremove`.
 
 ## Guests
 
-| ID | Type | Name | LAN IPv4 | Role |
-|---|---|---|---|---|
-| 100 | VM | haos | 192.168.1.209 | [[Home Assistant]] OS. `ssh ha`. 4G RAM, 2 cores, 32G disk |
-| 101 | VM | docker | 192.168.1.187 | [[Docker]] / [[DevPod]] / [[Frigate]]. `ssh docker`. 8G RAM, 16 cores (`cpu: host`), 100G disk |
-| 103 | LXC | cloudflare-ddns | 192.168.1.235 | Dynamic DNS (`k39.podval.org`). 3G disk |
-| 105 | LXC | unifi-os-server | 192.168.1.184 | [[UniFi]] OS (controller). **Not** the switch at 192.168.1.101 |
-| 106 | LXC | homelab-tailscale | 192.168.1.237 | Tailscale subnet router for `192.168.1.0/24`. 1G RAM, 1 core, 4G disk, Debian 13 |
-| 107 | LXC | escriptorium | 192.168.1.238 | [[eScriptorium]] v26.07 and Kraken CLI 7.1.1. Debian 13, unprivileged, 8 cores, 16G RAM, 32G disk. Compose on port 8080. Tailscale node `escriptorium` (`100.81.96.9`); `tailscale serve` is tailnet-only. Funnel is off |
+One VM for [[Home Assistant]] OS (`ssh ha`), one VM for [[Docker]] / [[DevPod]] / [[Frigate]] (`ssh docker`), and LXCs
+for dynamic DNS, [[UniFi]] OS, Tailscale, and [[eScriptorium]].
+Ids, addresses, CPU, and RAM are in the private note.
+All guests: `onboot: 1`, on the LAN bridge.
 
-LXC **104** (`cloudflared`, `.236`) was destroyed 2026-09-16.
-Its UniFi fixed-IP reservation was removed 2026-10-07.
-The remote path is LXC **106** (`homelab-tailscale`, static `192.168.1.237`).
-Tailscale 1.104.6 is on the tailnet as `homelab-tailscale` (`100.82.39.37`, `homelab-tailscale.tailc87f26.ts.net`).
-The machine name is generated from the OS hostname.
-It advertises `192.168.1.0/24` only, and that route is enabled for this machine.
+The dynamic-DNS, Tailscale, and eScriptorium containers are unprivileged, with nesting.
+The UniFi OS container is privileged (nesting only).
+Checked 2026-11-18.
+The Tailscale and eScriptorium containers also have `keyctl=1` and `/dev/net/tun`, so Tailscale can open its tunnel.
+
+The Cloudflare Tunnel container and the cloud-infrastructure container were destroyed.
+Do not recreate them.
+See [[Domains]] and [[Cloud Infrastructure]].
+
+Remote access is the Tailscale container.
 It does not run Grok, is not an exit node, and does not use Tailscale SSH.
-See [[Domains]].
+It still advertises a subnet route, and that route is what my own machines use off the LAN.
+An assistant does not get the LAN through that route.
+The route, the tailnet names, and the assistant allow-list are in the private note.
+Assistant access is `notes/SystemAdministration/Grok Bot access.md` in the private vault.
 
-LXC **108** (`cloud-infrastructure`, `.239`) was destroyed.
-Its Tailscale node and UniFi reservation are removed.
-See [[Cloud Infrastructure]].
-
-All guests: `onboot: 1`, `vmbr0`.
-103 and 105 carry the community-script tag.
-LXC 103/105/106/107 are unprivileged with nesting.
-106 and 107 also have `keyctl=1` and `/dev/net/tun`.
-106 uses that so Tailscale can open its tunnel.
-Snapshots taken 2026-11-11 (leave them in place until I say otherwise):
-
-- VM 100: `pre-pve-reboot-20261111` (USB passthrough did not block the snapshot)
-- VM 101: `pre-101-window-20261111`, then `pre-pve-reboot-20261111`
-- LXC 103/105/106: `pre-phase1-20261111`, then `pre-pve-reboot-20261111`
-- LXC 107 cannot `pct snapshot` because of the bind mounts (`mp0` facsimiles, `mp1` `/mnt/data/apps/htr`).
-  Use a file backup on the PVE host instead: `/root/107-pre-phase1-20261111150901` and
-  `/root/107-pre-pve-reboot-20261111152106`.
-
+Snapshots taken 2026-11-11 are no longer on the host (checked 2026-11-18).
+eScriptorium cannot `pct snapshot` because of the bind mounts (facsimiles read-only, work dir read-write).
+Use a file backup on the host for that guest.
 
 On **2026-09-01 12:45 EDT** the host itself came back from an **unclean** stop (no `reboot` in the journal, EFI dirty
 bit, journal “uncleanly shut down”, guest ext4 recovery).
-Same kernel as before (`7.0.14-12-pve`).
 No UPS/NUT/IPMI log, no `qmreboot`.
-`startall` then started 100/101/103–105.
+`startall` then started the guests that existed then.
 Docker/Frigate fallout: [[Frigate]].
 
-HAOS USB passthrough (do not steal these off VM 100):
+HAOS USB passthrough (do not steal these off the Home Assistant VM):
 
-- `0bda:2832` Realtek RTL2832U (rtl_433)
-- `303a:831a` Nabu Casa ZBT-2 (Zigbee)
-- `303a:4001` Nabu Casa ZWA-2 (Z-Wave)
+- Realtek RTL2832U (rtl_433)
+- Nabu Casa ZBT-2 (Zigbee)
+- Nabu Casa ZWA-2 (Z-Wave)
 
-Docker VM hostname `docker`.
-Debian 13, kernel **6.12.116+deb13-amd64**, timezone **America/New_York** (set 2026-11-11; was UTC).
-**Does not use virtiofs** (no `virtiofs` / `fsN` in `101.conf`).
-**Do not attach it** — it hangs UEFI boot.
-Frigate is NFS from `/mnt/data/apps/frigate` to `192.168.1.187` only; guest mounts `/frigate`.
+The USB ids are in the private note.
+
+The Docker VM is Debian, timezone **America/New_York**.
+**Does not use virtiofs.** **Do not attach it.** It hangs UEFI boot.
+Frigate is NFS from `/mnt/data/apps/frigate` to that VM only.
+The guest mounts `/frigate`.
 
 ## Community Scripts
 
@@ -85,9 +68,13 @@ https://community-scripts.github.io/ProxmoxVE/scripts.
 ```
 ## Dynamic DNS
 
-I use `cloudflare-ddns` LXC (103).
+I use the `cloudflare-ddns` LXC.
 Binary `/usr/local/bin/cloudflare-ddns` + `/etc/cloudflare-ddns.env` (mode 600).
-Do **not** restore `go run …@latest` — that filled the 3G disk.
+The token stays in that file.
+Do not copy it into either vault.
+The name it updates is in the private note.
+Do **not** restore `go run …@latest`.
+That filled the disk.
 ## Running Docker Containers
 
 As recommended, I use a [[Virtual Machines]] to run [[Docker]] containers.
@@ -99,7 +86,7 @@ $ bash -c "$(wget -qLO - https://github.com/community-scripts/ProxmoxVE/raw/main
 
 I use this VM to run [[DevPod]] workspaces locally - and to run `docker compose` stacks like [[Frigate]].
 
-[[eScriptorium]] and Kraken run in LXC 107.
+[[eScriptorium]] and Kraken run in their own LXC.
 Do not move that stack onto this VM.
 
 Passing the host iGPU into that VM for Frigate VAAPI is planned (not done): see [[Frigate]] § iGPU passthrough.
@@ -178,21 +165,23 @@ And mount:
 # mount /mnt/data
 ```
 
-`/mnt/data` is Btrfs RAID1 label `Big Data` on `/dev/sdc`+`/dev/sdd` (2×4T WD Red).
-Photo/media (including Calibre under `Books/`) + [[Frigate]] NFS source.
-**~25% used**.
+`/mnt/data` is Btrfs RAID1.
+Photo/media (including Calibre under `Books/`) and the [[Frigate]] NFS source live there.
+Disk names, the label, and how full it is are in the private note.
 `Pictures/originals` uses the gphoto-sync layout `YYYY/MM/DD` (renamed from `YYYY/YYYY-MM/YYYY-MM-DD` on 2026-08-21).
 
-`sda`/`sdb` (2×2T WD): leftover `md127` superblocks from the old `/mnt/data`.
-Array is **stopped**; `/etc/mdadm/mdadm.conf` has `ARRAY <ignore> UUID=dbc353c9:9eddf842:f209850f:8c30d5ea` and
-`AUTO -all`.
+The previous pair of disks still has leftover `md127` superblocks from the old `/mnt/data`.
+The array is **stopped**.
+`/etc/mdadm/mdadm.conf` ignores it (`AUTO -all`).
+The UUID is in the private note.
 Do not start it.
 Superblocks not wiped.
 
-`sde` (500G) old backup disk; not mounted.
-No vzdump/PBS jobs; `/var/lib/vz/dump` is empty.
-Later: scheduled `vzdump` of 100/101/105 (and the small LXC if wanted) onto `sde` or PBS — not onto `local-lvm` next to
-the guests.
+An old backup disk is not mounted.
+No vzdump/PBS jobs.
+`/var/lib/vz/dump` is empty.
+Later: scheduled `vzdump` of the Home Assistant VM, the Docker VM, and the UniFi container (and the small LXCs if
+wanted) onto that disk or PBS, not onto `local-lvm` next to the guests.
 
 ## Mount
 

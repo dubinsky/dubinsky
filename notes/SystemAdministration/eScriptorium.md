@@ -4,17 +4,21 @@ tags:
 ---
 [eScriptorium](https://gitlab.com/scripta/escriptorium) is the review UI for the archival HTR pipeline.
 The engine is Kraken.
-Both run on [[ProxMox]] LXC **107** (`escriptorium`, static `192.168.1.238`).
-SSH is `root@192.168.1.238` with the YubiKey key.
+Both run on their own [[ProxMox]] container.
+Private details (address, Tailscale name, where the admin password is kept) are in the private vault
+`dubinsky/dubinsky-private`, at this same path.
+SSH is root with the [[YubiKey]] key.
 
 ## Why an LXC
 
-On 2026-10-14 this was chosen over the `docker` VM (101) and over a new VM.
+On 2026-10-14 this was chosen over the Docker VM and over a new VM.
 Proxmox's own advice is to run Docker in a VM, and that is how [[Frigate]] is installed.
 A VM on this host pins its whole RAM allocation.
-Guest 101 is 32G and 16 cores, and on that day Frigate was its only container: about 1.9G RAM and a load around 2 cores.
 An LXC uses RAM only while it needs it.
-107's ceiling is 16G and it sits near 1.2G when idle.
+The 2026-10-14 note said the Docker VM was 32G and this container's ceiling was 16G.
+Checked 2026-11-18: that swap is backwards.
+The sizes are in the private note.
+The reason still holds.
 
 The same day a Compose probe cleared the usual Docker-in-LXC failures.
 Postgres 16 and Redis 7 started under Docker Compose.
@@ -28,12 +32,11 @@ No switch to a VM.
 
 ## Guest
 
-Debian 13, unprivileged, `onboot: 1`.
-8 cores, 16G RAM, 512M swap, 32G rootfs on `local-lvm`.
-`cpuunits: 50`, so this guest loses to VM 101 when the CPUs are busy.
-`features: nesting=1,keyctl=1` and `/dev/net/tun`.
-The TUN device is there so Tailscale can be added the way LXC 106 was.
-`.238` is outside the UniFi DHCP pool (`.100`–`.199`), so it has no fixed-IP reservation.
+Debian 13, unprivileged, `onboot: 1`, with `nesting`, `keyctl`, and `/dev/net/tun` so Tailscale can run the way the
+other Tailscale container does.
+`cpuunits: 50`, so this guest loses to the Docker VM when the CPUs are busy.
+Cores, RAM, and disk are in the private note.
+The address is outside the DHCP pool, so there is no fixed-IP reservation.
 
 Docker is Debian `docker.io` 26.1.5 and Compose 2.26.1.
 Storage driver `overlay2`, cgroup driver `systemd`.
@@ -64,7 +67,8 @@ Local settings are `variables.env` (mode 600, gitignored) and `docker-compose.ov
 The override pins `registry.gitlab.com/scripta/escriptorium:v26.07`, sets Kraken training and inference to CPU, and
 turns Flower off so port 5555 is not published.
 The only published port is `8080`.
-LAN check: `http://192.168.1.238:8080/health`.
+A LAN health check is in the private note.
+Checked 2026-11-18: `/health` returned ok.
 
 Named volumes for static files, media, and Postgres are bind mounts under `/srv/htr/data`.
 Docker image layers stay on the 32G rootfs (`overlay2`).
@@ -75,22 +79,21 @@ Hard limits: web 1536m, channelserver 1024m, celery-live and celery-low-priority
 2560m, intensive inference 1536m, celery-jvm 2048m, Postgres 1536m.
 A 768m web limit OOM-killed the container when a second Python process started.
 
-The Django superuser is `dub` (`dub@podval.org`).
-The password is only in `/root/escriptorium-admin.txt` and `variables.env` inside the container.
+The Django superuser name and where the password is kept are in the private note.
+The password is not in either vault.
 
 ## Tailscale
 
-Tailscale 1.104.6 is installed and logged in (updated from 1.104.1 on 2026-11-11).
+Tailscale is installed and logged in.
 `/dev/net/tun` is passed in.
-The node is `escriptorium` at `100.81.96.9`, MagicDNS `escriptorium.tailc87f26.ts.net`.
-Login was `tailscale up --hostname=escriptorium --ssh=false --accept-dns=false`: no subnet routes, no Tailscale SSH, and
-LAN DNS stays `192.168.1.1`.
-`tailscale serve --bg 8080` fronts the UI at `https://escriptorium.tailc87f26.ts.net` (tailnet only, proxy to
-`127.0.0.1:8080`).
+Login was `tailscale up` with SSH off, no subnet routes, and without accepting Tailscale DNS, so LAN DNS stays the
+gateway.
+`tailscale serve` fronts the UI for the tailnet only, proxying to local port 8080.
 Leave Tailscale Funnel off.
-Funnel would publish that same URL on the public internet.
-The LAN URL `http://192.168.1.238:8080` still answers.
-Do not move this stack onto VM 101.
+Funnel would publish that URL on the public internet.
+The node name, the tailnet address, and the LAN URL are in the private note.
+The LAN URL still answers.
+Do not move this stack onto the Docker VM.
 
 ## Kraken CLI
 

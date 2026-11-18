@@ -12,10 +12,15 @@ blogger_orig_url: https://blog.dub.podval.org/2015/01/yubikey-neo-2-factor-authe
 ---
 [[TODO]] let obsolete be obsolete: simplify
 
-Current daily driver is a YubiKey 5C (serial 18600387). OpenPGP key `049DC4EF6FB97468` lives on that card (`uif` decrypt=on) and is the recipient for [[dotfiles]] `yadm encrypt`. FIDO2 SSH is `~/.ssh/id_ed25519_sk.pub`.
+Current daily driver is a YubiKey 5C.
+The serial is in the private vault `dubinsky/dubinsky-private`, at this same path.
+PINs are not written in either vault.
+OpenPGP key `049DC4EF6FB97468` lives on that card (`uif` decrypt=on) and is the recipient for [[dotfiles]]
+`yadm encrypt`.
+The public key is in this repo under `keys/`.
+FIDO2 SSH is `~/.ssh/id_ed25519_sk.pub`.
 
-* TOC
-{:toc}
+* TOC {:toc}
 
 # Yubikey: 2-factor authentication (U2F, OATH and OTP) and SSH
 
@@ -25,8 +30,9 @@ I've been using 2-factor authentication with my Google account for a few years: 
 password, I need to enter a code that an application on my phone displays.
 
 Recently Google introduced an alternative to the codes (for Chrome users): a Yubikey USB token that supports
-[U2F](http://fidoalliance.org/adoption/video/yubico-fido-alliance-universal-2nd-factor-u2f-demonstration) -
-Universal 2nd Factor - protocol. That sounded cool, and I decided to get me one :)
+[U2F](http://fidoalliance.org/adoption/video/yubico-fido-alliance-universal-2nd-factor-u2f-demonstration) - Universal
+2nd Factor - protocol.
+That sounded cool, and I decided to get me one :)
 
 There is no new information in this post; everything is already available on the Internet - and probably in more popular
 and easier to find places :)   Consider this as a note to self - so that I know what to do next time :)
@@ -36,29 +42,31 @@ and easier to find places :)   Consider this as a note to self - so that I know 
 NFC, so it can be used with the smartphones (if they are
 [not from Apple](https://www.yubico.com/2014/09/neo-work-iphone-6-nfc/) :)).
 
-Yubikey Neo is also a SmartCard, which comes with OATH and GPG applets installed, and seems to allow applet installation.
+Yubikey Neo is also a SmartCard, which comes with OATH and GPG applets installed, and seems to allow applet
+installation.
 This is important, since firmware on Yubico tokens is not upgradeable, but on Yubikey Neo new functionality can be
-deployed via applets. Hopefully, that means that I won't have to replace the $50 Yubikey Neo every time Yubico releases
-new firmware :)
+deployed via applets.
+Hopefully, that means that I won't have to replace the $50 Yubikey Neo every time Yubico releases new firmware :)
 
 Recently, I bought myself a Yubikey 4C, which doesn't have NFC, but it plugs directly into my phone's USB-C port, so
 that's ok.
 
 ### udev
 
-On Omarchy in 2026, no udev rules are needed. The following seems obsolete:
+On Omarchy in 2026, no udev rules are needed.
+The following seems obsolete:
 
 It seems that recent Linux releases recognize the token out of the box, but custom udev rules are needed to allow
 non-root users accessing the USB device representing the YubiKey (which is needed to use the smart-card functionality).
 
-On current Fedora releases, you need to install package "ykpers" (or "yubikey-personalization-gui" that drags it in);
-it puts appropriate udev rules in `/lib/udev/rules.d/69-yubikey.rules`. Reboot or force udev daemon to reload the rules
-in some other way.
+On current Fedora releases, you need to install package "ykpers" (or "yubikey-personalization-gui" that drags it in); it
+puts appropriate udev rules in `/lib/udev/rules.d/69-yubikey.rules`.
+Reboot or force udev daemon to reload the rules in some other way.
 
 ### Enabling yubikey features
 
 Not all features are enabled initially; to turn the Yubikey into “OTP/U2F/CCID composite device” issue command (from the
- “ykpers” package that you already installed):
+“ykpers” package that you already installed):
 ```shell
 $ ykpersonalize -m6
 ``` 
@@ -69,17 +77,18 @@ enhancements have to be used.
 
 ## Yubikey Authenticator
 
-Yubikey provides two "slots", both of which can be used for OATH credentials. Length of the tap on the token determines
-which one the user intends. Although convenient - the user doesn't need to copy codes from the phone - this approach is
-limited to 2 distinct OATH credentials (also, varying-length taps are weird :)).
+Yubikey provides two "slots", both of which can be used for OATH credentials.
+Length of the tap on the token determines which one the user intends.
+Although convenient - the user doesn't need to copy codes from the phone - this approach is limited to 2 distinct OATH
+credentials (also, varying-length taps are weird :)).
 
 OATH applet installed on Yubikey Neo can be used to store many more than 2 credentials.
 
-To use it, standard Google Authenticator application needs to be replaced by Yubikey Authenticator. Just like the
-Google's one, it shows codes that the user has to enter when logging into a site, but unlike Google one, nothing is
-stored on the phone: Yubikey Neo has to be tapped to the phone to see the codes (or add credentials). Yubikey 4C needs
-to be plugged into the phone, since it doesn't support NFC. (Direct plugging of Yubikey wasn't supported on early
-versions of the Yubikey Authenticator; it is now.)
+To use it, standard Google Authenticator application needs to be replaced by Yubikey Authenticator.
+Just like the Google's one, it shows codes that the user has to enter when logging into a site, but unlike Google one,
+nothing is stored on the phone: Yubikey Neo has to be tapped to the phone to see the codes (or add credentials).
+Yubikey 4C needs to be plugged into the phone, since it doesn't support NFC.
+(Direct plugging of Yubikey wasn't supported on early versions of the Yubikey Authenticator; it is now.)
 
 2-factor authentication of this nature can be used with sites that support it but do not (yet) support U2F - which used
 to include, for instance, GitHub and WordPress (it seems that Github does support U2F now).
@@ -96,32 +105,41 @@ While we are waiting for U2F to become universal so that we can go back to havin
 password on all the sites, strong passwords are only practical if you use a password manager - a service that stores
 your passwords, detects when you are logging into a site it knows about, and supplies the password.
 
-I stored login information about the sites I
-frequent in the password manager, drained passwords from the browser's built-in password manager and told the browser to stop collecting
-my passwords.
+I stored login information about the sites I frequent in the password manager, drained passwords from the browser's
+built-in password manager and told the browser to stop collecting my passwords.
 
-When all the passwords are stored in a password manager, the question arises: how secure is the password manager itself? Current password managers support multiple flavors of 2-factor authentication, including the Authenticator codes - and the OTP (one-time passwords) that Yubikey supports directly.
+When all the passwords are stored in a password manager, the question arises: how secure is the password manager itself?
+Current password managers support multiple flavors of 2-factor authentication, including the Authenticator codes - and
+the OTP (one-time passwords) that Yubikey supports directly.
 
-Usually, Yubikey support requires a for paid accounts, but the price is reasonable: around $40/year for a family. Multiple tokens can be registered for one account, to allow for the recovery in case the token is lost. One can get a (cheaper) OTP-only Yubico token for this purpose - or get Yubike Neo/4C tokens for the family members and
+Usually, Yubikey support requires a for paid accounts, but the price is reasonable: around $40/year for a family.
+Multiple tokens can be registered for one account, to allow for the recovery in case the token is lost.
+One can get a (cheaper) OTP-only Yubico token for this purpose - or get Yubike Neo/4C tokens for the family members and
 cross-register them :)
 
-Originally, I chose [LastPass](https://www.lastpass.com/) as the password manager because of raving reviews; later, after a few security breaches in LastPass, I switched to [BitWarden](https://bitwarden.com/).
+Originally, I chose [LastPass](https://www.lastpass.com/) as the password manager because of raving reviews; later,
+after a few security breaches in LastPass, I switched to [BitWarden](https://bitwarden.com/).
 
 ## SSH
 
-Remaining piece of the puzzle: SSH. I use SSH to log into my home server remotely. I also use it to push code into my
-GitHub repositories.
+Remaining piece of the puzzle: SSH.
+I use SSH to log into my home server remotely.
+I also use it to push code into my GitHub repositories.
 
-I want to store my private SSH key on the Yubikey. With this configuration, I do not need my private key on the machine
-I open SSH connection from, which increases my feeling of security. On top of that, the key can be deleted from any
-machine that I ssh into and then open further ssh connection from! All it takes is - add `ForwardAgent yes` in
-`~./ssh/config` for the particular host! This is really cool!
+I want to store my private SSH key on the Yubikey.
+With this configuration, I do not need my private key on the machine I open SSH connection from, which increases my
+feeling of security.
+On top of that, the key can be deleted from any machine that I ssh into and then open further ssh connection from!
+All it takes is - add `ForwardAgent yes` in `~./ssh/config` for the particular host!
+This is really cool!
 
 ## FIDO2 and SSH
 
-The simplest way to use Yubikey for SSH is via FIDO2. It is simpler than using [[#Yubikey as a PIV Smart Card]] or [[#Yubikey as a GPG Smart Card]].
+The simplest way to use Yubikey for SSH is via FIDO2.
+It is simpler than using [[#Yubikey as a PIV Smart Card]] or [[#Yubikey as a GPG Smart Card]].
 
-That is what I actually use now: `Host *` in `~/.ssh/config` points at `~/.ssh/id_ed25519_sk.pub`, so GitHub and the house SSH aliases (`ha`, `pve`, `docker`, `unifi`) all use this resident key.
+That is what I actually use now: `Host *` in `~/.ssh/config` points at `~/.ssh/id_ed25519_sk.pub`, so GitHub and the
+house SSH aliases (`ha`, `pve`, `docker`, `unifi`) all use this resident key.
 
 TODO set FIDO2 pin first
 
@@ -156,19 +174,26 @@ Key comment:
 - `ssh-keygen -C "comment"` is not stored in the key
 - public key written during key generation has the default comment `user@host`
 - public key retrieved by `ssh-keygen -K` has the comment from the `-O application` parameter
-- `ykman fido credentials list` shows hex representation of the value of the `-O user` parameter 
+- `ykman fido credentials list` shows hex representation of the value of the `-O user` parameter
 
 By default, FIDO2 SSH keys require touch (presence detection) for each operation.
-It is possible to disable this at generation time with `ssh-keygen ... -O no-touch-required`,
-but such keys are rejected by default, and sshd needs to be re-configured to accept them.
-I am not going to fight this since: 
+It is possible to disable this at generation time with `ssh-keygen ... -O no-touch-required`, but such keys are rejected
+by default, and sshd needs to be re-configured to accept them.
+I am not going to fight this since:
 - it is more surprising (compared to PIV keys) than annoying,
 - it requires re-configuration of SSHD,
 - GitHub rejects `no-touch-required` keys,
 - it is more secure
-- even when the key is generated with no-touch-required AND is prefixed in the authorized_keys file with no-touch-required, rclone still requires touch (per thread ;))...
-- rclone's built-in SFTP (Go SSH) cannot sign `sk-ssh-ed25519` via ssh-agent (`agent: failed to sign challenge`). The `gatekeeper` remote uses OpenSSH: `ssh = ssh -o BatchMode=yes dub@gatekeeper`. That also lets ControlMaster cover the extra SSH connections `--checksum` opens.
-- rclone Go SSH prefers ECDSA over Ed25519. If `~/.ssh/known_hosts` only has Ed25519 for `gatekeeper` / `192.168.1.40`, the built-in client reports `knownhosts: key mismatch` even though OpenSSH is fine. Keep all three host key types for those names.
+- even when the key is generated with no-touch-required AND is prefixed in the authorized_keys file with
+  no-touch-required, rclone still requires touch (per thread ;))...
+- rclone's built-in SFTP (Go SSH) cannot sign `sk-ssh-ed25519` via ssh-agent (`agent: failed to sign challenge`).
+  The `gatekeeper` remote uses OpenSSH: `ssh = ssh -o BatchMode=yes dub@gatekeeper`.
+  That also lets ControlMaster cover the extra SSH connections `--checksum` opens.
+- rclone Go SSH prefers ECDSA over Ed25519.
+  If `~/.ssh/known_hosts` only has Ed25519 for the Proxmox host, the built-in client reports `knownhosts: key mismatch`
+  even though OpenSSH is fine.
+  Keep all three host key types for that name.
+  The address is in the private ProxMox note.
 - [ ] [[TODO]] Message about the touch wait is not being shown - link to the bug
 - Note about backup keys
 
@@ -248,8 +273,8 @@ $ ssh-add -L
 
 Running gpg-agent (needed for the GPG approach below) may cause problems.
 
-When Yubikey is removed and re-inserted, ssh-agent needs to be killed and the key re-added for some reason. I use this
-alias in `~./bashrc`:
+When Yubikey is removed and re-inserted, ssh-agent needs to be killed and the key re-added for some reason.
+I use this alias in `~./bashrc`:
 ```shell
 alias yk='pkill ssh-agent; pkill gpg-agent; ssh-add -s /usr/lib64/opensc-pkcs11.so'
 ```
@@ -260,15 +285,18 @@ alias yk='pkill ssh-agent; pkill gpg-agent; ssh-add -s /usr/lib64/opensc-pkcs11.
 
 ## Yubikey as a GPG Smart Card
 
-Yubikey has a GPG Applet that can be used to store GPG keys. It doesn’t seem to be possible to turn an existing SSH key
-into a GPG key, but it is possible to use a GPG key for SSH authentication, and that is what I decided to do.
+Yubikey has a GPG Applet that can be used to store GPG keys.
+It doesn’t seem to be possible to turn an existing SSH key into a GPG key, but it is possible to use a GPG key for SSH
+authentication, and that is what I decided to do.
 
-Since I do not use GPG for email, I did not have a GPG key. It is possible to generate the key on the Neo itself, but it
-is impossible to extract the key from it (for obvious reasons). I want to have a backup of the key (to stash in a safe
-place), so I needed to generate the key in a normal way and put it on the Neo.
+Since I do not use GPG for email, I did not have a GPG key.
+It is possible to generate the key on the Neo itself, but it is impossible to extract the key from it (for obvious
+reasons).
+I want to have a backup of the key (to stash in a safe place), so I needed to generate the key in a normal way and put
+it on the Neo.
 
-There is a lot of stuff out there about the gpg-agent configuration, ssh support, sshcontrol, keygrips etc.
-This [document](https://github.com/herlo/ssh-gpg-smartcard-config/blob/master/YubiKey_NEO.rst) by
+There is a lot of stuff out there about the gpg-agent configuration, ssh support, sshcontrol, keygrips etc. This
+[document](https://github.com/herlo/ssh-gpg-smartcard-config/blob/master/YubiKey_NEO.rst) by
 [Aric Gardner](https://github.com/Aricg) helped me get the things running.
   
 ### Configure GPG to use agent
@@ -292,8 +320,8 @@ fi
 
 ### Generate Key and Subkeys
   
-When generating the key, I did not add a photo to it, nor did I publish it to the key servers. People who actually use
-GPG would know how to do all that :)
+When generating the key, I did not add a photo to it, nor did I publish it to the key servers.
+People who actually use GPG would know how to do all that :)
 
 To generate the key:
 ```shell
@@ -347,8 +375,8 @@ Use “keytocard” command to move the marked key into appropriate slot on the 
 ### It Works!
 
 When the smart card is connected, “ssh-add -L” should output the public key corresponding to the authentication key from
-the card (no need to insert any "keygrips" into the sshcontrol file :)). It needs to be listed on the machine you are
-logging into :)
+the card (no need to insert any "keygrips" into the sshcontrol file :)).
+It needs to be listed on the machine you are logging into :)
 
 I never had to do this before, but on fc28 in order for the ssh key to work, I have to do (see
 [https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=835394](https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=835394)):
@@ -356,12 +384,13 @@ I never had to do this before, but on fc28 in order for the ssh key to work, I h
 $ gpg-connect-agent updatestartuptty /bye
 ```
 If the public key is published somewhere, GPG applet on the token can be configured with the URL so that it can fetch
-the key. On a machine where GPG doesn't know about my the key, I used "fetch" in gpg2 --card-edit.
+the key.
+On a machine where GPG doesn't know about my the key, I used "fetch" in gpg2 --card-edit.
 
 ## Obsolete
 
-Previously, additional steps were required to set things up. In recent releases, some of them are no longer needed - but
-I preserved previous instructions here just in case :)
+Previously, additional steps were required to set things up.
+In recent releases, some of them are no longer needed - but I preserved previous instructions here just in case :)
 
 ### udev
 
@@ -373,22 +402,24 @@ ATTRS{idVendor}=="1050",
 ATTRS{idProduct}=="0010|0110|0111|0113|0114|0115|0116|0120|0401|0402|0403|0405|0406|0407|0410",
 TAG+="uaccess"
 ```
-Above rule works for Fedora, but not for Debian-based Raspbian running on my Raspberry Pi. There, instead of TAG, I use
-`MODE:="0666"`. It is ugly, and only works with "final" assignment (:=), but it works...
+Above rule works for Fedora, but not for Debian-based Raspbian running on my Raspberry Pi.
+There, instead of TAG, I use `MODE:="0666"`.
+It is ugly, and only works with "final" assignment (:=), but it works...
 
 ### Install GnuPG2
 
 Both version 1 (gpg) and version 2 (gpg2) of the Gnu Privacy Guard can be used for the key generation, but only gpg2 is
-capable of writing the keys to the Neo. Previously, I had to make sure that the following packages are installed:
-gnupg2, gnupg2-smime (contains scdaemon, which is needed) and pinentry-gtk (GTK UI for PIN entry) (on Raspbian, I had
-to install packages gnupg2, gnupg-agent and scdaemon).
+capable of writing the keys to the Neo.
+Previously, I had to make sure that the following packages are installed: gnupg2, gnupg2-smime (contains scdaemon, which
+is needed) and pinentry-gtk (GTK UI for PIN entry) (on Raspbian, I had to install packages gnupg2, gnupg-agent and
+scdaemon).
 
 ### Uninstall pcsc-lite
 
-There is some kind of a race for the card access between GPG and pcsc-lite (which is installed by default). Previously,
-I removed pcsc-lite, pcsc-lite-libs, pcsc-lite-ccid, pcsc-perl and dependent packages: opensc, coolkey, openconnect,
-NetworkManager-openconnect, NetworkManager-openconnect-gnome. I hope this gets resolved soon, and package
-uninstallation won't be necessary.
+There is some kind of a race for the card access between GPG and pcsc-lite (which is installed by default).
+Previously, I removed pcsc-lite, pcsc-lite-libs, pcsc-lite-ccid, pcsc-perl and dependent packages: opensc, coolkey,
+openconnect, NetworkManager-openconnect, NetworkManager-openconnect-gnome.
+I hope this gets resolved soon, and package uninstallation won't be necessary.
 
 ### Disable Gnome keyring agent
   

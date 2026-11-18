@@ -6,7 +6,7 @@
   - [Agda Documentation](https://agda.readthedocs.io/en/stable/)
   - [Learn You An Agda](http://learnyouanagda.liamoc.net/pages/introduction.html)
 - Haskell
-  - [A Type of Programming](https://atypeofprogramming.com/auth?token=4c949432-09dc-4c9f-a9e0-9cf7eabb1d7d&email=dub@podval.org&next=%2Fread)
+  - [A Type of Programming](https://atypeofprogramming.com/)
 - [Arend Theorem Prover](https://arend-lang.github.io/documentation/tutorial.html)
 - HoTT
   - [Martin Escardo's course](https://www.cs.bham.ac.uk/~mhe/HoTT-UF-in-Agda-Lecture-Notes/HoTT-UF-Agda.html#mlttinagda)
