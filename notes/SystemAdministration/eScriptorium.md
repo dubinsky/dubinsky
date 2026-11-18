@@ -5,8 +5,8 @@ tags:
 [eScriptorium](https://gitlab.com/scripta/escriptorium) is the review UI for the archival HTR pipeline.
 The engine is Kraken.
 Both run on their own [[ProxMox]] container.
-Private details (address, Tailscale name, where the admin password is kept) are in the private vault
-`dubinsky/dubinsky-private`, at this same path.
+Private details (address, Tailscale name, installed package versions, where the admin password is kept) are in the
+private vault `dubinsky/dubinsky-private`, at this same path.
 SSH is root with the [[YubiKey]] key.
 
 ## Why an LXC
@@ -38,7 +38,8 @@ other Tailscale container does.
 Cores, RAM, and disk are in the private note.
 The address is outside the DHCP pool, so there is no fixed-IP reservation.
 
-Docker is Debian `docker.io` 26.1.5 and Compose 2.26.1.
+Docker is Debian `docker.io` with Compose.
+The package versions are in the private note.
 Storage driver `overlay2`, cgroup driver `systemd`.
 
 ## Storage
@@ -97,13 +98,14 @@ Do not move this stack onto the Docker VM.
 
 ## Kraken CLI
 
-Kraken 7.1.1 and ketos are on the container with `pipx install --global 'kraken==7.1.*'`, Python 3.13.5.
+Kraken and ketos are on the container with `pipx install --global 'kraken==7.1.*'`.
+The installed Kraken, Python, Lightning, and Torch versions are in the private note.
 The binaries are `/usr/local/bin/kraken` and `/usr/local/bin/ketos`.
 The venv is `/opt/pipx/venvs/kraken` on the 32G rootfs.
 After that install about 11G of the rootfs was free.
 On 2026-11-11 rootfs was at 65% (20G used); purging `/root/.cache/pip` brought it to 55% (17G used, about 14G free).
 A Docker image prune would not have helped in any useful way and was not run.
-Lightning is pinned at 2.6.1 by this Kraken release, with Torch 2.14.0.
+Lightning is pinned by that Kraken release.
 Do not upgrade Lightning on its own.
 The eScriptorium image also contains Kraken.
 Host-side models use `XDG_DATA_HOME=/srv/htr/xdg`.

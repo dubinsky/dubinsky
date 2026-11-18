@@ -19,8 +19,8 @@ My Reolink Doorbell Wi-Fi had ONVIF and RTSP enabled out-of-the-box; those setti
 
 I used Grok to configure Frigate ;)
 
-Private details (camera address, stream paths, zone coordinates) are in the private vault `dubinsky/dubinsky-private`,
-at this same path.
+Private details (camera address, stream paths, zone coordinates, the image tag and rollback backups) are in the private
+vault `dubinsky/dubinsky-private`, at this same path.
 
 ## Where it runs
 
@@ -52,29 +52,23 @@ The address is in the private note.
   storage/                       # recordings, clips, snapshots
 ```
 
-Image `ghcr.io/blakeblackshear/frigate:0.18.2`, pinned in `compose.yml` on 2026-11-11 (was `:stable` at 0.17.2).
+The image is pinned in `compose.yml`, not floating on `:stable`.
 CPU only (no Coral).
-Config is `version: 0.18-0` after Frigate's auto-migration.
 Do not hand-edit `version` — leaving the old value is what triggers migration.
-A local rollback tag `frigate:0.17.2` is on the docker VM.
+A local rollback tag and dated backups from the upgrade are on the docker VM.
+The image tag, the config schema version, the rollback tag, and the backup names are in the private note.
 Ports 8971, 8554 (go2rtc RTSP), 8555 WebRTC.
 MQTT goes to the Home Assistant Mosquitto broker.
 The host, the username, and where the password is kept are in the private note.
 The password is not in either vault.
-After 0.18.2, nginx logs `using uninitialized "go2rtc_stream_proxy" variable` on API requests (including HA `/api/stats`).
+Nginx logs `using uninitialized "go2rtc_stream_proxy" variable` on API requests (including HA `/api/stats`).
 Harmless: those requests still return 200, and detect/record/MQTT work.
 
 This tree is not in yadm and not in HA Google Drive Backup.
 Safe to copy off-box: `compose.yml` and `config/config.yaml`.
 Do not copy `.env`, `config/.jwt_secret`, or `config/frigate.db*`.
-Backups from the 2026-11-11 0.17.2 → 0.18.2 upgrade, on this same share:
-
-- `compose.yml.bak.20261111151330` and `compose.yml.bak.20261111151745`
-- `config/config.yaml.bak.20261111151330`
-- Frigate's own migrator copies: `config/backup_config.yaml` (0.17) and `config/backup.db`
-- dated `config/frigate.db*.bak.20261111151745` and directory `backups-pre-0.18.2-20261111151745/`
-
-To roll back: restore the dated `config.yaml` + `frigate.db*`, set the compose image to `frigate:0.17.2`, and
+To roll back, restore the dated config and database backups named in the private note and point compose at the local
+rollback tag.
 `docker compose -f /frigate/compose.yml up -d` (never `compose down`).
 Later: include this dataset in PVE/PBS, or rsync the two safe files somewhere tracked.
 
