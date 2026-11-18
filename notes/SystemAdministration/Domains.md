@@ -5,7 +5,6 @@ tags: [sysadmin]
 
 Private details (the house dynamic-DNS name and the records that point at the house) are in the private vault
 `dubinsky/dubinsky-private`, at this same path.
-Token values are not in either vault.
 
 ## Square Space
 
@@ -280,19 +279,10 @@ The name is in the private note.
 Port 22 is not published on the router.
 Checked 2026-11-18: there are no port-forward rules.
 
-A Cloudflare Tunnel container was started and never given a config.
-It was destroyed on 2026-09-16.
-The tunnel itself is gone.
-The Podval account has no live or deleted tunnels.
-Do not use Cloudflare Tunnel for admin SSH.
-The tunnel's old name is in the private note.
-
-Remote access is a [[ProxMox]] container running Tailscale.
-It is not an exit node, and Tailscale SSH is off, so admin login stays normal SSH plus the YubiKey.
 Checked 2026-11-18: that container still advertises one subnet route, and the route is enabled.
 My own machines off the LAN accept it and use the same `ssh` aliases as on the LAN.
 That route is not the assistant path.
 Grok Bot comes in as a forwarding-only user on the same container, and that user can open SSH only on a short
 allow-list.
 The route, the tailnet names, and the allow-list are in the private note.
-Assistant access is `notes/SystemAdministration/Grok Bot access.md` in the private vault.
+Assistant access is `notes/SystemAdministration/Grok Bot Access.md` in the private vault.

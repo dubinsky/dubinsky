@@ -112,7 +112,7 @@ $ gpg2 --armor --export dub@podval.org
 
 All the above was repeated for a dub@opentorah.org key.
 
-By default, Gradle's [Signing Plugin](https://docs.gradle.org/current/userguide/signing_plugin.html)uses properties
+By default, Gradle's [Signing Plugin](https://docs.gradle.org/current/userguide/signing_plugin.html) uses properties
 (signing.keyId, signing.password, signing.secretKeyRingFile) to access the key.
 I prefer to use explicit configuration, but more importantly, I need the flexibility to use different keys to sign the
 artifacts of different projects.
