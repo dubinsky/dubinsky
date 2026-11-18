@@ -57,9 +57,11 @@ The grok-bot Cloudflare token on each account is read-only.
 The grants are Zone, DNS, Zone Settings, and Single Redirect Read.
 Write attempts were verified to be denied.
 
-`pulumi preview --refresh` gets 403 on Cloud Identity groups unless `grok-bot` gets the Google Workspace Groups Reader admin role.
-That role is not granted.
-It is optional.
+As of 2026-11-18, each org's `grok-bot` service account has the Google Workspace Groups Reader admin role.
+`grok-bot@podval-infra.iam.gserviceaccount.com` is assigned in the podval.org Workspace, `grok-bot@opentorah-infra.iam.gserviceaccount.com` in opentorah.org, and `grok-bot@cognomath-infra.iam.gserviceaccount.com` in cognomath.org.
+Each org's own service account is assigned in that org's own Admin console, under Account > Admin roles > Groups Reader > Admins assigned > Assign service accounts.
+The role may take a few minutes to take effect.
+With it, `direnv exec . pulumi preview --refresh` runs clean on all three dev stacks: Podval 111, OpenTorah 166, and CognoMath 246 unchanged.
 
 The desktop installs `pulumi-language-scala` 0.5.2 from `github://api.github.com/VirtusLab/besom`.
 GCP is pinned to `9.0.0`, the plugin in `besom-gcp_3:9.0.0-core.0.5`.
