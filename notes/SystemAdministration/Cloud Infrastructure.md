@@ -1,106 +1,24 @@
-LXC **108** on [[ProxMox]], hostname `cloud-infrastructure`.
-This is the cloud Grok Bot's Pulumi runner across Podval, OpenTorah, and CognoMath.
-I cannot push from it or run IntelliJ IDEA on it.
-I edit the `dubinsky/pulumi` library and the three infra repos on this desktop.
-The repos are `dubinsky/podval-infra`, `opentorah/infra`, and `cognomath/infra`.
-I reach it from this desktop with the [[YubiKey]], over Tailscale.
-The cloud Grok Bot reaches it from the [[ProxMox]] host with `pct exec`.
+The Cloud Infrastructure Grok Bot runs Pulumi for Podval, OpenTorah, and CognoMath on its own computer.
+It runs only `pulumi preview`, and `pulumi preview --refresh` for drift checks.
+I run everything that writes on this desktop: `pulumi up`, refresh, import, and state surgery, with the `terraform` keys.
+Code changes still go through pull requests.
 Domain and DNS state stays in [[Domains]].
 The library stays in [[Pulumi]].
 
+[[ProxMox]] LXC **108** (`cloud-infrastructure`) is dismantled.
+The guest is destroyed.
+Its Tailscale node and UniFi reservation are removed.
+The read-only GitHub deploy keys on `dubinsky/podval-infra`, `opentorah/infra`, and `cognomath/infra` are deleted.
+`~/.local/bin/copy-cloud-infrastructure-credentials` and the `Host infra` SSH entry are removed from dotfiles.
+
 * TOC {:toc}
-
-## Guest
-
-| | |
-|---|---|
-| ID | 108 |
-| LAN | `192.168.1.239/24` on `vmbr0`, gateway `192.168.1.1` |
-| UniFi | Fixed reservation for `bc:24:11:16:ef:ac`, name `cloud-infrastructure` |
-| Size | 4 cores, 8G RAM, 512M swap, 32G on `local-lvm` |
-| OS | Debian 13, unprivileged, nesting, `keyctl=1`, `/dev/net/tun` |
-| Boot | `onboot: 1`, timezone `America/New_York` |
-| JDK | Debian OpenJDK 25.0.5 |
-| Pulumi CLI | 3.270.0 at `/usr/local/bin/pulumi` |
-
-No sudo for `dub`.
-Package upgrades run as root from the hypervisor:
-`ssh pve "pct exec 108 -- bash -lc 'apt-get update && apt-get upgrade'"`.
-That covers Tailscale and OpenJDK.
-The Pulumi CLI in `/usr/local/bin` is not a Debian package.
-Debian has no Pulumi package, and the desktop copy comes from Arch `pacman`.
-The guest has the single `pulumi` binary from the official `3.270.0` Linux tarball, so the version stays pinned to the
-desktop.
-The upstream install script would unpack a whole release under `~/.pulumi` and follow newer releases.
-`apt` does not upgrade this binary.
-Language and provider plugins install separately.
-Root SSH and password login are off.
-`sshd` listens on all addresses, and nftables drops TCP 22 that arrives on `eth0`.
-LXC 106 already routes `192.168.1.0/24` onto the tailnet, so a LAN listener would be reachable from there too.
-From the host, `pct exec 108` still works when Tailscale is down.
-
-Do not vzdump this guest, and do not leave a `pct snapshot` of it.
-The disk holds the Pulumi credentials.
-The code is in git and the state is in GCS, so the guest can be rebuilt.
-The credentials themselves are copied from the desktop.
-
-## Tailscale
-
-Tailscale 1.104.6, the same package as LXC 106 and 107.
-Login command: `tailscale up --hostname=cloud-infrastructure --ssh=false --accept-dns=false`.
-No subnet routes, no Tailscale SSH, and LAN DNS stays `192.168.1.1`.
-Funnel stays off.
-The node is `cloud-infrastructure` at `100.68.230.126`, MagicDNS `cloud-infrastructure.tailc87f26.ts.net`.
-It does not accept subnet routes.
-From this desktop, the SSH host alias stays `infra`.
-It connects to that MagicDNS name as `dub`, with the YubiKey.
-
-## Access
-
-The cloud Grok Bot administers the homelab from its own computer.
-That computer's SSH key is on the Proxmox host and the other guests.
-It does not join this tailnet.
-Its Tailscale client reaches MCP servers granted to `tag:grokbot` and cannot log the computer into the tailnet.
-It enters this guest from the host:
-`pct exec 108 -- runuser -u dub -- bash -lc 'cd ~/Podval/infra && direnv exec . pulumi preview'`.
-`pct exec` is root.
-`runuser` runs Pulumi as `dub`.
-The same form works in `~/OpenTorah/infra` and `~/CognoMath/infra`.
-
-TCP 22 stays dropped on `eth0`.
-LXC 106 advertises `192.168.1.0/24`, so an open port on the LAN address would be reachable from every tailnet device
-that accepts that route.
-The jump user on LXC 106 is not a way around that drop, and this guest is not on its allow-list.
-Tailscale stays on this guest because the desktop login uses it.
-
-## Checkouts
-
-Same paths as the desktop, so the `includeBuild` defaults work without edits.
-`~/Podval/infra` uses `../pulumi` and `../podval-gradle`.
-`~/OpenTorah/infra` and `~/CognoMath/infra` use `../../Podval/pulumi` and `../../Podval/podval-gradle`.
-
-| Checkout | Remote | Guest access |
-|---|---|---|
-| `~/Podval/infra` | `dubinsky/podval-infra` | read-only deploy key `cloud-infrastructure` |
-| `~/OpenTorah/infra` | `opentorah/infra` | read-only deploy key `cloud-infrastructure` |
-| `~/CognoMath/infra` | `cognomath/infra` | read-only deploy key `cloud-infrastructure` |
-| `~/Podval/pulumi` | `dubinsky/pulumi` | public HTTPS |
-| `~/Podval/podval-gradle` | `dubinsky/podval-gradle` | public HTTPS |
-
-GitHub deploy keys belong to one repository and cannot be reused, so the guest has three read-only keys, all titled
-`cloud-infrastructure`.
-The private halves are `~/.ssh/podval-infra`, `~/.ssh/opentorah-infra`, and `~/.ssh/cognomath-infra` on the guest.
-It can pull those repos.
-It cannot push.
-
-Each infra build uses that repo's Gradle wrapper.
-`direnv` is hooked for interactive shells.
-A non-interactive command has to be `direnv exec . pulumi preview`, because a plain `ssh` command does not load `.envrc`.
 
 ## Changes
 
 When I ask the cloud Grok Bot for a change, it has a Cursor cloud agent open a pull request.
 The pull request is in the library or an infra repo.
+The repos are `dubinsky/podval-infra`, `opentorah/infra`, and `cognomath/infra`.
+The library is `dubinsky/pulumi`.
 Each commit uses that org's identity.
 The name is Leonid Dubinsky.
 Podval and the `dubinsky/pulumi` library use `dub@podval.org`.
@@ -108,70 +26,49 @@ OpenTorah uses `dub@opentorah.org`.
 CognoMath uses `dub@cognomath.org`.
 I review and merge.
 I publish the library to Maven Central myself.
-The bot then runs `git pull --ff-only` on LXC 108.
-It runs `direnv exec . pulumi preview`.
-It runs `pulumi up` only after my go-ahead for that change.
 A library pull request has to merge before an infra pull request that depends on it.
-The guest builds against its `~/Podval/pulumi` checkout through `includeBuild`.
-
-## Git identity
-
-The guest has no Git identity.
-`~/.config/git/config` and the empty `~/.config/git` directory were deleted.
-The guest has no global Git config.
-`~/OpenTorah/.gitconfig` and `~/CognoMath/.gitconfig` were deleted.
-The guest only pulls, with its read-only deploy keys.
-Commit identity lives in the cloud agents' pull requests and on the desktop.
+The bot does not run `pulumi up`.
 
 ## Credentials
 
-The desktop runs Pulumi as `terraform@<project>.iam.gserviceaccount.com`.
-The guest's identity is `grok-bot@<project>.iam.gserviceaccount.com`.
-`grok-bot` has the same organization roles as `terraform`.
-`roles/iam.serviceAccountKeyAdmin` is granted only on the `grok-bot` service account, to `terraform` and to `grok-bot`.
-The JSON key is a Pulumi resource, so the private key is also in the state bucket.
-A desktop `pulumi up` writes the decoded key, mode `0600`, to `~/<Org>/Keys/grok-bot-<project>.json`.
-The guest does not write that file.
+`.envrc` in each infra repo uses `terraform-<project>.json` and `<org>-cloudflare-api-token.txt` when those files are present.
+That is this desktop.
+Otherwise it falls back to `grok-bot-<project>.json` and `grok-bot-<org>-cloudflare-api-token.txt`.
+That is the bot's computer.
+`<project>` is `podval-infra`, `opentorah-infra`, or `cognomath-infra`.
+`<org>` is `podval`, `opentorah`, or `cognomath`.
+On this desktop the files are in `~/<Org>/Keys/`.
 
-`.envrc` is shared.
-It still reads `terraform-<project>.json` and the Cloudflare token file next to it.
-On the desktop those files stay the `terraform` key and the desktop Cloudflare token.
-On the guest those same names are where the `grok-bot` key and a `grok-bot` account token go.
-`~/.local/bin/copy-cloud-infrastructure-credentials` installs the desktop `grok-bot-*` files onto the guest under those
-`.envrc` names, over `ssh infra`, and checks that the sizes match.
-The script is YADM-managed and copies only the six credential files.
-
-The Cloudflare tokens are account-owned.
-Pulumi does not create them: the current tokens cannot create another token.
-Each `grok-bot` token needs Zone DNS Edit, Zone Edit, Zone Settings Edit, and Single Redirects, with no expiry.
-
-| Org | Desktop file for the guest GCP key | Desktop file for the guest Cloudflare token |
+| Org | Desktop, when present | Bot fallback |
 |---|---|---|
-| Podval | `~/Podval/Keys/grok-bot-podval-infra.json` | `~/Podval/Keys/grok-bot-podval-cloudflare-api-token.txt` |
-| OpenTorah | `~/OpenTorah/Keys/grok-bot-opentorah-infra.json` | `~/OpenTorah/Keys/grok-bot-opentorah-cloudflare-api-token.txt` |
-| CognoMath | `~/CognoMath/Keys/grok-bot-cognomath-infra.json` | `~/CognoMath/Keys/grok-bot-cognomath-cloudflare-api-token.txt` |
+| Podval | `terraform-podval-infra.json`, `podval-cloudflare-api-token.txt` | `grok-bot-podval-infra.json`, `grok-bot-podval-cloudflare-api-token.txt` |
+| OpenTorah | `terraform-opentorah-infra.json`, `opentorah-cloudflare-api-token.txt` | `grok-bot-opentorah-infra.json`, `grok-bot-opentorah-cloudflare-api-token.txt` |
+| CognoMath | `terraform-cognomath-infra.json`, `cognomath-cloudflare-api-token.txt` | `grok-bot-cognomath-infra.json`, `grok-bot-cognomath-cloudflare-api-token.txt` |
 
-The guest files keep the names `.envrc` already uses: `terraform-<project>.json` and `<org>-cloudflare-api-token.txt`.
-The copy script has installed the `grok-bot` key and token into those names.
-The rest of each `Keys` directory stays on the desktop.
+The desktop runs Pulumi as `terraform@<project>.iam.gserviceaccount.com`.
+The bot runs as `grok-bot@<project>.iam.gserviceaccount.com`.
+At org level, `grok-bot` has only `roles/browser`, `roles/iam.securityReviewer`, `roles/iam.serviceAccountViewer`, `roles/serviceusage.serviceUsageViewer`, `roles/billing.viewer`, and `roles/storage.bucketViewer`.
+On the state bucket it also has `roles/storage.objectViewer`.
+It has no `roles/iam.serviceAccountKeyAdmin` on itself.
+[dubinsky/pulumi#16](https://github.com/dubinsky/pulumi/pull/16) set that.
 State is in `gs://state.podval.org`, `gs://state.opentorah.org`, and `gs://state.cognomath.org`.
 
-`pulumi preview` is the usual command.
-`pulumi up` waits for an explicit go-ahead for that change.
-The guest does not enforce that.
-The cloud bot is root through `pct exec` on the host.
+The grok-bot Cloudflare token on each account is read-only.
+The grants are Zone, DNS, Zone Settings, and Single Redirect Read.
+Write attempts were verified to be denied.
 
-The desktop bootstrap and the guest both install `pulumi-language-scala` 0.5.2 from
-`github://api.github.com/VirtusLab/besom`.
+`pulumi preview --refresh` gets 403 on Cloud Identity groups unless `grok-bot` gets the Google Workspace Groups Reader admin role.
+That role is not granted.
+It is optional.
+
+The desktop installs `pulumi-language-scala` 0.5.2 from `github://api.github.com/VirtusLab/besom`.
 GCP is pinned to `9.0.0`, the plugin in `besom-gcp_3:9.0.0-core.0.5`.
 Cloudflare is pinned to `6.20.0`, the plugin in `besom-cloudflare_3:6.20.0-core.0.5`.
 Each stack config sets `gcp:version` and `cloudflare:version` to those versions.
-The shared program sets the same version on the provider, on each resource, and on the GCP invokes, because the
-resources use the default provider.
-Desktop and guest both have Cloudflare `6.20.0` and GCP `9.0.0`.
+The shared program sets the same version on the provider, on each resource, and on the GCP invokes, because the resources use the default provider.
+The desktop has Cloudflare `6.20.0` and GCP `9.0.0`.
 The selected stack is not stored in git.
 On a new checkout, `pulumi stack select organization/<project>/dev` once.
-`<project>` is `podval-infra`, `opentorah-infra`, or `cognomath-infra`.
 
 ## Besom provider update
 
@@ -182,11 +79,9 @@ The Besom jar's `plugin.json` names the plugin the program was generated for.
 Those were the newest jars on Maven Central on 2026-11-11.
 Upstream plugins can be newer and still have no Besom jar.
 
-Bump `besom-core_3`, `besom-gcp_3`, and `besom-cloudflare_3` together in `~/Podval/pulumi` and in each infra
-`build.gradle`.
+Bump `besom-core_3`, `besom-gcp_3`, and `besom-cloudflare_3` together in `~/Podval/pulumi` and in each infra `build.gradle`.
 The infra builds also depend on published `org.podval.tools.pulumi`.
-`includeBuild` of `~/Podval/pulumi` replaces that when the checkout is present, so the guest does not need a new library
-release to compile the pin.
+`includeBuild` of `~/Podval/pulumi` replaces that when the checkout is present.
 
 Change the version literals in `gcpResourceOptions` and `cloudflareResourceOptions`.
 Besom accepts a string literal there and rejects a `val`.
@@ -198,14 +93,11 @@ There are no Cloudflare lookups.
 
 Install that plugin on this desktop with `pulumi plugin install resource <name> <version>`.
 `direnv exec . pulumi preview` for Podval, OpenTorah, and CognoMath.
-`pulumi up` waits for an explicit go-ahead for that diff.
+I run `pulumi up` on this desktop for that diff.
 A GCP provider upgrade can replace groups.
 `Group.initialGroupConfig` is ignored for that reason.
 
-Then install the same plugin on the guest and remove the older plugin of that name.
-The guest gets the code with `git pull` in `~/Podval/pulumi` and the three infra checkouts.
-State is already in the buckets from the desktop `pulumi up`.
-Do not run `pulumi up` on the guest only to copy state.
-`pulumi preview` on the guest should be empty.
+State stays in the buckets from the desktop `pulumi up`.
+The bot does not run `pulumi up`.
 Remove an old plugin only after state no longer names it.
 A stack that still records the old version makes the next preview download that plugin again.

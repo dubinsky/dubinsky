@@ -27,7 +27,6 @@ PVE storage: `local` (dir `/var/lib/vz`, ISO/backup) and `local-lvm` (thin pool 
 | 105 | LXC | unifi-os-server | 192.168.1.184 | [[UniFi]] OS (controller). **Not** the switch at 192.168.1.101 |
 | 106 | LXC | homelab-tailscale | 192.168.1.237 | Tailscale subnet router for `192.168.1.0/24`. 1G RAM, 1 core, 4G disk, Debian 13 |
 | 107 | LXC | escriptorium | 192.168.1.238 | [[eScriptorium]] v26.07 and Kraken CLI 7.1.1. Debian 13, unprivileged, 8 cores, 16G RAM, 32G disk. Compose on port 8080. Tailscale node `escriptorium` (`100.81.96.9`); `tailscale serve` is tailnet-only. Funnel is off |
-| 108 | LXC | cloud-infrastructure | 192.168.1.239 | [[Cloud Infrastructure]]. Pulumi for Podval, OpenTorah, and CognoMath. Debian 13, unprivileged, 4 cores, 8G RAM, 32G disk. Tailscale node `cloud-infrastructure` (`100.68.230.126`). SSH on the tailnet only. No vzdump |
 
 LXC **104** (`cloudflared`, `.236`) was destroyed 2026-09-16.
 Its UniFi fixed-IP reservation was removed 2026-10-07.
@@ -38,14 +37,15 @@ It advertises `192.168.1.0/24` only, and that route is enabled for this machine.
 It does not run Grok, is not an exit node, and does not use Tailscale SSH.
 See [[Domains]].
 
+LXC **108** (`cloud-infrastructure`, `.239`) was destroyed.
+Its Tailscale node and UniFi reservation are removed.
+See [[Cloud Infrastructure]].
+
 All guests: `onboot: 1`, `vmbr0`.
 103 and 105 carry the community-script tag.
-LXC 103/105/106/107/108 are unprivileged with nesting.
-106, 107, and 108 also have `keyctl=1` and `/dev/net/tun`.
+LXC 103/105/106/107 are unprivileged with nesting.
+106 and 107 also have `keyctl=1` and `/dev/net/tun`.
 106 uses that so Tailscale can open its tunnel.
-108 uses it the same way.
-SSH to 108 is tailnet-only.
-See [[Cloud Infrastructure]].
 Snapshots taken 2026-11-11 (leave them in place until I say otherwise):
 
 - VM 100: `pre-pve-reboot-20261111` (USB passthrough did not block the snapshot)

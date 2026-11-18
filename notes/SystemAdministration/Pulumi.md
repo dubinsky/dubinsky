@@ -11,5 +11,6 @@ This started as a blog post, but I now think it deserves a repository of its own
 Three organizations consume that library from their `infra` repositories: Podval (`~/Podval/infra`), OpenTorah (`~/OpenTorah/infra`),
 CognoMath (`~/CognoMath/infra`).
 Domain/DNS current state: [[Domains]].
-The shared runner is [[ProxMox]] LXC 108.
+The Cloud Infrastructure Grok Bot runs `pulumi preview` on its own computer.
+I run `pulumi up`, refresh, import, and state surgery on this desktop.
 See [[Cloud Infrastructure]].
