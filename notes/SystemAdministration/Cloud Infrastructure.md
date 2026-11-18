@@ -5,7 +5,6 @@ keys.
 Code changes go through pull requests.
 Domain and DNS state stays in [[Domains]].
 The library stays in [[Pulumi]].
-Token and key values are not in the notes.
 
 For a while, what Grok Bot does now on its own computer happened in a dedicated container in the homelab.
 That was more complex but not safer.
