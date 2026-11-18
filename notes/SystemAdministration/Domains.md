@@ -3,7 +3,7 @@ tags: [sysadmin]
 ---
 * TOC {:toc}
 
-Private details (the house dynamic-DNS name and the records that point at the house) are in the private vault
+Private details (the house dynamic-DNS name and the records that pointed at the house) are in the private vault
 `dubinsky/dubinsky-private`, at this same path.
 
 ## Square Space
@@ -142,13 +142,17 @@ Pulumi stack `podval-infra` / `dev` is clean.
 
 | Zone | Role |
 |---|---|
-| `podval.org` | GitHub Pages, orange-cloud CNAME `@` → `www` → `dubinsky.github.io` + Always Use HTTPS. Extra CNAMEs stay grey: Workspace `calendar`, `docs`, `drive`, `email`, `groups`, `hangouts`, `mail`, `sheets`, `slides` → `ghs.googlehosted.com` (DNS-only), `dub` → GitHub Pages, `nina` → `ghs.google.com` (Blogger), `ha` + its ACME name → Nabu Casa. The names that point at the house are in the private note. |
+| `podval.org` | GitHub Pages, orange-cloud CNAME `@` → `www` → `dubinsky.github.io` + Always Use HTTPS. Extra CNAMEs stay grey: Workspace `calendar`, `docs`, `drive`, `email`, `groups`, `hangouts`, `mail`, `sheets`, `slides` → `ghs.googlehosted.com` (DNS-only), `dub` → GitHub Pages, `nina` → `ghs.google.com` (Blogger), `ha` + its ACME name → Nabu Casa. The names that used to point at the house are in the private note. |
 | `podval.dev` | Auxiliary: dummy A + 301 → `https://www.podval.org` |
 
-The house dynamic-DNS name is an A record and is **not** in Pulumi.
-The dynamic-DNS container updates it.
-Keep it that way.
-The name, and the records that alias to it, are in the private note.
+The house dynamic-DNS name was deleted in Cloudflare on 2026-11-18.
+It was not in Pulumi.
+The records that aliased to it were removed in the Podval infra repo and applied with `pulumi up`.
+The pull request is in the private note.
+The dynamic-DNS container was destroyed the same day.
+There is no public DDNS name.
+Remote access is the Tailscale container on [[ProxMox]].
+The name, and the records that aliased to it, are in the private note.
 
 `http://www.podval.org/` is now Cloudflare Always Use HTTPS (301 to `https://`).
 
@@ -208,8 +212,8 @@ No expiry.
 
 Other tokens:
 
-- DDNS on the [[ProxMox]] dynamic-DNS container: DNS Edit on `podval.org` only.
-  Keep zone-scoped; account-owned if it is not already.
+- The DDNS token (DNS Edit on `podval.org` only) was for the [[ProxMox]] dynamic-DNS container.
+  The container was destroyed 2026-11-18, and the token was revoked the same day.
 - OpenTorah worker token: GitHub Actions on `opentorah/alter-rebbe.org` deploys Worker `alter-rebbe-aliases` (`site-publisher.yml`
   → repo secret `CLOUDFLARE_API_TOKEN`).
   The live Worker does not use the token; only **redeploy** does.
@@ -222,6 +226,12 @@ Other tokens:
   Do not reuse the Pulumi token.
 
 ## Dynamic DNS
+
+Retired 2026-11-18.
+The container was destroyed, and the Cloudflare token was revoked.
+There is no public DDNS name.
+Remote access is the Tailscale container on [[ProxMox]].
+The name and the records that aliased to it are in the private note.
 
 Among other interesting things, CloudFlare *does*
 [support](https://developers.cloudflare.com/dns/manage-dns-records/how-to/managing-dynamic-ip-addresses/) Dynamic DNS.
@@ -261,21 +271,19 @@ services:
 
 Turns out, the client
 [is](https://community-scripts.github.io/ProxmoxVE/scripts?id=cloudflare-ddns&category=Network+%26+Firewall) available
-as an LXC after all - and that is how I run it now.
+as an LXC after all, and that is how I ran it until 2026-11-18.
 
-As of 2026-11-11 the binary is favonia cloudflare-ddns **1.18.0** at `/usr/local/bin/cloudflare-ddns`.
-It was extracted from the official image `ghcr.io/favonia/cloudflare-ddns:1.18.0` pinned by digest (`sha256:345b41895a8846d74c62d30bd27e61101a754f8ab8da10c68115823883803afb`),
+Until then the binary was favonia cloudflare-ddns **1.18.0** at `/usr/local/bin/cloudflare-ddns`.
+It had been extracted from the official image `ghcr.io/favonia/cloudflare-ddns:1.18.0` pinned by digest (`sha256:345b41895a8846d74c62d30bd27e61101a754f8ab8da10c68115823883803afb`),
 not built on the LXC.
-Do **not** update it with `go run …@latest` — that filled the 3G disk once.
-
-Configuration file is in `/etc/systemd/system/cloudflare-ddns.service`; for changes to take:
-`systemctl restart cloudflare-ddns`.
+`go run …@latest` filled the 3G disk once.
+Do not bring the container back.
 
 ## Remote SSH (not Cloudflare Tunnel)
 
 On the LAN, SSH is `ssh pve` / `ha` / `docker` / `unifi`, with the [[YubiKey]].
-The dynamic-DNS name is there if something still needs a public name for the house.
-The name is in the private note.
+There is no public DDNS name.
+The name that used to be there is in the private note.
 Port 22 is not published on the router.
 Checked 2026-11-18: there are no port-forward rules.
 
