@@ -13,8 +13,6 @@ blogger_orig_url: https://blog.dub.podval.org/2015/01/yubikey-neo-2-factor-authe
 [[TODO]] let obsolete be obsolete: simplify
 
 Current daily driver is a YubiKey 5C.
-The serial is in the private vault `dubinsky/dubinsky-private`, at this same path.
-PINs are not written in either vault.
 OpenPGP key `049DC4EF6FB97468` lives on that card (`uif` decrypt=on) and is the recipient for [[dotfiles]]
 `yadm encrypt`.
 The public key is in this repo under `keys/`.

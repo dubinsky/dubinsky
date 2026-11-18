@@ -3,5 +3,6 @@
   "baseFontSize": 16,
   "baseFontSizeAction": true,
   "cssTheme": "Omarchy",
-  "nativeMenus": false
+  "nativeMenus": false,
+  "showRibbon": true
 }
