@@ -72,16 +72,13 @@ Enable SSH for UniFi devices:
   https://kcore.org/2023/03/27/ssh-unifi-fedora-37/)
 
 ## Dynamic DNS
-Retired 2026-11-18 with the [[ProxMox]] dynamic-DNS container.
-The DHCP reservation was removed.
-There is no public DDNS name.
-Remote access is the Tailscale container.
+It ran for a while on [[ProxMox]] and was never used.
+It is gone, in favour of Tailscale.
 See [[Domains]].
 
 ### Port forwarding
 
 No port forwards are configured (checked 2026-11-18).
-UPnP is off.
 An old note proposed some.
 That list is in the private note, and it was never applied.
 Remote admin is not port forwarding.
