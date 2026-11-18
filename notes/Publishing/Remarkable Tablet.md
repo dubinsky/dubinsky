@@ -2,16 +2,9 @@
 tags:
   - sysadmin
 ---
-- Order
-  - 14/04/2020 12:17 AM +00:00 UTC
-  - Id: 2e6b4760-3aa1-4af2-9db7-450348dad239
-  - Serial: RM110-043-23722
-  - Free Connect: https://support.remarkable.com/hc/en-us/articles/4409609578001
-- Got: 2020-11-02
 - Setup
   - SSH password is shown on the tablet under Settings | Help | Copyright and licenses.
-    It is not written in either vault.
-    The order id, serial, and LAN address are in the private vault `dubinsky/dubinsky-private`, at this same path.
+
   - upload files via USB web interface (when enabled under "Storage" and the tablet connected) at http://10.11.99.1/
     (see [File Transfer](https://remarkablewiki.com/tips/file_transfer))
   - the tablet's LAN name is in the private note; over USB the address above is reMarkable's, not the house LAN
