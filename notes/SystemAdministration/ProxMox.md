@@ -3,8 +3,8 @@ tags:
   - sysadmin
 ---
 Standalone Proxmox node.
-Private details (addresses, the guest table, hardware ids) are in the private vault `dubinsky/dubinsky-private`, at this
-same path.
+Private details (addresses, the guest table, disk identifiers) are in the private vault `dubinsky/dubinsky-private`, at
+this same path.
 
 PVE storage: `local` (dir `/var/lib/vz`, ISO/backup) and `local-lvm` (thin pool `pve/data` on the boot NVMe).
 Host iGPU stays on the hypervisor (not passed to the Docker VM) until [[Frigate]] § iGPU passthrough is started.
@@ -14,9 +14,13 @@ Do not `apt autoremove`.
 
 ## Guests
 
-One VM for [[Home Assistant]] OS (`ssh ha`), one VM for [[Docker]] / [[DevPod]] / [[Frigate]] (`ssh docker`), and LXCs
-for [[UniFi]] OS, Tailscale, and [[eScriptorium]].
-Ids, addresses, CPU, and RAM are in the private note.
+One VM for [[Home Assistant]] OS (`ssh ha`): 4G RAM, 2 cores, 32G disk.
+One VM for [[Docker]] / [[DevPod]] / [[Frigate]] (`ssh docker`): 8G RAM, 16 cores, 100G disk.
+Not 32G.
+An LXC for [[UniFi]] OS: privileged, 2 cores, 4G RAM, 20G disk.
+An LXC for Tailscale: unprivileged, 1G RAM, 1 core, 4G disk.
+An LXC for [[eScriptorium]]: unprivileged, 8 cores, 32G RAM, 512M swap, 32G disk.
+Addresses and guest ids are in the private note.
 All guests: `onboot: 1`, on the LAN bridge.
 
 The Tailscale and eScriptorium containers are unprivileged, with nesting.
@@ -49,11 +53,9 @@ Docker/Frigate fallout: [[Frigate]].
 
 HAOS USB passthrough (do not steal these off the Home Assistant VM):
 
-- Realtek RTL2832U (rtl_433)
-- Nabu Casa ZBT-2 (Zigbee)
-- Nabu Casa ZWA-2 (Z-Wave)
-
-The USB ids are in the private note.
+- Realtek RTL2832U (rtl_433), `0bda:2832`
+- Nabu Casa ZBT-2 (Zigbee), `303a:831a`
+- Nabu Casa ZWA-2 (Z-Wave), `303a:4001`
 
 The Docker VM is Debian, timezone **America/New_York**.
 **Does not use virtiofs.** **Do not attach it.** It hangs UEFI boot.

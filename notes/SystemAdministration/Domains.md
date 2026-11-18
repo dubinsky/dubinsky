@@ -268,8 +268,8 @@ Turns out, the client
 as an LXC after all, and that is how I ran it until 2026-11-18.
 
 Until then the binary was favonia cloudflare-ddns **1.18.0** at `/usr/local/bin/cloudflare-ddns`.
-It had been extracted from the official image `ghcr.io/favonia/cloudflare-ddns:1.18.0` pinned by digest (`sha256:345b41895a8846d74c62d30bd27e61101a754f8ab8da10c68115823883803afb`),
-not built on the LXC.
+It had been extracted from the official image `ghcr.io/favonia/cloudflare-ddns:1.18.0`, not built on the LXC.
+The image digest is in the private note.
 `go run …@latest` filled the 3G disk once.
 Do not bring the container back.
 

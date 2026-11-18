@@ -5,7 +5,7 @@ tags:
 [eScriptorium](https://gitlab.com/scripta/escriptorium) is the review UI for the archival HTR pipeline.
 The engine is Kraken.
 Both run on their own [[ProxMox]] container.
-Private details (address, Tailscale name, installed package versions, where the admin password is kept) are in the
+Private details (address, Tailscale name, the Docker package versions, where the admin password is kept) are in the
 private vault `dubinsky/dubinsky-private`, at this same path.
 SSH is root with the [[YubiKey]] key.
 
@@ -16,8 +16,7 @@ Proxmox's own advice is to run Docker in a VM, and that is how [[Frigate]] is in
 A VM on this host pins its whole RAM allocation.
 An LXC uses RAM only while it needs it.
 The 2026-10-14 note said the Docker VM was 32G and this container's ceiling was 16G.
-Checked 2026-11-18: that swap is backwards.
-The sizes are in the private note.
+That was backwards: the Docker VM is 8G RAM and 16 cores, and this container's ceiling is 32G.
 The reason still holds.
 
 The same day a Compose probe cleared the usual Docker-in-LXC failures.
@@ -35,7 +34,7 @@ No switch to a VM.
 Debian 13, unprivileged, `onboot: 1`, with `nesting`, `keyctl`, and `/dev/net/tun` so Tailscale can run the way the
 other Tailscale container does.
 `cpuunits: 50`, so this guest loses to the Docker VM when the CPUs are busy.
-Cores, RAM, and disk are in the private note.
+8 cores, 32G RAM, 512M swap, 32G rootfs on `local-lvm`.
 The address is outside the DHCP pool, so there is no fixed-IP reservation.
 
 Docker is Debian `docker.io` with Compose.
@@ -98,14 +97,12 @@ Do not move this stack onto the Docker VM.
 
 ## Kraken CLI
 
-Kraken and ketos are on the container with `pipx install --global 'kraken==7.1.*'`.
-The installed Kraken, Python, Lightning, and Torch versions are in the private note.
+Kraken 7.1.1 and ketos are on the container with `pipx install --global 'kraken==7.1.*'`, Python 3.13.5.
 The binaries are `/usr/local/bin/kraken` and `/usr/local/bin/ketos`.
 The venv is `/opt/pipx/venvs/kraken` on the 32G rootfs.
-After that install about 11G of the rootfs was free.
-On 2026-11-11 rootfs was at 65% (20G used); purging `/root/.cache/pip` brought it to 55% (17G used, about 14G free).
+Purging `/root/.cache/pip` freed space on that small rootfs.
 A Docker image prune would not have helped in any useful way and was not run.
-Lightning is pinned by that Kraken release.
+Lightning is pinned at 2.6.1 by this Kraken release, with Torch 2.14.0.
 Do not upgrade Lightning on its own.
 The eScriptorium image also contains Kraken.
 Host-side models use `XDG_DATA_HOME=/srv/htr/xdg`.

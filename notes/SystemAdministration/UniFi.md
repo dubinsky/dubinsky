@@ -11,26 +11,29 @@ I used to run UniFi in [[Docker]] using various images:
 - https://github.com/linuxserver/docker-unifi-network-application
 
 I now run it in an LXC container in [[ProxMox]].
+The gateway is a USG.
+The controller is UniFi OS Server in that LXC, not a cloud console and not the PoE switch.
 Private details (address, SSIDs, the device list, DHCP reservations) are in the private vault
 `dubinsky/dubinsky-private`, at this same path.
 
 The UI is on port **11443**, not the old **8443**.
-The PoE switch is not the controller.
 Versions and the LAN address are in the private note.
 
 Host units `uosserver.service` / `uosserver-updater.service` (user `uosserver`).
 `uosserver-updater.service` is the app updater, and `uosserver` has no update command.
 Data on the LXC: `/var/lib/uosserver/`.
 App data in the container: `/usr/lib/unifi/data/`.
-Inform/STUN is published via pasta.
-The port list is in the private note.
+Inform/STUN is published via pasta: `8080`, `3478/udp`, `11443` to `443`, and `8444`, `8880`–`8882`, `5671`, `6789`,
+`9543`.
+That list was written 2026-11-11 and was not re-checked port by port.
 
 ## Setup
 
 ### Basic
 - choose "Advanced Setup" to avoid logging into a UniFi cloud account
 - Settings > System > Advanced > Inform Host > Override with the address of the machine running `unifi`
-- The name used at first setup, and whether it is still the live name, is in the private note.
+- The name chosen at first setup is not necessarily the live Network identity or the live site name.
+  Check both.
 
 ### Devices
 
@@ -78,10 +81,11 @@ See [[Domains]].
 
 ### Port forwarding
 
-No port forwards are configured (checked 2026-11-18).
-An old note proposed some.
-That list is in the private note, and it was never applied.
-Remote admin is not port forwarding.
+No port forwards are configured.
+UPnP is off.
+An old note proposed forwarding 22, 80, and 443 to a LAN host.
+That was never applied.
+Remote admin is Tailscale, not port forwarding.
 See [[Domains]].
 
 ### Addresses

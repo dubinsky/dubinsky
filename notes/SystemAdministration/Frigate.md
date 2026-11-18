@@ -19,8 +19,8 @@ My Reolink Doorbell Wi-Fi had ONVIF and RTSP enabled out-of-the-box; those setti
 
 I used Grok to configure Frigate ;)
 
-Private details (camera address, stream paths, zone coordinates, the image tag and rollback backups) are in the private
-vault `dubinsky/dubinsky-private`, at this same path.
+Private details (camera address, zone coordinates, and the rollback backup names) are in the private vault
+`dubinsky/dubinsky-private`, at this same path.
 
 ## Where it runs
 
@@ -52,11 +52,13 @@ The address is in the private note.
   storage/                       # recordings, clips, snapshots
 ```
 
-The image is pinned in `compose.yml`, not floating on `:stable`.
+Image `ghcr.io/blakeblackshear/frigate:0.18.2`, pinned in `compose.yml` on 2026-11-11 (was `:stable` at 0.17.2).
 CPU only (no Coral).
+Config is `version: 0.18-0` after Frigate's auto-migration.
 Do not hand-edit `version` — leaving the old value is what triggers migration.
-A local rollback tag and dated backups from the upgrade are on the docker VM.
-The image tag, the config schema version, the rollback tag, and the backup names are in the private note.
+A local rollback tag `frigate:0.17.2` is on the docker VM.
+Dated config and database backups from that upgrade are on the same share.
+The backup names are in the private note.
 Ports 8971, 8554 (go2rtc RTSP), 8555 WebRTC.
 MQTT goes to the Home Assistant Mosquitto broker.
 The host, the username, and where the password is kept are in the private note.
@@ -67,9 +69,8 @@ Harmless: those requests still return 200, and detect/record/MQTT work.
 This tree is not in yadm and not in HA Google Drive Backup.
 Safe to copy off-box: `compose.yml` and `config/config.yaml`.
 Do not copy `.env`, `config/.jwt_secret`, or `config/frigate.db*`.
-To roll back, restore the dated config and database backups named in the private note and point compose at the local
-rollback tag.
-`docker compose -f /frigate/compose.yml up -d` (never `compose down`).
+To roll back: restore the dated `config.yaml` and `frigate.db*` named in the private note, set the compose image to
+`frigate:0.17.2`, and run `docker compose -f /frigate/compose.yml up -d` (never `compose down`).
 Later: include this dataset in PVE/PBS, or rsync the two safe files somewhere tracked.
 
 Do **not** attach virtiofs to VM 101 (UEFI hang).
@@ -80,12 +81,11 @@ NFS only.
 One camera: a Reolink doorbell.
 The hostname, MAC, and reservation are in the private note.
 HTTP is enabled on the camera.
-go2rtc takes the camera's main and sub streams.
-Two-way talk is **only** on the sub stream, and that stream has no `ffmpeg:` prefix.
+go2rtc takes the camera's main and sub streams as HTTP-FLV: `channel0_main.bcs` and `channel0_ext.bcs`.
+Two-way talk is **only** on the sub stream (`Preview_01_sub`), and that stream has no `ffmpeg:` prefix.
 That is the stream the Home Assistant card uses.
 Do not put talk on the main stream (one backchannel).
-Frigate consumes the local go2rtc restreams.
-The paths are in the private note.
+Frigate consumes the local go2rtc restreams `doorbell_main` and `doorbell_sub` on `127.0.0.1:8554`.
 
 Detect **on**, 480×640 on the sub stream; record+audio on main.
 Review **alerts = person only**, and `review.alerts.required_zones: [stoop]`.
@@ -127,8 +127,7 @@ This is headroom for more cameras, and it would silence Frigate’s `Did not det
 
 The GPU to pass is the **[[ProxMox]] host** iGPU, not the Arrow Lake desktop:
 
-- The host iGPU (Intel, driver `i915`).
-  The PCI id is in the private note.
+- The host iGPU is Intel Alder Lake-S GT1, device `8086:4680`, at `0000:00:02.0` on this host, driver `i915`.
 - The render node exists on the hypervisor only.
 - IOMMU group 0 is the GPU alone.
 - DRM connectors are disconnected (the host is headless).
@@ -140,8 +139,7 @@ The GPU to pass is the **[[ProxMox]] host** iGPU, not the Arrow Lake desktop:
 The Docker VM today is OVMF, `cpu: host`, no `hostpci`.
 Frigate `compose.yml` already has the render node commented out.
 `config.yaml` has no `ffmpeg.hwaccel_args`.
-Do not pass the HDMI audio device.
-Its id is in the private note.
+Do not pass the HDMI audio device (`00:1f.3` on this host).
 
 **Blast radius:** Phase 0 needs a **PVE host reboot** (HA, docker, Cloudflare, UniFi OS all drop).
 After passthrough the host has no iGPU; PVE web UI is fine; a monitor on the PVE box will stay blank.
@@ -153,8 +151,8 @@ On `pve`:
 
 1. Backup `/etc/default/grub` and `/etc/pve/qemu-server/101.conf` (`/root/101.conf.bak.$(date +%Y%m%d%H%M%S)`).
 2. GRUB: `intel_iommu=on iommu=pt`.
-3. `/etc/modprobe.d/vfio.conf` binds vfio-pci to the host iGPU id from the private note, with `softdep` so `i915` and
-   `xe` load after vfio-pci.
+3. `/etc/modprobe.d/vfio.conf` binds vfio-pci to `8086:4680`, with `softdep` so `i915` and `xe` load after vfio-pci.
+   On this host that line is `options vfio-pci ids=8086:4680`.
 4. Load `vfio`, `vfio_pci`, `vfio_iommu_type1` at boot.
 5. `update-initramfs -u && update-grub && reboot`.
 6. After reboot the iGPU's kernel driver is `vfio-pci`, and it is still alone in IOMMU group 0.
@@ -166,8 +164,10 @@ HAOS USB radios stay on VM 100.
 1. Shut the Docker VM down.
    Do not destroy it.
 2. Switch it to **q35** (needed for PCIe `hostpci`) and pass the host iGPU with `pcie=1,rombar=0`.
-   The bus address is in the private note.
+   On this host: `qm set 101 -machine q35` and `qm set 101 -hostpci0 0000:00:02.0,pcie=1,rombar=0`.
    Do **not** set `x-vga=1` unless the guest cannot see the device.
+   The guest's existing VGA is QEMU stdvga (`1234:1111`).
+   The passed GPU should show up beside it.
 3. Start the VM.
    The guest should show the iGPU on `i915`, and `/dev/dri/renderD128` should exist (not only QEMU `card0`).
 

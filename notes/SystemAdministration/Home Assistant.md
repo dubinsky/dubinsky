@@ -426,8 +426,9 @@ YAML is a list of maps (`id`, `alias`, modern `triggers:` / `actions:` keys, `mo
 Timers that should reset when the device is turned on again use `mode: restart` — that is per-automation, not per
 entity, so do not combine the bathroom fans into one automation.
 
-- **Shabbos/Yom Tov** turns on the Shabbos scene (master bedroom Shabbos lights and fridge Sabbath mode) and then sends
-  an explicit switch command for the fridge.
+- **Shabbos/Yom Tov** turns on the Shabbos scene (master bedroom Shabbos lights and fridge Sabbath mode) 40 minutes
+  before sunset, and only if candle-lighting is still ahead and within 2½ hours, and then sends an explicit switch
+  command for the fridge.
   A scene alone is not enough: `scene.turn_on` skips an entity Home Assistant already thinks matches.
   Motzaei 2026-08-22 applied the Night scene, which lists the fridge switch off, while Home Assistant still showed off,
   so the fridge command never went out.
