@@ -279,6 +279,8 @@ The name is in the private note.
 Port 22 is not published on the router.
 Checked 2026-11-18: there are no port-forward rules.
 
+Remote access is a [[ProxMox]] container running Tailscale.
+It is not an exit node, and Tailscale SSH is off, so admin login stays normal SSH plus the YubiKey.
 Checked 2026-11-18: that container still advertises one subnet route, and the route is enabled.
 My own machines off the LAN accept it and use the same `ssh` aliases as on the LAN.
 That route is not the assistant path.
