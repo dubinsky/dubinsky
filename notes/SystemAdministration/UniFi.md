@@ -13,11 +13,8 @@ I used to run UniFi in [[Docker]] using various images:
 I now run it in an LXC container in [[ProxMox]].
 The gateway is a USG.
 The controller is UniFi OS Server in that LXC, not a cloud console and not the PoE switch.
-Private details (address, SSIDs, the device list, DHCP reservations) are in the private vault
-`dubinsky/dubinsky-private`, at this same path.
 
 The UI is on port **11443**, not the old **8443**.
-Versions and the LAN address are in the private note.
 
 Host units `uosserver.service` / `uosserver-updater.service` (user `uosserver`).
 `uosserver-updater.service` is the app updater, and `uosserver` has no update command.
@@ -47,14 +44,11 @@ Reset to the factory state with a `syswrapper.sh restore-default` command on the
 ### Networks
 
 One LAN, no extra VLANs.
-The subnet, the DHCP pool, and the LAN domain are in the private note.
 
 Two Wi‑Fi networks:
 
 - people Wi‑Fi, currently **2.4 + 5 GHz**, because the Samsung fridge is 2.4-only and is still on this network
 - IoT, **2.4 GHz only** (boiler, dishwasher, the ratgdo)
-
-The SSID strings are in the private note.
 
 ### Later (do not start until I ask)
 
@@ -90,6 +84,5 @@ See [[Domains]].
 
 ### Addresses
 
-The hardware list, DHCP reservations, and the WAN address are in the private note.
 Fixed addresses for UniFi's own devices are still a TODO: the gear has addresses, and I have not written down a
 procedure I trust for pinning the devices themselves.

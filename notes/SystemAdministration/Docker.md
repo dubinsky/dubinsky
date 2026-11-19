@@ -8,8 +8,6 @@ tags:
 ## docker VM (ProxMox 101)
 
 The long-lived Docker host is a [[ProxMox]] VM named `docker`, Debian 13, timezone America/New_York.
-The address is in the private vault `dubinsky/dubinsky-private`, at this same path.
-Installed package versions are in that note.
 The only compose stack on this VM is [[Frigate]].
 Do not attach virtiofs.
 

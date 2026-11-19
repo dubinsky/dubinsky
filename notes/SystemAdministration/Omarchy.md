@@ -39,7 +39,6 @@ Not in [[dotfiles]] bootstrap.
 Needs `fuse2`.
 
 The in-app updater replaces the AppImage and does not rename it, so the filename can lag the running version.
-The running version and the on-disk filename are in the private vault `dubinsky/dubinsky-private`, at this same path.
 `fuse2` is installed.
 The Omarchy package `grok-bot` is not installed.
 

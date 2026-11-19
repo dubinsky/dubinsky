@@ -5,8 +5,6 @@ tags:
 [eScriptorium](https://gitlab.com/scripta/escriptorium) is the review UI for the archival HTR pipeline.
 The engine is Kraken.
 Both run on their own [[ProxMox]] container.
-Private details (address, Tailscale name, the Docker package versions, where the admin password is kept) are in the
-private vault `dubinsky/dubinsky-private`, at this same path.
 SSH is root with the [[YubiKey]] key.
 
 ## Why an LXC
@@ -38,7 +36,6 @@ other Tailscale container does.
 The address is outside the DHCP pool, so there is no fixed-IP reservation.
 
 Docker is Debian `docker.io` with Compose.
-The package versions are in the private note.
 Storage driver `overlay2`, cgroup driver `systemd`.
 
 ## Storage
@@ -67,7 +64,6 @@ Local settings are `variables.env` (mode 600, gitignored) and `docker-compose.ov
 The override pins `registry.gitlab.com/scripta/escriptorium:v26.07`, sets Kraken training and inference to CPU, and
 turns Flower off so port 5555 is not published.
 The only published port is `8080`.
-A LAN health check is in the private note.
 Checked 2026-11-18: `/health` returned ok.
 
 Named volumes for static files, media, and Postgres are bind mounts under `/srv/htr/data`.
@@ -79,8 +75,7 @@ Hard limits: web 1536m, channelserver 1024m, celery-live and celery-low-priority
 2560m, intensive inference 1536m, celery-jvm 2048m, Postgres 1536m.
 A 768m web limit OOM-killed the container when a second Python process started.
 
-The Django superuser name and where the password is kept are in the private note.
-The password is not in either vault.
+The password is not in these notes.
 
 ## Tailscale
 
@@ -91,7 +86,6 @@ gateway.
 `tailscale serve` fronts the UI for the tailnet only, proxying to local port 8080.
 Leave Tailscale Funnel off.
 Funnel would publish that URL on the public internet.
-The node name, the tailnet address, and the LAN URL are in the private note.
 The LAN URL still answers.
 Do not move this stack onto the Docker VM.
 

@@ -137,7 +137,7 @@ Install syncthing:
 
 Configure the sync:
 - browse to http://address:8384 - syncthing UI
-	- set a user and password. Keep the password in Bitwarden. It is not written in either vault.
+	- set a user and password. Keep the password in Bitwarden. It is not written in these notes.
 	- set the default folder to /mn/onboard/SyncThing
 	- add device to sync from
 	- auto-accept the folders

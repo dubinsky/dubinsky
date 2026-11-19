@@ -9,9 +9,6 @@ allow-list is what the jump host actually enforces.
 No key material is written here.
 Neither assistant makes a change without my approval.
 
-Private details (the container address, the tailnet name, and the hosts on the allow-list) are in the private vault
-`dubinsky/dubinsky-private`, at this same path.
-
 ## Path
 
 Grok Bot is off the LAN.
@@ -31,7 +28,6 @@ There is no sudoers entry.
 The key options are what limit it: `restrict`, `port-forwarding`, and `permitopen` to port 22 only.
 The hosts are Proxmox (`pve`), the Docker VM (`docker`), Home Assistant (`ha`), and UniFi OS.
 An `unifi` alias was not part of the intended client config.
-The addresses are in the private note.
 
 `restrict` turns off a pty, agent forwarding, and the other extras.
 `port-forwarding` turns forwarding back on, and `permitopen` is the whole list.
