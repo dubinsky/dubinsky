@@ -137,7 +137,7 @@ The simplest way to use Yubikey for SSH is via FIDO2.
 It is simpler than using [[#Yubikey as a PIV Smart Card]] or [[#Yubikey as a GPG Smart Card]].
 
 That is what I actually use now: `Host *` in `~/.ssh/config` points at `~/.ssh/id_ed25519_sk.pub`, so GitHub and the
-house SSH aliases (`ha`, `pve`, `docker`, `unifi`) all use this resident key.
+house SSH aliases (`ha`, `pve`, `frigate`, `unifi`) all use this resident key.
 
 TODO set FIDO2 pin first
 

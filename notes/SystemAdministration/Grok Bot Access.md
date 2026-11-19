@@ -12,7 +12,7 @@ Neither assistant makes a change without my approval.
 ## Path
 
 Grok Bot is off the LAN.
-Its SSH aliases `pve`, `docker`, and `ha` use `ProxyJump` through `grokbot@homelab-tailscale`.
+Its SSH aliases `pve`, `frigate`, and `ha` use `ProxyJump` through `grokbot@homelab-tailscale`.
 
 `homelab-tailscale` is the Proxmox Tailscale container.
 See [[ProxMox]].
@@ -26,7 +26,7 @@ The shell is `/usr/sbin/nologin`.
 There is no sudoers entry.
 `sshd` itself allows TCP forwarding.
 The key options are what limit it: `restrict`, `port-forwarding`, and `permitopen` to port 22 only.
-The hosts are Proxmox (`pve`), the Docker VM (`docker`), Home Assistant (`ha`), and UniFi OS.
+The hosts are Proxmox (`pve`), the Frigate VM (`frigate`), Home Assistant (`ha`), and UniFi OS.
 An `unifi` alias was not part of the intended client config.
 
 `restrict` turns off a pty, agent forwarding, and the other extras.

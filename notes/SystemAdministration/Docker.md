@@ -5,9 +5,9 @@ tags:
 - [Documentation](https://docs.docker.com/reference/)
 - [Fedora Instructions](https://linuxconfig.org/how-to-install-and-configure-docker-ce-moby-engine-on-fedora-32)
 
-## docker VM (ProxMox 101)
+## Frigate VM (ProxMox 101)
 
-The long-lived Docker host is a [[ProxMox]] VM named `docker`, Debian 13, timezone America/New_York.
+The long-lived Docker host is a [[ProxMox]] VM named `frigate`, Debian 13, timezone America/New_York.
 The only compose stack on this VM is [[Frigate]].
 Do not attach virtiofs.
 

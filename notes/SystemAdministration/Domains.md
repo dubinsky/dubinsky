@@ -269,7 +269,7 @@ Do not bring the container back.
 
 ## Remote SSH (not Cloudflare Tunnel)
 
-On the LAN, SSH is `ssh pve` / `ha` / `docker` / `unifi`, with the [[YubiKey]].
+On the LAN, SSH is `ssh pve` / `ha` / `frigate` / `unifi`, with the [[YubiKey]].
 Dynamic DNS used to publish a name for the house.
 Nothing used it.
 It is gone, in favour of Tailscale.

@@ -9,8 +9,8 @@ Assistant.
 
 Frigate [documentation](https://frigate.video/) advises against running Frigate in a ProxMox LXC, and suggests a VM
 instead; I did try using a [community script](https://community-scripts.org/scripts/frigate) that creates an LXC as
-discussed in [discussions](https://github.com/blakeblackshear/frigate/discussions/5773) - and decided to run it in my
-`docker` VM because:
+discussed in [discussions](https://github.com/blakeblackshear/frigate/discussions/5773) - and decided to run it on a VM
+because:
 - it seems simpler
 - two-way talk works out of the box when I use VM but not when I use LXC
 
@@ -21,7 +21,7 @@ I used Grok to configure Frigate ;)
 
 ## Where it runs
 
-On the Frigate VM (Proxmox name `frigate`, guest hostname `frigate`, `ssh docker`), not inside [[Home Assistant]].
+On the Frigate VM (Proxmox name `frigate`, guest hostname `frigate`, `ssh frigate`), not inside [[Home Assistant]].
 Config and recordings live on the Proxmox host at `/mnt/data/apps/frigate` and are NFS-exported only to that VM (mounted
 at `/frigate`, NFS4, `_netdev,nofail,x-systemd.automount`).
 The UniFi reservation is that same DHCP client.

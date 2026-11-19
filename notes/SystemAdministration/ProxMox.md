@@ -13,7 +13,7 @@ Do not `apt autoremove`.
 ## Guests
 
 One VM for [[Home Assistant]] OS (`ssh ha`): 4G RAM, 2 cores, 32G disk.
-One VM for [[Frigate]] (Proxmox name `frigate`, guest hostname `frigate`, `ssh docker`): 4G RAM, 4 cores, 100G disk.
+One VM for [[Frigate]] (Proxmox name `frigate`, guest hostname `frigate`, `ssh frigate`): 4G RAM, 4 cores, 100G disk.
 Not 32G.
 An LXC for [[UniFi]] OS: privileged, 2 cores, 4G RAM, 20G disk.
 An LXC for Tailscale: unprivileged, 1G RAM, 1 core, 4G disk.
