@@ -21,11 +21,11 @@ I used Grok to configure Frigate ;)
 
 ## Where it runs
 
-On the Docker VM, not inside [[Home Assistant]].
+On the Frigate VM (Proxmox name `frigate`, guest hostname `frigate`, `ssh docker`), not inside [[Home Assistant]].
 Config and recordings live on the Proxmox host at `/mnt/data/apps/frigate` and are NFS-exported only to that VM (mounted
 at `/frigate`, NFS4, `_netdev,nofail,x-systemd.automount`).
-The UniFi reservation is on the Docker VM.
-There is no separate client named `frigate`.
+The UniFi reservation is that same DHCP client.
+A new client named `frigate` would be a different reservation.
 
 `restart: unless-stopped` is not enough after a VM reboot.
 On 2026-09-01 **12:45 EDT** the [[ProxMox]] host reset uncleanly (not a guest `reboot`); `startall` brought docker back,
@@ -34,8 +34,8 @@ failed (`mkdir: no such device`), and the container stayed **exited** until 2026
 HA's Frigate integration went `setup_retry`, occupancy sensors went unavailable, and **Doorbell Notification** died (`frigate.create_event`
 missing — that abort also skipped `notify.phones`).
 Recovery: `docker start frigate` once NFS is mounted, then reload the HA Frigate config entry.
-To survive the next reboot, `frigate-ensure.service` on the docker VM (`/usr/local/sbin/start-frigate.sh`) retries every
-15 s until `/frigate` is a mountpoint and the container is running.
+To survive the next reboot, `frigate-ensure.service` on this VM (`/usr/local/sbin/start-frigate.sh`) retries every 15 s
+until `/frigate` is a mountpoint and the container is running.
 
 The UI is on port 8971, not port 5000.
 
@@ -52,7 +52,7 @@ Image `ghcr.io/blakeblackshear/frigate:0.18.2`, pinned in `compose.yml` on 2026-
 CPU only (no Coral).
 Config is `version: 0.18-0` after Frigate's auto-migration.
 Do not hand-edit `version` — leaving the old value is what triggers migration.
-A local rollback tag `frigate:0.17.2` is on the docker VM.
+A local rollback tag `frigate:0.17.2` is on this VM.
 Dated config and database backups from that upgrade are on the same share.
 Ports 8971, 8554 (go2rtc RTSP), 8555 WebRTC.
 MQTT goes to the Home Assistant Mosquitto broker.
@@ -122,12 +122,12 @@ The GPU to pass is the **[[ProxMox]] host** iGPU, not the Arrow Lake desktop:
 - The render node exists on the hypervisor only.
 - IOMMU group 0 is the GPU alone.
 - DRM connectors are disconnected (the host is headless).
-- GVT-g is not on this generation, and SR-IOV vGPU is not on this SKU, so this is full PCI passthrough into the Docker
+- GVT-g is not on this generation, and SR-IOV vGPU is not on this SKU, so this is full PCI passthrough into the Frigate
   VM.
 - Do **not** attach virtiofs to that VM (UEFI hang).
   NFS stays.
 
-The Docker VM today is OVMF, `cpu: host`, no `hostpci`.
+The Frigate VM today is OVMF, `cpu: host`, 4G RAM, 4 cores, no `hostpci`.
 Frigate `compose.yml` already has the render node commented out.
 `config.yaml` has no `ffmpeg.hwaccel_args`.
 Do not pass the HDMI audio device (`00:1f.3` on this host).
@@ -152,7 +152,7 @@ HAOS USB radios stay on VM 100.
 
 ### Phase 1 — give the GPU to VM 101
 
-1. Shut the Docker VM down.
+1. Shut the Frigate VM down.
    Do not destroy it.
 2. Switch it to **q35** (needed for PCIe `hostpci`) and pass the host iGPU with `pcie=1,rombar=0`.
    On this host: `qm set 101 -machine q35` and `qm set 101 -hostpci0 0000:00:02.0,pcie=1,rombar=0`.

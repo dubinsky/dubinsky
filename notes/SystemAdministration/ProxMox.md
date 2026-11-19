@@ -5,7 +5,7 @@ tags:
 Standalone Proxmox node.
 
 PVE storage: `local` (dir `/var/lib/vz`, ISO/backup) and `local-lvm` (thin pool `pve/data` on the boot NVMe).
-Host iGPU stays on the hypervisor (not passed to the Docker VM) until [[Frigate]] § iGPU passthrough is started.
+Host iGPU stays on the hypervisor (not passed to the Frigate VM) until [[Frigate]] § iGPU passthrough is started.
 Do not start that.
 Leave old kernels installed.
 Do not `apt autoremove`.
@@ -13,7 +13,7 @@ Do not `apt autoremove`.
 ## Guests
 
 One VM for [[Home Assistant]] OS (`ssh ha`): 4G RAM, 2 cores, 32G disk.
-One VM for [[Docker]] / [[DevPod]] / [[Frigate]] (`ssh docker`): 8G RAM, 16 cores, 100G disk.
+One VM for [[Frigate]] (Proxmox name `frigate`, guest hostname `frigate`, `ssh docker`): 4G RAM, 4 cores, 100G disk.
 Not 32G.
 An LXC for [[UniFi]] OS: privileged, 2 cores, 4G RAM, 20G disk.
 An LXC for Tailscale: unprivileged, 1G RAM, 1 core, 4G disk.
@@ -53,7 +53,7 @@ HAOS USB passthrough (do not steal these off the Home Assistant VM):
 - Nabu Casa ZBT-2 (Zigbee), `303a:831a`
 - Nabu Casa ZWA-2 (Z-Wave), `303a:4001`
 
-The Docker VM is Debian, timezone **America/New_York**.
+The Frigate VM is Debian, timezone **America/New_York**.
 **Does not use virtiofs.** **Do not attach it.** It hangs UEFI boot.
 Frigate is NFS from `/mnt/data/apps/frigate` to that VM only.
 The guest mounts `/frigate`.
@@ -81,7 +81,7 @@ In ProxMox shell, run the [community script](https://community-scripts.github.io
 $ bash -c "$(wget -qLO - https://github.com/community-scripts/ProxmoxVE/raw/main/vm/docker-vm.sh)"
 ```
 
-I use this VM to run [[DevPod]] workspaces locally - and to run `docker compose` stacks like [[Frigate]].
+I use this VM to run [[Frigate]].
 
 [[eScriptorium]] and Kraken run in their own LXC.
 Do not move that stack onto this VM.
@@ -175,7 +175,7 @@ Superblocks not wiped.
 An old backup disk is not mounted.
 No vzdump/PBS jobs.
 `/var/lib/vz/dump` is empty.
-Later: scheduled `vzdump` of the Home Assistant VM, the Docker VM, and the UniFi container (and the small LXCs if
+Later: scheduled `vzdump` of the Home Assistant VM, the Frigate VM, and the UniFi container (and the small LXCs if
 wanted) onto that disk or PBS, not onto `local-lvm` next to the guests.
 
 ## Mount

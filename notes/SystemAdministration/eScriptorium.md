@@ -14,7 +14,8 @@ Proxmox's own advice is to run Docker in a VM, and that is how [[Frigate]] is in
 A VM on this host pins its whole RAM allocation.
 An LXC uses RAM only while it needs it.
 The 2026-10-14 note said the Docker VM was 32G and this container's ceiling was 16G.
-That was backwards: the Docker VM is 8G RAM and 16 cores, and this container's ceiling is 32G.
+That was backwards: the Docker VM was 8G RAM and 16 cores, and this container's ceiling is 32G.
+On 2026-11-18 that VM was renamed `frigate` and cut to 4G RAM and 4 cores.
 The reason still holds.
 
 The same day a Compose probe cleared the usual Docker-in-LXC failures.
@@ -31,7 +32,7 @@ No switch to a VM.
 
 Debian 13, unprivileged, `onboot: 1`, with `nesting`, `keyctl`, and `/dev/net/tun` so Tailscale can run the way the
 other Tailscale container does.
-`cpuunits: 50`, so this guest loses to the Docker VM when the CPUs are busy.
+`cpuunits: 50`, so this guest loses to the Frigate VM when the CPUs are busy.
 8 cores, 32G RAM, 512M swap, 32G rootfs on `local-lvm`.
 The address is outside the DHCP pool, so there is no fixed-IP reservation.
 

@@ -5,8 +5,7 @@ tags:
 ---
 Upgrade in-place: https://docs.fedoraproject.org/en-US/quick-docs/upgrading-fedora-offline/
 
-* TOC
-{:toc}
+* TOC {:toc}
 
 ## hostname
 ```shell
@@ -29,7 +28,8 @@ Starting with Fedora 38, GDM suspends the machine; to turn this off - say, for a
 ```shell
 $ sudo -u gdm dbus-run-session gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 0
 ```
-(see https://discussion.fedoraproject.org/t/gnome-suspends-after-15-minutes-of-user-inactivity-even-on-ac-power/79801) - and in Fedora 41 it no longer works...
+(see https://discussion.fedoraproject.org/t/gnome-suspends-after-15-minutes-of-user-inactivity-even-on-ac-power/79801) -
+and in Fedora 41 it no longer works...
 ## Chrome
 
 - Add `Google Chrome` YUM repository (download and install Chrome)
@@ -70,7 +70,7 @@ $ sudo -v && wget -nv -O- https://download.calibre-ebook.com/linux-installer.sh 
 ```
    
 ## node
-Install: 
+Install:
 ```shell
 $ sudo rpm -e nodejs nodejs-full-i18n
 $ curl -sL https://rpm.nodesource.com/setup_18.x | sudo bash -
@@ -136,12 +136,12 @@ virsh net-autostart --network default --disable
 - [[Zotero]]
 - [[Keyboards]] Utilities
 - Solaar autostart
-- devpod
 - pulumi
 
 ### Printers
 - https://wiki.debian.org/CUPSDriverlessPrinting
-- Brother drivers (using their tool) for MFC-J5930DW: http://support.brother.com/g/b/downloadend.aspx?c=us&lang=en&prod=mfcj5930dw_us_eu&os=127&dlid=dlf006893_000&flang=4&type3=625
+- Brother drivers (using their tool) for MFC-J5930DW:
+  http://support.brother.com/g/b/downloadend.aspx?c=us&lang=en&prod=mfcj5930dw_us_eu&os=127&dlid=dlf006893_000&flang=4&type3=625
 - Configure printers.
 - Epson scanner thing: iscan-gt-x770-bundle-1.0.1.x64.rpm
 

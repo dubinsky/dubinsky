@@ -74,7 +74,7 @@ AUR packages that `bootstrap.d` installs:
 
 - `zotero-bin` — official Zotero Linux tarball.
   Do not use AUR `zotero`; it compiles from git/npm.
-- `devpod-community-bin`, `google-cloud-cli`, `oscar`, `jetbrains-toolbox`, `chirp-next`, `sdrpp-git`, `sdrsharp`
+- `google-cloud-cli`, `oscar`, `jetbrains-toolbox`, `chirp-next`, `sdrpp-git`, `sdrsharp`
 
 FreeCAD is official `freecad` plus `python-shapely`.
 IfcOpenShell is not installed.
