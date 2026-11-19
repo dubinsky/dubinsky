@@ -7,7 +7,7 @@ tags:
 
   - upload files via USB web interface (when enabled under "Storage" and the tablet connected) at http://10.11.99.1/
     (see [File Transfer](https://remarkablewiki.com/tips/file_transfer))
-  - the tablet's LAN name is in the private note; over USB the address above is reMarkable's, not the house LAN
+  - over USB the address above is reMarkable's, not the house LAN
   - put the public SSH key on the tablet and configured local SSH so that `$ ssh remarkable` works (see
     [SSH](https://remarkablewiki.com/tech/ssh))
   - works in `mc` as a shell link

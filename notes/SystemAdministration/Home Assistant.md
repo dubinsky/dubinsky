@@ -9,9 +9,6 @@ with [everything](https://www.home-assistant.io/integrations/)...
 But it wasn't until I replaced my HVAC system recently that I decided to see what it can do.
 And it is great!
 
-Private details (addresses, entity ids, the meter account, the garage-opener device) are in the private vault
-`dubinsky/dubinsky-private`, at this same path.
-
 Some informational sites:
 - https://www.homeautomationguy.io/
 ## Installation
@@ -196,9 +193,8 @@ to https://​api.​viessmann-climatesolutions.​com; not clear at this point 
 Eversource replaced the analog electric meter with an Itron Gen5 Riva AMI meter in September 2026.
 It reports 15-minute usage to Eversource over their private 900 MHz mesh, not house Wi‑Fi, not Zigbee, not rtl_433.
 Customer-facing data is the same Opower portal that sends the weekly usage emails.
-The street address and the account number are in the private note.
 The login is the utility's own.
-It is not written in either vault.
+It is not written in these notes.
 
 Home Assistant pulls that feed with the built-in [Opower](https://www.home-assistant.io/integrations/opower/)
 integration (utility **Eversource**).
@@ -219,7 +215,6 @@ Energy dashboard grid consumption / cost:
 Return/compensation statistics exist but stay at 0 (no solar).
 Current-bill sensors can read 0 at the start of a billing period.
 Use the Opower statistics for the Energy dashboard, not those sensors.
-The typical-monthly figure from the first pull is in the private note.
 
 The Energy panel is in the sidebar (it had been hidden).
 Today/yesterday on that dashboard will often be empty; look back two days.
@@ -265,17 +260,15 @@ Professionally done labor of love - way to go!!
 The first board, a v2.53i on ESP8266, was removed from Home Assistant on 2026-09-22.
 The opener now is a ratgdo32 disco, Security+ 2.0.
 Home Assistant may call services on it.
-The address, the Wi‑Fi network, the firmware, and the entity id are in the private note.
 The address is inside the DHCP pool, so it can change.
 The old “do not OTA” warning applied only to that ESP8266 board.
 Current `esphome-ratgdo` needed an API encryption key it did not have, and the ESP8266 OTA slot was tight.
-The encryption key is not in either vault.
+The encryption key is not in these notes.
 
 ## Z-Wave
 From the list of Z-Wave controllers Home Assistant supports](https://www.home-assistant.io/docs/z-wave/controllers/), I
 picked "Zooz 800 Series Z-Wave Long Range S2 USB Stick ZST39 LR" ($37 on Amazon).
 
-In the zwave-js-ui, the Zooz stick's firmware and SDK versions are in the private note.
 ZOOZ firmware [page](https://www.support.getzooz.com/kb/article/1158-zooz-ota-firmware-files/) has the latest firmware;
 ZOOZ firmware update
 [instructions](https://www.support.getzooz.com/kb/article/1276-how-to-perform-an-otw-firmware-update-on-your-zst39-800-long-range-z-wave-stick/)
@@ -343,11 +336,11 @@ battery change.
   add-on
 - the old note guessed a broker username and password here.
   That guess is deleted.
-  Broker credentials are created by the Mosquitto add-on and are not written in either vault
+  Broker credentials are created by the Mosquitto add-on and are not written in these notes
 - start the add-on when adding a new 433 MHz sensor
 - add [MQTT Explorer](https://github.com/GollumDom/addon-repository/tree/master/mqtt-explorer) add-on
 - point it at the Mosquitto add-on.
-  Do not write the username or password in either vault
+  Do not write the username or password in these notes
 - start the add-on when debugging topics
 
 
@@ -394,7 +387,6 @@ Grok can use it once I SSH there first ;)
 ## Current setup
 
 Checked 2026-11-18.
-Versions, hostnames, and the address are in the private note.
 Core HTTP is on the usual port with `ssl: false`.
 Doorbell talk and the mic need a secure context.
 Today that means Nabu Casa.
@@ -410,14 +402,13 @@ duplicate a future flow.
 
 Add-ons that are supposed to be running: Z-Wave JS, Terminal & SSH, Mosquitto, Google Drive Backup, rtl_433 (next).
 Stopped on purpose (boot manual or unused): Node-RED, rtl_433 MQTT Auto Discovery (next), File editor, MQTT Explorer.
-Versions are in the private note.
 Custom: HACS and the Frigate integration.
 Advanced Camera Card is unpacked under `/config/www/advanced-camera-card/` and is not from HACS.
 `lovelace_resources` is what actually loads it.
 If doorbell notify dies and Frigate entities are `unavailable`, the NVR container on the Docker VM is down.
 See [[Frigate]] (NFS race after the VM reboots).
 
-The F007TH sensors I keep (boiler, garage, deck) are identified in the private note.
+The F007TH sensors I keep are the boiler, the garage, and the deck.
 Auto Discovery stays stopped so a neighbor's sensor is not re-created.
 
 ### Automations (do not clobber)
@@ -434,7 +425,6 @@ entity, so do not combine the bathroom fans into one automation.
   so the fridge command never went out.
   A follower automation sends the switch command when Shabbos, Night, or Day is actually activated, and when issur
   melacha turns on or off.
-  Entity ids are in the private note.
   Do not use the older master-bedroom-only Shabbos scene.
 - **Fridge Sabbath mode** is a Samsung / SmartThings switch.
   An explicit on or off does reach the appliance (the door light follows).
@@ -453,7 +443,6 @@ entity, so do not combine the bathroom fans into one automation.
 
 ### Stable entities
 
-The registry list (garage, garden, climate, boiler, meter, doorbell, phones, speakers) is in the private note.
 Many lights still have generic ids.
 Use the registry `original_name` / `name` to disambiguate.
 
@@ -461,17 +450,15 @@ Use the registry `original_name` / `name` to disambiguate.
 Delete it in **Settings → People**.
 After that, the HA login user `mqtt` can go too.
 rtl_433 no longer uses it.
-Do not write that user's password in either vault.
+Do not write that user's password in these notes.
 
 ## TODO
 
 **Move the refrigerator to the IoT Wi‑Fi, then make people Wi‑Fi 5 GHz only.** See [[UniFi]] § Later.
 The ratgdo is already on the IoT network.
-The SSID strings are in the private note.
 
 **Smoke / CO + garden leak notify.** Sensors exist, nothing notifies.
 The attic Zooz ZEN55 smoke and CO sensors, and the garden SONOFF leak sensor, should notify the phones at high priority.
-Entity ids are in the private note.
 Do not trigger on the fire sensor's idle binary sensor.
 
 **Advanced Camera Card via HACS** (today it is just files in `/config/www/advanced-camera-card/`).
@@ -489,7 +476,6 @@ report.
 Separate low-battery notify to the phones for real cells: the SNZB-02D sensors, the garden valve, the T6 thermostat, and
 the F007TH keepers only.
 Skip phone battery entities.
-The entity ids are in the private note.
 
 **Floor plan** dashboard.
 Draw in Sweet Home 3D / RoomSketcher / FreeCAD; see Floor Plans above.

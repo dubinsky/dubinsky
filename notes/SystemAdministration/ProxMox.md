@@ -3,8 +3,6 @@ tags:
   - sysadmin
 ---
 Standalone Proxmox node.
-Private details (addresses, the guest table, disk identifiers) are in the private vault `dubinsky/dubinsky-private`, at
-this same path.
 
 PVE storage: `local` (dir `/var/lib/vz`, ISO/backup) and `local-lvm` (thin pool `pve/data` on the boot NVMe).
 Host iGPU stays on the hypervisor (not passed to the Docker VM) until [[Frigate]] § iGPU passthrough is started.
@@ -20,7 +18,6 @@ Not 32G.
 An LXC for [[UniFi]] OS: privileged, 2 cores, 4G RAM, 20G disk.
 An LXC for Tailscale: unprivileged, 1G RAM, 1 core, 4G disk.
 An LXC for [[eScriptorium]]: unprivileged, 8 cores, 32G RAM, 512M swap, 32G disk.
-Addresses and guest ids are in the private note.
 All guests: `onboot: 1`, on the LAN bridge.
 
 The Tailscale and eScriptorium containers are unprivileged, with nesting.
@@ -38,7 +35,6 @@ Remote access is the Tailscale container.
 It does not run Grok, is not an exit node, and does not use Tailscale SSH.
 It still advertises a subnet route, and that route is what my own machines use off the LAN.
 An assistant does not get the LAN through that route.
-The route, the tailnet names, and the assistant allow-list are in the private note.
 Assistant access is [[Grok Bot Access]].
 
 Snapshots taken 2026-11-11 are no longer on the host (checked 2026-11-18).
@@ -75,7 +71,6 @@ https://community-scripts.github.io/ProxmoxVE/scripts.
 An LXC (`cloudflare-ddns`) updated a Cloudflare A record for a while.
 Nothing used it.
 It is gone, in favour of the Tailscale container.
-The name and the address are in the private note.
 See [[Domains]].
 ## Running Docker Containers
 
@@ -169,13 +164,11 @@ And mount:
 
 `/mnt/data` is Btrfs RAID1.
 Photo/media (including Calibre under `Books/`) and the [[Frigate]] NFS source live there.
-Disk names, the label, and how full it is are in the private note.
 `Pictures/originals` uses the gphoto-sync layout `YYYY/MM/DD` (renamed from `YYYY/YYYY-MM/YYYY-MM-DD` on 2026-08-21).
 
 The previous pair of disks still has leftover `md127` superblocks from the old `/mnt/data`.
 The array is **stopped**.
 `/etc/mdadm/mdadm.conf` ignores it (`AUTO -all`).
-The UUID is in the private note.
 Do not start it.
 Superblocks not wiped.
 

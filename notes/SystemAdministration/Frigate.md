@@ -19,9 +19,6 @@ My Reolink Doorbell Wi-Fi had ONVIF and RTSP enabled out-of-the-box; those setti
 
 I used Grok to configure Frigate ;)
 
-Private details (camera address, zone coordinates, and the rollback backup names) are in the private vault
-`dubinsky/dubinsky-private`, at this same path.
-
 ## Where it runs
 
 On the Docker VM, not inside [[Home Assistant]].
@@ -41,7 +38,6 @@ To survive the next reboot, `frigate-ensure.service` on the docker VM (`/usr/loc
 15 s until `/frigate` is a mountpoint and the container is running.
 
 The UI is on port 8971, not port 5000.
-The address is in the private note.
 
 ```
 /mnt/data/apps/frigate/          # PVE NFS; docker mounts this at /frigate
@@ -58,19 +54,17 @@ Config is `version: 0.18-0` after Frigate's auto-migration.
 Do not hand-edit `version` — leaving the old value is what triggers migration.
 A local rollback tag `frigate:0.17.2` is on the docker VM.
 Dated config and database backups from that upgrade are on the same share.
-The backup names are in the private note.
 Ports 8971, 8554 (go2rtc RTSP), 8555 WebRTC.
 MQTT goes to the Home Assistant Mosquitto broker.
-The host, the username, and where the password is kept are in the private note.
-The password is not in either vault.
+The password is not in these notes.
 Nginx logs `using uninitialized "go2rtc_stream_proxy" variable` on API requests (including HA `/api/stats`).
 Harmless: those requests still return 200, and detect/record/MQTT work.
 
 This tree is not in yadm and not in HA Google Drive Backup.
 Safe to copy off-box: `compose.yml` and `config/config.yaml`.
 Do not copy `.env`, `config/.jwt_secret`, or `config/frigate.db*`.
-To roll back: restore the dated `config.yaml` and `frigate.db*` named in the private note, set the compose image to
-`frigate:0.17.2`, and run `docker compose -f /frigate/compose.yml up -d` (never `compose down`).
+To roll back: restore the dated `config.yaml` and `frigate.db*` on that share, set the compose image to `frigate:0.17.2`,
+and run `docker compose -f /frigate/compose.yml up -d` (never `compose down`).
 Later: include this dataset in PVE/PBS, or rsync the two safe files somewhere tracked.
 
 Do **not** attach virtiofs to VM 101 (UEFI hang).
@@ -79,7 +73,6 @@ NFS only.
 ## Doorbell
 
 One camera: a Reolink doorbell.
-The hostname, MAC, and reservation are in the private note.
 HTTP is enabled on the camera.
 go2rtc takes the camera's main and sub streams as HTTP-FLV: `channel0_main.bcs` and `channel0_ext.bcs`.
 Two-way talk is **only** on the sub stream (`Preview_01_sub`), and that stream has no `ffmpeg:` prefix.
@@ -90,7 +83,6 @@ Frigate consumes the local go2rtc restreams `doorbell_main` and `doorbell_sub` o
 Detect **on**, 480×640 on the sub stream; record+audio on main.
 Review **alerts = person only**, and `review.alerts.required_zones: [stoop]`.
 Zone `stoop` is the brick landing and the brick stairs, not the sidewalk or the street.
-The coordinates are in the private note.
 On 0.17, `objects.filters.person.required_zones` was invalid (safe-mode).
 The 0.18 migrator left `review.alerts.required_zones: [stoop]` in place and added `enabled` / `friendly_name` on the
 person and motion masks; coordinates were unchanged.
@@ -100,7 +92,6 @@ Sidewalk people can still be detections / `doorbell_person_occupancy`; they are 
 For HA phone notify to match, trigger on the stoop occupancy entity (not generic person occupancy).
 
 A person object mask covers the left rail at the top of the stairs.
-The rectangle is in the private note.
 A dark post there was detected as a person (score about 0.57), and the box bottom jumped between the stoop edge and the
 upper step.
 That made `binary_sensor.stoop_person_occupancy` chatter, and Doorbell Notification fired every few seconds

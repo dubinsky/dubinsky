@@ -3,9 +3,6 @@ tags: [sysadmin]
 ---
 * TOC {:toc}
 
-Private details (the house dynamic-DNS name and the records that pointed at the house) are in the private vault
-`dubinsky/dubinsky-private`, at this same path.
-
 ## Square Space
 
 For a while, I registered my domains with Google Domains and used Google Domains DNS.
@@ -142,14 +139,13 @@ Pulumi stack `podval-infra` / `dev` is clean.
 
 | Zone | Role |
 |---|---|
-| `podval.org` | GitHub Pages, orange-cloud CNAME `@` → `www` → `dubinsky.github.io` + Always Use HTTPS. Extra CNAMEs stay grey: Workspace `calendar`, `docs`, `drive`, `email`, `groups`, `hangouts`, `mail`, `sheets`, `slides` → `ghs.googlehosted.com` (DNS-only), `dub` → GitHub Pages, `nina` → `ghs.google.com` (Blogger), `ha` + its ACME name → Nabu Casa. The names that used to point at the house are in the private note. |
+| `podval.org` | GitHub Pages, orange-cloud CNAME `@` → `www` → `dubinsky.github.io` + Always Use HTTPS. Extra CNAMEs stay grey: Workspace `calendar`, `docs`, `drive`, `email`, `groups`, `hangouts`, `mail`, `sheets`, `slides` → `ghs.googlehosted.com` (DNS-only), `dub` → GitHub Pages, `nina` → `ghs.google.com` (Blogger), `ha` + its ACME name → Nabu Casa. |
 | `podval.dev` | Auxiliary: dummy A + 301 → `https://www.podval.org` |
 
 Dynamic DNS was configured for a while.
 A Cloudflare A record pointed at the house, and an LXC on [[ProxMox]] updated it.
 Nothing used it.
 It is gone, in favour of Tailscale.
-The name, and the records that aliased to it, are in the private note.
 
 `http://www.podval.org/` is now Cloudflare Always Use HTTPS (301 to `https://`).
 
@@ -225,7 +221,6 @@ Other tokens:
 This ran for a while: a Cloudflare A record, and an LXC on [[ProxMox]] that updated it.
 Nothing used it.
 It is gone, in favour of Tailscale.
-The name is in the private note.
 
 Among other interesting things, CloudFlare *does*
 [support](https://developers.cloudflare.com/dns/manage-dns-records/how-to/managing-dynamic-ip-addresses/) Dynamic DNS.
@@ -259,7 +254,7 @@ services:
     security_opt: [no-new-privileges:true]
     environment:
       - CLOUDFLARE_API_TOKEN=...
-      - DOMAINS=<the house name, in the private note>
+      - DOMAINS=<the house name>
       - IP6_PROVIDER=none
 ```
 
@@ -269,7 +264,6 @@ as an LXC after all, and that is how I ran it until 2026-11-18.
 
 Until then the binary was favonia cloudflare-ddns **1.18.0** at `/usr/local/bin/cloudflare-ddns`.
 It had been extracted from the official image `ghcr.io/favonia/cloudflare-ddns:1.18.0`, not built on the LXC.
-The image digest is in the private note.
 `go run …@latest` filled the 3G disk once.
 Do not bring the container back.
 
@@ -279,7 +273,6 @@ On the LAN, SSH is `ssh pve` / `ha` / `docker` / `unifi`, with the [[YubiKey]].
 Dynamic DNS used to publish a name for the house.
 Nothing used it.
 It is gone, in favour of Tailscale.
-The name is in the private note.
 Port 22 is not published on the router.
 Checked 2026-11-18: there are no port-forward rules.
 
@@ -290,5 +283,4 @@ My own machines off the LAN accept it and use the same `ssh` aliases as on the L
 That route is not the assistant path.
 Grok Bot comes in as a forwarding-only user on the same container, and that user can open SSH only on a short
 allow-list.
-The route, the tailnet names, and the allow-list are in the private note.
 Assistant access is [[Grok Bot Access]].

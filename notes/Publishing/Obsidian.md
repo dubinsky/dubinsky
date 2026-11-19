@@ -25,12 +25,11 @@ Grok Bot reads these notes through GitHub.
 It edits only by opening a pull request, which I review.
 It does not commit to `master`.
 
-`dubinsky/dubinsky-private`, checked out at `~/Podval/dubinsky-private`, is the second vault.
-It is private.
-When a note was split, the private vault has a note with the same name and the same path.
-The public note keeps the decision and the setup.
-The private note keeps addresses, inventory, and where a credential is stored.
-Passwords, tokens, and keys are not written in either vault.
+Agent inventory is the private repository `dubinsky/homelab`, checked out at `~/Podval/homelab`.
+It is not a vault, and it is not published.
+Grok Bot reads that repository through GitHub too.
+Addresses and device lists are not in this vault.
+Passwords, tokens, and keys are not written in either place.
 
-House skills in `~/.grok/skills/` read both.
+House skills in `~/.grok/skills/` read this vault for the setup and `homelab` for the inventory.
 See [[dotfiles]].
