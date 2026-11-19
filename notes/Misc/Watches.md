@@ -10,18 +10,30 @@ Analog Quartz
 
 Timex Easy Reader lug bars are removable; Weekender (but not New England) - no, slip-through only.
 
-| Model                                                                                                                                            | Size | Height | Thickness | Lug | Weight | Note                      | Price |
-| ------------------------------------------------------------------------------------------------------------------------------------------------ | ---- | ------ | --------- | --- | ------ | ------------------------- | ----- |
-| Casio MQ-24                                                                                                                                      | 34.9 | 38.8   | 7.8       | 16  | 20     | weight with strap         | $30   |
-| [Timex T2H281](https://timex.com/products/easy-reader-35mm-leather-strap-watch-t2h281) Easy Reader                                               | 35   | 41     |           | 18  | 37.44  | date                      | $73   |
-| [Timex T20041](https://timex.com/products/easy-reader-day-date-35mm-leather-strap-watch-t20041) Easy Reader Day Date                             | 35   | 41     |           | 18  | 36.82  | date                      | $73   |
-| [Timex TW2Y83800](https://timex.com/products/todd-snyder-x-timex-marlin-mesh-34mm-stainless-steel-bracelet-watch-tw2y83800) Marlin Mesh          | 34   |        | 10        | 18  |        | works with normal straps? | $199  |
-| [Timex TW2V00400](https://timex.com/products/expedition-field-post-solar-36mm-recycled-fabric-strap-watch-tw2v00400) Expedition Field Post Solar | 36   | 44.5   | 12        | 18  | 53.2   |                           | $209  |
-| [Timex TW2V462009J](https://www.amazon.com/dp/B09RTP5NK7) Weekender                                                                              | 38   | 45-46  | 9-10      | 20  | 50     | bought; too big...        | $57   |
-| [Timex TW2Y86500](https://timex.com/products/timex-weekender-new-england-34mm-leather-strap-watch-tw2y86500) Weekender New England               | 34   | 39.5   | 9         | 18  |        |                           | $139  |
-| [Militado ML07](https://www.militadowatch.com/products/new-released-militado-36mm-high-domed-vh31-khaki-field-watch-ml07?variant=43267415506991) | 36   | 43.75  | 10        | 18  | 28-30  | bought; too big?          | $59   |
-| [Vaer](https://www.vaerwatches.com/products/s3-field-white-watch) S3 Calendar White                                                              | 36   | 43     | 8.4       | 20  |        |                           | $189  |
+| Model                                                                                                                                            | Size | Height | Thickness | Lug | Weight | Note                                                                                                    | Price |
+| ------------------------------------------------------------------------------------------------------------------------------------------------ | ---- | ------ | --------- | --- | ------ | ------------------------------------------------------------------------------------------------------- | ----- |
+| Casio MQ-24                                                                                                                                      | 34.9 | 38.8   | 7.8       | 16  | 20     | weight with strap                                                                                       | $30   |
+| [Timex T2H281](https://timex.com/products/easy-reader-35mm-leather-strap-watch-t2h281) Easy Reader                                               | 35   | 41     |           | 18  | 37.44  | date                                                                                                    | $73   |
+| [Timex T20041](https://timex.com/products/easy-reader-day-date-35mm-leather-strap-watch-t20041) Easy Reader Day Date                             | 35   | 41     |           | 18  | 36.82  | date                                                                                                    | $73   |
+| [Timex TW2Y83800](https://timex.com/products/todd-snyder-x-timex-marlin-mesh-34mm-stainless-steel-bracelet-watch-tw2y83800) Marlin Mesh          | 34   | ~41    | 10        | 18  |        | quick-release spring bars (Timex page), NATO OK with mesh off; dress style, 30 m; colour not restocking | $199  |
+| [Timex TW2V00400](https://timex.com/products/expedition-field-post-solar-36mm-recycled-fabric-strap-watch-tw2v00400) Expedition Field Post Solar | 36   | 44.5   | 12        | 18  | 53.2   |                                                                                                         | $209  |
+| [Timex TW2V462009J](https://www.amazon.com/dp/B09RTP5NK7) Weekender                                                                              | 38   | 45-46  | 9-10      | 20  | 50     | bought; too big...                                                                                      | $57   |
+| [Timex TW2Y86500](https://timex.com/products/timex-weekender-new-england-34mm-leather-strap-watch-tw2y86500) Weekender New England               | 34   | 39.5   | 9         | 18  | 42.07  | slip-thru only (Timex spec), no spring bars                                                             | $139  |
+| [Militado ML07](https://www.militadowatch.com/products/new-released-militado-36mm-high-domed-vh31-khaki-field-watch-ml07?variant=43267415506991) | 36   | 43.75  | 10        | 18  | 28-30  | bought; too big?                                                                                        | $59   |
+| [Vaer](https://www.vaerwatches.com/products/s3-field-white-watch) S3 Calendar White                                                              | 36   | 43     | 8.4       | 20  |        |                                                                                                         | $189  |
+| [Praesidus](https://praesidus.com/products/jungle-field-og) Jungle Field OG                                                                      | 34   | ~41.5  | 9.4       | 18  |        | quick-release pins, drilled lugs; L2L from Arctic Field (same case); top pick                           | $195  |
+| [Rdunae RA01/RA03](https://www.amazon.com/dp/B0CN6TWS7P)                                                                                         | 34.5 | 41.7   | 10.5      | 18  |        | spring bars, NATO OK; ticking seconds; 3rd-party seller on Amazon                                       | $60   |
+| [Timex Expedition Scout 36mm](https://www.amazon.com/dp/B074XQ5NYN)                                                                              | 36   | 44.4   | 9         | 18  |        | L2L owner-measured; Indiglo, date                                                                       | $79   |
 
+### Recommendations (Nov 2026)
+
+Smallest field watches under $200 with 18 mm lugs and spring bars (NATO-compatible), for wearing with FitBit Air:
+- Top pick: Praesidus Jungle Field OG ($195): 34 mm, ~41.5 mm L2L, 9.4 mm, drilled lugs, sweep seconds.
+- Budget: Rdunae RA03 ($60): nearly the same size, 1.1 mm thicker, ticking seconds.
+- Timex Marlin Mesh TW2Y83800 has quick-release spring bars, so an 18 mm NATO fits once the mesh is off.
+- Timex Weekender New England TW2Y86500 is slip-through only (no spring bars); a NATO threads through, but the bars don't come off for an adapter.
+
+Ruled out: Baltany S2005, Timex Marlin Hand-Wound 34, Expedition Field Solar 36 (over $200); Rdunae RA02, Thorn T005 (19 mm lugs); Seiko SNK809, Citizen BM8180 (37 mm).
 
 Nobody makes 16mm-to-18mm nor 12mm-to-18mm adapters...
 
