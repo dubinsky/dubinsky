@@ -38,18 +38,22 @@ Official Linux desktop AppImage ([docs](https://docs.x.ai/grok-bot/get-started);
 Not in [[dotfiles]] bootstrap.
 Needs `fuse2`.
 
-The in-app updater replaces the AppImage and does not rename it, so the filename can lag the running version.
+The in-app updater replaces the AppImage in place and does not change its name.
+The file is `~/Applications/Grok_Bot.AppImage`, with no version in the name, so a later update cannot leave a stale
+version in the filename.
 `fuse2` is installed.
 The Omarchy package `grok-bot` is not installed.
 
-An Omarchy repo package (menu **AI → Install → Grok Bot**) was installed 2026-09-14 and removed 2026-09-16: the repo
-lagged the AppImage.
-Do not reinstall from that menu until the package version catches up.
+An Omarchy repo package (menu **AI → Install → Grok Bot**) was installed 2026-09-14 and removed 2026-09-16.
+The package repacks the official `.deb` of the same release.
+Stay on the AppImage.
+Under `/opt/Grok Bot/` the app finds no `/var/lib/dpkg/info/grok-bot.list`, treats the install as RPM, and the update
+dialog offers an RPM download.
 **AI → Remove → Grok Bot** also deletes `~/.config/Grok Bot`.
 
 | What | Where |
 |---|---|
-| Live binary | `~/Applications/Grok_Bot_<ver>.AppImage` |
+| Live binary | `~/Applications/Grok_Bot.AppImage` |
 | Integrator | `~/.local/share/grok-bot/appimage` → that file |
 | Command | `grok-bot` (`~/.local/bin/grok-bot`) |
 | Menu | `~/.local/share/applications/grok-bot.desktop` |
@@ -59,5 +63,6 @@ Start from the app menu or `grok-bot`.
 The app checks for updates on its own.
 Upgrade in-app: **Settings → Updates → Check for Updates**, then **Restart to Update**.
 `omarchy update` does not touch it.
+Its mise step updates Grok Build (`grok`).
 
 Not Grok Build (`grok`).
