@@ -22,8 +22,12 @@ I used Grok to configure Frigate ;)
 ## Where it runs
 
 On the Frigate VM (Proxmox name `frigate`, guest hostname `frigate`, `ssh frigate`), not inside [[Home Assistant]].
-Config and recordings live on the Proxmox host at `/mnt/data/apps/frigate` and are NFS-exported only to that VM (mounted
-at `/frigate`, NFS4, `_netdev,nofail,x-systemd.automount`).
+Config and the database live on the VM's own disk at `/srv/frigate`.
+Only recordings are on the Proxmox host: `/mnt/data/apps/frigate` is NFS-exported only to that VM (mounted at `/frigate`,
+NFS4, `_netdev,nofail,x-systemd.automount`) and Frigate uses its `storage/`.
+Until 2026-11 the config and `frigate.db` were on that share too.
+I moved them because Frigate's docs warn against keeping its SQLite database on network storage (locking, corruption),
+and the recordings are what needs the big disk.
 The UniFi reservation is that same DHCP client.
 A new client named `frigate` would be a different reservation.
 
@@ -36,36 +40,42 @@ missing — that abort also skipped `notify.phones`).
 Recovery: `docker start frigate` once NFS is mounted, then reload the HA Frigate config entry.
 To survive the next reboot, `frigate-ensure.service` on this VM (`/usr/local/sbin/start-frigate.sh`) retries every 15 s
 until `/frigate` is a mountpoint and the container is running.
+It still waits for the mount after the move: without it there is nowhere to record.
 
 The UI is on port 8971, not port 5000.
 
 ```
-/mnt/data/apps/frigate/          # PVE NFS; docker mounts this at /frigate
-  compose.yml                    # restart: unless-stopped; binds config + storage
-  .env                           # doorbell + MQTT passwords (not in yadm)
+/srv/frigate/                    # on the VM's own disk
+  compose.yml                    # restart: unless-stopped; binds config + /frigate/storage
+  .env                           # doorbell + MQTT passwords (mode 600; never in git)
   config/config.yaml             # cameras + go2rtc (secrets as {FRIGATE_*} placeholders)
-  config/*.bak.*                 # timestamped copies after edits
+  config/frigate.db              # SQLite: events, review, recordings index
+/frigate/                        # NFS from PVE /mnt/data/apps/frigate
   storage/                       # recordings, clips, snapshots
 ```
 
-Image `ghcr.io/blakeblackshear/frigate:0.18.2`, pinned in `compose.yml` on 2026-11-11 (was `:stable` at 0.17.2).
+The image is pinned to a specific Frigate release in `compose.yml`, not `:stable`; the current version is in the
+inventory.
 CPU only (no Coral).
 Config is `version: 0.18-0` after Frigate's auto-migration.
 Do not hand-edit `version` — leaving the old value is what triggers migration.
-A local rollback tag `frigate:0.17.2` is on this VM.
-Dated config and database backups from that upgrade are on the same share.
+Before an upgrade, keep the previous image on the VM and dated copies of `compose.yml`, `config.yaml` and `frigate.db`.
 Ports 8971, 8554 (go2rtc RTSP), 8555 WebRTC.
 MQTT goes to the Home Assistant Mosquitto broker.
 The password is not in these notes.
 Nginx logs `using uninitialized "go2rtc_stream_proxy" variable` on API requests (including HA `/api/stats`).
 Harmless: those requests still return 200, and detect/record/MQTT work.
 
-This tree is not in yadm and not in HA Google Drive Backup.
-Safe to copy off-box: `compose.yml` and `config/config.yaml`.
-Do not copy `.env`, `config/.jwt_secret`, or `config/frigate.db*`.
-To roll back: restore the dated `config.yaml` and `frigate.db*` on that share, set the compose image to `frigate:0.17.2`,
-and run `docker compose -f /frigate/compose.yml up -d` (never `compose down`).
-Later: include this dataset in PVE/PBS, or rsync the two safe files somewhere tracked.
+Backups: `compose.yml` and `config/config.yaml` have no secrets in them, so copies are kept in git in the private
+`dubinsky/homelab` inventory repository (`frigate-config/`); after editing either on the VM, copy it there.
+`.env`, `config/.jwt_secret` and `config/frigate.db*` are never copied off the VM; the two passwords in `.env` belong in my
+password manager.
+The database is covered only by Proxmox snapshots of the VM; losing it loses event history, not recordings.
+Recordings are not backed up.
+Nothing here is in yadm or HA Google Drive Backup.
+To roll back an upgrade: put the previous image back in `compose.yml`, restore the dated `config.yaml` and `frigate.db`
+if the new version migrated them, and run `docker compose -f /srv/frigate/compose.yml up -d` (never `compose down`).
+The exact backup and snapshot names are in the inventory.
 
 Do **not** attach virtiofs to VM 101 (UEFI hang).
 NFS only.
@@ -164,7 +174,7 @@ HAOS USB radios stay on VM 100.
 
 ### Phase 2 — Frigate VAAPI
 
-Timestamped backups of `compose.yml` and `config.yaml` on `/mnt/data/apps/frigate`:
+Timestamped backups of `compose.yml` and `config.yaml` in `/srv/frigate` on the VM:
 
 1. Uncomment in compose:
    ```
@@ -174,7 +184,7 @@ Timestamped backups of `compose.yml` and `config.yaml` on `/mnt/data/apps/frigat
    If the container cannot open the node, `group_add` the guest `render` GID.
    Do not set `privileged` unless that fails.
 2. In `config.yaml` ffmpeg: `hwaccel_args: preset-vaapi` (fallback `preset-intel-qsv-h264`).
-3. `docker compose -f /frigate/compose.yml up -d` — do not `compose down`.
+3. `docker compose -f /srv/frigate/compose.yml up -d` — do not `compose down`.
 4. Check: logs no longer say `Did not detect hwaccel`; System page shows VAAPI; `docker exec frigate vainfo` lists iHD;
    doorbell still records/detects; Talk stays on `doorbell_sub` only.
 
