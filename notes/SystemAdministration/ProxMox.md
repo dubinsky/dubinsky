@@ -55,8 +55,21 @@ HAOS USB passthrough (do not steal these off the Home Assistant VM):
 
 The Frigate VM is Debian, timezone **America/New_York**.
 **Does not use virtiofs.** **Do not attach it.** It hangs UEFI boot.
-Frigate is NFS from `/mnt/data/apps/frigate` to that VM only.
+Frigate's recordings are NFS from `/mnt/data/apps/frigate` to that VM only.
 The guest mounts `/frigate`.
+
+Because the Frigate VM records onto an NFS share served by this host, guests must stop **before** the host's NFS
+server, and start after it.
+Out of the box nothing orders the two, and at host shutdown `nfs-server` stopped a second before `pve-guests` began
+stopping guests.
+The VM's `hard` mount then waited forever on a server that was gone, and Proxmox killed the VM at its 180 s timeout on
+the 2026-11-15 and 2026-11-22 host reboots.
+A `soft` mount would avoid the wait but can silently corrupt the recording being written, and a shorter timeout only
+shortens the wait, so the fix is ordering: a systemd drop-in for `pve-guests.service` on the host with
+`After=nfs-server.service` (2026-11-23).
+Inside the VM, Docker is likewise ordered after the `/frigate` mount (ordering only, no `RequiresMountsFor`, so Docker
+still starts if NFS is down at boot).
+The exact files are in the inventory.
 
 ## Community Scripts
 

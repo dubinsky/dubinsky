@@ -41,6 +41,8 @@ Recovery: `docker start frigate` once NFS is mounted, then reload the HA Frigate
 To survive the next reboot, `frigate-ensure.service` on this VM (`/usr/local/sbin/start-frigate.sh`) retries every 15 s
 until `/frigate` is a mountpoint and the container is running.
 It still waits for the mount after the move: without it there is nowhere to record.
+At host shutdown the order matters the other way: the VM has to stop before the host's NFS server, or the `hard` mount
+hangs the VM's shutdown; see [[ProxMox]].
 
 The UI is on port 8971, not port 5000.
 
