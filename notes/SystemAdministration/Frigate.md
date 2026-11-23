@@ -52,6 +52,7 @@ The UI is on port 8971, not port 5000.
   config/frigate.db              # SQLite: events, review, recordings index
 /frigate/                        # NFS from PVE /mnt/data/apps/frigate
   storage/                       # recordings, clips, snapshots
+  backup/                        # nightly copies of frigate.db, config.yaml, compose.yml, .env
 ```
 
 The image is pinned to a specific Frigate release in `compose.yml`, not `:stable`; the current version is in the
@@ -68,14 +69,19 @@ Harmless: those requests still return 200, and detect/record/MQTT work.
 
 Backups: `compose.yml` and `config/config.yaml` have no secrets in them, so copies are kept in git in the private
 `dubinsky/homelab` inventory repository (`frigate-config/`); after editing either on the VM, copy it there.
-`.env`, `config/.jwt_secret` and `config/frigate.db*` are never copied off the VM; the two passwords in `.env` belong in my
+`.env`, `config/.jwt_secret` and `config/frigate.db*` are never put in git; the two passwords in `.env` belong in my
 password manager.
-The database is covered only by Proxmox snapshots of the VM; losing it loses event history, not recordings.
+With the database off NFS, VM snapshots alone were too thin a safety net (losing it loses event history, not
+recordings), so a nightly systemd timer on the VM copies `frigate.db` with SQLite's online backup API (no Frigate
+stop), checks the copy with `PRAGMA integrity_check`, and writes it to `backup/` on the Proxmox share together with
+`config.yaml`, `compose.yml` and `.env` (mode 600); a week of database copies is kept.
+To restore: `docker stop frigate`, copy the database back (and delete any `frigate.db-wal` / `frigate.db-shm`), then
+`docker compose -f /srv/frigate/compose.yml up -d`.
 Recordings are not backed up.
 Nothing here is in yadm or HA Google Drive Backup.
 To roll back an upgrade: put the previous image back in `compose.yml`, restore the dated `config.yaml` and `frigate.db`
 if the new version migrated them, and run `docker compose -f /srv/frigate/compose.yml up -d` (never `compose down`).
-The exact backup and snapshot names are in the inventory.
+The exact backup names, schedule and retention are in the inventory.
 
 Do **not** attach virtiofs to VM 101 (UEFI hang).
 NFS only.
