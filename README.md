@@ -197,6 +197,9 @@ Archived:
   _[44](https://github.com/skevetter/devpod-provider-gcloud/pull/44)_.
 - [DevPod Community AWS Provider](https://github.com/skevetter/devpod-provider-aws):
   _[82](https://github.com/skevetter/devpod-provider-aws/pull/82)_.
+- [Devsy](https://github.com/devsy-org/devsy):
+  [1853](https://github.com/devsy-org/devsy/issues/1853),
+  [1854](https://github.com/devsy-org/devsy/issues/1854).
 - [Devsy GCloud Provider](https://github.com/devsy-org/devsy-provider-gcloud):
   _[110](https://github.com/devsy-org/devsy-provider-gcloud/pull/110)_.
 - [ScalaCheck](https://scalacheck.org):
