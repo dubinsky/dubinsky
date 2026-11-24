@@ -10,7 +10,6 @@ description = 'Financial Calculations'
 application.mainClass = 'org.podval.finance.Main'
 
 // There is no Java in the project :)
-podval.compileJavaEnabled = false
 
 site {
   treatErrorsAsWarnings = true
