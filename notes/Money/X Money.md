@@ -48,35 +48,6 @@ People who did get a deposit, from Grok Bot's October watch of posts on X:
   - No newer first-hand reports appeared by November 12.
     PayPal's own documentation also notes that most online-only or prepaid/stored-value accounts may not work as linked banks.
 
-
-## Passkeys
-
-I want the X Money passkey kept in Bitwarden.
-That works on the phone.
-On the desktop I had to register a second passkey, stored on the YubiKey.
-
-- I signed up for X Money on the phone, and Bitwarden stored the passkey.
-  How do I use that passkey on the desktop?
-- The passkey for X is in Bitwarden on the phone and is not in the desktop browser extension.
-- X Money says "Authenticate with your credential".
-  Continue does not ask whether to use a passkey or a security key, or where the passkey comes from, and authentication
-  fails.
-
-The unplug-the-YubiKey sequence, and when to let Chrome offer passkeys, is not in any session I can still read.
-
-What follows from how the tools work, which that lost session may have said and which I cannot quote:
-
-The Bitwarden passkey lives in the vault.
-The phone lets the Bitwarden app supply it, so login on the phone works.
-A passkey cannot be copied out of Bitwarden onto a YubiKey, so the desktop login is a second credential, created on the
-YubiKey and registered with X Money.
-On desktop Linux, Chrome uses its own passkey path and a plugged-in security key.
-Bitwarden's system passkey provider is the desktop app on Windows 11 and macOS.
-Linux is outside that.
-With the YubiKey plugged in, Chrome takes the security key and shows no choice of Bitwarden.
-That matches the August screen.
-
-
 ## X Money support ticket
 
 - **Open X Money support ticket (`CSP-70424`):**
@@ -87,3 +58,79 @@ That matches the August screen.
     Leonid sent his own follow-up reply on November 10 restating all three items after that window passed.
     Orders' weekday watch last checked on November 23 and confirmed still no human reply.
   - (The only other 2026 X Money support ticket in Gmail, `CSP-25527` from September 13 about physical card name embossing, was answered the same day and is unrelated to PayPal.)
+
+## Credentials
+
+Phone. An X Money passkey is already there. It was created in the X app: Money tab, menu, Settings, Security and Privacy, Credentials.
+
+Desktop sign-in can use it by scanning Chrome’s QR code and approving with face, fingerprint, or the phone PIN. A saved username and password does not answer that prompt.
+
+The Bitwarden passkey lives in the vault.
+The phone lets the Bitwarden app supply it, so login on the phone works.
+
+On desktop Linux, Chrome uses its own passkey path and a plugged-in security key.
+Bitwarden's system passkey provider is the desktop app on Windows 11 and macOS.
+Linux is outside that. On this Linux desktop the extension still cannot supply that passkey to X Money - even though passkeys are enabled in the extension.
+X Money’s sign-in allows only a phone or a USB security key.
+With the YubiKey plugged in, Chrome takes the security key and shows no choice of Bitwarden.
+
+Bitwarden only answers when the site allows an internal passkey, which is the kind Bitwarden stores. The extension sees the request, steps aside, and Chrome takes over. The vault item is never offered.
+
+
+Chrome Google Password Manager. Off. Both credentials_enable_service and password_manager_enabled are false. Leave it off for the procedure below. Chrome has one switch for this, Offer to save passwords and passkeys. Turning it on also makes Chrome ask to save passwords.
+
+Why each screen appeared
+
+With the YubiKey plugged in, Chrome asks for the FIDO PIN and a touch, then fails. With it unplugged, Chrome shows a phone or tablet QR code. The X Money page itself only shows Try again and I can’t access my credential.
+
+Register your credential / This is to ensure the safety of your account / Continue is X Money’s web-passkey step. With Bitwarden passkeys on, Continue does nothing, because the extension takes navigator.credentials.create and never hands it to Chrome. With Bitwarden passkeys off, Continue reaches Chrome and Chrome says: “Google Password Manager is turned off. To create a passkey for money.x.com, Google Password Manager must be on.” That button stores a passkey in the Google account. It does not write the YubiKey.
+
+The security keys section on the same Credentials page is the YubiKey enrollment. It does not need Google Password Manager.
+
+Settings for the YubiKey procedure
+
+┌──────────────────────────────────────┬──────────────┬─────────┐
+│ Setting                              │ During sign  │ After   │
+│                                      │ -in and      │ the key │
+│                                      │ enrollment   │ is      │
+│                                      │              │ listed  │
+├──────────────────────────────────────┼──────────────┼─────────┤
+│ Bitwarden → Settings → Notifications │ Off          │ On      │
+│ → Ask to save and use passkeys       │              │ again   │
+├──────────────────────────────────────┼──────────────┼─────────┤
+│ Chrome → chrome://password-          │ Off (leave   │ Off     │
+│ manager/settings → Offer to save     │ it)          │         │
+│ passwords and passkeys               │              │         │
+├──────────────────────────────────────┼──────────────┼─────────┤
+│ YubiKey                              │ Unplugged    │ Plugged │
+│                                      │ until the    │ in to   │
+│                                      │ Credentials  │ enroll, │
+│                                      │ page is open │ then    │
+│                                      │              │ either  │
+│                                      │              │ way     │
+└──────────────────────────────────────┴──────────────┴─────────┘
+
+Bitwarden passkeys go back on at the end. Other sites’ Bitwarden passkeys keep working. X Money on this desktop still goes to Chrome (phone QR or this YubiKey). The copy of the passkey already in the Bitwarden vault stays unused for desktop X Money sign-in.
+
+Add the YubiKey
+
+1. In the Bitwarden extension, open Settings → Notifications and turn Ask to save and use passkeys off.
+2. Leave Chrome’s Offer to save passwords and passkeys off. If a dialog offers Settings and Close for Google Password Manager, click Close.
+3. Unplug the YubiKey.
+4. In Chrome profile Default, open X Money and sign in. Chrome shows the phone QR code. Scan it with the phone that holds the X Money passkey and approve it. On iPhone, Bitwarden must be the passkey provider under Settings → Passwords → AutoFill Passwords and Passkeys if that passkey lives in Bitwarden. On Android: Bitwarden → Settings → Autofill → Passkey management.
+5. Open Money → Settings → Security and Privacy → Credentials. Use the security keys section.
+6. Plug in the YubiKey.
+7. Use that section’s add control. Ignore Register your credential / Continue. That is the web passkey.
+8. Chrome asks for a USB security key. Enter the YubiKey FIDO PIN and touch the key. If no dialog is visible, check the other desktops.
+9. Confirm the new key is listed in the security keys section. The SSH credential on the key stays. One slot is now used.
+10. Turn Bitwarden Ask to save and use passkeys back on.
+
+Sign in next time
+
+This laptop, key plugged in. Open X Money. Chrome asks for the FIDO PIN and a touch. Bitwarden may appear for a moment and then hand the request to Chrome. That is the transport check, and the key can succeed once it holds the credential.
+
+Phone instead. Unplug the YubiKey first, then sign in and approve the QR code on the phone. Leave the key unplugged for the whole sign-in. If it is plugged in, Chrome asks the key and the phone QR does not come up.
+
+Web passkey (the other button)
+
+Register your credential / Continue creates a passkey in Google Password Manager for nina@podval.org. To finish that path you would turn Offer to save passwords and passkeys on, click Continue again, confirm Create, and set a Google Password Manager PIN the first time. That PIN is only for Google Password Manager passkeys. Chrome will also start asking to save passwords. Leave Bitwarden passkeys off afterward, or add money.x.com under Bitwarden → Settings → Notifications → Excluded domains. An excluded domain also stops Bitwarden’s save-login and update-login notices for that domain. With Bitwarden passkeys left on and the domain not excluded, Bitwarden takes the next X Money sign-in, does not find the Google passkey in the vault, and does not hand the request back to Chrome.
