@@ -58,3 +58,7 @@ And, to attach FitBit Air to the band, there are printables:
 And Etsy:
 - https://www.etsy.com/listing/4521125718/fitbit-air-adapter-for-bicep-straps-or
 - https://www.etsy.com/listing/4510865361/fitbit-air-adapter-for-regular-watch
+
+
+
+How to turn a NATO strap into a single-pass strap by snipping off the short under-layer right at its last seam, then quickly heat-sealing the cut edge with a lighter so it doesn't fray. That can't be undone, but afterward the buckle and keepers slide anywhere: [Crown & Buckle's how-to](https://www.crownandbuckle.com/blog/single-layer-natos/).
