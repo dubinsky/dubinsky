@@ -9,14 +9,13 @@ description = 'Financial Calculations'
 
 application.mainClass = 'org.podval.finance.Main'
 
-// There is no Java in the project :)
+// scala.runtime.LazyVals$ uses sun.misc.Unsafe
+podval.allowJdkRestrictedAccess()
 
 site {
   treatErrorsAsWarnings = true
   production = true
 }
 
-// scala.runtime.LazyVals$ uses sun.misc.Unsafe
-podval.allowJdkRestrictedAccess()
 
 
