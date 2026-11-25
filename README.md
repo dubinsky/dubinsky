@@ -91,7 +91,8 @@ Archived:
   [10037](https://github.com/zio/zio/issues/10037),
   _[10053](https://github.com/zio/zio/pull/10053)_,
   _[10054](https://github.com/zio/zio/pull/10054)_,
-  _[10120](https://github.com/zio/zio/pull/10120)_.
+  _[10120](https://github.com/zio/zio/pull/10120)_,
+  [11506](https://github.com/zio/zio/issues/11506).
 - [ZIO HTTP](https://github.com/zio/zio-http):
   [613](https://github.com/zio/zio-http/issues/613),
   [2767](https://github.com/zio/zio-http/issues/2767).
